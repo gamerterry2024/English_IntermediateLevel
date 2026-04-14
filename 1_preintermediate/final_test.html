@@ -1,0 +1,693 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎓 FINAL TEST: Pre-Intermediate (Units 1-16)</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --error: #e74c3c;
+            --bg: #f4f7f6;
+            --card: #ffffff;
+        }
+
+        .back-to-dashboard {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #7f8c8d;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 1001;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        .back-to-dashboard:hover {
+            transform: scale(1.1);
+            background-color: #3498db;
+        }
+
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; background-color: var(--bg); color: var(--primary); line-height: 1.6; margin: 0; padding: 20px; }
+        .container { max-width: 900px; margin: 0 auto; background: var(--card); padding: 40px; border-radius: 20px; box-shadow: 0 10px 30px rgba(0,0,0,0.1); }
+        h1 { text-align: center; color: var(--primary); border-bottom: 3px solid var(--secondary); padding-bottom: 10px; }
+        .section-title { background: var(--primary); color: white; padding: 10px 20px; border-radius: 5px; margin-top: 30px; font-weight: bold; }
+        
+        .question-block { margin-bottom: 20px; padding: 15px; border-bottom: 1px solid #eee; }
+        .question-text { font-weight: 600; margin-bottom: 10px; display: block; }
+        .q-select { padding: 8px; border-radius: 5px; border: 1px solid #ccc; width: 100%; max-width: 400px; font-size: 1rem; cursor: pointer; transition: 0.3s; }
+        
+        .passage { background: #f9f9f9; padding: 20px; border-left: 5px solid var(--secondary); margin: 20px 0; font-style: italic; }
+
+        .result-bar { position: fixed; bottom: 0; left: 0; width: 100%; background: var(--primary); color: white; padding: 20px; text-align: center; box-shadow: 0 -5px 15px rgba(0,0,0,0.2); display: flex; justify-content: center; align-items: center; gap: 20px; z-index: 1000; }
+        .score-display { font-size: 1.5rem; font-weight: bold; }
+        .grade-btn { background: var(--success); color: white; border: none; padding: 12px 30px; border-radius: 30px; font-size: 1.1rem; cursor: pointer; transition: 0.3s; }
+        .grade-btn:hover { background: #219150; transform: translateY(-2px); }
+
+        @media (max-width: 600px) {
+            .container { padding: 20px; }
+            .result-bar { flex-direction: column; gap: 10px; }
+        }
+    </style>
+</head>
+<body>
+
+<a href="index.html#final_test" class="back-to-dashboard">🏠 Back to Dashboard</a>
+
+<div class="container">
+    <h1>🎓 FINAL DIAGNOSTIC TEST</h1>
+    <p style="text-align:center;">Units 01 - 16 Total Review</p>
+
+    <div class="section-title">PART 1: Vocabulary (15 Questions)</div>
+    
+    <div class="question-block">
+        <span class="question-text">01. After the heavy rain, the river ________ and flooded the streets.</span>
+        <select class="q-select" data-ans="rose">
+            <option value="">-- Choose --</option>
+            <option value="melted">melted</option>
+            <option value="rose">rose</option>
+            <option value="froze">froze</option>
+            <option value="dried">dried</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">02. Scientists are trying to ________ a cure for the new virus.</span>
+        <select class="q-select" data-ans="discover">
+            <option value="">-- Choose --</option>
+            <option value="discover">discover</option>
+            <option value="invent">invent</option>
+            <option value="design">design</option>
+            <option value="research">research</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">03. It’s a very ________ building with a long and interesting past.</span>
+        <select class="q-select" data-ans="historic">
+            <option value="">-- Choose --</option>
+            <option value="modern">modern</option>
+            <option value="historic">historic</option>
+            <option value="natural">natural</option>
+            <option value="scientific">scientific</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">04. I was so ________ when I won the first prize!</span>
+        <select class="q-select" data-ans="thrilled">
+            <option value="">-- Choose --</option>
+            <option value="exhausted">exhausted</option>
+            <option value="annoyed">annoyed</option>
+            <option value="thrilled">thrilled</option>
+            <option value="miserable">miserable</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">05. You should ________ some money every month for travel.</span>
+        <select class="q-select" data-ans="save">
+            <option value="">-- Choose --</option>
+            <option value="spend">spend</option>
+            <option value="lend">lend</option>
+            <option value="borrow">borrow</option>
+            <option value="save">save</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">06. The government decided to ________ the old hospital and build a park.</span>
+        <select class="q-select" data-ans="destroy">
+            <option value="">-- Choose --</option>
+            <option value="protect">protect</option>
+            <option value="destroy">destroy</option>
+            <option value="develop">develop</option>
+            <option value="explore">explore</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">07. The weather ________ says it will be sunny this weekend.</span>
+        <select class="q-select" data-ans="forecast">
+            <option value="">-- Choose --</option>
+            <option value="documentary">documentary</option>
+            <option value="interview">interview</option>
+            <option value="forecast">forecast</option>
+            <option value="headline">headline</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">08. She has a very ________ lifestyle; she exercises every day.</span>
+        <select class="q-select" data-ans="healthy">
+            <option value="">-- Choose --</option>
+            <option value="healthy">healthy</option>
+            <option value="stressful">stressful</option>
+            <option value="boring">boring</option>
+            <option value="creative">creative</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">09. We need to ________ the environment from pollution.</span>
+        <select class="q-select" data-ans="protect">
+            <option value="">-- Choose --</option>
+            <option value="damage">damage</option>
+            <option value="attack">attack</option>
+            <option value="protect">protect</option>
+            <option value="ignore">ignore</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">10. The lecture was so ________ that I almost fell asleep.</span>
+        <select class="q-select" data-ans="dull">
+            <option value="">-- Choose --</option>
+            <option value="exciting">exciting</option>
+            <option value="frightening">frightening</option>
+            <option value="dull">dull</option>
+            <option value="fascinating">fascinating</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">11. If you are not happy with the item, you can ask for a ________.</span>
+        <select class="q-select" data-ans="refund">
+            <option value="">-- Choose --</option>
+            <option value="receipt">receipt</option>
+            <option value="discount">discount</option>
+            <option value="refund">refund</option>
+            <option value="bargain">bargain</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">12. He is very ________; he always shares his food.</span>
+        <select class="q-select" data-ans="generous">
+            <option value="">-- Choose --</option>
+            <option value="selfish">selfish</option>
+            <option value="generous">generous</option>
+            <option value="arrogant">arrogant</option>
+            <option value="stubborn">stubborn</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">13. The earthquake caused a lot of ________ to the town.</span>
+        <select class="q-select" data-ans="damage">
+            <option value="">-- Choose --</option>
+            <option value="benefit">benefit</option>
+            <option value="damage">damage</option>
+            <option value="improvement">improvement</option>
+            <option value="development">development</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">14. I forgot my ________, so I couldn't log in.</span>
+        <select class="q-select" data-ans="password">
+            <option value="">-- Choose --</option>
+            <option value="attachment">attachment</option>
+            <option value="password">password</option>
+            <option value="keyboard">keyboard</option>
+            <option value="screen">screen</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">15. Can you ________ the volume? It's too loud.</span>
+        <select class="q-select" data-ans="turn down">
+            <option value="">-- Choose --</option>
+            <option value="turn up">turn up</option>
+            <option value="turn off">turn off</option>
+            <option value="turn down">turn down</option>
+            <option value="turn on">turn on</option>
+        </select>
+    </div>
+
+    <div class="section-title">PART 2: Grammar (15 Questions)</div>
+
+    <div class="question-block">
+        <span class="question-text">16. I ________ my homework yet.</span>
+        <select class="q-select" data-ans="haven't finished">
+            <option value="">-- Choose --</option>
+            <option value="didn't finish">didn't finish</option>
+            <option value="haven't finished">haven't finished</option>
+            <option value="don't finish">don't finish</option>
+            <option value="wasn't finishing">wasn't finishing</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">17. If I ________ enough money, I would buy a boat.</span>
+        <select class="q-select" data-ans="had">
+            <option value="">-- Choose --</option>
+            <option value="have">have</option>
+            <option value="will have">will have</option>
+            <option value="had">had</option>
+            <option value="have had">have had</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">18. This phone ________ in Korea last year.</span>
+        <select class="q-select" data-ans="was made">
+            <option value="">-- Choose --</option>
+            <option value="made">made</option>
+            <option value="was made">was made</option>
+            <option value="is made">is made</option>
+            <option value="makes">makes</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">19. You ________ smoke here. It is forbidden.</span>
+        <select class="q-select" data-ans="mustn't">
+            <option value="">-- Choose --</option>
+            <option value="don't have to">don't have to</option>
+            <option value="shouldn't">shouldn't</option>
+            <option value="mustn't">mustn't</option>
+            <option value="might not">might not</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">20. She is the woman ________ lives next door.</span>
+        <select class="q-select" data-ans="who">
+            <option value="">-- Choose --</option>
+            <option value="which">which</option>
+            <option value="who">who</option>
+            <option value="whose">whose</option>
+            <option value="where">where</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">21. I ________ to Japan three times so far.</span>
+        <select class="q-select" data-ans="have been">
+            <option value="">-- Choose --</option>
+            <option value="went">went</option>
+            <option value="have been">have been</option>
+            <option value="am going">am going</option>
+            <option value="was">was</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">22. While I ________, I saw an old friend.</span>
+        <select class="q-select" data-ans="was walking">
+            <option value="">-- Choose --</option>
+            <option value="walk">walk</option>
+            <option value="walked">walked</option>
+            <option value="was walking">was walking</option>
+            <option value="have walked">have walked</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">23. This movie is ________ than the last one.</span>
+        <select class="q-select" data-ans="more exciting">
+            <option value="">-- Choose --</option>
+            <option value="exciting">exciting</option>
+            <option value="more exciting">more exciting</option>
+            <option value="most exciting">most exciting</option>
+            <option value="as exciting">as exciting</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">24. We ________ a party this Friday. You're invited!</span>
+        <select class="q-select" data-ans="are having">
+            <option value="">-- Choose --</option>
+            <option value="have">have</option>
+            <option value="had">had</option>
+            <option value="are having">are having</option>
+            <option value="have had">have had</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">25. He asked me ________ I could swim.</span>
+        <select class="q-select" data-ans="if">
+            <option value="">-- Choose --</option>
+            <option value="that">that</option>
+            <option value="if">if</option>
+            <option value="what">what</option>
+            <option value="which">which</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">26. You ________ bring any food; we have plenty.</span>
+        <select class="q-select" data-ans="don't have to">
+            <option value="">-- Choose --</option>
+            <option value="mustn't">mustn't</option>
+            <option value="don't have to">don't have to</option>
+            <option value="can't">can't</option>
+            <option value="shouldn't">shouldn't</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">27. I ________ you as soon as I get home.</span>
+        <select class="q-select" data-ans="will call">
+            <option value="">-- Choose --</option>
+            <option value="call">call</option>
+            <option value="called">called</option>
+            <option value="will call">will call</option>
+            <option value="am calling">am calling</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">28. The bridge ________ in 1890.</span>
+        <select class="q-select" data-ans="was built">
+            <option value="">-- Choose --</option>
+            <option value="builds">builds</option>
+            <option value="was built">was built</option>
+            <option value="is built">is built</option>
+            <option value="building">building</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">29. ________ you ever ________ a shark?</span>
+        <select class="q-select" data-ans="Have / seen">
+            <option value="">-- Choose --</option>
+            <option value="Did / see">Did / see</option>
+            <option value="Have / seen">Have / seen</option>
+            <option value="Do / see">Do / see</option>
+            <option value="Were / seeing">Were / seeing</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">30. I enjoy ________ in the ocean.</span>
+        <select class="q-select" data-ans="swimming">
+            <option value="">-- Choose --</option>
+            <option value="swim">swim</option>
+            <option value="to swim">to swim</option>
+            <option value="swimming">swimming</option>
+            <option value="to swimming">to swimming</option>
+        </select>
+    </div>
+
+    <div class="section-title">PART 3: Reading Comprehension (10 Questions)</div>
+    
+    <div class="passage">
+        Alexander Fleming discovered penicillin in 1928 by accident. He noticed a mold in a dish that killed bacteria. This discovery changed medicine forever. Today, penicillin is used worldwide to treat infections.
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">31. Penicillin was discovered ________.</span>
+        <select class="q-select" data-ans="by accident">
+            <option value="">-- Choose --</option>
+            <option value="on purpose">on purpose</option>
+            <option value="by accident">by accident</option>
+            <option value="in 1938">in 1938</option>
+            <option value="by a nurse">by a nurse</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">32. What did the mold do to the bacteria?</span>
+        <select class="q-select" data-ans="It killed them">
+            <option value="">-- Choose --</option>
+            <option value="It fed them">It fed them</option>
+            <option value="It killed them">It killed them</option>
+            <option value="It changed them">It changed them</option>
+            <option value="It ignored them">It ignored them</option>
+        </select>
+    </div>
+
+    <div class="passage">
+        Renewable energy, like solar and wind power, is good for the Earth. It doesn't create CO2. However, these energy sources depend on the weather. If there is no sun or wind, we cannot make energy.
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">33. Why is renewable energy good?</span>
+        <select class="q-select" data-ans="It doesn't create CO2">
+            <option value="">-- Choose --</option>
+            <option value="It is very cheap">It is very cheap</option>
+            <option value="It works every day">It works every day</option>
+            <option value="It doesn't create CO2">It doesn't create CO2</option>
+            <option value="It is easy to make">It is easy to make</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">34. What is the problem with solar power?</span>
+        <select class="q-select" data-ans="It depends on the weather">
+            <option value="">-- Choose --</option>
+            <option value="It is very noisy">It is very noisy</option>
+            <option value="It is dangerous">It is dangerous</option>
+            <option value="It depends on the weather">It depends on the weather</option>
+            <option value="It smells bad">It smells bad</option>
+        </select>
+    </div>
+
+    <div class="passage">
+        Coffee began in Ethiopia. A goat herder saw his goats get energetic after eating berries. This practice spread to the Arab world and then to Europe. Coffee houses became social places in the 17th century.
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">35. Who first noticed the effect of coffee?</span>
+        <select class="q-select" data-ans="A goat herder">
+            <option value="">-- Choose --</option>
+            <option value="A businessman">A businessman</option>
+            <option value="A goat herder">A goat herder</option>
+            <option value="A scientist">A scientist</option>
+            <option value="A king">A king</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">36. Coffee houses were ________.</span>
+        <select class="q-select" data-ans="social hubs">
+            <option value="">-- Choose --</option>
+            <option value="social hubs">social hubs</option>
+            <option value="quiet libraries">quiet libraries</option>
+            <option value="dangerous prisons">dangerous prisons</option>
+            <option value="medical labs">medical labs</option>
+        </select>
+    </div>
+
+    <div class="passage">
+        A storm hit Sandgate last night. Winds reached 120 km/h. Trees fell and many people lost power. No one was hurt, but beach houses were damaged by water.
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">37. What caused the power cut?</span>
+        <select class="q-select" data-ans="A storm">
+            <option value="">-- Choose --</option>
+            <option value="A fire">A fire</option>
+            <option value="A storm">A storm</option>
+            <option value="A robbery">A robbery</option>
+            <option value="An animal">An animal</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">38. How many people were injured?</span>
+        <select class="q-select" data-ans="No one">
+            <option value="">-- Choose --</option>
+            <option value="Thousands">Thousands</option>
+            <option value="Only ten">Only ten</option>
+            <option value="No one">No one</option>
+            <option value="The herder">The herder</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">39. Significant water damage means ________ damage.</span>
+        <select class="q-select" data-ans="a lot of">
+            <option value="">-- Choose --</option>
+            <option value="very little">very little</option>
+            <option value="a lot of">a lot of</option>
+            <option value="no">no</option>
+            <option value="unusual">unusual</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">40. The emergency services ________.</span>
+        <select class="q-select" data-ans="cleared the roads">
+            <option value="">-- Choose --</option>
+            <option value="stayed at home">stayed at home</option>
+            <option value="cleared the roads">cleared the roads</option>
+            <option value="built houses">built houses</option>
+            <option value="watched the news">watched the news</option>
+        </select>
+    </div>
+
+    <div class="section-title">PART 4: Usage & Application (10 Questions)</div>
+
+    <div class="question-block">
+        <span class="question-text">41. A: "I'm quitting my job." B: "________"</span>
+        <select class="q-select" data-ans="That sounds brave!">
+            <option value="">-- Choose --</option>
+            <option value="What did you eat?">What did you eat?</option>
+            <option value="That sounds brave!">That sounds brave!</option>
+            <option value="I'm open.">I'm open.</option>
+            <option value="Happy birthday!">Happy birthday!</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">42. Which is the most formal?</span>
+        <select class="q-select" data-ans="Would you mind passing the salt?">
+            <option value="">-- Choose --</option>
+            <option value="Give salt.">Give salt.</option>
+            <option value="Pass me salt.">Pass me salt.</option>
+            <option value="Would you mind passing the salt?">Would you mind passing the salt?</option>
+            <option value="Salt please.">Salt please.</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">43. Logical order: (1) Medium, please. (2) Can I help? (3) I need a shirt.</span>
+        <select class="q-select" data-ans="2-3-1">
+            <option value="">-- Choose --</option>
+            <option value="1-2-3">1-2-3</option>
+            <option value="2-3-1">2-3-1</option>
+            <option value="3-2-1">3-2-1</option>
+            <option value="2-1-3">2-1-3</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">44. Which sentence is WRONG?</span>
+        <select class="q-select" data-ans="He don't like milk.">
+            <option value="">-- Choose --</option>
+            <option value="She has a dog.">She has a dog.</option>
+            <option value="He don't like milk.">He don't like milk.</option>
+            <option value="They were tired.">They were tired.</option>
+            <option value="I am a student.">I am a student.</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">45. Best news headline?</span>
+        <select class="q-select" data-ans="Bank Robbed in City Center">
+            <option value="">-- Choose --</option>
+            <option value="I lost my wallet.">I lost my wallet.</option>
+            <option value="Bank Robbed in City Center">Bank Robbed in City Center</option>
+            <option value="I like money.">I like money.</option>
+            <option value="Robbers are bad.">Robbers are bad.</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">46. A: "I'm nervous about the test." B: "________"</span>
+        <select class="q-select" data-ans="Don't worry, you'll be fine.">
+            <option value="">-- Choose --</option>
+            <option value="Don't worry, you'll be fine.">Don't worry, you'll be fine.</option>
+            <option value="Why are you so slow?">Why are you so slow?</option>
+            <option value="I ate pizza.">I ate pizza.</option>
+            <option value="See you yesterday.">See you yesterday.</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">47. Hike order: (1) Lunch. (2) Start hike. (3) Summit.</span>
+        <select class="q-select" data-ans="2-1-3">
+            <option value="">-- Choose --</option>
+            <option value="1-2-3">1-2-3</option>
+            <option value="2-1-3">2-1-3</option>
+            <option value="3-1-2">3-1-2</option>
+            <option value="2-3-1">2-3-1</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">48. "The test was a ________ because I studied hard."</span>
+        <select class="q-select" data-ans="success">
+            <option value="">-- Choose --</option>
+            <option value="failure">failure</option>
+            <option value="success">success</option>
+            <option value="mystery">mystery</option>
+            <option value="danger">danger</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">49. Identify the correct passive sentence.</span>
+        <select class="q-select" data-ans="The cake was eaten by Jim.">
+            <option value="">-- Choose --</option>
+            <option value="The cake eaten by Jim.">The cake eaten by Jim.</option>
+            <option value="Jim was eaten cake.">Jim was eaten cake.</option>
+            <option value="The cake was eaten by Jim.">The cake was eaten by Jim.</option>
+            <option value="Jim eaten the cake.">Jim eaten the cake.</option>
+        </select>
+    </div>
+
+    <div class="question-block">
+        <span class="question-text">50. Formal letter ending (Unknown name)?</span>
+        <select class="q-select" data-ans="Yours faithfully">
+            <option value="">-- Choose --</option>
+            <option value="See you later">See you later</option>
+            <option value="Yours faithfully">Yours faithfully</option>
+            <option value="Bye bye">Bye bye</option>
+            <option value="Cheers">Cheers</option>
+        </select>
+    </div>
+
+    <div style="height: 150px;"></div> </div>
+
+<div class="result-bar">
+    <div class="score-display">Result: <span id="final-score">--</span> / 100</div>
+    <button class="grade-btn" onclick="checkAll()">Submit Final Test</button>
+</div>
+
+<script>
+    function checkAll() {
+        const selects = document.querySelectorAll('.q-select');
+        let correctCount = 0;
+        const totalQuestions = selects.length; // 50
+
+        selects.forEach(sel => {
+            const userAnswer = sel.value;
+            const correctAnswer = sel.getAttribute('data-ans');
+
+            if (userAnswer === correctAnswer) {
+                correctCount++;
+                sel.style.backgroundColor = "#d4edda";
+                sel.style.borderColor = "#28a745";
+            } else {
+                sel.style.backgroundColor = "#f8d7da";
+                sel.style.borderColor = "#dc3545";
+            }
+        });
+
+        // 50문항이므로 개당 2점으로 계산
+        const finalScore = correctCount * 2;
+        
+        document.getElementById('final-score').innerText = finalScore;
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        
+        let message = `Your score is ${finalScore} out of 100!`;
+        
+        // 100점 만점 기준 피드백 메시지 수정
+        if(finalScore >= 90) {
+            message += "\nExcellent! Master Level achieved! 🎉";
+        } else if(finalScore >= 70) {
+            message += "\nGreat job! You have a solid understanding. 👍";
+        } else if(finalScore >= 50) {
+            message += "\nGood effort! A bit more review would be helpful. 💪";
+        } else {
+            message += "\nKeep practicing! Let's review the units again. 📚";
+        }
+        
+        alert(message);
+    }
+</script>
+
+</body>
+</html>

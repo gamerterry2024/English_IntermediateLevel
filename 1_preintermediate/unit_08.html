@@ -1,0 +1,1032 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNIT 08: GETTING THERE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --bg: #f4f7f6;
+            --white: #ffffff;
+            --highlight: #fff59d;
+            --accent: #e67e22;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg);
+            color: var(--primary);
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+        section {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            /* 상단 헤더 높이를 고려한 스크롤 위치 조정 */
+            scroll-margin-top: 90px;
+        }
+        .back-to-dashboard {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 1001;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        .back-to-dashboard:hover {
+            transform: scale(1.1);
+            background-color: var(--secondary);
+        }
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 20px;
+            padding-bottom: 300px; 
+        }
+        h2 {
+            border-left: 6px solid var(--secondary);
+            padding-left: 15px;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        .reading-box {
+            background-color: #fffaf0;
+            border: 1px solid #f39c12;
+            padding: 25px;
+            border-radius: 12px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .vocab-link {
+            color: var(--secondary);
+            text-decoration: none;
+            border-bottom: 2px solid var(--secondary);
+            font-weight: bold;
+            padding: 0 2px;
+            cursor: pointer;
+        }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .card {
+            border: 1px solid #eee;
+            padding: 20px;
+            border-radius: 10px;
+            background: #fff;
+            transition: all 0.4s ease;
+        }
+        .card.active-highlight {
+            border: 2px solid var(--accent);
+            background-color: #fffde7;
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .return-btn {
+            display: inline-block;
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: bold;
+            border: 1px solid var(--secondary);
+            padding: 4px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .audio-zone {
+            background: #ebf5fb;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--secondary);
+            margin: 20px 0;
+            text-align: center;
+        }
+        .audio-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .script-window {
+            margin-top: 15px;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            height: 250px; 
+            overflow-y: auto;
+            display: none;
+            text-align: left;
+        }
+        .script-line {
+            padding: 8px 10px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            transition: background 0.3s;
+            font-size: 0.95rem;
+        }
+        .script-line.active {
+            background-color: var(--highlight);
+            font-weight: bold;
+        }
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        .quiz-item {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .instruction {
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        .save-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .save-btn:hover {
+            background-color: #219150;
+        }
+        .mini-input {
+            width: 100px !important;
+            padding: 5px !important;
+            margin: 0 5px !important;
+            display: inline-block !important;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html#unit_08" class="back-to-dashboard">🏠 Back to Dashboard</a>
+    <header>
+        <h1>UNIT 08</h1>
+        <nav class="nav-links">
+            <a href="#intro-reading">0. Core Reading</a>
+            <a href="#section1">1. Listen & Read</a>
+            <a href="#section2">2. Speaking</a>
+            <a href="#section3">3. Writing</a>
+        </nav>
+    </header>
+    <div class="container">
+        
+<section id="intro-reading">
+    <h2>Core Reading: The Full Story of Getting There</h2>
+    
+    <div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+
+<p>Planning a trip is often the most exciting part of a holiday, but as the travellers in today’s news found out, the <b>actual journey</b> can involve <b>a lot of stress</b> and <b>complete chaos</b>. Whether you are taking a train, <b>catching a bus</b>, or driving a car, there is always some risk of <b>facing the unexpected</b>. Today’s BBD travel report is a perfect example of how much <b>trouble</b> a single day can bring to the public.</p>
+<p>First, let’s look at the airports. In France, an <strong><span class="vocab-link" id="text-ongoing" onclick="centralizeScroll('vocab-ongoing')">ongoing</span></strong> strike by the <b>air traffic controllers</b> is <b>causing chaos</b>. There is little hope of a <b>deal</b> being reached soon, so much of the French <b>airspace</b> remains closed. Consequently, some flights are <b>delayed</b> while a few others are <b>cancelled</b>. Passengers are advised to <b>consult</b> the airline's website for <b>information</b> before leaving the house. On the roads, a <strong><span class="vocab-link" id="text-lorry" onclick="centralizeScroll('vocab-lorry')">lorry</span></strong> carrying a <b>huge load</b> of watermelons <b>crashed</b>, leaving <b>a big mess</b> for the police to <b>clear up</b>. Furthermore, the M6 motorway is <b>closed for repairs</b>, and although there is a <strong><span class="vocab-link" id="text-diversion" onclick="centralizeScroll('vocab-diversion')">diversion</span></strong> in operation, the traffic is moving <b>very slowly</b>. Even the London Underground is struggling; the Northern Line has <b>repair work</b>, and East Ham station is closed because of a <b>flood</b> caused by a <b>burst water pipe</b>.</p>
+<p>For one particular couple trying to reach the museum, the journey was the <b>biggest challenge</b> of the day. First, they realized they were <b>lost</b> and asked a <b>stranger</b> for the way. The man gave them some <b>advice</b>: "Take the <b>second road on the right</b>, <b>cross the street</b>, and find the stop <b>opposite the town hall</b>." However, because they didn't <b>pay attention</b>, they couldn't remember if it was the second right or the second left! They had <b>no idea</b> which bus to catch.</p>
+<p>Later, they found a bus stop, but an old lady they spoke to couldn't hear the question. A kind person nearby explained that they were at the <b>wrong stop</b> because the bus went the <b>wrong way</b>. They had to <b>go over the crossing</b>, past the <b>traffic lights</b>, to find the <b>number 67 bus</b>. Even after finally <b>getting on</b> a bus, they <b>got off</b> at the wrong stop again! A final guide told them to <b>walk past</b> a church, a <strong><span class="vocab-link" id="text-monument" onclick="centralizeScroll('vocab-monument')">monument</span></strong>, and a football ground for about <b>half a mile</b>. "You <b>can't miss it</b>," he said. By the time they arrived, they had <b>a lot of</b> <strong><span class="vocab-link" id="text-frustration" onclick="centralizeScroll('vocab-frustration')">frustration</span></strong> between them.</p>
+<p>Ultimately, the experience of <b>getting there</b> depends on the <strong><span class="vocab-link" id="text-perspective" onclick="centralizeScroll('vocab-perspective')">perspective</span></strong> you choose. As the story of the farmer and the two travellers teaches us, the kind of people and the kind of <b>luck</b> you find in a new town usually matches the <b>attitude</b> you bring with you. If you have <b>too much negativity</b>, you will only see the traffic and the strikes. But if you have <b>patience</b> and a <b>sense of humour</b>, you can survive any journey, even one filled with watermelons and <b>floods</b>.</p>    </div>
+
+<article style="margin-top: 3rem; border-top: 2px solid #eee;">
+    <h3 id="vocab-builder">Vocabulary Builder</h3>
+    <div class="vocab-grid">
+
+        <div class="card" id="vocab-ongoing">
+        <div class="card-content">
+            <strong>Ongoing:</strong> Continuing to exist or develop; happening right now.
+            <br><span class="return-btn" onclick="centralizeScroll('text-ongoing')">Return to Text ↑</span>
+        </div>
+    </div>
+
+    <div class="card" id="vocab-lorry">
+        <div class="card-content">
+            <strong>Lorry:</strong> A large, heavy motor vehicle used for transporting goods; a truck.
+            <br><span class="return-btn" onclick="centralizeScroll('text-lorry')">Return to Text ↑</span>
+        </div>
+    </div>
+
+    <div class="card" id="vocab-diversion">
+        <div class="card-content">
+            <strong>Diversion:</strong> A different route that is used because a road is closed.
+            <br><span class="return-btn" onclick="centralizeScroll('text-diversion')">Return to Text ↑</span>
+        </div>
+    </div>
+
+    <div class="card" id="vocab-monument">
+        <div class="card-content">
+            <strong>Monument:</strong> A statue or building built to help people remember a famous person or event.
+            <br><span class="return-btn" onclick="centralizeScroll('text-monument')">Return to Text ↑</span>
+        </div>
+    </div>
+
+    <div class="card" id="vocab-frustration">
+        <div class="card-content">
+            <strong>Frustration:</strong> The feeling of being annoyed or upset because you cannot change or achieve something.
+            <br><span class="return-btn" onclick="centralizeScroll('text-frustration')">Return to Text ↑</span>
+        </div>
+    </div>
+
+    <div class="card" id="vocab-perspective">
+        <div class="card-content">
+            <strong>Perspective:</strong> A particular way of thinking about something; a point of view.
+            <br><span class="return-btn" onclick="centralizeScroll('text-perspective')">Return to Text ↑</span>
+        </div>
+    </div>
+
+    </div>
+</article>
+</section>
+        <section id="section1">
+            <h2>Section 1: Listening & Reading Integration</h2>
+            
+<article>
+    <h3>1-1. Travel News (Dialogues)</h3>
+    
+    <div class="audio-zone" style="margin-bottom: 20px;">
+        <span class="audio-label">🎧 Listening 1: BBD Radio Travel News (Track 58)</span>
+        <audio id="main-player-1" style="width:100%;" controls src="Track 58.mp3"></audio>
+    </div>
+    <div id="script-container1" class="script-window" style="height: 450px; overflow-y: auto;"></div>
+
+</article>
+            <article style="margin-top: 3rem; border-top: 1px solid #eee; padding-top: 2rem;">
+                <h3>1-2. Lost on the Way to the Museum</h3>
+                
+                <div class="audio-zone">
+                    <span class="audio-label">🎁 Conversation 1 : Confused Directions (Track 54)</span>
+                    <audio id="player-1" style="width:100%;" controls src="Track 54.mp3"></audio>
+                    <div id="script-1" class="script-window"></div>
+                </div>
+                <div class="audio-zone">
+                    <span class="audio-label">📦 Conversation 2 : The Wrong Bus Stop (Track 55)</span>
+                    <audio id="player-2" style="width:100%;" controls src="Track 55.mp3"></audio>
+                    <div id="script-2" class="script-window"></div>
+                </div>
+                <div class="audio-zone">
+                    <span class="audio-label">👨‍💼 Conversation 3 : You Can't Miss It! (Track 56)</span>
+                    <audio id="player-3" style="width:100%;" controls src="Track 56.mp3"></audio>
+                    <div id="script-3" class="script-window"></div>
+                </div>
+            </article>
+
+         <article style="margin-top: 3rem; border-top: 1px solid #eee; padding-top: 2rem;">
+    <h2>1-3. &#x1F4D6; Reading: Breakfast around the world</h2>
+    <div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+        <p style="margin-top: 0;">The Two Travellers and the Farmer</p>
+        <p>One hot afternoon, a <b>traveller was walking along a dusty country road</b> when he suddenly noticed an old farmer working in the fields. Keen to rest his feet, the traveller stopped and called out to the farmer, who seemed happy enough to stop working and chat for a while. The farmer put down his tools, stretched his back and walked slowly over to the side of the road, where the two men sat down together and shared a glass of water.</p>
+<p>After some brief introductions, the stranger asked, "<b>What kind of people live in the next town?</b>"</p>
+<p>"What were the people like where you've come from?" replied the farmer, <b>answering one question with another</b>.</p>
+<p>"They were a bad bunch. They were all troublemakers – and very lazy too! They were the <b>most selfish people in the world</b>. I didn't trust any of them and I have to say, I'm glad I'm leaving them all behind."</p>
+<p>"Is that right?" replied the old farmer. "Well, I'm afraid I've got some bad news for you. In the town you come to, <b>you'll find more of the same sort of people</b>."</p>
+<p>Disappointed, the traveller continued on his way, while the farmer returned to his work.</p>
+<p>A couple of weeks later, another stranger appeared, coming from the same direction. He also slowed down as he walked through the fields and shouted out to the farmer. The two men stopped to talk and after a few minutes, the second traveller said, "Do you mind if I ask what kind of people live in the next town?"</p>
+<p>"What were the people like where you've come from?" replied the farmer once again.</p>
+<p>"They were the <b>best people in the world</b>. Hard-working, honest and friendly. I'm sorry I'm leaving them all behind."</p>
+<p>"Is that right?" replied the old farmer. "Well, I'm happy to tell you that in the town you come to, <b>you'll find more of the same sort of people</b>."</p>
+    </div>
+	</article>
+
+    <div class="quiz-container" style="margin-top: 2rem; padding: 0 1rem;">
+        <h4 style="color: var(--secondary); margin-bottom: 1.5rem;">✅ Check your understanding (True or False)</h4>
+        <style>
+            .quiz-row { display: flex; align-items: center; margin-bottom: 15px; font-size: 1.05rem; flex-wrap: wrap; }
+            .quiz-question { margin-right: 12px; font-weight: 500; }
+            .btn-check-small { 
+                padding: 3px 10px; font-size: 0.85rem; cursor: pointer; border-radius: 6px; 
+                border: 1px solid var(--secondary); background: white; color: var(--secondary);
+                transition: 0.2s; margin-right: 10px;
+            }
+            .btn-check-small:hover { background: var(--secondary); color: white; }
+            .answer-text { color: var(--success); font-weight: bold; font-size: 0.95rem; }
+        </style>
+<div class="quiz-container" style="background: #fdfdfd; padding: 20px; border-radius: 12px; border: 1px solid #eee;">
+    
+<div class="quiz-row" id="tf-q1" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+    <span class="quiz-question">1. The first traveller stopped to talk to the farmer because he wanted to help him with his work.</span>
+    <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+        <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+        <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+    </div>
+    <button onclick="validateTF('tf-q1', 'F', 'False (The traveller stopped because he was keen to rest his feet, not to help the farmer.)')" class="btn-check-small">Check</button>
+    <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-q2" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+    <span class="quiz-question">2. The first traveller thought the people in his previous town were the most selfish in the world.</span>
+    <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+        <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+        <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+    </div>
+    <button onclick="validateTF('tf-q2', 'T', 'True (He described them as a bad bunch, troublemakers, and the most selfish people.)')" class="btn-check-small">Check</button>
+    <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-q3" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+    <span class="quiz-question">3. The farmer told the first traveller that the people in the next town would be very different.</span>
+    <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+        <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+        <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+    </div>
+    <button onclick="validateTF('tf-q3', 'F', 'False (The farmer said he would find more of the same sort of people as the ones he left behind.)')" class="btn-check-small">Check</button>
+    <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-q4" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+    <span class="quiz-question">4. The second traveller had a very positive opinion of the people from his old town.</span>
+    <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+        <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+        <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+    </div>
+    <button onclick="validateTF('tf-q4', 'T', 'True (He said they were the best people in the world: hard-working, honest, and friendly.)')" class="btn-check-small">Check</button>
+    <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-q5" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+    <span class="quiz-question">5. The farmer used the travellers' own experiences to predict what they would find in the next town.</span>
+    <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+        <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+        <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+    </div>
+    <button onclick="validateTF('tf-q5', 'T', 'True (The story suggests that the people you find often depend on your own attitude and perspective.)')" class="btn-check-small">Check</button>
+    <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+</div>
+<script>
+// T/F 버튼 선택 시 시각적 효과
+function selectTF(btn, val) {
+    const parent = btn.parentElement;
+    const btns = parent.querySelectorAll('.tf-btn');
+    btns.forEach(b => {
+        b.style.background = '#fff';
+        b.style.color = '#333';
+        b.classList.remove('selected');
+    });
+    btn.style.background = '#333';
+    btn.style.color = '#fff';
+    btn.classList.add('selected');
+    btn.dataset.value = val;
+}// 정답 확인 및 토글 함수
+function validateTF(rowId, correctVal, explanation) {
+    const row = document.getElementById(rowId);
+    const selectedBtn = row.querySelector('.tf-btn.selected');
+    const ansText = row.querySelector('.answer-text');
+    // 이미 정답이 보이고 있다면 -> 다시 숨기기 (토글)
+    if (ansText.style.display === 'inline') {
+        ansText.style.display = 'none';
+        row.style.background = '#fff'; // 배경색 초기화
+        return;
+    }
+    // 버튼을 선택하지 않았을 때
+    if (!selectedBtn) {
+        alert("Please select T or F first!");
+        return;
+    }
+    // 정답 확인 모드
+    const userVal = selectedBtn.dataset.value;
+    ansText.style.display = 'inline';
+    ansText.innerText = explanation;
+    if (userVal === correctVal) {
+        row.style.background = '#e8f5e9'; // 정답: 연한 초록색
+        ansText.style.color = '#2e7d32';
+    } else {
+        row.style.background = '#ffebee'; // 오답: 연한 빨간색
+        ansText.style.color = '#c62828';
+    }
+}</script>
+    </div>
+</article>
+        </section>
+<section id="section2">
+    <h2>Section 2: Speaking Practice</h2> 
+    
+    <article style="margin-top: 1rem;">
+        <h3>Interactive Dialogue (Easy Version)</h3>
+        <p class="instruction" style="margin-bottom: 20px;">
+            <i class="fas fa-headphones-alt"></i> Listen to the sentence (🔊), record your voice (🎤), and check your recording (▶).
+        </p>
+        <div class="quiz-item" style="background: #fff; padding: 25px; border-radius: 15px; border: 1px solid #ddd; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <div id="dialogue-container" style="display: flex; flex-direction: column; gap: 12px; font-size: 1.05rem;"></div>
+        </div>
+    </article>
+</section>
+<section id="section3">
+            <h2>Section 3: Writing Practice</h2>
+            <div id="final-quiz-area" style="margin-top: 40px; border-top: 2px solid var(--secondary); padding-top: 25px;">
+                <div class="quiz-item" style="background: #fcfcfc; padding: 20px; border-radius: 10px;">
+    <p style="margin-bottom: 15px;">
+        <strong style="font-size: 1.1rem; color: #3498db;">Step 1. Grammar & Vocabulary Check:</strong>
+    </p> 
+<div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+    <h3 style="text-align: center; color: #2c3e50; margin-bottom: 2rem; border-bottom: 3px double #3498db; padding-bottom: 10px; display: block; width: fit-content; margin-left: auto; margin-right: auto;">
+        <i class="fas fa-book-open" style="margin-right: 10px;"></i>Grammar Mastery
+    </h3>
+
+<h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-top: 0;">
+1. Articles (a, an and the)</h3>
+<div style="background-color: #fff; padding: 15px; border-radius: 10px; border: 1px dashed #bdc3c7; margin-bottom: 15px;">
+<p style="margin: 5px 0;"><strong>• a / an</strong>: Used for <strong>singular, countable nouns</strong> when mentioned for the first time or not specific.</p>
+<p style="margin: 5px 0;"><strong>• the</strong>: Used for <strong>specific things</strong>, something already mentioned, or unique things (like "the sun").</p>
+</div>
+<ul style="list-style-type: none; padding-left: 10px;">
+<li style="margin-bottom: 15px;">
+<strong style="color: #e67e22;">• Example:</strong> "A <span style="color: #e67e22; font-weight: bold;">lorry</span> crashed on the road, leaving <span style="color: #e67e22; font-weight: bold;">a</span> big mess."
+
+<i style="color: #7f8c8d;">(Section 0 - Traffic accident news)</i>
+</li>
+<li style="margin-bottom: 15px;">
+<strong style="color: #16a085;">• Example:</strong> "Take the second road and find the stop opposite <span style="color: #16a085; font-weight: bold;">the town hall</span>."
+
+<i style="color: #7f8c8d;">(Section 1 - Specific directions)</i>
+</li>
+</ul>
+
+<h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-top: 25px;">
+2. Much & Too Much (Uncountable Nouns)</h3>
+<div style="background-color: #fff; padding: 15px; border-radius: 10px; border: 1px dashed #bdc3c7; margin-bottom: 15px;">
+<p style="margin: 5px 0;"><strong>• much</strong>: Used in <strong>negative sentences or questions</strong> to talk about a large amount of something you can't count.</p>
+<p style="margin: 5px 0;"><strong>• too much</strong>: Used to say there is <strong>more than enough</strong> (often a negative meaning).</p>
+</div>
+<ul style="list-style-type: none; padding-left: 10px;">
+<li style="margin-bottom: 15px;">
+<strong style="color: #2980b9;">• Example:</strong> "There isn't <span style="color: #2980b9; font-weight: bold;">much space</span> for cars to pass."
+
+<i style="color: #7f8c8d;">(Section 0 - Road condition)</i>
+</li>
+<li style="margin-bottom: 15px;">
+<strong style="color: #2980b9;">• Example:</strong> "I feel <span style="color: #2980b9; font-weight: bold;">too much frustration</span> with this journey!"
+
+<i style="color: #7f8c8d;">(Section 2 - Alex's complaint)</i>
+</li>
+</ul>
+
+<h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-top: 25px;">
+3. Some & A bit of (Uncountable Nouns)</h3>
+<div style="background-color: #fff; padding: 15px; border-radius: 10px; border: 1px dashed #bdc3c7; margin-bottom: 15px;">
+<p style="margin: 5px 0;"><strong>• some</strong>: Used in <strong>positive sentences</strong> to talk about an unspecified amount.</p>
+<p style="margin: 5px 0;"><strong>• a bit of / a little</strong>: Used for a <strong>small amount</strong> of something uncountable.</p>
+</div>
+<ul style="list-style-type: none; padding-left: 10px;">
+<li style="margin-bottom: 15px;">
+<strong style="color: #d35400;">• Example:</strong> "Passengers can find <span style="color: #d35400; font-weight: bold;">some information</span> on the website."
+
+<i style="color: #7f8c8d;">(Section 1 - Advice for flight delays)</i>
+</li>
+<li style="margin-bottom: 15px;">
+<strong style="color: #d35400;">• Example:</strong> "The man gave them <span style="color: #d35400; font-weight: bold;">a bit of advice</span> about the way."
+<i style="color: #7f8c8d;">(Section 0 - Asking for directions)</i>
+</li>
+</ul>
+<hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
+<p style="margin-top: 20px;"><strong>Context from our Reading & Listening:</strong></p>
+<ul style="padding-left: 20px; line-height: 1.8;">
+    <li>"A <strong><span style="color: #d35400; font-weight: bold;">lorry</span></strong> crashed on the A516, leaving <strong><span style="color: #d35400; font-weight: bold;">a</span></strong> big mess."</li>
+    <li>"There is <strong><span style="color: #d35400; font-weight: bold;">little hope</span></strong> of <strong><span style="color: #d35400; font-weight: bold;">a</span></strong> quick deal."</li>
+    <li>"Take the second road and find the stop opposite <strong><span style="color: #d35400; font-weight: bold;">the town hall</span></strong>."</li>
+    <li>"I feel so <strong><span style="color: #d35400; font-weight: bold;">much frustration</span></strong> with this journey!"</li>
+    <li>"Passengers can find <strong><span style="color: #d35400; font-weight: bold;">some information</span></strong> on the website."</li>
+</ul>
+
+</div>
+<div class="quiz-item" style="background: #fff; padding: 25px; border-radius: 15px; border: 1px solid #ddd; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+<div id="vocabulary-mastery-section">
+<h3 style="text-align: center; color: #2c3e50; margin-bottom: 2rem; border-bottom: 3px double #3498db; padding-bottom: 10px; display: block; width: fit-content; margin-left: auto; margin-right: auto; font-size: 1.6rem;">
+        <i class="fas fa-spell-check" style="margin-right: 10px;"></i>Vocabulary Check
+    </h3>
+
+<div style="background: #fff5f5; border: 1px solid #fed7d7; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #c53030; margin: 0; border-left: 4px solid #f56565; padding-left: 10px;">Group 1: Travel Chaos</h4>
+<span style="font-size: 0.85rem; background: #f56565; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: lorry, ongoing, diversion, chaos, strike
+</span>
+</div>
+
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+1. A large, heavy vehicle for moving goods is a <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......">.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: lorry)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+2. The protest is still <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......">; it hasn't finished yet.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: ongoing)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+3. The road is closed, so drivers must follow a <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......">.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: diversion)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+4. The airport was in complete <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> after the power cut.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: chaos)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+5. Train drivers are on <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> for higher pay.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: strike)</span>
+</div>
+</div>
+
+<div style="background: #fffaf0; border: 1px solid #feebc8; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #c05621; margin: 0; border-left: 4px solid #ed8936; padding-left: 10px;">Group 2: Flight Issues</h4>
+<span style="font-size: 0.85rem; background: #ed8936; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: delayed, cancelled, controllers, consult, airspace
+</span>
+</div>
+
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+6. Our flight was <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> by two hours.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: delayed)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+7. If your flight is <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......">, you get a refund.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: cancelled)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+8. Air traffic <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> guide planes safely.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: controllers)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+9. You should <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> the website for updates.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: consult)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+10. Much of the French <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> is currently closed.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: airspace)</span>
+</div>
+</div>
+
+<div style="background: #f0fff4; border: 1px solid #c6f6d5; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #276749; margin: 0; border-left: 4px solid #48bb78; padding-left: 10px;">Group 3: Directions</h4>
+<span style="font-size: 0.85rem; background: #48bb78; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: crossing, monument, stranger, opposite, mile
+</span>
+</div>
+
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+11. Please use the pedestrian <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> to be safe.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: crossing)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+12. There is a famous war <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> in the park.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: monument)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+13. I was lost, so I asked a <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> for the way.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: stranger)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+14. The bus stop is <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> the town hall.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: opposite)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+15. It is about half a <input type="text" class="mini-input" style="width: 80px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> from here to the station.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: mile)</span>
+</div>
+</div>
+
+<div style="background: #ebf8ff; border: 1px solid #bee3f8; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #2c5282; margin: 0; border-left: 4px solid #4299e1; padding-left: 10px;">Group 4: Perspectives</h4>
+<span style="font-size: 0.85rem; background: #4299e1; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: frustration, perspective, advice, journey, flood
+</span>
+</div>
+
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+16. I felt so much <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> when I lost my keys.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: frustration)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+17. Changing your <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> can help you stay positive.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: perspective)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+18. The guide gave us some useful <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> about the city.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: advice)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+19. It was a very long <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> across the country.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: journey)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+20. The heavy rain caused a <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> in the station.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: flood)</span>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="quiz-item" style="margin-top: 40px; padding: 25px; background: #fcfcfc; border-radius: 10px; border: 1px solid #eee;">
+<p style="margin-bottom: 15px;">
+<strong style="font-size: 1.1rem; color: #3498db;">Step 2. Content Check:</strong>
+</p>
+<p style="line-height: 1.6; color: #34495e; font-weight: 500;">
+The travel report describes several <b>disruptions</b> today. What are the specific problems at the <b>airports</b> and on the <b>motorways</b>, and what <b>advice</b> is given to the passengers?
+</p>
+<div style="margin: 10px 0; font-size: 0.85rem; color: #7f8c8d;">
+<i class="fas fa-lightbulb" style="color: #f1c40f;"></i>
+<b>Key Keywords:</b> ongoing strike, airspace closed, delayed, lorry crashed, diversion, consult the website, check the news
+</div>
+<textarea id="content-check-answer-u8" rows="3"
+style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; font-size: 0.95rem; line-height: 1.6; resize: vertical; display: block; margin-bottom: 10px; box-sizing: border-box;"
+placeholder="Explain the problems at the airport and on the road, and the advice given..."></textarea>
+</div>
+
+<div class="quiz-item" style="background: #fcfcfc; padding: 25px; border-radius: 10px; margin-top: 20px; border: 1px solid #eee;">
+<p style="margin-bottom: 15px;">
+<strong style="font-size: 1.1rem; color: #3498db;">Step 3. Perspective & Attitude:</strong>
+</p>
+<p style="color: #34495e; line-height: 1.6;">
+The story of the farmer and the travellers suggests that your <b>attitude</b> determines your experience in a new place. If you have <b>too much negativity</b>, you will only find trouble.
+
+
+<b>Do you agree that our "perspective" is the most important thing when we travel? Why do some people feel more "frustration" than others during a difficult journey?</b>
+</p>
+<textarea rows="5" style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; box-sizing: border-box;"
+placeholder="I agree/disagree because... I think people feel frustration when..."></textarea>
+</div>
+
+<div style="margin-top: 40px; padding: 30px; background: #fffde7; border-radius: 15px; border: 1px solid #fff176; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+<h3 style="margin-top: 0; color: #f57f17; display: flex; align-items: center;">
+<i class="fas fa-lightbulb" style="margin-right: 12px;"></i> Critical Thinking
+</h3>
+<p style="line-height: 1.7; color: #444;">
+We have explored various ways of <b>getting there</b> and the challenges that come with it, from <b>traffic chaos</b> to <b>getting lost</b>. We also learned that how we react to these problems depends on our <b>internal mindset</b>.
+
+
+<b>Is it better to "plan every detail" of a journey to avoid stress, or is it better to "be flexible" and accept that some chaos is part of the experience?
+
+Support your opinion by using the grammar we learned (Articles and Quantifiers like 'some', 'much', 'a lot of') to describe your ideal way of travelling.</b>
+</p>
+<textarea class="main-textarea"
+placeholder="Discuss planning vs. flexibility. Use articles (a, the) and quantifiers (some, much, a lot of) to support your ideas based on the unit's themes..."
+rows="10"
+style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; font-size: 0.95rem; line-height: 1.6; resize: vertical; display: block; box-sizing: border-box; background: white;">
+</textarea>
+</div>
+
+<div style="margin-top: 30px; padding: 25px; background: #ffffff; border-radius: 15px; border: 2px solid #3498db; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="margin: 0; color: #2980b9;"><i class="fas fa-robot"></i> AI Solution</h3>
+        <span style="background: #3498db; color: white; padding: 5px 15px; border-radius: 50px; font-weight: bold; font-size: 1.1rem;">
+            Overall Score: <input type="text" class="mini-input" style="width: 50px !important; color: white; background: transparent; border: 1px solid rgba(255,255,255,0.5); text-align: center;" value="9.2"> / 10
+        </span>
+    </div>
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.95rem;">
+        <thead>
+            <tr style="background: #ebf5fb; text-align: left;">
+                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Evaluation Criteria</th>
+                <th style="padding: 12px; border-bottom: 2px solid #3498db; text-align: center;">Score</th>
+                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Detailed Feedback</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Content</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="10"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Deep reflection on career stages from 20s to 50s."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Logic</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="9.5"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Strong comparison between 'meaning' and 'success'."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Grammar</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="8"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Check comparative forms (e.g., more important than)."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Vocabulary</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="9"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Great use of 'exhausted', 'exploiting', and 'fulfillment'."></td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="background: #f4f7f6; padding: 15px; border-radius: 10px; border-left: 5px solid #27ae60;">
+        <p style="margin: 0 0 10px 0; font-weight: bold; color: #27ae60;"><i class="fas fa-check-circle"></i> Recommended Revision</p>
+        <textarea style="width: 100%; background: transparent; border: 1px dashed #27ae60; border-radius: 5px; padding: 10px; font-style: italic;" rows="8">"In my experience, I thought gaining experience was more important than anything else in my twenties. My companies might have been exploiting me with boring tasks, but I worked hard and struggled through it. In my thirties, I chased high salaries, but I still worked over ten hours a day. Now in my late forties, I was so exhausted that I retired after 30 years of practice. I currently work as a security officer for two hours a day and I am happy because there is no pressure. To me, a 'meaningful' job is more important than a 'successful' one, and that meaning depends on my current physical and mental well-being."</textarea>
+    </div>
+</div>
+            <button class="save-btn" style="margin-top: 20px;" onclick="saveProgress()">Save My Work</button>
+        </section>
+    </div>
+    <script>
+        // --- 데이터 정의 ---
+        const dialogueData = [
+    { name: "Alex", color: "#3498db", bg: "#ebf5fb", text: "Is the flight to Paris delayed?", char: "customer" },
+    { name: "Bella", color: "#f39c12", bg: "#fdfaf0", text: "Yes, because of the <b>ongoing</b> strike.", char: "assistant" },
+    { name: "Alex", color: "#3498db", bg: "#ebf5fb", text: "That is terrible news. What should I do?", char: "customer" },
+    { name: "Bella", color: "#f39c12", bg: "#fdfaf0", text: "Please <b>consult</b> our website for more information.", char: "assistant" },
+    { name: "Alex", color: "#3498db", bg: "#ebf5fb", text: "Fine. Why is the traffic moving so slowly?", char: "customer" },
+    { name: "Bella", color: "#f39c12", bg: "#fdfaf0", text: "A <b>lorry</b> crashed and there is a <b>diversion</b>.", char: "assistant" },
+    { name: "Alex", color: "#3498db", bg: "#ebf5fb", text: "I feel so much <b>frustration</b> with this journey!", char: "customer" },
+    { name: "Bella", color: "#f39c12", bg: "#fdfaf0", text: "Try to have a better <b>perspective</b>, Alex.", char: "assistant" },
+    { name: "Alex", color: "#3498db", bg: "#ebf5fb", text: "Okay. How do I get to the museum?", char: "customer" },
+    { name: "Bella", color: "#f39c12", bg: "#fdfaf0", text: "Go over the <b>crossing</b> and turn left.", char: "assistant" }
+        ];
+const scriptData1_1_D1 = [
+    { start: 0, speaker: "Narrator", text: "8.3" },
+    { start: 2, speaker: "M", text: "In a moment we'll be with Ellen McArthur, interviewing her about her latest adventure - sailing round the globe on her own." },
+    { start: 10, speaker: "M", text: "So if you have any questions for her, ring 9873-7373 or email us at may@bbd.net." },
+    { start: 17, speaker: "M", text: "But first, the travel news from Lisa Verity." },
+    { start: 21, speaker: "L", text: "Thanks Mark. Not much good news, I'm afraid." },
+    { start: 24, speaker: "L", text: "Getting anywhere today is going to feel a bit like sailing round the world for many people. Terrible problems in a lot of places at the moment." },
+    { start: 32, speaker: "L", text: "Starting with the airports. The air traffic controllers' strike in France is continuing to cause complete chaos." },
+    { start: 40, speaker: "L", text: "Many flights are being delayed and quite a few cancelled because only a few planes can fly over France." },
+    { start: 47, speaker: "L", text: "Others have to be diverted to avoid French air space." },
+    { start: 51, speaker: "L", text: "Passengers who are flying at any time in the next few days are asked to ring their airline or consult their airline's website." },
+    { start: 60, speaker: "L", text: "A lorry has crashed on the A516 entering Milton Keynes and lost its load of watermelons." },
+    { start: 67, speaker: "L", text: "Lanes in both directions are shut at the moment while police try to clear up the mess - a big mess I would imagine too! Avoid the area, if you can." },
+    { start: 77, speaker: "L", text: "The M6 motorway between junctions 5 and 6 is completely closed for repairs." },
+    { start: 83, speaker: "L", text: "A diversion is in operation, but expect delays all day there. Traffic moving very slowly, so best to take other routes." },
+    { start: 91, speaker: "L", text: "Large sections of the Northern Line in London are closed today because of continuing repair work to renew the underground." },
+    { start: 100, speaker: "L", text: "A replacement bus service is in operation. And East Ham station is closed because of a flood. A burst water pipe there." },
+    { start: 109, speaker: "L", text: "Better news elsewhere. The rail service between London and Birmingham is now running normally after a fallen tree was removed from the line." },
+    { start: 119, speaker: "L", text: "And there aren't any more problems on the A6 now that the traffic lights are working again at the crossroads with the B761. The traffic's moving freely there." },
+    { start: 130, speaker: "L", text: "Finally, two events tonight to tell you about." },
+    { start: 133, speaker: "L", text: "Just to remind those travelling to Wembley for the big concert there - there's no parking in or around the stadium." },
+    { start: 141, speaker: "L", text: "Police will be operating in the area to remove cars, so go on foot or take public transport." },
+    { start: 147, speaker: "L", text: "And lastly in central London, a demonstration by cyclists is likely to cause some traffic problems from 5 o'clock, so avoid driving or leave work early." },
+    { start: 157, speaker: "L", text: "That's all from me - back to Mark." },
+    { start: 160, speaker: "M", text: "That's pretty awful for those going on holiday. Any idea when the air traffic controllers might end their strike?" },
+    { start: 167, speaker: "L", text: "Well, negotiations are continuing, but there's little hope of a deal yet. We'll give you more news when we have it." },
+    { start: 174, speaker: "M", text: "OK, thanks. Well, strikes were probably one thing she didn't have to deal with, but she had plenty of bad weather, storms, ten-metre high waves and more." },
+    { start: 184, speaker: "M", text: "Ellen McArthur, it doesn't sound like much fun! Why do you do it?" }
+];
+
+const scriptData1_2_P1 = [
+    { start: 0, speaker: "Narrator", text: "Conversation one." },
+    { start: 2, speaker: "A", text: "Listen, we're obviously lost. - ask this guy." },
+    { start: 5, speaker: "B", text: "OK, OK. ...Sorry. Do you speak English?" },
+    { start: 8, speaker: "C", text: "Sure." },
+    { start: 9, speaker: "B", text: "Oh, great. Do you know the way to the museum from here?" },
+    { start: 13, speaker: "C", text: "Yes, but it is far. It's better to get a bus." },
+    { start: 17, speaker: "B", text: "OK. So how do we get to the stop?" },
+    { start: 20, speaker: "C", text: "Down this road. Take the second road on the right then cross, turn left and then left and it's directly opposite the town hall." },
+    { start: 30, speaker: "B", text: "OK, great." },
+    { start: 31, speaker: "C", text: "No problem." },
+    { start: 33, speaker: "B", text: "So did he say second right or second left?" },
+    { start: 36, speaker: "A", text: "I don't know I wasn't really listening I thought you were! What bus did he say we should catch?" },
+    { start: 42, speaker: "B", text: "No idea! Listen, it's down here somewhere anyway." }
+];
+const scriptData1_2_P2 = [
+    { start: 0, speaker: "Narrator", text: "Conversation two." },
+    { start: 2, speaker: "B", text: "It's your turn. Ask that old lady." },
+    { start: 5, speaker: "A", text: "Excuse me. Is this the right bus stop for the museum?" },
+    { start: 9, speaker: "D", text: "Eh?" },
+    { start: 10, speaker: "A", text: "The bus? Brmm ... To the museum?" },
+    { start: 14, speaker: "D", text: "Eh?" },
+    { start: 15, speaker: "A", text: "To the museum?" },
+    { start: 17, speaker: "D", text: "Eh?" },
+    { start: 18, speaker: "E", text: "You want the number 67 bus." },
+    { start: 21, speaker: "D", text: "Oh thanks." },
+    { start: 23, speaker: "E", text: "You have to go over the road. This stop, it goes the wrong way. Go over the crossing. It's after the traffic lights." },
+    { start: 31, speaker: "A", text: "I see it. Thanks." },
+    { start: 33, speaker: "E", text: "They come often." },
+    { start: 35, speaker: "A", text: "Thanks." }
+];
+const scriptData1_2_P3 = [
+    { start: 0, speaker: "Narrator", text: "Conversation three." },
+    { start: 2, speaker: "A", text: "Excuse me, sorry. Do you speak English?" },
+    { start: 5, speaker: "F", text: "Sure I do. How can I help?" },
+    { start: 8, speaker: "A", text: "Do you know where the museum is? Is it near here?" },
+    { start: 12, speaker: "F", text: "Yes, quite near, but you got off at the wrong stop, really." },
+    { start: 16, speaker: "F", text: "Go down this road until you come to a church. Then turn left. It's quite a big road." },
+    { start: 22, speaker: "F", text: "You'll go past a monument and a football ground. Just keep going. It's maybe half a mile. It's on the right." },
+    { start: 30, speaker: "F", text: "You can't miss it." },
+    { start: 32, speaker: "B", text: "I told you that was it! Why do you never listen to me?" }
+];
+        // --- 기능 함수 ---
+        let mediaRecorder;
+        let audioChunks = {};
+        function initDialogue() {
+            const container = document.getElementById('dialogue-container');
+            dialogueData.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.style = `padding: 12px 15px; background: ${item.bg}; border-radius: 12px; border-left: 6px solid ${item.color}; display: flex; align-items: center; justify-content: space-between; gap: 10px;`;
+                div.innerHTML = `
+                    <div style="flex: 1;"><strong style="color: ${item.color};">${item.name}:</strong> <span>${item.text}</span></div>
+                    <div style="display: flex; gap: 8px; flex-shrink: 0;">
+                        <button onclick="speakText(\`${item.text.replace(/<\/?[^>]+(>|$)/g, "")}\`, '${item.char}')" style="background: ${item.color}; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">🔊</button>
+                        <button id="rec-${index}" onclick="toggleRecord(${index})" style="background: #e74c3c; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">🎤</button>
+                        <button id="play-${index}" onclick="playMyVoice(${index})" style="background: #2ecc71; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: none;">▶</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+        function speakText(text, character) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.pitch = (character === 'maya') ? 1.5 : 1.1;
+            window.speechSynthesis.speak(utterance);
+        }
+async function toggleRecord(index) {
+    const btn = document.getElementById(`rec-${index}`);
+    if (mediaRecorder && mediaRecorder.state === "recording") {
+        mediaRecorder.stop();
+        btn.style.backgroundColor = "#e74c3c"; btn.innerText = "🎤";
+    } else {
+        const stream = await navigator.mediaDevices.getUserMedia({ 
+            audio: {
+                echoCancellation: true,
+                noiseSuppression: true,
+                autoGainControl: false, // 웅웅거림 방지를 위해 끔
+                channelCount: 1
+            } 
+        });
+        // --- 오디오 증폭 로직 시작 ---
+        const audioContext = new AudioContext();
+        const source = audioContext.createMediaStreamSource(stream);
+        const gainNode = audioContext.createGain();
+        
+        gainNode.gain.value = 2.0; // [조정 포인트] 소리를 3배 키웁니다 (1.0~5.0 사이 조절 가능)
+        
+        const destination = audioContext.createMediaStreamDestination();
+        source.connect(gainNode);
+        gainNode.connect(destination);
+        // --- 오디오 증폭 로직 끝 ---
+        // 증폭된 스트림으로 녹음 진행
+        mediaRecorder = new MediaRecorder(destination.stream);
+        const chunks = [];
+        mediaRecorder.ondataavailable = e => chunks.push(e.data);
+        mediaRecorder.onstop = () => {
+            const blob = new Blob(chunks, { type: 'audio/webm' });
+            audioChunks[index] = URL.createObjectURL(blob);
+            document.getElementById(`play-${index}`).style.display = "flex";
+            
+            stream.getTracks().forEach(track => track.stop());
+            audioContext.close();
+        };
+        mediaRecorder.start();
+        btn.style.backgroundColor = "#000"; btn.innerText = "⏹";
+    }
+}        function playMyVoice(index) {
+            if (audioChunks[index]) new Audio(audioChunks[index]).play();
+        }
+        function setupAudioSync(audioId, containerId, data, isDialogue = false) {
+    const audio = document.getElementById(audioId);
+    const container = document.getElementById(containerId);
+    if(!audio || !container) return;
+    
+    container.innerHTML = '';
+    data.forEach((line, index) => {
+        const div = document.createElement('div');
+        div.className = 'script-line';
+        div.id = `${containerId}-line-${index}`;
+        div.innerHTML = isDialogue ? `<strong>${line.speaker}:</strong> ${line.text}` : line.text;
+        container.appendChild(div);
+    });
+    // 오디오 재생 시 스크립트 창 보이기
+    audio.addEventListener('play', () => { 
+        container.style.display = 'block'; 
+    });
+    // 오디오 진행 시간에 맞춰 스크립트 하이라이트 및 스크롤
+    audio.addEventListener('timeupdate', () => {
+        let activeIdx = -1;
+        for (let i = 0; i < data.length; i++) {
+            if (audio.currentTime >= data[i].start) activeIdx = i; else break;
+        }
+        container.querySelectorAll('.script-line').forEach(l => l.classList.remove('active'));
+        if (activeIdx !== -1) {
+            const currentLine = document.getElementById(`${containerId}-line-${activeIdx}`);
+            if (currentLine) {
+                currentLine.classList.add('active');
+                container.scrollTo({ 
+                    top: currentLine.offsetTop - container.offsetTop - 80, 
+                    behavior: 'smooth' 
+                });
+            }
+        }
+    });
+    // 추가된 부분: 음성 재생이 끝나면 스크립트 창 숨기기
+    audio.addEventListener('ended', () => { 
+        container.style.display = 'none'; 
+    });
+}        function centralizeScroll(targetId) {
+            const element = document.getElementById(targetId);
+            if (!element) return;
+            const elementRect = element.getBoundingClientRect();
+            const middle = (elementRect.top + window.pageYOffset) - (window.innerHeight / 2) + (elementRect.height / 2);
+            window.scrollTo({ top: middle, behavior: 'smooth' });
+            if (targetId.startsWith('vocab')) {
+                document.querySelectorAll('.card').forEach(c => c.classList.remove('active-highlight'));
+                element.classList.add('active-highlight');
+                setTimeout(() => element.classList.remove('active-highlight'), 1500);
+            }
+        }
+        function toggleAnswer(btn) {
+            const answerSpan = btn.nextElementSibling;
+            if (answerSpan.style.display === "none") {
+                answerSpan.style.display = "inline"; btn.innerText = "Hide";
+            } else {
+                answerSpan.style.display = "none"; btn.innerText = "Check";
+            }
+        }
+        function saveProgress() {
+            const allInputs = document.querySelectorAll('input[type="text"], textarea');
+            allInputs.forEach((input, index) => {
+                localStorage.setItem(`UNIT08_all_data_${index}`, input.value);
+            });
+            alert('Your progress has been saved! ✅');
+        }
+        // --- 초기화 로직 ---
+        window.addEventListener('DOMContentLoaded', () => {
+            initDialogue();
+            setupAudioSync('main-player-1', 'script-container1', scriptData1_1_D1, true);
+            setupAudioSync('player-1', 'script-1', scriptData1_2_P1, true);
+            setupAudioSync('player-2', 'script-2', scriptData1_2_P2, true);
+            setupAudioSync('player-3', 'script-3', scriptData1_2_P3, true);
+            // ... 나머지 setupAudioSync 호출
+            // 저장된 데이터 불러오기
+            const allInputs = document.querySelectorAll('input[type="text"], textarea');
+            allInputs.forEach((input, index) => {
+                const savedValue = localStorage.getItem(`UNIT08_all_data_${index}`);
+                if (savedValue) input.value = savedValue;
+            });
+        });
+    </script>
+<script>
+function speak(text) {
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';
+    
+    const voices = window.speechSynthesis.getVoices();
+    // 여성 목소리 우선 선택
+    const femaleVoice = voices.find(v => v.name.includes('Female') || v.name.includes('Google US English') || v.name.includes('Samantha'));
+    
+    if (femaleVoice) {
+        utterance.voice = femaleVoice;
+    }
+    
+    utterance.pitch = 1.1; 
+    utterance.rate = 1.0; // 현대식 표준 영어 빠르기
+    window.speechSynthesis.speak(utterance);
+}window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.getVoices(); };
+</script>
+</body>
+</html>

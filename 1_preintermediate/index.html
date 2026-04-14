@@ -1,0 +1,306 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Learning Dashboard</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --bg-color: #f4f7f6;
+            --card-bg: #ffffff;
+            --text-color: #333;
+        }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: var(--bg-color);
+            color: var(--text-color);
+            margin: 0;
+            padding: 0;
+        }
+        header {
+            background-color: var(--primary-color);
+            color: white;
+            padding: 2rem 10%;
+            text-align: center;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 2rem auto;
+            padding: 0 20px;
+        }
+
+        .welcome-section {
+            background: var(--card-bg);
+            padding: 2rem;
+            border-radius: 12px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+            margin-bottom: 2rem;
+        }
+        .progress-label {
+            margin-top: 1rem;
+            font-weight: bold;
+            color: var(--primary-color);
+        }
+
+        .progress-bar {
+            width: 100%; /* Unit 16 완료에 따른 진행률 업데이트 */
+            height: 100%;
+            background-color: #27ae60;
+            border-radius: 10px;
+            transition: width 0.5s ease-in-out;
+        }
+        .unit-list {
+            display: grid;
+            gap: 1.5rem;
+        }
+        .unit-card {
+            background: var(--card-bg);
+            padding: 1.5rem;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            text-decoration: none;
+            color: inherit;
+            border-left: 6px solid #bdc3c7;
+            transition: transform 0.2s;
+        }
+        .unit-card:hover {
+            transform: translateX(5px);
+        }
+        .unit-info h3 {
+            margin: 0 0 0.5rem 0;
+            color: var(--primary-color);
+        }
+        .unit-info p {
+            margin: 0;
+            font-size: 0.9rem;
+            color: #666;
+        }
+        .status-badge {
+            padding: 0.5rem 1rem;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: bold;
+        }
+        .status-completed {
+            background-color: #d4edda;
+            color: #155724;
+        }
+        .status-in-progress {
+            background-color: #fff3cd;
+            color: #856404;
+        }
+        footer {
+            text-align: center;
+            padding: 2rem;
+            color: #7f8c8d;
+            font-size: 0.8rem;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>My English Path</h1>
+        <p>Interactive learning for intermediate fluency</p>
+    </header>
+    <div class="container">
+
+        <section class="welcome-section">
+<div style="text-align: center; margin: 2rem 0;">
+    <h2>
+        <i class="fas fa-user-graduate" style="margin-right: 15px; color: #3498db;"></i>Welcome Back!
+    </h2>
+</div>
+        </section>
+
+        <h2>Course Modules</h2>
+        <div class="unit-list">
+
+<a id="unit01" href="unit_01.html" class="unit-card" style="border-left-color: #E74C3C; background-color: #FDEDEC;"> 
+        <div class="unit-info">
+            <h3>UNIT 01: Family and Friends</h3>
+            <p>Focus: The present simple, Question Formation, Similarities and contrasts</p>
+        </div>
+        <span class="status-badge status-completed">Completed</span>
+    </a>
+
+    <a id="unit02" href="unit_02.html" class="unit-card" style="border-left-color: #F39C12; background-color: #FEF5E7;"> 
+        <div class="unit-info">
+            <h3>UNIT 02: SHOPS</h3>
+            <p>Focus: The past simple, Comparatives, Passives</p>
+        </div>
+        <span class="status-badge status-completed">Completed</span>
+    </a>
+
+    <a id="unit03" href="unit_03.html" class="unit-card" style="border-left-color: #F1C40F; background-color: #FEF9E7;"> 
+        <div class="unit-info">
+            <h3>UNIT 03: EAT</h3>
+            <p>Focus: The present perfect simple, too / not... enough, Global Breakfasts</p>
+        </div>
+        <span class="status-badge status-completed">Completed</span>
+    </a>
+
+    <a id="unit04" href="unit_04.html" class="unit-card" style="border-left-color: #2ECC71; background-color: #EAFAF1;"> 
+        <div class="unit-info">
+            <h3>UNIT 04: JOBS</h3>
+            <p>Focus: Present continuous and simple, Past continuous and past simple</p>
+        </div>
+        <span class="status-badge status-completed">Completed</span>
+    </a>
+
+    <a id="unit_04-review_01" href="unit_04-review_01.html" class="unit-card" style="border-left-color: #7F8C8D; background-color: #F4F6F6;">
+        <div class="unit-info">
+            <h3 style="color: #34495E;">Review Quiz A (Units 01-04)</h3>
+            <p>Family, Shops, Eat, and Jobs vocabulary check</p>
+        </div>
+        <span class="status-badge status-completed">Completed</span>
+    </a>
+
+    <a id="unit_05" href="unit_05.html" class="unit-card" style="border-left-color: #3498DB; background-color: #EBF5FB;"> 
+        <div class="unit-info">
+            <h3>UNIT 05: RELAX</h3>
+            <p>Focus: Future Plans (be going to/will), might, and Superlatives</p>
+        </div>
+        <span class="status-badge status-completed">Completed</span>
+    </a>
+
+    <a id="unit_06" href="unit_06.html" class="unit-card" style="border-left-color: #9B59B6; background-color: #F5EEF8;"> 
+        <div class="unit-info">
+            <h3>UNIT 06: HOME</h3>
+            <p>Focus: have to, don't have to, can, wil / won't</p>
+        </div>
+        <span class="status-badge status-completed">Completed</span>
+    </a>
+
+    <a id="unit_07" href="unit_07.html" class="unit-card" style="border-left-color: #1ABC9C; background-color: #E8F8F5;"> 
+        <div class="unit-info">
+            <h3>UNIT 07: MIND AND BODY</h3>
+            <p>Focus: Giving advice (should, ought to, why don't you), and Imperative</p>
+        </div>
+        <span class="status-badge status-completed">Completed</span>
+    </a>
+
+    <a id="unit_08" href="unit_08.html" class="unit-card" style="border-left-color: #E74C3C; background-color: #FDEDEC;"> 
+        <div class="unit-info">
+            <h3>UNIT 08: GETTING THERE</h3>
+            <p>Focus: Articles (a, an and the), and Quantifiers with uncountable nouns</p>
+        </div>
+        <span class="status-badge status-completed">Completed</span>
+    </a>
+
+    <a id="unit_08-review_02" href="unit_08-review_02.html" class="unit-card" style="border-left-color: #7F8C8D; background-color: #F4F6F6;">
+        <div class="unit-info">
+            <h3 style="color: #34495E;">Review Quiz B (Units 05-08)</h3>
+            <p>Relax, Home, Mind/Body, and Travel vocabulary check</p>
+        </div>
+        <span class="status-badge status-completed">Completed</span>
+    </a>
+
+    <a id="unit_09" href="unit_09.html" class="unit-card" style="border-left-color: #F39C12; background-color: #FEF5E7;"> 
+        <div class="unit-info">
+            <h3>UNIT 09: SCIENCE AND NATURE</h3>
+            <p>Focus: The past perfect simple</p>
+        </div>
+        <span class="status-badge status-completed">Completed</span>
+    </a>
+
+    <a id="unit_10" href="unit_10.html" class="unit-card" style="border-left-color: #F1C40F; background-color: #FEF9E7;"> 
+        <div class="unit-info">
+            <h3>UNIT 10: SCHOOL AND UNIVERSITY</h3>
+            <p>Focus: First conditionals - had to / could, Education Systems</p>
+        </div>
+        <span class="status-badge status-completed">Completed</span>
+    </a>
+
+    <a id="unit_11" href="unit_11.html" class="unit-card" style="border-left-color: #2ECC71; background-color: #EAFAF1;"> 
+        <div class="unit-info">
+            <h3>UNIT 11: PLACES TO STAY</h3>
+            <p>Focus: Second conditional - used to, Accommodation</p>
+        </div>
+        <span class="status-badge status-completed">Completed</span>
+    </a>
+
+    <a id="unit_12" href="unit_12.html" class="unit-card" style="border-left-color: #3498DB; background-color: #EBF5FB;"> 
+        <div class="unit-info">
+            <h3>UNIT 12: PHONE</h3>
+            <p>Focus: just, already, yet and still, Digital Communication</p>
+        </div>
+        <span class="status-badge status-completed">Completed</span>
+    </a>
+
+    <a id="unit_12-review_03" href="unit_12-review_03.html" class="unit-card" style="border-left-color: #7F8C8D; background-color: #F4F6F6;">
+        <div class="unit-info">
+            <h3 style="color: #34495E;">Review Quiz C (Units 09-12)</h3>
+            <p>Science, School, Places, and Phone vocabulary check</p>
+        </div>
+        <span class="status-badge status-completed">Completed</span>
+    </a>
+
+    <a id="unit_13" href="unit_13.html" class="unit-card" style="border-left-color: #9B59B6; background-color: #F5EEF8;"> 
+        <div class="unit-info">
+            <h3>UNIT 13: CULTURE</h3>
+            <p>Focus: -ed/-ing adjectives, The present perfect continuous</p>
+        </div>
+        <span class="status-badge status-completed">Completed</span>
+    </a>
+
+    <a id="unit_14" href="unit_14.html" class="unit-card" style="border-left-color: #1ABC9C; background-color: #E8F8F5;"> 
+        <div class="unit-info">
+            <h3>UNIT 14: THINGS</h3>
+            <p>Focus: Relative clauses - must / mustn't, and Describing Objects</p>
+        </div>
+        <span class="status-badge status-completed">Completed</span>
+    </a>
+
+    <a id="unit_15" href="unit_15.html" class="unit-card" style="border-left-color: #E74C3C; background-color: #FDEDEC;"> 
+        <div class="unit-info">
+            <h3>UNIT 15: MONEY</h3>
+            <p>Focus: Time phrases and tense, Present tenses in future time clauses</p>
+        </div>
+        <span class="status-badge status-completed">Completed</span>
+    </a>
+
+    <a id="unit_16" href="unit_16.html" class="unit-card" style="border-left-color: #F39C12; background-color: #FEF5E7;"> 
+        <div class="unit-info">
+            <h3>UNIT 16: DATES AND HISTORY</h3>
+            <p>Focus: Prepositions and nouns / -ing form, Verb patterns(-ing / to -infinitives)</p>
+        </div>
+        <span class="status-badge status-completed">Completed</span>
+    </a>
+
+    <a id="unit_16-review_04" href="unit_16-review_04.html" class="unit-card" style="border-left-color: #7F8C8D; background-color: #F4F6F6;">
+        <div class="unit-info">
+            <h3 style="color: #34495E;">Review Quiz D (Units 13-16)</h3>
+            <p>Culture, Things, Money, and History vocabulary check</p>
+        </div>
+        <span class="status-badge status-completed">Completed</span>
+    </a>
+
+    <a id="word_test" href="word_test.html" class="unit-card" style="border-left: 8px double #3498DB; background-color: #EBF5FB; margin-top: 20px;">
+        <div class="unit-info">
+            <h3 style="color: #D35400;">WORD TEST</h3>
+            <p>Total Review: Units 01 - 16 / All Word Check</p>
+        </div>
+        <span class="status-badge status-completed">Check</span>
+    </a>
+
+    <a id="final_test" href="final_test.html" class="unit-card" style="border-left: 8px double #F1C40F; background-color: #FEF9E7; margin-top: 20px;">
+        <div class="unit-info">
+            <h3 style="color: #D35400;">🏆 FINAL COMPREHENSIVE TEST</h3>
+            <p>Total Review: Units 01 - 16 / All Grammar & Vocabulary</p>
+        </div>
+        <span class="status-badge status-completed" style="background: #F1C40F; color: #D35400;">Final Challenge</span>
+    </a>
+
+            </div>
+    </div>
+    <footer>
+        &copy; 2026 AI English Tutor - Based on Outcomes Pre-Intermediate Curriculum
+    </footer>
+</body>
+</html>

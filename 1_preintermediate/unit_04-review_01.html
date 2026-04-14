@@ -1,0 +1,406 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Review Quiz A: Units 01-04</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --u1: #E74C3C; --u2: #F39C12; --u3: #F1C40F; --u4: #2ECC71;
+            --bg: #F4F7F6; --card: #ffffff; --text: #2C3E50;
+        }
+        body { font-family: 'Segoe UI', sans-serif; background-color: var(--bg); color: var(--text); line-height: 1.6; margin: 0; padding: 20px; }
+        .container { max-width: 950px; margin: 0 auto; padding-bottom: 100px; }
+        
+        .back-to-dashboard {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: #7f8c8d;
+            color: white;
+            padding: 15px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 1001;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        .back-to-dashboard:hover {
+            transform: scale(1.1);
+            background-color: #3498db;
+        }
+
+        /* Grammar Notes */
+        .grammar-notes { background: white; padding: 30px; border-radius: 15px; margin-bottom: 40px; border-top: 10px solid #34495e; box-shadow: 0 4px 15px rgba(0,0,0,0.1); }
+        .note-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 20px; margin-top: 15px; }
+        .note-item { padding: 15px; border-radius: 10px; background: #f8f9fa; border-left: 4px solid #34495e; font-size: 0.9rem; }
+        .note-item h4 { margin: 0 0 8px 0; color: var(--text); border-bottom: 1px solid #ddd; padding-bottom: 5px; }
+
+        /* Quiz Styles */
+        .quiz-section { background: white; padding: 30px; border-radius: 15px; margin-bottom: 30px; box-shadow: 0 4px 10px rgba(0,0,0,0.05); }
+        .section-title { font-size: 1.3rem; font-weight: bold; margin-bottom: 20px; border-bottom: 2px solid #eee; padding-bottom: 10px; color: #2980b9; }
+        .question-item { margin-bottom: 15px; padding: 12px; border-radius: 8px; background: #fcfcfc; border: 1px solid #eee; }
+        .q-text { font-weight: 500; margin-bottom: 10px; display: block; }
+        
+        select { padding: 8px; border-radius: 5px; border: 1px solid #ccc; font-size: 0.95rem; width: 100%; max-width: 350px; cursor: pointer; }
+        .correct { background-color: #d4edda !important; border-color: #28a745 !important; }
+        .incorrect { background-color: #f8d7da !important; border-color: #dc3545 !important; }
+
+/* Word Bank Style (Requested Example Style) */
+        .word-bank-container { background: #fff5f5; border: 1px solid #fed7d7; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02); }
+        .bank-header { display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px; }
+        .bank-title { color: #c53030; margin: 0; border-left: 4px solid #f56565; padding-left: 10px; font-size: 1.1rem; }
+        .bank-badge { font-size: 0.85rem; background: #f56565; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500; }
+        
+        .q-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 15px; font-size: 1rem; }
+
+/* Select & Feedback */
+        .mini-select { 
+            border: none; border-bottom: 2px solid #feb2b2; background: transparent; 
+            font-weight: bold; color: #c53030; padding: 2px 5px; cursor: pointer; outline: none;
+            font-size: 1rem; appearance: none; text-align: center;
+        }
+	.ans-text { display: none; margin-left: 10px; font-weight: bold; color: #e53e3e; font-size: 0.9rem; }
+
+        /* Reading Passage */
+        .passage-box { background: #f0f4f8; padding: 15px; border-radius: 8px; margin-bottom: 15px; font-size: 0.9rem; border-left: 5px solid #2980b9; line-height: 1.4; }
+
+        /* Result Bar */
+        .result-bar { position: fixed; bottom: 0; left: 0; right: 0; background: #2c3e50; color: white; padding: 20px; text-align: center; box-shadow: 0 -5px 20px rgba(0,0,0,0.2); display: flex; justify-content: center; align-items: center; gap: 40px; z-index: 1000; }
+        .score-display { font-size: 1.4rem; font-weight: bold; }
+        .score-val { color: #2ecc71; font-size: 2rem; }
+        .grade-btn { background: #2ecc71; color: white; border: none; padding: 12px 30px; border-radius: 30px; cursor: pointer; font-weight: bold; font-size: 1.1rem; }
+    </style>
+</head>
+<body>
+
+    <a href="index.html#unit_04-review_01" class="back-to-dashboard">🏠 Back to Dashboard</a>
+
+<div class="container">
+
+
+    <header class="grammar-notes">
+        <h2><i class="fas fa-book-open"></i> Grammar & Vocabulary Notes: Units 01-04</h2>
+        <div class="note-grid">
+            <div class="note-item">
+                <h4>Unit 01: Family & Similarity</h4>
+                <p><b>Present Simple</b> for facts. Use <i>"Both...and"</i> or <i>"In common"</i> to show similarities.</p>
+            </div>
+            <div class="note-item">
+                <h4>Unit 02: Shopping & Past</h4>
+                <p><b>Past Simple</b> for finished actions. <b>Comparatives</b> (better, cheaper) for value.</p>
+            </div>
+            <div class="note-item">
+                <h4>Unit 03: Nutrition & Experience</h4>
+                <p><b>Present Perfect</b> for experiences. <b>Too/Enough</b> to describe quantity/quality.</p>
+            </div>
+            <div class="note-item">
+                <h4>Unit 04: Jobs & Continuous</h4>
+                <p><b>Present/Past Continuous</b> for actions in progress. Work conditions: <i>demanding, flexible</i>.</p>
+            </div>
+        </div>
+    </header>
+
+    <section class="quiz-section">
+        <div class="section-title">1. PREPOSITIONS</div>
+        <div class="question-item">
+            <span class="q-text">1. My twins have a lot _____ common with each other.</span>
+            <select class="q-select" data-ans="in"><option value="">--Select--</option><option value="with">with</option><option value="in">in</option><option value="of">of</option></select>
+        </div>
+        <div class="question-item">
+            <span class="q-text">2. We are sorry, but that item is currently _____ stock.</span>
+            <select class="q-select" data-ans="out"><option value="">--Select--</option><option value="off">off</option><option value="away">away</option><option value="out">out</option></select>
+        </div>
+        <div class="question-item">
+            <span class="q-text">3. Who is in charge _____ the marketing department?</span>
+            <select class="q-select" data-ans="of"><option value="">--Select--</option><option value="for">for</option><option value="to">to</option><option value="of">of</option></select>
+        </div>
+        <div class="question-item">
+            <span class="q-text">4. I usually pay for small items _____ cash.</span>
+            <select class="q-select" data-ans="in"><option value="">--Select--</option><option value="by">by</option><option value="in">in</option><option value="on">on</option></select>
+        </div>
+        <div class="question-item">
+            <span class="q-text">5. He is responsible _____ managing the team's schedule.</span>
+            <select class="q-select" data-ans="for"><option value="">--Select--</option><option value="to">to</option><option value="for">for</option><option value="at">at</option></select>
+        </div>
+    </section>
+
+    <section class="quiz-section">
+        <div class="section-title">2. WORD FAMILY</div>
+        <div class="question-item">
+            <span class="q-text">1. (COMPETE) The market is very _____; many shops are closing.</span>
+            <select class="q-select" data-ans="competitive"><option value="">--Select--</option><option value="competition">competition</option><option value="competitive">competitive</option><option value="competitor">competitor</option></select>
+        </div>
+        <div class="question-item">
+            <span class="q-text">2. (HEALTH) Replacing soda with water is a _____ choice.</span>
+            <select class="q-select" data-ans="healthy"><option value="">--Select--</option><option value="health">health</option><option value="healthy">healthy</option><option value="healthily">healthily</option></select>
+        </div>
+        <div class="question-item">
+            <span class="q-text">3. (RELY) I need a _____ car because I travel long distances.</span>
+            <select class="q-select" data-ans="reliable"><option value="">--Select--</option><option value="reliance">reliance</option><option value="reliable">reliable</option><option value="relying">relying</option></select>
+        </div>
+        <div class="question-item">
+            <span class="q-text">4. (DIFFER) There is a significant _____ between these two brands.</span>
+            <select class="q-select" data-ans="difference"><option value="">--Select--</option><option value="difference">difference</option><option value="different">different</option><option value="differently">differently</option></select>
+        </div>
+        <div class="question-item">
+            <span class="q-text">5. (TRADITION) We usually wear _____ clothes during the festival.</span>
+            <select class="q-select" data-ans="traditional"><option value="">--Select--</option><option value="tradition">tradition</option><option value="traditional">traditional</option><option value="traditionally">traditionally</option></select>
+        </div>
+    </section>
+
+<section class="quiz-section">
+    <div class="section-title">3. CORE WORD BUILDER (Word Bank)</div>
+
+    <div class="word-bank-container">
+        <div class="bank-header">
+            <h4 class="bank-title">Group 1</h4>
+            <span class="bank-badge"><i class="fas fa-spell-check"></i> Word Bank: selection, repetitive, demanding</span>
+        </div>
+        <div class="q-row">
+            1. Factory work can be very 
+            <select class="mini-select q-data" data-ans="repetitive">
+                <option value="">......</option><option value="selection">selection</option><option value="repetitive">repetitive</option><option value="demanding">demanding</option>
+            </select>.
+        </div>
+        <div class="q-row">
+            2. Being a surgeon is a 
+            <select class="mini-select q-data" data-ans="demanding">
+                <option value="">......</option><option value="selection">selection</option><option value="repetitive">repetitive</option><option value="demanding">demanding</option>
+            </select> job.
+        </div>
+        <div class="q-row">
+            3. The shop has a large 
+            <select class="mini-select q-data" data-ans="selection">
+                <option value="">......</option><option value="selection">selection</option><option value="repetitive">repetitive</option><option value="demanding">demanding</option>
+            </select> of tea.
+        </div>
+    </div>
+
+    <div class="word-bank-container">
+        <div class="bank-header">
+            <h4 class="bank-title">Group 2</h4>
+            <span class="bank-badge"><i class="fas fa-spell-check"></i> Word Bank: valuable, nutritious, difference</span>
+        </div>
+        <div class="q-row">
+            1. Eggs are very 
+            <select class="mini-select q-data" data-ans="nutritious">
+                <option value="">......</option><option value="valuable">valuable</option><option value="nutritious">nutritious</option><option value="difference">difference</option>
+            </select> for your health.
+        </div>
+        <div class="q-row">
+            2. This gold watch is very 
+            <select class="mini-select q-data" data-ans="valuable">
+                <option value="">......</option><option value="valuable">valuable</option><option value="nutritious">nutritious</option><option value="difference">difference</option>
+            </select>.
+        </div>
+        <div class="q-row">
+            3. Can you tell the 
+            <select class="mini-select q-data" data-ans="difference">
+                <option value="">......</option><option value="valuable">valuable</option><option value="nutritious">nutritious</option><option value="difference">difference</option>
+            </select> between them?
+        </div>
+    </div>
+
+    <div class="word-bank-container">
+        <div class="bank-header">
+            <h4 class="bank-title">Group 3</h4>
+            <span class="bank-badge"><i class="fas fa-spell-check"></i> Word Bank: flexible, stressful, successful, organized</span>
+        </div>
+        <div class="q-row">
+            1. I have 
+            <select class="mini-select q-data" data-ans="flexible">
+                <option value="">......</option><option value="flexible">flexible</option><option value="stressful">stressful</option><option value="successful">successful</option><option value="organized">organized</option>
+            </select> working hours.
+        </div>
+        <div class="q-row">
+            2. Deadlines can make a job 
+            <select class="mini-select q-data" data-ans="stressful">
+                <option value="">......</option><option value="flexible">flexible</option><option value="stressful">stressful</option><option value="successful">successful</option><option value="organized">organized</option>
+            </select>.
+        </div>
+        <div class="q-row">
+            3. He is a very 
+            <select class="mini-select q-data" data-ans="successful">
+                <option value="">......</option><option value="flexible">flexible</option><option value="stressful">stressful</option><option value="successful">successful</option><option value="organized">organized</option>
+            </select> businessman.
+        </div>
+        <div class="q-row">
+            4. Keep your desk 
+            <select class="mini-select q-data" data-ans="organized">
+                <option value="">......</option><option value="flexible">flexible</option><option value="stressful">stressful</option><option value="successful">successful</option><option value="organized">organized</option>
+            </select> and clean.
+        </div>
+    </div>
+</section>
+
+    <section class="quiz-section">
+        <div class="section-title">4. READING: CHOOSE THE BEST TITLE</div>
+        
+        <div class="passage-box">
+            My sister and I are twins, but we look very different. I have dark curly hair and I'm quite shy, while she has straight blonde hair and loves meeting new people. However, we have a lot in common when it comes to music and our sense of humor.
+        </div>
+        <div class="question-item">
+            <span class="q-text">1. What is the best title for this passage?</span>
+            <select class="q-select" data-ans="Similarities and Differences">
+                <option value="">--Select--</option>
+                <option value="A Busy Family Life">A Busy Family Life</option>
+                <option value="Similarities and Differences">Similarities and Differences</option>
+                <option value="How to Make New Friends">How to Make New Friends</option>
+            </select>
+        </div>
+
+        <div class="passage-box">
+            Last weekend, I went to the new department store downtown. They had a huge selection of clothes, and many items were on sale. I managed to find a high-quality leather jacket for half the original price. It was a real bargain and I'm very satisfied.
+        </div>
+        <div class="question-item">
+            <span class="q-text">2. What is the main idea?</span>
+            <select class="q-select" data-ans="A Successful Shopping Trip">
+                <option value="">--Select--</option>
+                <option value="A Successful Shopping Trip">A Successful Shopping Trip</option>
+                <option value="The History of Fashion">The History of Fashion</option>
+                <option value="Opening a New Business">Opening a New Business</option>
+            </select>
+        </div>
+
+        <div class="passage-box">
+            Eating a balanced diet is essential for staying healthy. You should include plenty of fresh fruit and vegetables in your meals because they are nutritious. It is also important to avoid eating too much sugar or salt, as this can lead to serious health problems later.
+        </div>
+        <div class="question-item">
+            <span class="q-text">3. Choose the most suitable title:</span>
+            <select class="q-select" data-ans="Tips for Healthy Eating">
+                <option value="">--Select--</option>
+                <option value="How to Cook Vegetables">How to Cook Vegetables</option>
+                <option value="Tips for Healthy Eating">Tips for Healthy Eating</option>
+                <option value="The Price of Fresh Food">The Price of Fresh Food</option>
+            </select>
+        </div>
+
+        <div class="passage-box">
+            I am currently working as a freelance graphic designer. My job is quite demanding because I often have to meet tight deadlines, but I love it. The best part is that my hours are very flexible, so I can work from home and spend time with my children.
+        </div>
+        <div class="question-item">
+            <span class="q-text">4. What is the speaker discussing?</span>
+            <select class="q-select" data-ans="Work-Life Balance">
+                <option value="">--Select--</option>
+                <option value="Work-Life Balance">Work-Life Balance</option>
+                <option value="Learning New Design Skills">Learning New Design Skills</option>
+                <option value="Applying for a Office Job">Applying for a Office Job</option>
+            </select>
+        </div>
+
+        <div class="passage-box">
+            Many people today prefer online shopping to visiting physical stores. It is often much easier to compare prices on the internet, and you can shop at any time of the day. Additionally, the items are delivered directly to your house, which saves a lot of time.
+        </div>
+        <div class="question-item">
+            <span class="q-text">5. What is the best title?</span>
+            <select class="q-select" data-ans="The Benefits of Online Shopping">
+                <option value="">--Select--</option>
+                <option value="The Benefits of Online Shopping">The Benefits of Online Shopping</option>
+                <option value="Building a Professional Website">Building a Professional Website</option>
+                <option value="The Dangers of Using Credit Cards">The Dangers of Using Credit Cards</option>
+            </select>
+        </div>
+    </section>
+
+    <section class="quiz-section">
+        <div class="section-title">5. MATCH THE MAIN IDEA</div>
+        <div class="passage-box">"Many cultures still value cousins and aunts living together, forming large social networks."</div>
+        <div class="question-item">
+            <span class="q-text">Q1. Main Idea:</span>
+            <select class="q-select" data-ans="Extended Families"><option value="">--Select--</option><option value="Extended Families">Extended Families</option><option value="Shopping Trends">Shopping Trends</option></select>
+        </div>
+        <div class="passage-box">"Before buying, check multiple websites to find the lowest price for the same item."</div>
+        <div class="question-item">
+            <span class="q-text">Q2. Main Idea:</span>
+            <select class="q-select" data-ans="Price Comparison"><option value="">--Select--</option><option value="Price Comparison">Price Comparison</option><option value="Healthy Eating">Healthy Eating</option></select>
+        </div>
+        <div class="passage-box">"Proteins help build muscle, while carbohydrates are the body's main source of energy."</div>
+        <div class="question-item">
+            <span class="q-text">Q3. Main Idea:</span>
+            <select class="q-select" data-ans="Macronutrients"><option value="">--Select--</option><option value="Macronutrients">Macronutrients</option><option value="Job Hunting">Job Hunting</option></select>
+        </div>
+        <div class="passage-box">"A flexible job allows parents to balance work and caring for their children."</div>
+        <div class="question-item">
+            <span class="q-text">Q4. Main Idea:</span>
+            <select class="q-select" data-ans="Work-Life Balance"><option value="">--Select--</option><option value="Work-Life Balance">Work-Life Balance</option><option value="Stock Market">Stock Market</option></select>
+        </div>
+        <div class="passage-box">"Global breakfasts range from spicy noodles in Asia to sweet pastries in Europe."</div>
+        <div class="question-item">
+            <span class="q-text">Q5. Main Idea:</span>
+            <select class="q-select" data-ans="Cultural Food Variety"><option value="">--Select--</option><option value="Cultural Food Variety">Cultural Food Variety</option><option value="Career Success">Career Success</option></select>
+        </div>
+    </section>
+
+    <section class="quiz-section">
+        <div class="section-title">6. PHRASAL VERBS</div>
+        <div class="question-item"><span class="q-text">1. I don't get _____ with my boss at all.</span><select class="q-select" data-ans="on"><option value="">--Select--</option><option value="up">up</option><option value="on">on</option><option value="out">out</option></select></div>
+        <div class="question-item"><span class="q-text">2. We've run _____ of milk again!</span><select class="q-select" data-ans="out"><option value="">--Select--</option><option value="away">away</option><option value="off">off</option><option value="out">out</option></select></div>
+        <div class="question-item"><span class="q-text">3. Could you fill _____ this application form?</span><select class="q-select" data-ans="in"><option value="">--Select--</option><option value="on">on</option><option value="at">at</option><option value="in">in</option></select></div>
+        <div class="question-item"><span class="q-text">4. I'm looking _____ a part-time job near my house.</span><select class="q-select" data-ans="for"><option value="">--Select--</option><option value="at">at</option><option value="for">for</option><option value="after">after</option></select></div>
+        <div class="question-item"><span class="q-text">5. They are going to set _____ a new branch in Seoul.</span><select class="q-select" data-ans="up"><option value="">--Select--</option><option value="up">up</option><option value="off">off</option><option value="in">in</option></select></div>
+    </section>
+
+    <section class="quiz-section">
+        <div class="section-title">7. INFINITIVE / -ING / -ED</div>
+        <div class="question-item"><span class="q-text">1. I was _____ (amaze) by how much they look alike.</span><select class="q-select" data-ans="amazed"><option value="">--Select--</option><option value="amazing">amazing</option><option value="amazed">amazed</option></select></div>
+        <div class="question-item"><span class="q-text">2. He decided _____ (apply) for the management position.</span><select class="q-select" data-ans="to apply"><option value="">--Select--</option><option value="applying">applying</option><option value="to apply">to apply</option></select></div>
+        <div class="question-item"><span class="q-text">3. She enjoys _____ (work) in a fast-paced environment.</span><select class="q-select" data-ans="working"><option value="">--Select--</option><option value="working">working</option><option value="to work">to work</option></select></div>
+        <div class="question-item"><span class="q-text">4. The instructions were very _____ (confuse).</span><select class="q-select" data-ans="confusing"><option value="">--Select--</option><option value="confused">confused</option><option value="confusing">confusing</option></select></div>
+        <div class="question-item"><span class="q-text">5. I went to the shop _____ (buy) some bread.</span><select class="q-select" data-ans="to buy"><option value="">--Select--</option><option value="to buy">to buy</option><option value="buying">buying</option></select></div>
+    </section>
+
+    <section class="quiz-section">
+        <div class="section-title">8. GRAMMAR FOCUS</div>
+        <div class="question-item"><span class="q-text">1. _____ you have any brothers or sisters?</span><select class="q-select" data-ans="Do"><option value="">--Select--</option><option value="Do">Do</option><option value="Does">Does</option></select></div>
+        <div class="question-item"><span class="q-text">2. He _____ (buy) that laptop three years ago.</span><select class="q-select" data-ans="bought"><option value="">--Select--</option><option value="buyed">buyed</option><option value="bought">bought</option></select></div>
+        <div class="question-item"><span class="q-text">3. _____ you ever worked in a department store?</span><select class="q-select" data-ans="Have"><option value="">--Select--</option><option value="Did">Did</option><option value="Have">Have</option></select></div>
+        <div class="question-item"><span class="q-text">4. This soup is _____ salty for me to eat.</span><select class="q-select" data-ans="too"><option value="">--Select--</option><option value="too">too</option><option value="enough">enough</option></select></div>
+        <div class="question-item"><span class="q-text">5. I don't have _____ money to go on holiday.</span><select class="q-select" data-ans="enough"><option value="">--Select--</option><option value="too">too</option><option value="enough">enough</option></select></div>
+        <div class="question-item"><span class="q-text">6. While I _____ (wait) for the bus, it started to snow.</span><select class="q-select" data-ans="was waiting"><option value="">--Select--</option><option value="waited">waited</option><option value="was waiting">was waiting</option></select></div>
+        <div class="question-item"><span class="q-text">7. She _____ (work) in the garden right now.</span><select class="q-select" data-ans="is working"><option value="">--Select--</option><option value="works">works</option><option value="is working">is working</option></select></div>
+        <div class="question-item"><span class="q-text">8. My mother _____ (go) to the gym every morning.</span><select class="q-select" data-ans="goes"><option value="">--Select--</option><option value="go">go</option><option value="goes">goes</option></select></div>
+        <div class="question-item"><span class="q-text">9. Online shopping is often _____ (easy) than going to a mall.</span><select class="q-select" data-ans="easier"><option value="">--Select--</option><option value="more easy">more easy</option><option value="easier">easier</option></select></div>
+        <div class="question-item"><span class="q-text">10. That is the _____ (expensive) car I've ever seen.</span><select class="q-select" data-ans="most expensive"><option value="">--Select--</option><option value="more expensive">more expensive</option><option value="most expensive">most expensive</option></select></div>
+    </section>
+
+    <div class="result-bar">
+        <div class="score-display">Total Score: <span id="final-val" class="score-val">--</span> / 100</div>
+        <button class="grade-btn" onclick="gradeAll()">Submit & Grade</button>
+    </div>
+</div>
+
+<script>
+    function gradeAll() {
+        // 모든 드롭다운 요소를 가져옵니다.
+        const allSelects = document.querySelectorAll('.q-select, .mini-select');
+        let correctCount = 0;
+
+        allSelects.forEach(sel => {
+            const userAnswer = sel.value;
+            const correctAnswer = sel.getAttribute('data-ans');
+
+            if (userAnswer === correctAnswer) {
+                correctCount++;
+                sel.style.backgroundColor = "#d4edda";
+                sel.style.borderColor = "#28a745";
+            } else {
+                sel.style.backgroundColor = "#f8d7da";
+                sel.style.borderColor = "#dc3545";
+            }
+        });
+
+        const totalQuestions = allSelects.length;
+        const finalScore = Math.round((correctCount / totalQuestions) * 100);
+        document.getElementById('final-val').innerText = finalScore;
+
+        window.scrollTo({ top: 0, behavior: 'smooth' });
+        alert(`Your score is ${finalScore} / 100. (${correctCount} / ${totalQuestions} correct)`);
+    }
+</script>
+
+</body>
+</html>

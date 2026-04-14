@@ -1,0 +1,77 @@
+﻿UNIT 06 Critical Thinking
+We have explored how independence brings both freedom (eating what you like, coming home late) and responsibility (managing a budget, cooking healthy meals). We also learned that social life and respecting rules are essential for a happy home.
+
+What do you think is the most important skill for a young person to learn before they leave home? Is it a "practical skill" (like cooking or fixing things) or a "social skill" (like managing arguments or respecting others' space)?
+Support your answer by comparing the "freedom of living alone" with the "reality of running a house" discussed in Unit 6.
+
+------------------------------
+I think the most important skill is manage your salary.
+When you are off your home,
+ you have to do the washing, iron your clothes, cook, shop, or fix things. And everything costs money, you buy a few bits of furniture and some new jeans.
+Furthemore you'll miss your mom's cooking you'll end up living on frozen meals and takeaway pizzas.
+Whether you share a house with friends or share others or alone, the important thing is to spend money.
+ If you don't manage salary, shaply reduce money suddenly find cash machine card is rejected soon realizing no money while banks are always happy to lend you money.
+It is essential to learn how to manage a budget as the saying goes, "money doesn't grow on trees."
+
+------------------------------
+AI SOLUTION
+
+Overall Score: 8.8 / 10 
+Content 10	/ 10 	
+Logic 	9.0/ 10 	
+Grammar 7.5	/ 10 	
+Vocabulary 9.0	/ 10
+
+1. 문장의 '마디' 확실히 하기 (Punctuation)
+
+생각의 속도에 맞춰 문장을 쓰다 보면 쉼표(,)로만 문장을 잇게 되는데, 이것이 Grammar 감점의 가장 큰 원인입니다.
+
+    해결책: 생각이 일단락되면 **마침표(.)**를 찍고 새로 시작하거나, **접속사(and, but, because, so)**를 명확히 넣어주세요.
+
+    주의: 영어에서 쉼표는 '나열'이나 '잠시 쉬기'의 용도이지, 문장과 문장을 접착하는 풀이 아닙니다.
+
+2. '치트키' 활용: 분사구문 (-ing)
+
+주어와 접속사를 다시 쓰기 귀찮을 때 가장 세련되게 문장을 잇는 방법입니다.
+
+    방법: [앞 문장], + [v-ing]...
+
+    효과: 주어를 반복하지 않아도 되고, 문맥상 인과관계나 부연 설명을 자연스럽게 연결해 줍니다.
+
+    예시: "...reduce money, suddenly finding my card rejected." (돈이 줄어들고, 결과적으로 카드가 거절됨을 알게 됨)
+
+3. 필수 문장 성분 챙기기 (Core Structure)
+
+단어만 나열되는 느낌을 지우기 위해 반드시 체크해야 할 성분들입니다.
+
+    가주어 it: "형용사 + to 부정사" 구조 앞에는 반드시 It is를 넣어주세요. (예: It is hard to find...)
+
+    수 일치: Each, Every, Everyone 뒤에는 반드시 단수 동사(-s/-es)를 씁니다.
+
+    동사의 변신: "A는 B다"라고 할 때 B 자리에 동작이 오면 to-부정사나 동명사(-ing)로 바꿔야 합니다. (예: My goal is **managing** my budget.)
+
+한 줄 요약:
+
+    "생각나는 대로 쭉 쓰시되, 쉼표(,)가 너무 많다 싶으면 -ing로 바꾸거나 마침표(.)를 찍으세요."
+
+Recommended Revision
+"I think the most important skill is managing your budget. 
+When you live away from home, you have to do the washing, iron your clothes, cook, shop, and fix things. 
+Since everything costs money—from buying furniture to new jeans—financial management is key. 
+Furthermore, if you miss your mom’s cooking, you might end up spending more on frozen meals and takeaway pizzas. 
+Whether you live alone or share a house, the most critical thing is how you spend.
+ If you don't manage your salary, your money will sharply decrease, and you might suddenly find your card rejected.
+ It is essential to learn how to manage a budget because, as the saying goes, 'money doesn't grow on trees.'"
+
+
+피드백 받고 난 후 문장
+ 그래머 8.2 /10
+-->>
+I think the most important skill is managing your burget.
+When you are away from home,
+ you have to do the washing, iron your clothes, cook, shop, or fix things. And everything cost money, buying a few bits of furniture and some new jeans.
+Furthemore you'll miss your mom's cooking. You don't learn how to cook and then you'll end up living on frozen meals and takeaway pizzas.
+Whether you live alone or share a house, the important thing is how to spend money.
+ If you don't manage burget, shaply reducing money. And you might find their card machine is rejecting. While banks are always happy to lend you money.
+It is essential to learn how to manage a budget as the saying goes, "money doesn't grow on trees."
+

@@ -1,0 +1,169 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>English Vocab Quiz</title>
+  <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --error: #e74c3c;
+            --bg: #f4f7f6;
+            --card: #ffffff;
+        }
+
+        .back-to-dashboard {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 1001;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        .back-to-dashboard:hover {
+            transform: scale(1.1);
+            background-color: var(--secondary);
+        }
+
+    body { font-family: 'Pretendard', sans-serif; background-color: var(--bg); color: #333; line-height: 1.6; padding: 20px; max-width: 800px; margin: 0 auto; }
+    h1 { text-align: center; color: var(--primary); margin-bottom: 30px; }
+    
+    .quiz-card { background: var(--card); border-radius: 12px; padding: 20px; margin-bottom: 20px; box-shadow: 0 2px 8px rgba(0,0,0,0.05); transition: transform 0.2s; }
+    .question-text { font-size: 1.1rem; font-weight: 600; margin-bottom: 15px; }
+    .question-text span { color: var(--primary); font-size: 1.2rem; }
+
+    .options-container { display: grid; gap: 10px; }
+    label { display: block; padding: 12px 15px; border: 2px solid #eee; border-radius: 8px; cursor: pointer; transition: 0.2s; }
+    label:hover { background-color: #f0f7ff; border-color: var(--primary); }
+    input[type="radio"] { margin-right: 10px; transform: scale(1.2); }
+    
+    /* 선택 시 스타일 */
+    input[type="radio"]:checked + span { font-weight: bold; color: var(--primary); }
+
+    .controls { text-align: center; margin-top: 40px; padding-bottom: 50px; }
+    button { background: var(--primary); color: white; border: none; padding: 15px 40px; font-size: 1.1rem; border-radius: 30px; cursor: pointer; font-weight: bold; box-shadow: 0 4px 15px rgba(74, 144, 226, 0.3); }
+    button:hover { background: #357abd; transform: translateY(-2px); }
+
+    #result { margin-top: 20px; font-size: 1.5rem; text-align: center; color: #2c3e50; }
+    hr { border: 0; height: 1px; background: #eee; margin: 20px 0; }
+  </style>
+</head>
+<body>
+
+<a href="index.html#word_test" class="back-to-dashboard">🏠 Back to Dashboard</a>
+
+<h1>📘 Vocabulary Challenge</h1>
+
+<div id="quiz-container">
+  </div>
+
+<div class="controls">
+  <button onclick="submitQuiz()">제출 및 채점하기</button>
+  <div id="result"></div>
+</div>
+
+<script src="vocab_data.js"></script>
+
+<script>
+// 1. 배열 섞기 (피셔-예이츠 알고리즘 적용으로 더 정확한 셔플)
+function shuffle(array) {
+  for (let i = array.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
+// 2. 문제 생성 로직
+function generateQuestions(data, count = 20) {
+  const shuffledData = shuffle([...data]);
+  const selected = shuffledData.slice(0, count);
+
+  return selected.map(v => {
+    // 오답 후보들 추출 (현재 단어 제외)
+    const otherMeanings = data
+      .filter(d => d.word !== v.word)
+      .map(d => d.meaning);
+    
+    const wrongChoices = shuffle(otherMeanings).slice(0, 3);
+    const allChoices = shuffle([v.meaning, ...wrongChoices]);
+
+    return {
+      word: v.word,
+      choices: allChoices,
+      answerIndex: allChoices.indexOf(v.meaning)
+    };
+  });
+}
+
+// 초기화
+const quizCount = vocabData.length < 20 ? vocabData.length : 20;
+const currentQuestions = generateQuestions(vocabData, quizCount);
+const container = document.getElementById("quiz-container");
+
+// 3. 화면 렌더링
+currentQuestions.forEach((q, i) => {
+  const card = document.createElement('div');
+  card.className = 'quiz-card';
+  
+  let optionsHtml = q.choices.map((choice, choiceIdx) => `
+    <label>
+      <input type="radio" name="q${i}" value="${choiceIdx}">
+      <span>${choice}</span>
+    </label>
+  `).join('');
+
+  card.innerHTML = `
+    <div class="question-text">
+      <span>Q${i + 1}.</span> What is the meaning of "<strong>${q.word}</strong>"?
+    </div>
+    <div class="options-container">
+      ${optionsHtml}
+    </div>
+  `;
+  container.appendChild(card);
+});
+
+// 4. 채점 로직
+function submitQuiz() {
+  let score = 0;
+  let allAnswered = true;
+
+  currentQuestions.forEach((q, i) => {
+    const selected = document.querySelector(`input[name="q${i}"]:checked`);
+    if (selected) {
+      if (parseInt(selected.value) === q.answerIndex) {
+        score++;
+      }
+    } else {
+      allAnswered = false;
+    }
+  });
+
+  if (!allAnswered) {
+    if (!confirm("아직 풀지 않은 문제가 있습니다. 그대로 제출할까요?")) return;
+  }
+
+  const resultArea = document.getElementById("result");
+  const percent = Math.round((score / currentQuestions.length) * 100);
+  
+  resultArea.innerHTML = `
+    <strong>최종 점수: ${score} / ${currentQuestions.length}</strong><br>
+    <span style="color: ${percent >= 70 ? '#27ae60' : '#e74c3c'}">${percent}점 입니다!</span>
+  `;
+  
+  window.scrollTo({ top: document.body.scrollHeight, behavior: 'smooth' });
+}
+</script>
+
+</body>
+</html>

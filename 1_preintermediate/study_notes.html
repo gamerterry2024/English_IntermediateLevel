@@ -1,0 +1,83 @@
+﻿<head>
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --bg: #f4f7f6;
+            --white: #ffffff;
+            --highlight: #fff59d;
+            --accent: #e67e22;
+        }
+        .back-to-dashboard {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 1001;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        .back-to-dashboard:hover {
+            transform: scale(1.1);
+            background-color: var(--secondary);
+        }
+    </style>
+</head>
+<a href="index.html#diagnostics" class="back-to-dashboard">🏠 Back to Dashboard</a>
+
+<div style="margin-top: 30px; padding: 25px; background: #ffffff; border-radius: 15px; border: 2px solid #3498db; box-shadow: 0 4px 15px rgba(0,0,0,0.05); font-family: 'Segoe UI', sans-serif;">
+    
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px; border-bottom: 2px solid #ebf5fb; padding-bottom: 10px;">
+        <h2 style="margin: 0; color: #2980b9;"><i class="fas fa-microchip"></i> The Direct Processing System</h2>
+        <span style="background: #e74c3c; color: white; padding: 5px 15px; border-radius: 50px; font-weight: bold; font-size: 0.9rem;">Master Logic</span>
+    </div>
+
+    <div style="margin-bottom: 25px; background: #f8f9fa; padding: 15px; border-radius: 10px;">
+        <h4 style="color: #2c3e50; margin-top: 0;"><i class="fas fa-info-circle"></i> Core Objective</h4>
+        <p style="color: #555; font-size: 0.95rem; margin: 0;">
+            This system is designed to prevent "mental freezing" and ensure real-time comprehension by prioritizing the <b>Subject-Verb connection</b> above all else.
+        </p>
+    </div>
+
+    <div style="line-height: 1.8;">
+
+        <div id="step-anchor" style="margin-bottom: 20px; padding: 15px; border-left: 5px solid #e74c3c; background: #fff5f5;">
+    <h4 style="color: #c0392b; margin: 0 0 10px 0;">STEP 1. Dropping the Anchor (Saving the Core Structure)</h4>
+    <p style="margin: 5px 0; font-size: 0.95rem; color: #333;">Identify the first meaningful chunk to secure the Subject.</p>
+    <ul style="font-size: 0.9rem; color: #555;">
+        <li><b>Case OK:</b> Meaning is clear? → Memorize the Subject and drive forward.</li>
+        <li><b>Case FAIL:</b> Meaning is unclear? → Don't get stuck. Find the <b>Main Noun (Subject)</b>, define it, and hold it until the verb appears.</li>
+    </ul>
+</div>
+
+        <div id="step-filter" style="margin-bottom: 20px; padding: 15px; border-left: 5px solid #3498db; background: #f0f7ff;">
+            <h4 style="color: #2980b9; margin: 0 0 10px 0;">STEP 2. Selective Visualization (Modifiers)</h4>
+            <p style="margin: 5px 0; font-size: 0.95rem; color: #333;">Process the next chunks (excluding the Subject).</p>
+            <ul style="font-size: 0.9rem; color: #555;">
+                <li><b>Case OK:</b> Meaning clear? → Quickly visualize the image and proceed.</li>
+                <li><b>Case FAIL:</b> Meaning unclear? → <b>Skip it immediately.</b> Do not stop the "movie."</li>
+            </ul>
+        </div>
+
+        <div id="step-match" style="margin-bottom: 20px; padding: 15px; border-left: 5px solid #f1c40f; background: #fffdf0;">
+            <h4 style="color: #b8860b; margin: 0 0 10px 0;">STEP 3. The Great Match (Connecting to the Verb)</h4>
+            <p style="margin: 5px 0; font-size: 0.95rem; color: #333;">Repeat Step 2 until you hit the <b>Main Verb</b>.</p>
+            <div style="background: white; padding: 10px; border-radius: 5px; border: 1px dashed #f1c40f; font-weight: bold; text-align: center; color: #d35400;">
+                Connect the "Main Verb" instantly to the "Subject" stored in Step 1.
+            </div>
+            <p style="font-size: 0.85rem; color: #7f8c8d; margin-top: 5px;">*Logic: Every main verb must be paired with its anchored subject to complete the thought.</p>
+        </div>
+
+        <div id="step-finish" style="padding: 15px; border-left: 5px solid #27ae60; background: #f2fff6;">
+            <h4 style="color: #27ae60; margin: 0 0 10px 0;">STEP 4. Final Processing</h4>
+            <p style="margin: 5px 0; font-size: 0.95rem; color: #333;">Continue Step 2 for any remaining modifiers to wrap up the sentence.</p>
+        </div>
+
+    </div>
+</div>

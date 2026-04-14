@@ -1,0 +1,1126 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNIT 12: PHONE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --bg: #f4f7f6;
+            --white: #ffffff;
+            --highlight: #fff59d;
+            --accent: #e67e22;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg);
+            color: var(--primary);
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+        section {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            /* 상단 헤더 높이를 고려한 스크롤 위치 조정 */
+            scroll-margin-top: 90px;
+        }
+        .back-to-dashboard {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 1001;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        .back-to-dashboard:hover {
+            transform: scale(1.1);
+            background-color: var(--secondary);
+        }
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 20px;
+            padding-bottom: 300px; 
+        }
+        h2 {
+            border-left: 6px solid var(--secondary);
+            padding-left: 15px;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        .reading-box {
+            background-color: #fffaf0;
+            border: 1px solid #f39c12;
+            padding: 25px;
+            border-radius: 12px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .vocab-link {
+            color: var(--secondary);
+            text-decoration: none;
+            border-bottom: 2px solid var(--secondary);
+            font-weight: bold;
+            padding: 0 2px;
+            cursor: pointer;
+        }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .card {
+            border: 1px solid #eee;
+            padding: 20px;
+            border-radius: 10px;
+            background: #fff;
+            transition: all 0.4s ease;
+        }
+        .card.active-highlight {
+            border: 2px solid var(--accent);
+            background-color: #fffde7;
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .return-btn {
+            display: inline-block;
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: bold;
+            border: 1px solid var(--secondary);
+            padding: 4px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .audio-zone {
+            background: #ebf5fb;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--secondary);
+            margin: 20px 0;
+            text-align: center;
+        }
+        .audio-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .script-window {
+            margin-top: 15px;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            height: 250px; 
+            overflow-y: auto;
+            display: none;
+            text-align: left;
+        }
+        .script-line {
+            padding: 8px 10px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            transition: background 0.3s;
+            font-size: 0.95rem;
+        }
+        .script-line.active {
+            background-color: var(--highlight);
+            font-weight: bold;
+        }
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        .quiz-item {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .instruction {
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        .save-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .save-btn:hover {
+            background-color: #219150;
+        }
+        .mini-input {
+            width: 100px !important;
+            padding: 5px !important;
+            margin: 0 5px !important;
+            display: inline-block !important;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html#unit_12" class="back-to-dashboard">🏠 Back to Dashboard</a>
+    <header>
+        <h1>UNIT 12</h1>
+        <nav class="nav-links">
+            <a href="#intro-reading">0. Core Reading</a>
+            <a href="#section1">1. Listen & Read</a>
+            <a href="#section2">2. Speaking</a>
+            <a href="#section3">3. Writing</a>
+        </nav>
+    </header>
+    <div class="container">
+        
+<section id="intro-reading">
+    <h2>Core Reading: Communication, Services, and Critical Moments</h2>
+    
+    <div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+    <p style="margin-top: 0;">In our modern world, we are more connected than ever. Whether it is a quick mobile phone call to a friend or an <strong><span class="vocab-link" id="text-urgent" onclick="centralizeScroll('vocab-urgent')">urgent</span></strong> 999 emergency dial, communication is the thread that holds our society together. However, this ease of connection comes with its own set of challenges. Sometimes, the lines of communication get crossed, leading to <strong><span class="vocab-link" id="text-frustration" onclick="centralizeScroll('vocab-frustration')">frustration</span></strong>, while at other times, a single message or photo can <strong><span class="vocab-link" id="text-literally" onclick="centralizeScroll('vocab-literally')">literally</span></strong> save a life.</p>
+<p>In northern England, the police face a growing crisis. Every day, they have to answer three hundred 999 calls, but <b>still</b>, a third of them are found to be <b>totally unnecessary</b>. People have called the emergency line for <strong><span class="vocab-link" id="text-trivial" onclick="centralizeScroll('vocab-trivial')">trivial</span></strong> reasons, such as complaining about a broken TV. To combat <strong><span class="vocab-link" id="text-improper" onclick="centralizeScroll('vocab-improper')">improper</span></strong> calls, the police have <b>already</b> introduced £80 fines and are distributing <strong><span class="vocab-link" id="text-leaflets" onclick="centralizeScroll('vocab-leaflets')">leaflets</span></strong> to educate the public. Although they have started this campaign, many people haven't changed their habits <b>yet</b>.</p>
+<p>While some use phones for minor issues, others have used them to perform miracles. In a remote town in Australia, a young boy suffered a serious head injury. His mother noticed a <strong><span class="vocab-link" id="text-swelling" onclick="centralizeScroll('vocab-swelling')">swelling</span></strong> on his head and rushed him to the hospital. The doctor, despite having never performed such an operation, had the <strong><span class="vocab-link" id="text-presence" onclick="centralizeScroll('vocab-presence')">presence</span></strong> of mind to call a colleague for help. He used a household drill to save the boy's life.</p>
+<p>Similarly, a man bitten by a poisonous spider used his mobile phone to take a picture. This photo was sent to <strong><span class="vocab-link" id="text-experts" onclick="centralizeScroll('vocab-experts')">experts</span></strong> at a university, who <strong><span class="vocab-link" id="text-identified" onclick="centralizeScroll('vocab-identified')">identified</span></strong> the <strong><span class="vocab-link" id="text-species" onclick="centralizeScroll('vocab-species')">species</span></strong> and found a cure. Without that digital image, the doctor might not have known how to treat the poison in time.</p>
+<p>However, technology and services are not always reliable. Take the case of Jaslyn, who tried to track two packages from Singapore. She was told they were being held due to <strong><span class="vocab-link" id="text-insufficient" onclick="centralizeScroll('vocab-insufficient')">insufficient</span></strong> <strong><span class="vocab-link" id="text-postage" onclick="centralizeScroll('vocab-postage')">postage</span></strong>. Despite being promised that they would arrive, she later discovered that one had <b>already</b> been returned. Similarly, many customers face <b>awful</b> service with their internet connections, where automated systems often <b>drive them mad</b>.</p>
+<p>Whether we are dealing with a life-threatening situation or an annoying bill, how we communicate <strong><span class="vocab-link" id="text-defines" onclick="centralizeScroll('vocab-defines')">defines</span></strong> our daily experience. We have <b>already</b> seen how technology can save us, but we <b>still</b> have a long way to go in making sure our service systems function as they should.</p>
+</div>
+
+<article style="margin-top: 3rem; border-top: 2px solid #eee;">
+    <h3 id="vocab-builder">Vocabulary Builder</h3>
+    <div class="vocab-grid">
+
+ 
+<div class="card" id="vocab-urgent">
+    <div class="card-content">
+        <strong>Urgent:</strong> Very important and needing to be dealt with immediately.
+        <br><span class="return-btn" onclick="centralizeScroll('text-urgent')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-frustration">
+    <div class="card-content">
+        <strong>Frustration:</strong> The feeling of being annoyed or impatient because you cannot do what you want.
+        <br><span class="return-btn" onclick="centralizeScroll('text-frustration')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-literally">
+    <div class="card-content">
+        <strong>Literally:</strong> Used to emphasize that something is actually true, even if it sounds surprising.
+        <br><span class="return-btn" onclick="centralizeScroll('text-literally')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-trivial">
+    <div class="card-content">
+        <strong>Trivial:</strong> Not important or serious; having very little value.
+        <br><span class="return-btn" onclick="centralizeScroll('text-trivial')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-improper">
+    <div class="card-content">
+        <strong>Improper:</strong> Not right or not suitable for a particular situation; dishonest.
+        <br><span class="return-btn" onclick="centralizeScroll('text-improper')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-leaflets">
+    <div class="card-content">
+        <strong>Leaflets:</strong> Small pieces of printed paper that give information or advertise something.
+        <br><span class="return-btn" onclick="centralizeScroll('text-leaflets')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-swelling">
+    <div class="card-content">
+        <strong>Swelling:</strong> A place on your body that has become larger than normal because of an injury or illness.
+        <br><span class="return-btn" onclick="centralizeScroll('text-swelling')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-presence">
+    <div class="card-content">
+        <strong>Presence (of mind):</strong> The ability to stay calm and make good decisions in a difficult or surprising situation.
+        <br><span class="return-btn" onclick="centralizeScroll('text-presence')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-experts">
+    <div class="card-content">
+        <strong>Experts:</strong> People who have a lot of knowledge or skill in a particular subject.
+        <br><span class="return-btn" onclick="centralizeScroll('text-experts')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-identified">
+    <div class="card-content">
+        <strong>Identified:</strong> Recognized or named someone or something correctly.
+        <br><span class="return-btn" onclick="centralizeScroll('text-identified')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-species">
+    <div class="card-content">
+        <strong>Species:</strong> A group of animals or plants that are very similar to each other.
+        <br><span class="return-btn" onclick="centralizeScroll('text-species')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-insufficient">
+    <div class="card-content">
+        <strong>Insufficient:</strong> Not enough for a particular purpose.
+        <br><span class="return-btn" onclick="centralizeScroll('text-insufficient')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-postage">
+    <div class="card-content">
+        <strong>Postage:</strong> The amount of money you pay to send a letter or a package by mail.
+        <br><span class="return-btn" onclick="centralizeScroll('text-postage')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-defines">
+    <div class="card-content">
+        <strong>Defines:</strong> Describes or explains the quality or nature of something.
+        <br><span class="return-btn" onclick="centralizeScroll('text-defines')">Return to Text ↑</span>
+    </div>
+</div>
+
+    </div>
+</article>
+</section>
+<section id="section1">
+            <h2>Section 1: Listening & Reading Integration</h2>
+<article>
+    <h3>1-1. Telephone Messages (Dialogues)</h3>
+    
+    <div class="audio-zone" style="margin-bottom: 20px;">
+        <span class="audio-label">🎧 Listening 1: Appointment Change (CD2_Track 18)</span>
+        <audio id="main-player-1" style="width:100%;" controls src="CD2_Track 18.mp3"></audio>
+    </div>
+    <div id="script-container1" class="script-window" style="height: 450px; overflow-y: auto;"></div>
+    <div class="audio-zone" style="margin-bottom: 20px;">
+        <span class="audio-label">🎧 Listening 2: Business Inquiry (CD2_Track 19)</span>
+        <audio id="main-player-2" style="width:100%;" controls src="CD2_Track 19.mp3"></audio>
+    </div>
+    <div id="script-container2" class="script-window" style="height: 450px; overflow-y: auto;"></div>
+        
+</article>
+            <article style="margin-top: 3rem; border-top: 1px solid #eee; padding-top: 2rem;">
+                <h3>1-2. Customer Complaints & Service Issues Aid</h3>
+                
+                <div class="audio-zone">
+                    <span class="audio-label">🎁 Conversation 1 : Tracking a Package (CD2_Track 21)</span>
+                    <audio id="player-1" style="width:100%;" controls src="CD2_Track 21.mp3"></audio>
+                    <div id="script-1" class="script-window"></div>
+                </div>
+                <div class="audio-zone">
+                    <span class="audio-label">📦 Conversation 2 : A Processing Error (CD2_Track 22)</span>
+                    <audio id="player-2" style="width:100%;" controls src="CD2_Track 22.mp3"></audio>
+                    <div id="script-2" class="script-window"></div>
+                </div>
+                <div class="audio-zone">
+                    <span class="audio-label">👨‍💼 Conversation 3 : Voice Message: Internet Problems (CD2_Track 23)</span>
+                    <audio id="player-3" style="width:100%;" controls src="CD2_Track 23.mp3"></audio>
+                    <div id="script-3" class="script-window"></div>
+                </div>
+            </article>
+
+         <article style="margin-top: 3rem; border-top: 1px solid #eee; padding-top: 2rem;">
+    <h2>1-3. &#x1F4D6; Reading: News and Stories</h2>
+    <div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+<p style="margin-top: 0; font-size: 1.2rem; color: #2b6cb0;"><b>1. Unnecessary 999 Calls in Northern England</b></p>
+<p>Every day, the police in northern England have to answer three hundred 999 calls, but <b>a third of them are totally unnecessary</b>. Last year, the calls that police received included someone wanting a ride home, a man <b>complaining about his TV not working</b>, and two people who reported lost cats. A number of calls were also from young children who had accidentally dialled 999.</p>
+<p>The police are <b>still</b> dealing with this problem, so they are sending leaflets to houses to explain the situation. They have <b>already</b> introduced £80 fines for those making improper calls to prevent further time-wasting.</p>
+
+<hr style="border: 0; border-top: 1px solid #edf2f7; margin: 25px 0;">
+
+<p style="font-size: 1.2rem; color: #2b6cb0;"><b>2. A Miracle Operation in Remote Australia</b></p>
+<p>Nicolas Rossi, a 13-year-old boy from a remote town in Australia, fell off his bicycle and hit his head. Although Nicolas initially seemed fine, his mother, a nurse, <b>noticed a swelling on his head</b>. She rushed him to the nearest hospital, where the doctor realized the boy was in danger of dying if he didn't have an operation <b>to reduce the pressure on his brain</b>.</p>
+<p>Unfortunately, Doctor Carson had <b>never done the operation</b> before and only had a normal household drill. After cleaning the drill, he <b>just</b> phoned a colleague in Melbourne, who explained where and how to make the hole. The one-minute operation was successful, and the boy was transferred by plane to a Melbourne hospital. Nicolas has <b>already</b> made a complete recovery, and Carson described his actions as <b>'just part of the job'</b>.</p>
+
+<hr style="border: 0; border-top: 1px solid #edf2f7; margin: 25px 0;">
+
+<p style="font-size: 1.2rem; color: #2b6cb0;"><b>3. The Spider Photo that Saved a Life</b></p>
+<p>Matthew Stevens, 23, was <b>bitten by a Brazilian wandering spider</b> in a pub in south-west England while he was cleaning the kitchen. The spider probably came into Britain in a box of bananas. After the incident, Mr. Stevens <b>took a photo of the 12-centimetre spider</b> with his mobile phone, but then went home, even though his hand was <b>still</b> swelling 'like a balloon'.</p>
+<p>At home, he collapsed with breathing difficulties and had to be rushed to the hospital. Fortunately, he had <b>already</b> taken the picture, which he was able to show to the doctors. The photo was <b>just</b> sent to a university, where they identified the species and found a cure for the poison. He hasn't fully recovered <b>yet</b>, but he is out of danger thanks to that photo.</p>    </div>
+	</article>
+
+    <div class="quiz-container" style="margin-top: 2rem; padding: 0 1rem;">
+        <h4 style="color: var(--secondary); margin-bottom: 1.5rem;">✅ Check your understanding (True or False)</h4>
+        <style>
+            .quiz-row { display: flex; align-items: center; margin-bottom: 15px; font-size: 1.05rem; flex-wrap: wrap; }
+            .quiz-question { margin-right: 12px; font-weight: 500; }
+            .btn-check-small { 
+                padding: 3px 10px; font-size: 0.85rem; cursor: pointer; border-radius: 6px; 
+                border: 1px solid var(--secondary); background: white; color: var(--secondary);
+                transition: 0.2s; margin-right: 10px;
+            }
+            .btn-check-small:hover { background: var(--secondary); color: white; }
+            .answer-text { color: var(--success); font-weight: bold; font-size: 0.95rem; }
+        </style>
+<div class="quiz-container" style="background: #fdfdfd; padding: 20px; border-radius: 12px; border: 1px solid #eee;">
+    
+<div class="quiz-row" id="tf-q1" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+<span class="quiz-question">1. In northern England, about 33% of 999 calls are considered unnecessary.</span>
+<div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+<button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+<button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+</div>
+<button onclick="validateTF('tf-q1', 'T', 'True (A third of the 300 daily 999 calls are totally unnecessary.)')" class="btn-check-small">Check</button>
+<span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-q2" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+<span class="quiz-question">2. The police have already started fining people £80 for making improper emergency calls.</span>
+<div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+<button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+<button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+</div>
+<button onclick="validateTF('tf-q2', 'T', 'True (The police have already introduced £80 fines for those making improper calls.)')" class="btn-check-small">Check</button>
+<span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-q3" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+<span class="quiz-question">3. Doctor Carson had performed the brain operation many times before helping Nicolas.</span>
+<div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+<button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+<button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+</div>
+<button onclick="validateTF('tf-q3', 'F', 'False (Doctor Carson had never done the operation before and had to use a household drill.)')" class="btn-check-small">Check</button>
+<span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-q4" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+<span class="quiz-question">4. Matthew Stevens went straight to the hospital as soon as the spider bit him.</span>
+<div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+<button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+<button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+</div>
+<button onclick="validateTF('tf-q4', 'F', 'False (He took a photo and went home first, despite his hand swelling like a balloon.)')" class="btn-check-small">Check</button>
+<span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-q5" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+<span class="quiz-question">5. The photo on Matthew&#39;s phone was just sent to a university to help find a cure.</span>
+<div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+<button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+<button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+</div>
+<button onclick="validateTF('tf-q5', 'T', 'True (The photo was just sent to a university where they identified the spider and a cure.)')" class="btn-check-small">Check</button>
+<span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+</div>
+
+
+<script>
+// T/F 버튼 선택 시 시각적 효과
+function selectTF(btn, val) {
+    const parent = btn.parentElement;
+    const btns = parent.querySelectorAll('.tf-btn');
+    btns.forEach(b => {
+        b.style.background = '#fff';
+        b.style.color = '#333';
+        b.classList.remove('selected');
+    });
+    btn.style.background = '#333';
+    btn.style.color = '#fff';
+    btn.classList.add('selected');
+    btn.dataset.value = val;
+}// 정답 확인 및 토글 함수
+function validateTF(rowId, correctVal, explanation) {
+    const row = document.getElementById(rowId);
+    const selectedBtn = row.querySelector('.tf-btn.selected');
+    const ansText = row.querySelector('.answer-text');
+    // 이미 정답이 보이고 있다면 -> 다시 숨기기 (토글)
+    if (ansText.style.display === 'inline') {
+        ansText.style.display = 'none';
+        row.style.background = '#fff'; // 배경색 초기화
+        return;
+    }
+    // 버튼을 선택하지 않았을 때
+    if (!selectedBtn) {
+        alert("Please select T or F first!");
+        return;
+    }
+    // 정답 확인 모드
+    const userVal = selectedBtn.dataset.value;
+    ansText.style.display = 'inline';
+    ansText.innerText = explanation;
+    if (userVal === correctVal) {
+        row.style.background = '#e8f5e9'; // 정답: 연한 초록색
+        ansText.style.color = '#2e7d32';
+    } else {
+        row.style.background = '#ffebee'; // 오답: 연한 빨간색
+        ansText.style.color = '#c62828';
+    }
+}</script>
+    </div>
+</article>
+        </section>
+<section id="section2">
+    <h2>Section 2: Speaking Practice</h2> 
+    
+    <article style="margin-top: 1rem;">
+        <h3>Interactive Dialogue (Easy Version)</h3>
+        <p class="instruction" style="margin-bottom: 20px;">
+            <i class="fas fa-headphones-alt"></i> Listen to the sentence (🔊), record your voice (🎤), and check your recording (▶).
+        </p>
+        <div class="quiz-item" style="background: #fff; padding: 25px; border-radius: 15px; border: 1px solid #ddd; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <div id="dialogue-container" style="display: flex; flex-direction: column; gap: 12px; font-size: 1.05rem;"></div>
+        </div>
+    </article>
+</section>
+<section id="section3">
+            <h2>Section 3: Writing Practice</h2>
+            <div id="final-quiz-area" style="margin-top: 40px; border-top: 2px solid var(--secondary); padding-top: 25px;">
+                <div class="quiz-item" style="background: #fcfcfc; padding: 20px; border-radius: 10px;">
+    <p style="margin-bottom: 15px;">
+        <strong style="font-size: 1.1rem; color: #3498db;">Step 1. Grammar & Vocabulary Check:</strong>
+    </p> 
+<div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+    <h3 style="text-align: center; color: #2c3e50; margin-bottom: 2rem; border-bottom: 3px double #3498db; padding-bottom: 10px; display: block; width: fit-content; margin-left: auto; margin-right: auto;">
+        <i class="fas fa-book-open" style="margin-right: 10px;"></i>Grammar Mastery
+    </h3>
+
+
+<h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-top: 0;">
+1. Completed Actions (Already & Just)</h3>
+<div style="background-color: #fff; padding: 15px; border-radius: 10px; border: 1px dashed #bdc3c7; margin-bottom: 15px;">
+<p style="margin: 5px 0;"><strong>• already</strong>: Used to say that something happened <strong>sooner than expected</strong>.</p>
+<p style="margin: 5px 0;"><strong>• just</strong>: Used to say that something happened <strong>a very short time ago</strong>.</p>
+</div>
+<ul style="list-style-type: none; padding-left: 10px;">
+<li style="margin-bottom: 15px;">
+<strong style="color: #e67e22;">• Example:</strong> "The police have <span style="color: #e67e22; font-weight: bold;">already introduced</span> £80 fines."
+
+<i style="color: #7f8c8d;">(Section 1 - Action taken against improper calls)</i>
+</li>
+<li style="margin-bottom: 15px;">
+<strong style="color: #16a085;">• Example:</strong> "Doctor Carson <span style="color: #16a085; font-weight: bold;">just phoned</span> a colleague for help."
+
+<i style="color: #7f8c8d;">(Section 2 - Immediate action during the operation)</i>
+</li>
+</ul>
+
+<h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-top: 25px;">
+2. Expected & Continuing Actions (Yet & Still)</h3>
+<div style="background-color: #fff; padding: 15px; border-radius: 10px; border: 1px dashed #bdc3c7; margin-bottom: 15px;">
+<p style="margin: 5px 0;"><strong>• yet</strong>: Used in negative sentences or questions to talk about something <strong>expected to happen</strong>.</p>
+<p style="margin: 5px 0;"><strong>• still</strong>: Used to say that a situation is <strong>continuing</strong>, especially when it should have finished.</p>
+</div>
+<ul style="list-style-type: none; padding-left: 10px;">
+<li style="margin-bottom: 15px;">
+<strong style="color: #2980b9;">• Example:</strong> "Many people <span style="color: #2980b9; font-weight: bold;">haven't changed</span> their habits <span style="color: #2980b9; font-weight: bold;">yet</span>."
+
+<i style="color: #7f8c8d;">(Section 1 - Expected change in behavior)</i>
+</li>
+<li style="margin-bottom: 15px;">
+<strong style="color: #2980b9;">• Example:</strong> "He is <span style="color: #2980b9; font-weight: bold;">still in bed</span> at 12 o'clock!"
+
+<i style="color: #7f8c8d;">(Conversation 1 - A continuing state of sleeping)</i>
+</li>
+</ul>
+
+<h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-top: 25px;">
+3. Negative Contexts with Still & Yet</h3>
+<div style="background-color: #fff; padding: 15px; border-radius: 10px; border: 1px dashed #bdc3c7; margin-bottom: 15px;">
+<p style="margin: 5px 0;"><strong>• still (negative)</strong>: Often used to show <strong>surprise or annoyance</strong> that something hasn't happened.</p>
+<p style="margin: 5px 0;"><strong>• haven't + yet</strong>: A standard way to describe an <strong>uncompleted</strong> task.</p>
+</div>
+<ul style="list-style-type: none; padding-left: 10px;">
+<li style="margin-bottom: 15px;">
+<strong style="color: #d35400;">• Example:</strong> "The wireless box <span style="color: #d35400; font-weight: bold;">still doesn't work</span> properly."
+
+<i style="color: #7f8c8d;">(Section 3 - Frustration with technology)</i>
+</li>
+<li style="margin-bottom: 15px;">
+<strong style="color: #d35400;">• Example:</strong> "He <span style="color: #d35400; font-weight: bold;">hasn't been able</span> to talk to a person <span style="color: #d35400; font-weight: bold;">yet</span>."
+
+<i style="color: #7f8c8d;">(Core Reading - Jim's service complaint)</i>
+</li>
+</ul>
+
+<hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
+<p style="margin-top: 20px;"><strong>Context from our Reading:</strong></p>
+<ul style="padding-left: 20px;">
+<li>"Nicolas has <span style="color: #d35400; font-weight: bold;">already made</span> a complete recovery."</li>
+<li>"The photo was <span style="color: #d35400; font-weight: bold;">just sent</span> to a university."</li>
+<li>"He is <span style="color: #d35400; font-weight: bold;">still waiting</span> for a resolution."</li>
+</ul>
+
+</div>
+
+
+<div class="quiz-item" style="background: #fff; padding: 25px; border-radius: 15px; border: 1px solid #ddd; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+<div id="vocabulary-mastery-section">
+<h3 style="text-align: center; color: #2c3e50; margin-bottom: 2rem; border-bottom: 3px double #3498db; padding-bottom: 10px; display: block; width: fit-content; margin-left: auto; margin-right: auto; font-size: 1.6rem;">
+        <i class="fas fa-spell-check" style="margin-right: 10px;"></i>Vocabulary Check
+    </h3>
+ 
+<div style="background: #fff5f5; border: 1px solid #fed7d7; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #c53030; margin: 0; border-left: 4px solid #f56565; padding-left: 10px;">Group 1: Services & Systems</h4>
+<span style="font-size: 0.85rem; background: #f56565; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: urgent, frustration, automated, properly, defines
+</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+1. Please help me now; this emergency call is very <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......">.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: urgent)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+2. Waiting for a slow computer system causes a lot of <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......">.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: frustration)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+3. I don't like <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> voices on the phone; I want a real person.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: automated)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+4. My internet connection is slow and doesn't work <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......">.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: properly)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+5. How we communicate often <input type="text" class="mini-input" style="width: 80px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> our daily experience.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: defines)</span>
+</div>
+</div>
+
+<div style="background: #fffaf0; border: 1px solid #feebc8; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #c05621; margin: 0; border-left: 4px solid #ed8936; padding-left: 10px;">Group 2: Post & Public Info</h4>
+<span style="font-size: 0.85rem; background: #ed8936; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: insufficient, postage, leaflets, improper, trivial
+</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+6. The package was held because of <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> money on the stamp.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: insufficient)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+7. You need to pay the correct <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> to send a letter abroad.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: postage)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+8. The police are giving out information <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> to every house.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: leaflets)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+9. It is <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> to use 999 for non-emergency situations.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: improper)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+10. Don't call the police for <input type="text" class="mini-input" style="width: 80px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> matters like a lost cat.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: trivial)</span>
+</div>
+</div>
+
+<div style="background: #f0fff4; border: 1px solid #c6f6d5; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #276749; margin: 0; border-left: 4px solid #48bb78; padding-left: 10px;">Group 3: Emergency & Medical</h4>
+<span style="font-size: 0.85rem; background: #48bb78; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: swelling, presence, literally, poisonous, recovery
+</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+11. The doctor noticed a large <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> on the boy's head.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: swelling)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+12. Having the <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> of mind to stay calm can save a life.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: presence)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+13. In a serious accident, a mobile phone can <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> save your life.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: literally)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+14. Matthew was bitten by a very <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> spider in the kitchen.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: poisonous)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+15. After the operation, the young boy made a complete <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......">.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: recovery)</span>
+</div>
+</div>
+
+<div style="background: #ebf8ff; border: 1px solid #bee3f8; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #2c5282; margin: 0; border-left: 4px solid #4299e1; padding-left: 10px;">Group 4: Identification</h4>
+<span style="font-size: 0.85rem; background: #4299e1; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: experts, identified, species, colleague, fine
+</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+16. University <input type="text" class="mini-input" style="width: 80px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> studied the photo to find a cure.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: experts)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+17. The scientists <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> the spider as a Brazilian wandering spider.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: identified)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+18. There are many different <input type="text" class="mini-input" style="width: 80px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> of insects in the rainforest.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: species)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+19. The doctor called a <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> in Melbourne for surgical advice.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: colleague)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+20. You will have to pay a <input type="text" class="mini-input" style="width: 70px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> of £80 for a false 999 call.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: fine)</span>
+</div>
+</div>
+
+</div>
+</div>
+
+
+<div class="quiz-item" style="margin-top: 40px; padding: 25px; background: #fcfcfc; border-radius: 10px; border: 1px solid #eee;">
+<p style="margin-bottom: 15px;">
+<strong style="font-size: 1.1rem; color: #3498db;">Step 2. Content Check:</strong>
+</p>
+<p style="line-height: 1.6; color: #34495e; font-weight: 500;">
+The unit explores how phones are used in different situations. In the <b>Core Reading</b>, how did a mobile phone <b>literally save</b> Matthew's life after he was bitten by a <b>poisonous</b> spider? Also, why does the police department issue <b>leaflets</b> about 999 calls?
+</p>
+<div style="margin: 10px 0; font-size: 0.85rem; color: #7f8c8d;">
+<i class="fas fa-lightbulb" style="color: #f1c40f;"></i>
+<b>Key Keywords:</b> presence of mind, mobile photo, identified the species, university experts, improper calls, trivial matters, £80 fine
+</div>
+<textarea id="content-check-answer-u12" rows="3"
+style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; font-size: 0.95rem; line-height: 1.6; resize: vertical; display: block; margin-bottom: 10px; box-sizing: border-box;"
+placeholder="Explain how the photo helped Matthew and why the police are worried about 999 calls..."></textarea>
+</div>
+
+<div class="quiz-item" style="background: #fcfcfc; padding: 25px; border-radius: 10px; margin-top: 20px; border: 1px solid #eee;">
+<p style="margin-bottom: 15px;">
+<strong style="font-size: 1.1rem; color: #3498db;">Step 3. Thinking about Service & Frustration:</strong>
+</p>
+<p style="color: #34495e; line-height: 1.6;">
+In the listening and reading tasks, we saw characters like Jim who felt <b>frustration</b> because of <b>automated systems</b> and <b>insufficient</b> customer service. He had <b>already</b> paid his bill, but his internet <b>still</b> didn't work <b>properly</b>.
+
+
+<b>In your opinion, why do many companies use "automated systems" instead of real people? Do you think this technology makes our lives better or just more stressful?</b>
+</p>
+<textarea rows="5" style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; box-sizing: border-box;"
+placeholder="I think companies use them because... In my view, this technology is... because..."></textarea>
+</div>
+
+<div style="margin-top: 40px; padding: 30px; background: #fffde7; border-radius: 15px; border: 1px solid #fff176; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+<h3 style="margin-top: 0; color: #f57f17; display: flex; align-items: center;">
+<i class="fas fa-lightbulb" style="margin-right: 12px;"></i> Critical Thinking
+</h3>
+<p style="line-height: 1.7; color: #444;">
+We have explored the theme of <b>PHONE</b> and communication. We saw how phones can be <b>urgent</b> tools for survival (emergency surgeries, identifying spiders), but also sources of <b>frustration</b> (slow internet, expensive bills, improper 999 calls).
+
+
+<b>How has the way we use phones changed our responsibilities in society?
+
+Support your answer by using the grammar we learned (just, already, yet, still). For example, talk about things people have "already" stopped doing or problems that "still" exist because of phones.</b>
+</p>
+<textarea class="main-textarea"
+placeholder="Compare the positive and negative sides of phone communication. Use 'just, already, yet, still' to describe these changes and your opinions..."
+rows="10"
+style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; font-size: 0.95rem; line-height: 1.6; resize: vertical; display: block; box-sizing: border-box; background: white;">
+</textarea>
+</div>
+
+
+<div style="margin-top: 30px; padding: 25px; background: #ffffff; border-radius: 15px; border: 2px solid #3498db; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="margin: 0; color: #2980b9;"><i class="fas fa-robot"></i> AI Solution</h3>
+        <span style="background: #3498db; color: white; padding: 5px 15px; border-radius: 50px; font-weight: bold; font-size: 1.1rem;">
+            Overall Score: <input type="text" class="mini-input" style="width: 50px !important; color: white; background: transparent; border: 1px solid rgba(255,255,255,0.5); text-align: center;" value="9.2"> / 10
+        </span>
+    </div>
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.95rem;">
+        <thead>
+            <tr style="background: #ebf5fb; text-align: left;">
+                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Evaluation Criteria</th>
+                <th style="padding: 12px; border-bottom: 2px solid #3498db; text-align: center;">Score</th>
+                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Detailed Feedback</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Content</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="10"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Deep reflection on career stages from 20s to 50s."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Logic</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="9.5"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Strong comparison between 'meaning' and 'success'."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Grammar</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="8"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Check comparative forms (e.g., more important than)."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Vocabulary</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="9"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Great use of 'exhausted', 'exploiting', and 'fulfillment'."></td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="background: #f4f7f6; padding: 15px; border-radius: 10px; border-left: 5px solid #27ae60;">
+        <p style="margin: 0 0 10px 0; font-weight: bold; color: #27ae60;"><i class="fas fa-check-circle"></i> Recommended Revision</p>
+        <textarea style="width: 100%; background: transparent; border: 1px dashed #27ae60; border-radius: 5px; padding: 10px; font-style: italic;" rows="8">"In my experience, I thought gaining experience was more important than anything else in my twenties. My companies might have been exploiting me with boring tasks, but I worked hard and struggled through it. In my thirties, I chased high salaries, but I still worked over ten hours a day. Now in my late forties, I was so exhausted that I retired after 30 years of practice. I currently work as a security officer for two hours a day and I am happy because there is no pressure. To me, a 'meaningful' job is more important than a 'successful' one, and that meaning depends on my current physical and mental well-being."</textarea>
+    </div>
+</div>
+            <button class="save-btn" style="margin-top: 20px;" onclick="saveProgress()">Save My Work</button>
+        </section>
+    </div>
+    <script>
+        // --- 데이터 정의 ---
+        const dialogueData = [
+    { name: "Jim", color: "#f39c12", bg: "#fdfaf0", text: "Hello? I'm <b>still</b> having <b>Internet connection</b> problems.", char: "customer" },
+    { name: "Agent", color: "#3498db", bg: "#ebf5fb", text: "I'm sorry. This <b>automated system</b> is <b>just</b> slow.", char: "assistant" },
+    { name: "Jim", color: "#f39c12", bg: "#fdfaf0", text: "It's <b>urgent</b>! I <b>already</b> <b>signed a contract</b>.", char: "customer" },
+    { name: "Agent", color: "#3498db", bg: "#ebf5fb", text: "Did you restart your <b>wireless box</b> <b>yet</b>?", char: "assistant" },
+    { name: "Jim", color: "#f39c12", bg: "#fdfaf0", text: "Yes, but it doesn't <b>work properly</b>. It's <b>awful</b>!", char: "customer" },
+    { name: "Agent", color: "#3498db", bg: "#ebf5fb", text: "I see. I'll <b>put you through</b> to <b>experts</b>.", char: "assistant" },
+    { name: "Jim", color: "#f39c12", bg: "#fdfaf0", text: "Thanks. This <b>frustration</b> is <b>driving me mad</b>!", char: "customer" },
+    { name: "Agent", color: "#3498db", bg: "#ebf5fb", text: "Wait, I <b>just</b> <b>identified</b> a <b>system error</b>.", char: "assistant" },
+    { name: "Jim", color: "#f39c12", bg: "#fdfaf0", text: "Oh? So when will you <b>sort it out</b>?", char: "customer" },
+    { name: "Agent", color: "#3498db", bg: "#ebf5fb", text: "We'll find a <b>resolution</b> by this afternoon.", char: "assistant" }
+        ];
+const scriptData1_1_D1 = [
+    { start: 0, speaker: "Narrator", text: "Twelve point one. Conversation one." },
+    { start: 4, speaker: "A", text: "Hello." },
+    { start: 5, speaker: "Brendan", text: "Hi, it's <b>Brendan</b>. Is <b>Neil</b> there?" },
+    { start: 8, speaker: "A", text: "No, he's <b>not up yet</b>. Is it <b>urgent</b>?" },
+    { start: 11, speaker: "Brendan", text: "No, it's OK. Just tell him we're <b>meeting earlier</b> - at <b>seven</b>, not eight." },
+    { start: 16, speaker: "Brendan", text: "And tell him he's <b>very lazy</b>! 12 o'clock and <b>still in bed</b>!" },
+    { start: 21, speaker: "A", text: "Well, he was <b>out late</b> last night. Has he <b>got your number</b>, Brendan?" },
+    { start: 25, speaker: "Brendan", text: "Yeah, he has. So <b>what time</b> will he be up?" },
+    { start: 29, speaker: "A", text: "I imagine in about <b>an hour</b>. He didn't <b>get back home</b> till four." },
+    { start: 34, speaker: "Brendan", text: "Oh right. Well, <b>I'll see him later</b>. Thanks." },
+    { start: 37, speaker: "A", text: "That's OK. <b>I'll give him your message</b>. Meet at seven, not eight." },
+    { start: 42, speaker: "Brendan", text: "Yeah." },
+    { start: 43, speaker: "A", text: "Bye now." }
+];
+const scriptData1_1_D2 = [
+    { start: 0, speaker: "Narrator", text: "Conversation two." },
+    { start: 1, speaker: "Receptionist", text: "Good morning, DBB. <b>How can I help you</b>?" },
+    { start: 4, speaker: "Diane", text: "Yeah hi. Could I <b>speak to</b> Jane Simpson, please?" },
+    { start: 8, speaker: "Receptionist", text: "Of course. I'll just <b>put you through</b> to her." },
+    { start: 11, speaker: "Diane", text: "Thanks." },
+    { start: 13, speaker: "Poppy", text: "Hello." },
+    { start: 14, speaker: "Diane", text: "Hi, Jane?" },
+    { start: 15, speaker: "Poppy", text: "No, it's actually <b>Poppy</b>. I'm afraid Jane's <b>out visiting</b> a client." },
+    { start: 19, speaker: "Poppy", text: "Would you like to <b>leave a message</b>?" },
+    { start: 21, speaker: "Diane", text: "Yeah, could you tell her <b>Diane called</b>." },
+    { start: 24, speaker: "Diane", text: "I've already <b>spoken to my boss</b> and he's <b>fine with the price</b>." },
+    { start: 28, speaker: "Diane", text: "So we can <b>go ahead</b> with the work." },
+    { start: 30, speaker: "Diane", text: "Can you ask her to <b>phone me</b> when she <b>gets back</b>?" },
+    { start: 34, speaker: "Poppy", text: "Of course. Has she <b>got your number</b>?" },
+    { start: 37, speaker: "Diane", text: "I don't think she has <b>my mobile</b>. It's 07729-651-118." },
+    { start: 45, speaker: "Poppy", text: "OK. 07729-651-118. And <b>what was your name</b> again?" },
+    { start: 51, speaker: "Diane", text: "<b>Diane Lincoln</b>. L-I-N-C-O-L-N." },
+    { start: 57, speaker: "Diane", text: "So <b>when will she be back</b>?" },
+    { start: 59, speaker: "Poppy", text: "Probably <b>later this afternoon</b>. I think she's <b>going for lunch</b>." },
+    { start: 64, speaker: "Diane", text: "Oh right. Well, <b>hopefully</b> I can speak to her today." },
+    { start: 68, speaker: "Diane", text: "I'm actually <b>away on holiday</b> from tomorrow." },
+    { start: 71, speaker: "Poppy", text: "Oh right. Well, <b>I'll let her know</b> anyway." },
+    { start: 75, speaker: "Diane", text: "OK. Thanks. Bye." },
+    { start: 78, speaker: "Poppy", text: "Bye." }
+];
+const scriptData1_2_P1 = [
+    { start: 0, speaker: "Narrator", text: "Twelve point three." },
+    { start: 1, speaker: "System", text: "If you'd like to <b>obtain a postal code</b>, please press one." },
+    { start: 4, speaker: "System", text: "If you'd like to <b>check the status</b> of a recorded or special delivery..." },
+    { start: 7, speaker: "H", text: "Hello. <b>World Mail</b>. How can I help you?" },
+    { start: 10, speaker: "Jaslyn", text: "Oh hi. I'm trying to <b>find out what's happened</b> to two packages." },
+    { start: 14, speaker: "Jaslyn", text: "My parents sent them from <b>Singapore</b>." },
+    { start: 17, speaker: "H", text: "OK. <b>How long ago</b> were they sent?" },
+    { start: 19, speaker: "H", text: "Obviously <b>international mail</b> can take a lot longer sometimes." },
+    { start: 24, speaker: "Jaslyn", text: "It's <b>nearly two months</b> now." },
+    { start: 26, speaker: "Jaslyn", text: "They were sent by <b>registered airmail post</b>." },
+    { start: 29, speaker: "Jaslyn", text: "So they <b>should be here</b> by now, really." },
+    { start: 33, speaker: "H", text: "Hmm. Yes, that does <b>sound strange</b>. Can I <b>take your address</b>, please?" },
+    { start: 38, speaker: "Jaslyn", text: "Sure. It's <b>Jaslyn</b> - that's J-A-S-L-Y-N - Wang." },
+    { start: 42, speaker: "Jaslyn", text: "My address is <b>Flat 13, 30 Bedford Way, Walford</b>." },
+    { start: 48, speaker: "Jaslyn", text: "W-A-L-F-O-R-D, London E25 4QW." },
+    { start: 54, speaker: "H", text: "Right. Let me just <b>check that on my computer</b>." },
+    { start: 58, speaker: "H", text: "Yes. OK. <b>I've got them</b>." },
+    { start: 61, speaker: "H", text: "It seems they <b>entered England</b> on June the 16th." },
+    { start: 65, speaker: "H", text: "They're now being <b>held</b> in our main <b>sorting office</b> in Manchester." },
+    { start: 70, speaker: "Jaslyn", text: "OK. Do you <b>know why</b>?" },
+    { start: 72, speaker: "H", text: "I have <b>no information</b> on that, I'm afraid." },
+    { start: 75, speaker: "H", text: "But they're <b>going out this week</b>." },
+    { start: 78, speaker: "H", text: "They'll be <b>with you</b> by the end of the week, the 25th." },
+    { start: 82, speaker: "H", text: "Oh, and you'll have to <b>pay £8.70</b> for one of them." },
+    { start: 87, speaker: "H", text: "Because of <b>insufficient postage</b>." },
+    { start: 90, speaker: "Jaslyn", text: "Oh, OK. That's strange. <b>Thanks anyway</b>, though." }
+];
+const scriptData1_2_P2 = [
+    { start: 0, speaker: "Narrator", text: "Twelve point four." },
+    { start: 3, speaker: "H", text: "If you can just <b>wait one more minute</b>. I'm just <b>checking everything</b> now." },
+    { start: 8, speaker: "H", text: "The <b>system's a bit slow</b> today, I'm afraid." },
+    { start: 12, speaker: "H", text: "OK. So one of your packages has been <b>returned to Singapore</b>." },
+    { start: 18, speaker: "H", text: "And the other one is in our main <b>sorting office</b> in Manchester..." },
+    { start: 24, speaker: "Jaslyn", text: "No, <b>that's not possible</b>! Look, the last time I called," },
+    { start: 28, speaker: "Jaslyn", text: "the man I spoke to said my packages had <b>entered England</b> on June the 16th." },
+    { start: 34, speaker: "Jaslyn", text: "He said they were <b>going out that week</b> and <b>promised me</b>," },
+    { start: 39, speaker: "Jaslyn", text: "<b>promised me</b> that they'd be <b>with me</b> by the end of that week." },
+    { start: 45, speaker: "H", text: "Ah, well... I don't know <b>what's happened</b>, but obviously <b>something has gone wrong</b>." },
+    { start: 51, speaker: "H", text: "What I can do is I can..." }
+];
+const scriptData1_2_P3 = [
+    { start: 0, speaker: "Narrator", text: "Twelve point five." },
+    { start: 1, speaker: "Trish", text: "Hi there. <b>Sorry I can't get to the phone</b> at the moment," },
+    { start: 4, speaker: "Trish", text: "but if you'd like to <b>leave a message</b>, please do so after the tone." },
+    { start: 9, speaker: "Jim", text: "Hi Tricia. It's me, <b>Jim</b>. Sorry I <b>haven't been in touch</b>." },
+    { start: 13, speaker: "Jim", text: "I wanted to email you, but I'm having <b>all kinds of problems</b> with my <b>Internet connection</b>." },
+    { start: 19, speaker: "Jim", text: "I <b>signed a contract</b> with <b>World Mail</b> the other week, but they've been <b>awful</b>." },
+    { start: 24, speaker: "Jim", text: "They took about <b>three weeks to deliver</b> everything," },
+    { start: 28, speaker: "Jim", text: "and then the <b>wireless box didn't work properly</b>." },
+    { start: 32, speaker: "Jim", text: "I've tried calling them, but I always just get this <b>automated system</b>, which <b>drives me mad</b>!" },
+    { start: 39, speaker: "Jim", text: "Then this morning I got a <b>bill for £80</b>." },
+    { start: 43, speaker: "Jim", text: "<b>Thirty for installation</b> and <b>fifty for the first month</b>! I couldn't believe it!" },
+    { start: 49, speaker: "Jim", text: "It's so <b>annoying</b>. Anyway, sorry. I didn't mean to <b>complain</b>." },
+    { start: 54, speaker: "Jim", text: "Listen, I'll ... Oh. Um." }
+];
+        // --- 기능 함수 ---
+        let mediaRecorder;
+        let audioChunks = {};
+        function initDialogue() {
+            const container = document.getElementById('dialogue-container');
+            dialogueData.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.style = `padding: 12px 15px; background: ${item.bg}; border-radius: 12px; border-left: 6px solid ${item.color}; display: flex; align-items: center; justify-content: space-between; gap: 10px;`;
+                div.innerHTML = `
+                    <div style="flex: 1;"><strong style="color: ${item.color};">${item.name}:</strong> <span>${item.text}</span></div>
+                    <div style="display: flex; gap: 8px; flex-shrink: 0;">
+                        <button onclick="speakText(\`${item.text.replace(/<\/?[^>]+(>|$)/g, "")}\`, '${item.char}')" style="background: ${item.color}; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">🔊</button>
+                        <button id="rec-${index}" onclick="toggleRecord(${index})" style="background: #e74c3c; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">🎤</button>
+                        <button id="play-${index}" onclick="playMyVoice(${index})" style="background: #2ecc71; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: none;">▶</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+        function speakText(text, character) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.pitch = (character === 'maya') ? 1.5 : 1.1;
+            window.speechSynthesis.speak(utterance);
+        }
+async function toggleRecord(index) {
+    const btn = document.getElementById(`rec-${index}`);
+    if (mediaRecorder && mediaRecorder.state === "recording") {
+        mediaRecorder.stop();
+        btn.style.backgroundColor = "#e74c3c"; btn.innerText = "🎤";
+    } else {
+        const stream = await navigator.mediaDevices.getUserMedia({ 
+            audio: {
+                echoCancellation: true,
+                noiseSuppression: true,
+                autoGainControl: false, // 웅웅거림 방지를 위해 끔
+                channelCount: 1
+            } 
+        });
+        // --- 오디오 증폭 로직 시작 ---
+        const audioContext = new AudioContext();
+        const source = audioContext.createMediaStreamSource(stream);
+        const gainNode = audioContext.createGain();
+        
+        gainNode.gain.value = 2.0; // [조정 포인트] 소리를 3배 키웁니다 (1.0~5.0 사이 조절 가능)
+        
+        const destination = audioContext.createMediaStreamDestination();
+        source.connect(gainNode);
+        gainNode.connect(destination);
+        // --- 오디오 증폭 로직 끝 ---
+        // 증폭된 스트림으로 녹음 진행
+        mediaRecorder = new MediaRecorder(destination.stream);
+        const chunks = [];
+        mediaRecorder.ondataavailable = e => chunks.push(e.data);
+        mediaRecorder.onstop = () => {
+            const blob = new Blob(chunks, { type: 'audio/webm' });
+            audioChunks[index] = URL.createObjectURL(blob);
+            document.getElementById(`play-${index}`).style.display = "flex";
+            
+            stream.getTracks().forEach(track => track.stop());
+            audioContext.close();
+        };
+        mediaRecorder.start();
+        btn.style.backgroundColor = "#000"; btn.innerText = "⏹";
+    }
+}        function playMyVoice(index) {
+            if (audioChunks[index]) new Audio(audioChunks[index]).play();
+        }
+        function setupAudioSync(audioId, containerId, data, isDialogue = false) {
+    const audio = document.getElementById(audioId);
+    const container = document.getElementById(containerId);
+    if(!audio || !container) return;
+    
+    container.innerHTML = '';
+    data.forEach((line, index) => {
+        const div = document.createElement('div');
+        div.className = 'script-line';
+        div.id = `${containerId}-line-${index}`;
+        div.innerHTML = isDialogue ? `<strong>${line.speaker}:</strong> ${line.text}` : line.text;
+        container.appendChild(div);
+    });
+    // 오디오 재생 시 스크립트 창 보이기
+    audio.addEventListener('play', () => { 
+        container.style.display = 'block'; 
+    });
+    // 오디오 진행 시간에 맞춰 스크립트 하이라이트 및 스크롤
+    audio.addEventListener('timeupdate', () => {
+        let activeIdx = -1;
+        for (let i = 0; i < data.length; i++) {
+            if (audio.currentTime >= data[i].start) activeIdx = i; else break;
+        }
+        container.querySelectorAll('.script-line').forEach(l => l.classList.remove('active'));
+        if (activeIdx !== -1) {
+            const currentLine = document.getElementById(`${containerId}-line-${activeIdx}`);
+            if (currentLine) {
+                currentLine.classList.add('active');
+                container.scrollTo({ 
+                    top: currentLine.offsetTop - container.offsetTop - 80, 
+                    behavior: 'smooth' 
+                });
+            }
+        }
+    });
+    // 추가된 부분: 음성 재생이 끝나면 스크립트 창 숨기기
+    audio.addEventListener('ended', () => { 
+        container.style.display = 'none'; 
+    });
+}        function centralizeScroll(targetId) {
+            const element = document.getElementById(targetId);
+            if (!element) return;
+            const elementRect = element.getBoundingClientRect();
+            const middle = (elementRect.top + window.pageYOffset) - (window.innerHeight / 2) + (elementRect.height / 2);
+            window.scrollTo({ top: middle, behavior: 'smooth' });
+            if (targetId.startsWith('vocab')) {
+                document.querySelectorAll('.card').forEach(c => c.classList.remove('active-highlight'));
+                element.classList.add('active-highlight');
+                setTimeout(() => element.classList.remove('active-highlight'), 1500);
+            }
+        }
+        function toggleAnswer(btn) {
+            const answerSpan = btn.nextElementSibling;
+            if (answerSpan.style.display === "none") {
+                answerSpan.style.display = "inline"; btn.innerText = "Hide";
+            } else {
+                answerSpan.style.display = "none"; btn.innerText = "Check";
+            }
+        }
+        function saveProgress() {
+            const allInputs = document.querySelectorAll('input[type="text"], textarea');
+            allInputs.forEach((input, index) => {
+                localStorage.setItem(`UNIT12_all_data_${index}`, input.value);
+            });
+            alert('Your progress has been saved! ✅');
+        }
+         // --- 초기화 로직 ---
+        window.addEventListener('DOMContentLoaded', () => {
+            initDialogue();
+            setupAudioSync('main-player-1', 'script-container1', scriptData1_1_D1, true);
+            setupAudioSync('main-player-2', 'script-container2', scriptData1_1_D2, true);
+            setupAudioSync('player-1', 'script-1', scriptData1_2_P1, true);
+            setupAudioSync('player-2', 'script-2', scriptData1_2_P2, true);
+            setupAudioSync('player-3', 'script-3', scriptData1_2_P3, true);
+            // ... 나머지 setupAudioSync 호출
+            // 저장된 데이터 불러오기
+            const allInputs = document.querySelectorAll('input[type="text"], textarea');
+            allInputs.forEach((input, index) => {
+                const savedValue = localStorage.getItem(`UNIT10_all_data_${index}`);
+                if (savedValue) input.value = savedValue;
+            });
+        });
+    </script>
+
+<script>
+function speak(text) {
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';
+    
+    const voices = window.speechSynthesis.getVoices();
+    // 여성 목소리 우선 선택
+    const femaleVoice = voices.find(v => v.name.includes('Female') || v.name.includes('Google US English') || v.name.includes('Samantha'));
+    
+    if (femaleVoice) {
+        utterance.voice = femaleVoice;
+    }
+    
+    utterance.pitch = 1.1; 
+    utterance.rate = 1.0; // 현대식 표준 영어 빠르기
+    window.speechSynthesis.speak(utterance);
+}window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.getVoices(); };
+</script>
+</body>
+</html>

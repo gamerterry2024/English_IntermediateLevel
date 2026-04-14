@@ -1,0 +1,1132 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNIT 11: PLACES TO STAY</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --bg: #f4f7f6;
+            --white: #ffffff;
+            --highlight: #fff59d;
+            --accent: #e67e22;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg);
+            color: var(--primary);
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+        section {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            /* 상단 헤더 높이를 고려한 스크롤 위치 조정 */
+            scroll-margin-top: 90px;
+        }
+        .back-to-dashboard {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 1001;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        .back-to-dashboard:hover {
+            transform: scale(1.1);
+            background-color: var(--secondary);
+        }
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 20px;
+            padding-bottom: 300px; 
+        }
+        h2 {
+            border-left: 6px solid var(--secondary);
+            padding-left: 15px;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        .reading-box {
+            background-color: #fffaf0;
+            border: 1px solid #f39c12;
+            padding: 25px;
+            border-radius: 12px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .vocab-link {
+            color: var(--secondary);
+            text-decoration: none;
+            border-bottom: 2px solid var(--secondary);
+            font-weight: bold;
+            padding: 0 2px;
+            cursor: pointer;
+        }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .card {
+            border: 1px solid #eee;
+            padding: 20px;
+            border-radius: 10px;
+            background: #fff;
+            transition: all 0.4s ease;
+        }
+        .card.active-highlight {
+            border: 2px solid var(--accent);
+            background-color: #fffde7;
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .return-btn {
+            display: inline-block;
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: bold;
+            border: 1px solid var(--secondary);
+            padding: 4px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .audio-zone {
+            background: #ebf5fb;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--secondary);
+            margin: 20px 0;
+            text-align: center;
+        }
+        .audio-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .script-window {
+            margin-top: 15px;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            height: 250px; 
+            overflow-y: auto;
+            display: none;
+            text-align: left;
+        }
+        .script-line {
+            padding: 8px 10px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            transition: background 0.3s;
+            font-size: 0.95rem;
+        }
+        .script-line.active {
+            background-color: var(--highlight);
+            font-weight: bold;
+        }
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        .quiz-item {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .instruction {
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        .save-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .save-btn:hover {
+            background-color: #219150;
+        }
+        .mini-input {
+            width: 100px !important;
+            padding: 5px !important;
+            margin: 0 5px !important;
+            display: inline-block !important;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html#unit_11" class="back-to-dashboard">🏠 Back to Dashboard</a>
+    <header>
+        <h1>UNIT 11</h1>
+        <nav class="nav-links">
+            <a href="#intro-reading">0. Core Reading</a>
+            <a href="#section1">1. Listen & Read</a>
+            <a href="#section2">2. Speaking</a>
+            <a href="#section3">3. Writing</a>
+        </nav>
+    </header>
+    <div class="container">
+        
+<section id="intro-reading">
+    <h2>Core Reading: Different Ways to Stay and Play</h2>
+    
+    <div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+    <p style="margin-top: 0;">When planning a vacation, the most <strong><span class="vocab-link" id="text-crucial" onclick="centralizeScroll('vocab-crucial')">crucial</span></strong> decision is often where you will stay. This choice can lead to <strong><span class="vocab-link" id="text-entirely" onclick="centralizeScroll('vocab-entirely')">entirely</span></strong> different experiences, as seen in the lives of Falah from Jordan and Andro from Croatia, or in the busy daily operations of the Hillbrow Hotel in Dublin.</p>
+    <p>Falah Rhiladi lives in the <strong><span class="vocab-link" id="text-bustling" onclick="centralizeScroll('vocab-bustling')">bustling</span></strong> city of Amman, but his roots are in the desert. His grandfather <b>used to follow</b> the traditional <strong><span class="vocab-link" id="text-nomadic" onclick="centralizeScroll('vocab-nomadic')">nomadic</span></strong> life, moving his home across the sands. While Falah is a <strong><span class="vocab-link" id="text-proclaimed" onclick="centralizeScroll('vocab-proclaimed')">self-proclaimed</span></strong> "city boy" who <b>would never give up</b> his urban comforts, he still feels the pull of the wilderness. Once a year, he goes camping with his father. He loves the peace of the desert, claiming that <b>you wouldn't believe</b> how many stars you can see once you leave the city's <strong><span class="vocab-link" id="text-pollution" onclick="centralizeScroll('vocab-pollution')">pollution</span></strong> behind. If he didn't have these annual trips, <b>he would probably feel</b> much more stressed by city life.</p>
+    <p>Similarly, Andro Zelic grew up with a deep love for the outdoors. As a child, his family <b>used to go</b> to the same campsite every year on the Croatian coast. He <strong><span class="vocab-link" id="text-fondly" onclick="centralizeScroll('vocab-fondly')">fondly</span></strong> remembers a "gang" of children who always <b>used to see</b> each other and run around until the early hours. "We never <b>used to go</b> to bed before one in the morning," he recalls. Even though Andro can afford luxury hotels today, he still prefers camping. He believes that if he stayed in a hotel, his children <b>wouldn't have</b> the same freedom to explore. To him, hotels often have a cold <strong><span class="vocab-link" id="text-atmosphere" onclick="centralizeScroll('vocab-atmosphere')">atmosphere</span></strong> compared to the friendly <strong><span class="vocab-link" id="text-vibe" onclick="centralizeScroll('vocab-vibe')">vibe</span></strong> of a campsite.</p>
+    <p>However, hotels remain the primary choice for many travelers. David recently called the Hillbrow Hotel to inquire about a room. He learned that while the hotel is <strong><span class="vocab-link" id="text-convenient" onclick="centralizeScroll('vocab-convenient')">convenient</span></strong>, it comes with extra costs. For instance, if guests wanted Wi-Fi, <b>they would have to pay</b> a fee. Furthermore, if they decided to cancel late, <b>they would lose</b> their 10% <strong><span class="vocab-link" id="text-deposit" onclick="centralizeScroll('vocab-deposit')">deposit</span></strong>.</p>
+    <p>The life of a hotel receptionist is never dull, especially when dealing with guests in the <strong><span class="vocab-link" id="text-presidential" onclick="centralizeScroll('vocab-presidential')">presidential</span></strong> suite. Lady Zaza has a <strong><span class="vocab-link" id="text-severe" onclick="centralizeScroll('vocab-severe')">severe</span></strong> nut allergy; if she accidentally ate a peanut, <b>it would be</b> a medical emergency. If the hotel <b>didn't remove</b> all green items from her room, she <b>would likely refuse</b> to stay there. She also requested hundreds of flowers because <strong><span class="vocab-link" id="text-arranging" onclick="centralizeScroll('vocab-arranging')">arranging</span></strong> them is the only thing that relaxes her.</p>
+    <p>Whether it is the <strong><span class="vocab-link" id="text-simplicity" onclick="centralizeScroll('vocab-simplicity')">simplicity</span></strong> of a desert tent, the <strong><span class="vocab-link" id="text-nostalgia" onclick="centralizeScroll('vocab-nostalgia')">nostalgia</span></strong> of a coastal campsite, or the high-<strong><span class="vocab-link" id="text-maintenance" onclick="centralizeScroll('vocab-maintenance')">maintenance</span></strong> luxury of a suite, how we travel <strong><span class="vocab-link" id="text-reflects" onclick="centralizeScroll('vocab-reflects')">reflects</span></strong> who we are. As Andro suggests, if more people chose camping, <b>they would perhaps find</b> a warmer way of life. But for those like Lady Zaza, the comfort of a hotel is a necessity she <b>would never trade</b> for a night under the stars.</p>
+    </div>
+<article style="margin-top: 3rem; border-top: 2px solid #eee;">
+    <h3 id="vocab-builder">Vocabulary Builder</h3>
+    <div class="vocab-grid">
+ 
+<div class="card" id="vocab-crucial">
+    <div class="card-content">
+        <strong>Crucial:</strong> Extremely important or necessary for the success or failure of something.
+        <br><span class="return-btn" onclick="centralizeScroll('text-crucial')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-entirely">
+    <div class="card-content">
+        <strong>Entirely:</strong> Completely; with nothing missing or excepted.
+        <br><span class="return-btn" onclick="centralizeScroll('text-entirely')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-bustling">
+    <div class="card-content">
+        <strong>Bustling:</strong> Full of people moving about in a busy way; very active.
+        <br><span class="return-btn" onclick="centralizeScroll('text-bustling')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-nomadic">
+    <div class="card-content">
+        <strong>Nomadic:</strong> Belonging to a group of people who move from place to place rather than living in one place all the time.
+        <br><span class="return-btn" onclick="centralizeScroll('text-nomadic')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-proclaimed">
+    <div class="card-content">
+        <strong>Self-proclaimed:</strong> Giving yourself a particular title or status without anyone else saying it is true.
+        <br><span class="return-btn" onclick="centralizeScroll('text-proclaimed')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-pollution">
+    <div class="card-content">
+        <strong>Pollution:</strong> Substances that make air, water, or soil dirty and dangerous for living things.
+        <br><span class="return-btn" onclick="centralizeScroll('text-pollution')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-fondly">
+    <div class="card-content">
+        <strong>Fondly:</strong> In a way that shows love or great liking for someone or something.
+        <br><span class="return-btn" onclick="centralizeScroll('text-fondly')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-atmosphere">
+    <div class="card-content">
+        <strong>Atmosphere:</strong> The feeling or mood that you get from a particular place or situation.
+        <br><span class="return-btn" onclick="centralizeScroll('text-atmosphere')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-vibe">
+    <div class="card-content">
+        <strong>Vibe:</strong> The general mood or emotional quality of a person, place, or situation (informal).
+        <br><span class="return-btn" onclick="centralizeScroll('text-vibe')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-convenient">
+    <div class="card-content">
+        <strong>Convenient:</strong> Useful, easy, or quick to do; not causing any problems.
+        <br><span class="return-btn" onclick="centralizeScroll('text-convenient')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-deposit">
+    <div class="card-content">
+        <strong>Deposit:</strong> A sum of money that is given as the first part of a larger payment to secure a booking.
+        <br><span class="return-btn" onclick="centralizeScroll('text-deposit')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-presidential">
+    <div class="card-content">
+        <strong>Presidential:</strong> Relating to a president, or suitable for a president (often used for luxury hotel suites).
+        <br><span class="return-btn" onclick="centralizeScroll('text-presidential')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-severe">
+    <div class="card-content">
+        <strong>Severe:</strong> Very serious, bad, or difficult to deal with.
+        <br><span class="return-btn" onclick="centralizeScroll('text-severe')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-arranging">
+    <div class="card-content">
+        <strong>Arranging:</strong> Putting things in a particular order or position, especially to make them look attractive.
+        <br><span class="return-btn" onclick="centralizeScroll('text-arranging')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-simplicity">
+    <div class="card-content">
+        <strong>Simplicity:</strong> The quality of being easy to understand or use, or the state of being plain and uncomplicated.
+        <br><span class="return-btn" onclick="centralizeScroll('text-simplicity')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-nostalgia">
+    <div class="card-content">
+        <strong>Nostalgia:</strong> A feeling of pleasure mixed with sadness when you think of happy times in the past.
+        <br><span class="return-btn" onclick="centralizeScroll('text-nostalgia')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-maintenance">
+    <div class="card-content">
+        <strong>Maintenance:</strong> The act of keeping something in good condition (High-maintenance: needing a lot of time, money, or effort).
+        <br><span class="return-btn" onclick="centralizeScroll('text-maintenance')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-reflects">
+    <div class="card-content">
+        <strong>Reflects:</strong> To show, express, or be a sign of something.
+        <br><span class="return-btn" onclick="centralizeScroll('text-reflects')">Return to Text ↑</span>
+    </div>
+</div>
+
+    </div>
+</article>
+</section>
+<section id="section1">
+            <h2>Section 1: Listening & Reading Integration</h2>
+<article>
+    <h3>1-1. Hotel Reservation Inquiry (Dialogues)</h3>
+    
+    <div class="audio-zone" style="margin-bottom: 20px;">
+        <span class="audio-label">🎧 Listening 1: Hotel Reservation Inquiry (CD2_Track 14)</span>
+        <audio id="main-player-1" style="width:100%;" controls src="CD2_Track 14.mp3"></audio>
+    </div>
+    <div id="script-container1" class="script-window" style="height: 450px; overflow-y: auto;"></div>
+
+</article>
+            <article style="margin-top: 3rem; border-top: 1px solid #eee; padding-top: 2rem;">
+                <h3>1-2. Hotel Service & Guest Requirements</h3>
+                
+                <div class="audio-zone">
+                    <span class="audio-label">🎁 Conversation 1 : Credit Card Details for Deposit (CD2_Track 16)</span>
+                    <audio id="player-1" style="width:100%;" controls src="CD2_Track 16.mp3"></audio>
+                    <div id="script-1" class="script-window"></div>
+                </div>
+                <div class="audio-zone">
+                    <span class="audio-label">📦 Conversation 2 : Special Requests for Lady Zaza (CD2_Track 17)</span>
+                    <audio id="player-2" style="width:100%;" controls src="CD2_Track 17.mp3"></audio>
+                    <div id="script-2" class="script-window"></div>
+                </div>
+     
+            </article>
+
+         <article style="margin-top: 3rem; border-top: 1px solid #eee; padding-top: 2rem;">
+    <h2>1-3. &#x1F4D6; Reading: Camping Experiences</h2>
+
+
+<div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+<p style="margin-top: 0; font-weight: bold; color: #2c3e50;">Falah Rhiladi, Jordan</p>
+    <p>
+        I live and was brought up in Amman, the capital of Jordan, but I'm actually from a family of Bedouin. 
+        My grandfather <b>used to follow the traditional nomadic life</b>, moving from place to place. 
+        I'm a real city boy now and <b>I would never give it up</b>. 
+        However, I usually go camping in the desert once a year with my father. I really love it. 
+        You feel a peace you can never get in the city with its noise and pollution. 
+        You feel closer to nature and God in the desert, and <b>you wouldn't believe how many stars you can see</b>!
+    </p>
+
+    <p style="margin-top: 20px; font-weight: bold; color: #2c3e50;">Andro Zelic, Croatia</p>
+    <p>
+        We <b>used to go to the same campsite every year</b> when I was a kid. 
+        It's a place on the coast not far from Split. It was a different world to Zagreb. 
+        We <b>always used to see the same people there</b>. There was a gang of us that just ran around all day. 
+        We went to the beach, played table tennis or football, explored the campsite and played hide and seek: 
+        we just did whatever we liked and <b>we never used to go to bed before one in the morning</b>. 
+        I can afford to stay in hotels now with my family, but to be honest, we prefer to camp. 
+        Hotels have a cold atmosphere. They're less friendly and there's not the same freedom and, actually, there are often more facilities at campsites - especially for kids.
+    </p>
+</div>
+	</article>
+
+    <div class="quiz-container" style="margin-top: 2rem; padding: 0 1rem;">
+        <h4 style="color: var(--secondary); margin-bottom: 1.5rem;">✅ Check your understanding (True or False)</h4>
+        <style>
+            .quiz-row { display: flex; align-items: center; margin-bottom: 15px; font-size: 1.05rem; flex-wrap: wrap; }
+            .quiz-question { margin-right: 12px; font-weight: 500; }
+            .btn-check-small { 
+                padding: 3px 10px; font-size: 0.85rem; cursor: pointer; border-radius: 6px; 
+                border: 1px solid var(--secondary); background: white; color: var(--secondary);
+                transition: 0.2s; margin-right: 10px;
+            }
+            .btn-check-small:hover { background: var(--secondary); color: white; }
+            .answer-text { color: var(--success); font-weight: bold; font-size: 0.95rem; }
+        </style>
+
+
+<div class="quiz-container" style="background: #fdfdfd; padding: 20px; border-radius: 12px; border: 1px solid #eee;">
+    
+<div class="quiz-row" id="tf-q1" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+    <span class="quiz-question">1. Falah's grandfather used to live a nomadic life as a Bedouin.</span>
+    <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+        <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+        <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+    </div>
+    <button onclick="validateTF('tf-q1', 'T', 'True (His grandfather used to follow the traditional nomadic life, moving from place to place.)')" class="btn-check-small">Check</button>
+    <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-q2" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+    <span class="quiz-question">2. Falah wants to leave the city and return to the traditional nomadic lifestyle.</span>
+    <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+        <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+        <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+    </div>
+    <button onclick="validateTF('tf-q2', 'F', 'False (He describes himself as a real city boy and said he would never give it up.)')" class="btn-check-small">Check</button>
+    <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-q3" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+    <span class="quiz-question">3. Andro and his friends used to go to bed very early at the campsite.</span>
+    <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+        <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+        <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+    </div>
+    <button onclick="validateTF('tf-q3', 'F', 'False (They never used to go to bed before one in the morning.)')" class="btn-check-small">Check</button>
+    <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-q4" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+    <span class="quiz-question">4. Andro prefers staying in hotels now because they are friendlier than campsites.</span>
+    <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+        <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+        <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+    </div>
+    <button onclick="validateTF('tf-q4', 'F', 'False (He prefers camping because he thinks hotels have a cold atmosphere and are less friendly.)')" class="btn-check-small">Check</button>
+    <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-q5" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+    <span class="quiz-question">5. According to Andro, campsites often have more facilities for children than hotels.</span>
+    <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+        <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+        <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+    </div>
+    <button onclick="validateTF('tf-q5', 'T', 'True (He mentions there are often more facilities at campsites, especially for kids.)')" class="btn-check-small">Check</button>
+    <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+</div>
+<script>
+// T/F 버튼 선택 시 시각적 효과
+function selectTF(btn, val) {
+    const parent = btn.parentElement;
+    const btns = parent.querySelectorAll('.tf-btn');
+    btns.forEach(b => {
+        b.style.background = '#fff';
+        b.style.color = '#333';
+        b.classList.remove('selected');
+    });
+    btn.style.background = '#333';
+    btn.style.color = '#fff';
+    btn.classList.add('selected');
+    btn.dataset.value = val;
+}// 정답 확인 및 토글 함수
+function validateTF(rowId, correctVal, explanation) {
+    const row = document.getElementById(rowId);
+    const selectedBtn = row.querySelector('.tf-btn.selected');
+    const ansText = row.querySelector('.answer-text');
+    // 이미 정답이 보이고 있다면 -> 다시 숨기기 (토글)
+    if (ansText.style.display === 'inline') {
+        ansText.style.display = 'none';
+        row.style.background = '#fff'; // 배경색 초기화
+        return;
+    }
+    // 버튼을 선택하지 않았을 때
+    if (!selectedBtn) {
+        alert("Please select T or F first!");
+        return;
+    }
+    // 정답 확인 모드
+    const userVal = selectedBtn.dataset.value;
+    ansText.style.display = 'inline';
+    ansText.innerText = explanation;
+    if (userVal === correctVal) {
+        row.style.background = '#e8f5e9'; // 정답: 연한 초록색
+        ansText.style.color = '#2e7d32';
+    } else {
+        row.style.background = '#ffebee'; // 오답: 연한 빨간색
+        ansText.style.color = '#c62828';
+    }
+}</script>
+    </div>
+</article>
+        </section>
+<section id="section2">
+    <h2>Section 2: Speaking Practice</h2> 
+    
+    <article style="margin-top: 1rem;">
+        <h3>Interactive Dialogue (Easy Version)</h3>
+        <p class="instruction" style="margin-bottom: 20px;">
+            <i class="fas fa-headphones-alt"></i> Listen to the sentence (🔊), record your voice (🎤), and check your recording (▶).
+        </p>
+        <div class="quiz-item" style="background: #fff; padding: 25px; border-radius: 15px; border: 1px solid #ddd; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <div id="dialogue-container" style="display: flex; flex-direction: column; gap: 12px; font-size: 1.05rem;"></div>
+        </div>
+    </article>
+</section>
+<section id="section3">
+            <h2>Section 3: Writing Practice</h2>
+            <div id="final-quiz-area" style="margin-top: 40px; border-top: 2px solid var(--secondary); padding-top: 25px;">
+                <div class="quiz-item" style="background: #fcfcfc; padding: 20px; border-radius: 10px;">
+    <p style="margin-bottom: 15px;">
+        <strong style="font-size: 1.1rem; color: #3498db;">Step 1. Grammar & Vocabulary Check:</strong>
+    </p> 
+<div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+    <h3 style="text-align: center; color: #2c3e50; margin-bottom: 2rem; border-bottom: 3px double #3498db; padding-bottom: 10px; display: block; width: fit-content; margin-left: auto; margin-right: auto;">
+        <i class="fas fa-book-open" style="margin-right: 10px;"></i>Grammar Mastery
+    </h3>
+
+<h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-top: 0;">
+1. Past Habits & States (used to)</h3>
+<div style="background-color: #fff; padding: 15px; border-radius: 10px; border: 1px dashed #bdc3c7; margin-bottom: 15px;">
+<p style="margin: 5px 0;"><strong>• used to + verb</strong>: Used to talk about <strong>past habits</strong> or states that are no longer true now.</p>
+<p style="margin: 5px 0;"><strong>• never used to + verb</strong>: Used for things that <strong>did not happen</strong> regularly in the past.</p>
+</div>
+<ul style="list-style-type: none; padding-left: 10px;">
+<li style="margin-bottom: 15px;">
+<strong style="color: #e67e22;">• Example:</strong> "My grandfather <span style="color: #e67e22; font-weight: bold;">used to follow</span> the traditional nomadic life."
+
+<i style="color: #7f8c8d;">(Core Reading - Falah's family history)</i>
+</li>
+<li style="margin-bottom: 15px;">
+<strong style="color: #16a085;">• Example:</strong> "We <span style="color: #16a085; font-weight: bold;">never used to go</span> to bed before one in the morning."
+
+<i style="color: #7f8c8d;">(Core Reading - Andro's childhood camping)</i>
+</li>
+</ul>
+
+<h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-top: 25px;">
+2. Imaginary Situations (Second Conditional)</h3>
+<div style="background-color: #fff; padding: 15px; border-radius: 10px; border: 1px dashed #bdc3c7; margin-bottom: 15px;">
+<p style="margin: 5px 0;"><strong>• If + Past Simple, ...would + verb</strong>: Used to talk about <strong>imaginary or unlikely</strong> situations in the present or future.</p>
+<p style="margin: 5px 0;"><strong>• wouldn't</strong>: Used to express a negative result in an imaginary situation.</p>
+</div>
+<ul style="list-style-type: none; padding-left: 10px;">
+<li style="margin-bottom: 15px;">
+<strong style="color: #2980b9;">• Example:</strong> "If she accidentally ate a peanut, it <span style="color: #2980b9; font-weight: bold;">would be</span> a medical emergency."
+
+<i style="color: #7f8c8d;">(Core Reading - Lady Zaza's allergy)</i>
+</li>
+<li style="margin-bottom: 15px;">
+<strong style="color: #2980b9;">• Example:</strong> "You <span style="color: #2980b9; font-weight: bold;">wouldn't believe</span> how many stars you can see!"
+
+<i style="color: #7f8c8d;">(Core Reading - Falah's camping experience)</i>
+</li>
+</ul>
+
+<h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-top: 25px;">
+3. Conditional Intentions & Will</h3>
+<div style="background-color: #fff; padding: 15px; border-radius: 10px; border: 1px dashed #bdc3c7; margin-bottom: 15px;">
+<p style="margin: 5px 0;"><strong>• would / wouldn't (Volition)</strong>: Used to show <strong>willingness</strong> or refusal to do something in a specific context.</p>
+</div>
+<ul style="list-style-type: none; padding-left: 10px;">
+<li style="margin-bottom: 15px;">
+<strong style="color: #d35400;">• Example:</strong> "I am a real city boy and I <span style="color: #d35400; font-weight: bold;">would never give</span> it up."
+
+<i style="color: #7f8c8d;">(Core Reading - Falah's lifestyle choice)</i>
+</li>
+<li style="margin-bottom: 15px;">
+<strong style="color: #d35400;">• Example:</strong> "She <span style="color: #d35400; font-weight: bold;">would likely refuse</span> to stay there."
+
+<i style="color: #7f8c8d;">(Core Reading - Lady Zaza's reaction)</i>
+</li>
+</ul>
+
+<hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
+
+<p style="margin-top: 20px;"><strong>Context from our Reading:</strong></p>
+<ul style="padding-left: 20px;">
+<li>"If guests wanted Wi-Fi, they <span style="color: #2980b9; font-weight: bold;">would have to pay</span> a fee."</li>
+<li>"We <span style="color: #e67e22; font-weight: bold;">used to go</span> to the same campsite every year."</li>
+<li>"If more people chose camping, they <span style="color: #2980b9; font-weight: bold;">would perhaps find</span> a warmer way of life."</li>
+</ul>
+</div>
+
+<div class="quiz-item" style="background: #fff; padding: 25px; border-radius: 15px; border: 1px solid #ddd; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+<div id="vocabulary-mastery-section">
+<h3 style="text-align: center; color: #2c3e50; margin-bottom: 2rem; border-bottom: 3px double #3498db; padding-bottom: 10px; display: block; width: fit-content; margin-left: auto; margin-right: auto; font-size: 1.6rem;">
+        <i class="fas fa-spell-check" style="margin-right: 10px;"></i>Vocabulary Check
+    </h3>
+
+ 
+<div style="background: #fff5f5; border: 1px solid #fed7d7; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #c53030; margin: 0; border-left: 4px solid #f56565; padding-left: 10px;">Group 1</h4>
+<span style="font-size: 0.85rem; background: #f56565; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: crucial, entirely, bustling, nomadic, proclaimed
+</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+1. Water is <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> for our survival.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: crucial)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+2. My experience at the new hotel was <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> different from the last one.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: entirely)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+3. The city center is always <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> with tourists and shoppers.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: bustling)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+4. Bedouin tribes used to live a <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> life in the desert.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: nomadic)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+5. He is a self-<input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> expert on ancient history.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: proclaimed)</span>
+</div>
+</div>
+
+<div style="background: #fffaf0; border: 1px solid #feebc8; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #c05621; margin: 0; border-left: 4px solid #ed8936; padding-left: 10px;">Group 2</h4>
+<span style="font-size: 0.85rem; background: #ed8936; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: pollution, fondly, atmosphere, vibe, convenient
+</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+6. Heavy traffic is the main cause of air <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> in the city.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: pollution)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+7. She remembers her childhood camping trips very <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......">.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: fondly)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+8. The restaurant has a very romantic <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> with candlelight.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: atmosphere)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+9. I love the friendly <input type="text" class="mini-input" style="width: 70px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> of this small seaside town.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: vibe)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+10. Online shopping is very <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> for busy people.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: convenient)</span>
+</div>
+</div>
+
+<div style="background: #f0fff4; border: 1px solid #c6f6d5; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #276749; margin: 0; border-left: 4px solid #48bb78; padding-left: 10px;">Group 3</h4>
+<span style="font-size: 0.85rem; background: #48bb78; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: deposit, presidential, severe, arranging, facilities
+</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+11. You need to pay a 10% <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> to book the room.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: deposit)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+12. The famous singer stayed in the <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> suite of the hotel.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: presidential)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+13. He has a <input type="text" class="mini-input" style="width: 80px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> allergy to peanuts.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: severe)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+14. She spends her free time <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> flowers in beautiful vases.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: arranging)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+15. The hotel offers great <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> like a pool and a gym.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: facilities)</span>
+</div>
+</div>
+
+<div style="background: #ebf8ff; border: 1px solid #bee3f8; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #2c5282; margin: 0; border-left: 4px solid #4299e1; padding-left: 10px;">Group 4</h4>
+<span style="font-size: 0.85rem; background: #4299e1; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: simplicity, nostalgia, maintenance, reflects, choice
+</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+16. Some people prefer the <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> of country life.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: simplicity)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+17. Looking at old photos often gives people a sense of <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......">.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: nostalgia)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+18. A luxury car requires high <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> costs.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: maintenance)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+19. The way you dress often <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> your personality.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: reflects)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+20. You have the <input type="text" class="mini-input" style="width: 80px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> to stay in a hotel or camp.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: choice)</span>
+</div>
+</div>
+
+</div>
+</div>
+
+
+<div class="quiz-item" style="margin-top: 40px; padding: 25px; background: #fcfcfc; border-radius: 10px; border: 1px solid #eee;">
+<p style="margin-bottom: 15px;">
+<strong style="font-size: 1.1rem; color: #3498db;">Step 2. Content Check:</strong>
+</p>
+<p style="line-height: 1.6; color: #34495e; font-weight: 500;">
+The Core Reading compares different types of accommodation. Briefly explain <b>why Falah and Andro prefer camping</b> despite their different backgrounds, and describe <b>two specific rules or costs</b> mentioned for the Hillbrow Hotel.
+</p>
+<div style="margin: 10px 0; font-size: 0.85rem; color: #7f8c8d;">
+<i class="fas fa-lightbulb" style="color: #f1c40f;"></i>
+<b>Key Keywords:</b> peace of the desert, nomadic life, freedom to explore, nostalgia, Wi-Fi fee, 10% deposit, cancellation policy.
+</div>
+<textarea id="content-check-answer-u11" rows="3"
+style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; font-size: 0.95rem; line-height: 1.6; resize: vertical; display: block; margin-bottom: 10px; box-sizing: border-box;"
+placeholder="Explain why they like camping and list the hotel's rules/costs..."></textarea>
+</div>
+
+<div class="quiz-item" style="background: #fcfcfc; padding: 25px; border-radius: 10px; margin-top: 20px; border: 1px solid #eee;">
+<p style="margin-bottom: 15px;">
+<strong style="font-size: 1.1rem; color: #3498db;">Step 3. Thinking about Personal Comfort:</strong>
+</p>
+<p style="color: #34495e; line-height: 1.6;">
+In the text, Lady Zaza has <b>specific demands</b> (no green items, many flowers) to feel relaxed, while Andro finds comfort in <b>simplicity</b> and <b>nostalgia</b>.
+
+
+<b>In your opinion, what is the most "crucial" thing a place must have for you to feel comfortable? If you could design your own "presidential suite," what specific items would it have?</b>
+</p>
+<textarea rows="5" style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; box-sizing: border-box;"
+placeholder="I think the most crucial thing is... If I designed a suite, it would have..."></textarea>
+</div>
+
+<div style="margin-top: 40px; padding: 30px; background: #fffde7; border-radius: 15px; border: 1px solid #fff176; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+<h3 style="margin-top: 0; color: #f57f17; display: flex; align-items: center;">
+<i class="fas fa-lightbulb" style="margin-right: 12px;"></i> Critical Thinking
+</h3>
+<p style="line-height: 1.7; color: #444;">
+We have explored various <b>PLACES TO STAY</b>, from <b>nomadic</b> desert tents to high-<b>maintenance</b> luxury hotels. We learned that where we stay often <b>reflects</b> who we are and our past habits.
+
+
+<b>If you had a huge budget for a one-month vacation, would you choose to stay in a "bustling" 5-star hotel or a quiet, remote "campsite"?
+
+Support your answer by using the grammar we learned (used to, second conditional). Explain the possible benefits and what you "would" do in that situation.</b>
+</p>
+<textarea class="main-textarea"
+placeholder="Compare a luxury hotel vs. a remote campsite. Use 'used to' to talk about your past travels and 'second conditional' (If I stayed..., I would...) to describe your dream vacation..."
+rows="10"
+style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; font-size: 0.95rem; line-height: 1.6; resize: vertical; display: block; box-sizing: border-box; background: white;">
+</textarea>
+</div>
+
+
+<div style="margin-top: 30px; padding: 25px; background: #ffffff; border-radius: 15px; border: 2px solid #3498db; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="margin: 0; color: #2980b9;"><i class="fas fa-robot"></i> AI Solution</h3>
+        <span style="background: #3498db; color: white; padding: 5px 15px; border-radius: 50px; font-weight: bold; font-size: 1.1rem;">
+            Overall Score: <input type="text" class="mini-input" style="width: 50px !important; color: white; background: transparent; border: 1px solid rgba(255,255,255,0.5); text-align: center;" value="9.2"> / 10
+        </span>
+    </div>
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.95rem;">
+        <thead>
+            <tr style="background: #ebf5fb; text-align: left;">
+                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Evaluation Criteria</th>
+                <th style="padding: 12px; border-bottom: 2px solid #3498db; text-align: center;">Score</th>
+                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Detailed Feedback</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Content</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="10"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Deep reflection on career stages from 20s to 50s."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Logic</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="9.5"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Strong comparison between 'meaning' and 'success'."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Grammar</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="8"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Check comparative forms (e.g., more important than)."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Vocabulary</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="9"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Great use of 'exhausted', 'exploiting', and 'fulfillment'."></td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="background: #f4f7f6; padding: 15px; border-radius: 10px; border-left: 5px solid #27ae60;">
+        <p style="margin: 0 0 10px 0; font-weight: bold; color: #27ae60;"><i class="fas fa-check-circle"></i> Recommended Revision</p>
+        <textarea style="width: 100%; background: transparent; border: 1px dashed #27ae60; border-radius: 5px; padding: 10px; font-style: italic;" rows="8">"In my experience, I thought gaining experience was more important than anything else in my twenties. My companies might have been exploiting me with boring tasks, but I worked hard and struggled through it. In my thirties, I chased high salaries, but I still worked over ten hours a day. Now in my late forties, I was so exhausted that I retired after 30 years of practice. I currently work as a security officer for two hours a day and I am happy because there is no pressure. To me, a 'meaningful' job is more important than a 'successful' one, and that meaning depends on my current physical and mental well-being."</textarea>
+    </div>
+</div>
+            <button class="save-btn" style="margin-top: 20px;" onclick="saveProgress()">Save My Work</button>
+        </section>
+    </div>
+    <script>
+        // --- 데이터 정의 ---
+        const dialogueData = [
+    { name: "Jackie", color: "#3498db", bg: "#ebf5fb", text: "Welcome! Would you like a <b>presidential</b> suite today?", char: "receptionist" },
+    { name: "Andro", color: "#f39c12", bg: "#fdfaf0", text: "No, thanks. I prefer the <b>simplicity</b> of camping.", char: "traveler" },
+    { name: "Jackie", color: "#3498db", bg: "#ebf5fb", text: "But our rooms are very <b>convenient</b> and luxurious.", char: "receptionist" },
+    { name: "Andro", color: "#f39c12", bg: "#fdfaf0", text: "I <b>used to go</b> to campsites <b>every</b> summer.", char: "traveler" },
+    { name: "Jackie", color: "#3498db", bg: "#ebf5fb", text: "If you stayed here, you <b>would have</b> more <b>facilities</b>.", char: "receptionist" },
+    { name: "Andro", color: "#f39c12", bg: "#fdfaf0", text: "But hotels often have a very <b>cold atmosphere</b>.", char: "traveler" },
+    { name: "Jackie", color: "#3498db", bg: "#ebf5fb", text: "We can offer a <b>bustling</b> and exciting <b>vibe</b> here.", char: "receptionist" },
+    { name: "Andro", color: "#f39c12", bg: "#fdfaf0", text: "If I were you, I <b>would choose</b> the <b>entirely</b> free nature.", char: "traveler" },
+    { name: "Jackie", color: "#3498db", bg: "#ebf5fb", text: "Do you need a <b>deposit</b> for your tent space?", char: "receptionist" },
+    { name: "Andro", color: "#f39c12", bg: "#fdfaf0", text: "No, and the <b>nostalgia</b> of the stars is <b>free</b>!", char: "traveler" }
+        ];
+const scriptData1_1_D1 = [
+    { start: 0, speaker: "Narrator", text: "11.1" },
+    { start: 3, speaker: "Jackie", text: "Hillbrow Hotel." },
+    { start: 5, speaker: "David", text: "Oh, hello. I'm ringing on behalf of a colleague. He wants some information." },
+    { start: 9, speaker: "Jackie", text: "Sure. What would you like to know?" },
+    { start: 11, speaker: "David", text: "Um, well, do you have any triple rooms available in August?" },
+    { start: 16, speaker: "Jackie", text: "I'm afraid not. We only have doubles." },
+    { start: 19, speaker: "David", text: "Oh, right. Is it possible to get a double with an extra bed? They have a small kid." },
+    { start: 24, speaker: "Jackie", text: "That should be possible." },
+    { start: 26, speaker: "David", text: "And how much would that be per night?" },
+    { start: 28, speaker: "Jackie", text: "110 euros per night, with a supplement for the cot." },
+    { start: 33, speaker: "David", text: "Sorry. Does that include the cost of the extra bed or not?" },
+    { start: 37, speaker: "Jackie", text: "It does include it, yes." },
+    { start: 40, speaker: "David", text: "And breakfast?" },
+    { start: 41, speaker: "Jackie", text: "I'm afraid breakfast is extra. What dates are they thinking of coming?" },
+    { start: 46, speaker: "David", text: "Um, Tuesday the 12th to the 17th." },
+    { start: 51, speaker: "Jackie", text: "OK. Let me just check our availability. Hmm, I'm afraid we're fully booked that weekend." },
+    { start: 59, speaker: "David", text: "So does that include Friday night?" },
+    { start: 61, speaker: "Jackie", text: "That's right, yes. Sorry." },
+    { start: 64, speaker: "David", text: "And what if they came earlier? Would that be better?" },
+    { start: 68, speaker: "Jackie", text: "Again, the previous Saturday we're full, but we have rooms available from the Sunday night." },
+    { start: 74, speaker: "David", text: "So that's the 10th, right?" },
+    { start: 76, speaker: "Jackie", text: "That's correct." },
+    { start: 77, speaker: "David", text: "OK. I'll need to check with them about that. And just a couple of other things." },
+    { start: 82, speaker: "Jackie", text: "Sure." },
+    { start: 83, speaker: "David", text: "Do you have Wi-Fi or Internet access?" },
+    { start: 86, speaker: "Jackie", text: "There is Wi-Fi in rooms for a fee." },
+    { start: 89, speaker: "David", text: "So you have to pay, right?" },
+    { start: 91, speaker: "Jackie", text: "I'm afraid so. It's 12 euros a day, or four euros for half an hour." },
+    { start: 98, speaker: "David", text: "And do you have parking facilities?" },
+    { start: 101, speaker: "Jackie", text: "Not at the hotel itself, but we have an arrangement with a local car park. They offer a reduced rate of 15 euros per day." },
+    { start: 109, speaker: "David", text: "And what if they wanted to rent a car once they're in Dublin? Could they do that through the hotel?" },
+    { start: 114, speaker: "Jackie", text: "I'm afraid not, but there are several car hire places nearby, or they could try through the Internet." },
+    { start: 121, speaker: "David", text: "OK - and what about getting from the airport?" },
+    { start: 125, speaker: "Jackie", text: "There's a shuttle bus, which serves a number of hotels including ours. It costs three euros - or they could take a cab." },
+    { start: 133, speaker: "David", text: "OK. Let me just talk to my friends. Could you tell me your name if I call back?" },
+    { start: 138, speaker: "Jackie", text: "Yes, it's Jackie, but any of my colleagues can deal with the booking." },
+    { start: 142, speaker: "David", text: "Oh wait, sorry - one last thing. Will they need to make a payment when they make the booking?" },
+    { start: 147, speaker: "Jackie", text: "Yes, we'll need to take a 10% deposit on a credit card." },
+    { start: 152, speaker: "David", text: "So if for whatever reason they didn't come, they'd lose that money?" },
+    { start: 156, speaker: "Jackie", text: "If the cancellation was made within two weeks of the arrival date, then yes, that's right." }
+];
+
+const scriptData1_2_P1 = [
+    { start: 0, speaker: "Narrator", text: "11.3" },
+    { start: 2, speaker: "Jackie", text: "OK, so can I take your credit card details for the deposit?" },
+    { start: 6, speaker: "David", text: "Sure." },
+    { start: 7, speaker: "Jackie", text: "What kind of card is it?" },
+    { start: 9, speaker: "David", text: "Visa." },
+    { start: 10, speaker: "Jackie", text: "And the name on your card?" },
+    { start: 12, speaker: "David", text: "Mr D E Gwaizda. That's G - W - A - I - Z - D - A." },
+    { start: 19, speaker: "Jackie", text: "OK. That's an unusual name." },
+    { start: 22, speaker: "David", text: "Yeah, it's Polish originally." },
+    { start: 24, speaker: "Jackie", text: "OK. And the card number on the card?" },
+    { start: 27, speaker: "David", text: "1003 6566 9242 8307." },
+    { start: 33, speaker: "Jackie", text: "And the security number on the back of the card - the last three digits there?" },
+    { start: 38, speaker: "David", text: "718." },
+    { start: 40, speaker: "Jackie", text: "And the expiry date?" },
+    { start: 42, speaker: "David", text: "0-6 seventeen." },
+    { start: 45, speaker: "Jackie", text: "And can I just take a contact number in case there are any problems?" },
+    { start: 49, speaker: "David", text: "Sure. 0044 796 883 412." }
+];
+
+const scriptData1_2_P2 = [
+    { start: 0, speaker: "Narrator", text: "11.4" },
+    { start: 2, speaker: "Jackie", text: "Hello. Reception." },
+    { start: 4, speaker: "Manager", text: "Hi. I'm calling on behalf of Lady Zaza, in the presidential suite." },
+    { start: 8, speaker: "Jackie", text: "Oh yes. It's a real pleasure to have her in the hotel." },
+    { start: 12, speaker: "Manager", text: "Yeah, well, there was no way we could stay in that last place. The service there was a joke!" },
+    { start: 18, speaker: "Jackie", text: "(nervous laugh) Well, I hope everything's OK with our rooms. We really didn't have much time to prepare them." },
+    { start: 24, speaker: "Manager", text: "Yeah, everything's fine, basically, but there are just a couple of things she's asked for." },
+    { start: 30, speaker: "Jackie", text: "OK." },
+    { start: 31, speaker: "Manager", text: "Well, first, can you ask room service to send some fresh flowers to the room? Lady Zaza enjoys arranging them. It relaxes her, you know?" },
+    { start: 40, speaker: "Manager", text: "She'd like a hundred bunches of red flowers, eighty bunches of white and fifty bunches of yellow." },
+    { start: 48, speaker: "Jackie", text: "Certainly. I'll send someone up with them in a minute." },
+    { start: 51, speaker: "Manager", text: "And tell them to bring more of her favourite chocolates too, please. With the peanut ones removed." },
+    { start: 57, speaker: "Manager", text: "There were two left in the ones that were in the room, and she almost ate them! She has a really bad nut allergy!" },
+    { start: 64, speaker: "Jackie", text: "I'm so sorry to hear that. I'll sort that out at once." },
+    { start: 67, speaker: "Manager", text: "Oh, and no green ones either, please. She can't stand the colour green!" }
+];
+
+
+        // --- 기능 함수 ---
+        let mediaRecorder;
+        let audioChunks = {};
+        function initDialogue() {
+            const container = document.getElementById('dialogue-container');
+            dialogueData.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.style = `padding: 12px 15px; background: ${item.bg}; border-radius: 12px; border-left: 6px solid ${item.color}; display: flex; align-items: center; justify-content: space-between; gap: 10px;`;
+                div.innerHTML = `
+                    <div style="flex: 1;"><strong style="color: ${item.color};">${item.name}:</strong> <span>${item.text}</span></div>
+                    <div style="display: flex; gap: 8px; flex-shrink: 0;">
+                        <button onclick="speakText(\`${item.text.replace(/<\/?[^>]+(>|$)/g, "")}\`, '${item.char}')" style="background: ${item.color}; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">🔊</button>
+                        <button id="rec-${index}" onclick="toggleRecord(${index})" style="background: #e74c3c; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">🎤</button>
+                        <button id="play-${index}" onclick="playMyVoice(${index})" style="background: #2ecc71; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: none;">▶</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+        function speakText(text, character) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.pitch = (character === 'maya') ? 1.5 : 1.1;
+            window.speechSynthesis.speak(utterance);
+        }
+async function toggleRecord(index) {
+    const btn = document.getElementById(`rec-${index}`);
+    if (mediaRecorder && mediaRecorder.state === "recording") {
+        mediaRecorder.stop();
+        btn.style.backgroundColor = "#e74c3c"; btn.innerText = "🎤";
+    } else {
+        const stream = await navigator.mediaDevices.getUserMedia({ 
+            audio: {
+                echoCancellation: true,
+                noiseSuppression: true,
+                autoGainControl: false, // 웅웅거림 방지를 위해 끔
+                channelCount: 1
+            } 
+        });
+        // --- 오디오 증폭 로직 시작 ---
+        const audioContext = new AudioContext();
+        const source = audioContext.createMediaStreamSource(stream);
+        const gainNode = audioContext.createGain();
+        
+        gainNode.gain.value = 2.0; // [조정 포인트] 소리를 3배 키웁니다 (1.0~5.0 사이 조절 가능)
+        
+        const destination = audioContext.createMediaStreamDestination();
+        source.connect(gainNode);
+        gainNode.connect(destination);
+        // --- 오디오 증폭 로직 끝 ---
+        // 증폭된 스트림으로 녹음 진행
+        mediaRecorder = new MediaRecorder(destination.stream);
+        const chunks = [];
+        mediaRecorder.ondataavailable = e => chunks.push(e.data);
+        mediaRecorder.onstop = () => {
+            const blob = new Blob(chunks, { type: 'audio/webm' });
+            audioChunks[index] = URL.createObjectURL(blob);
+            document.getElementById(`play-${index}`).style.display = "flex";
+            
+            stream.getTracks().forEach(track => track.stop());
+            audioContext.close();
+        };
+        mediaRecorder.start();
+        btn.style.backgroundColor = "#000"; btn.innerText = "⏹";
+    }
+}        function playMyVoice(index) {
+            if (audioChunks[index]) new Audio(audioChunks[index]).play();
+        }
+        function setupAudioSync(audioId, containerId, data, isDialogue = false) {
+    const audio = document.getElementById(audioId);
+    const container = document.getElementById(containerId);
+    if(!audio || !container) return;
+    
+    container.innerHTML = '';
+    data.forEach((line, index) => {
+        const div = document.createElement('div');
+        div.className = 'script-line';
+        div.id = `${containerId}-line-${index}`;
+        div.innerHTML = isDialogue ? `<strong>${line.speaker}:</strong> ${line.text}` : line.text;
+        container.appendChild(div);
+    });
+    // 오디오 재생 시 스크립트 창 보이기
+    audio.addEventListener('play', () => { 
+        container.style.display = 'block'; 
+    });
+    // 오디오 진행 시간에 맞춰 스크립트 하이라이트 및 스크롤
+    audio.addEventListener('timeupdate', () => {
+        let activeIdx = -1;
+        for (let i = 0; i < data.length; i++) {
+            if (audio.currentTime >= data[i].start) activeIdx = i; else break;
+        }
+        container.querySelectorAll('.script-line').forEach(l => l.classList.remove('active'));
+        if (activeIdx !== -1) {
+            const currentLine = document.getElementById(`${containerId}-line-${activeIdx}`);
+            if (currentLine) {
+                currentLine.classList.add('active');
+                container.scrollTo({ 
+                    top: currentLine.offsetTop - container.offsetTop - 80, 
+                    behavior: 'smooth' 
+                });
+            }
+        }
+    });
+    // 추가된 부분: 음성 재생이 끝나면 스크립트 창 숨기기
+    audio.addEventListener('ended', () => { 
+        container.style.display = 'none'; 
+    });
+}        function centralizeScroll(targetId) {
+            const element = document.getElementById(targetId);
+            if (!element) return;
+            const elementRect = element.getBoundingClientRect();
+            const middle = (elementRect.top + window.pageYOffset) - (window.innerHeight / 2) + (elementRect.height / 2);
+            window.scrollTo({ top: middle, behavior: 'smooth' });
+            if (targetId.startsWith('vocab')) {
+                document.querySelectorAll('.card').forEach(c => c.classList.remove('active-highlight'));
+                element.classList.add('active-highlight');
+                setTimeout(() => element.classList.remove('active-highlight'), 1500);
+            }
+        }
+        function toggleAnswer(btn) {
+            const answerSpan = btn.nextElementSibling;
+            if (answerSpan.style.display === "none") {
+                answerSpan.style.display = "inline"; btn.innerText = "Hide";
+            } else {
+                answerSpan.style.display = "none"; btn.innerText = "Check";
+            }
+        }
+        function saveProgress() {
+            const allInputs = document.querySelectorAll('input[type="text"], textarea');
+            allInputs.forEach((input, index) => {
+                localStorage.setItem(`UNIT11_all_data_${index}`, input.value);
+            });
+            alert('Your progress has been saved! ✅');
+        }
+        // --- 초기화 로직 ---
+        window.addEventListener('DOMContentLoaded', () => {
+            initDialogue();
+            setupAudioSync('main-player-1', 'script-container1', scriptData1_1_D1, true);
+            setupAudioSync('player-1', 'script-1', scriptData1_2_P1, true);
+            setupAudioSync('player-2', 'script-2', scriptData1_2_P2, true);
+            // ... 나머지 setupAudioSync 호출
+            // 저장된 데이터 불러오기
+            const allInputs = document.querySelectorAll('input[type="text"], textarea');
+            allInputs.forEach((input, index) => {
+                const savedValue = localStorage.getItem(`UNIT11_all_data_${index}`);
+                if (savedValue) input.value = savedValue;
+            });
+        });
+    </script>
+<script>
+function speak(text) {
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';
+    
+    const voices = window.speechSynthesis.getVoices();
+    // 여성 목소리 우선 선택
+    const femaleVoice = voices.find(v => v.name.includes('Female') || v.name.includes('Google US English') || v.name.includes('Samantha'));
+    
+    if (femaleVoice) {
+        utterance.voice = femaleVoice;
+    }
+    
+    utterance.pitch = 1.1; 
+    utterance.rate = 1.0; // 현대식 표준 영어 빠르기
+    window.speechSynthesis.speak(utterance);
+}window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.getVoices(); };
+</script>
+</body>
+</html>

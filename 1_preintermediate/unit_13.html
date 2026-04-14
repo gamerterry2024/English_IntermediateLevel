@@ -1,0 +1,1074 @@
+﻿</html><!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNIT 13: CULTURE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --bg: #f4f7f6;
+            --white: #ffffff;
+            --highlight: #fff59d;
+            --accent: #e67e22;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg);
+            color: var(--primary);
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+        section {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            /* 상단 헤더 높이를 고려한 스크롤 위치 조정 */
+            scroll-margin-top: 90px;
+        }
+        .back-to-dashboard {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 1001;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        .back-to-dashboard:hover {
+            transform: scale(1.1);
+            background-color: var(--secondary);
+        }
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 20px;
+            padding-bottom: 300px; 
+        }
+        h2 {
+            border-left: 6px solid var(--secondary);
+            padding-left: 15px;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        .reading-box {
+            background-color: #fffaf0;
+            border: 1px solid #f39c12;
+            padding: 25px;
+            border-radius: 12px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .vocab-link {
+            color: var(--secondary);
+            text-decoration: none;
+            border-bottom: 2px solid var(--secondary);
+            font-weight: bold;
+            padding: 0 2px;
+            cursor: pointer;
+        }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .card {
+            border: 1px solid #eee;
+            padding: 20px;
+            border-radius: 10px;
+            background: #fff;
+            transition: all 0.4s ease;
+        }
+        .card.active-highlight {
+            border: 2px solid var(--accent);
+            background-color: #fffde7;
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .return-btn {
+            display: inline-block;
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: bold;
+            border: 1px solid var(--secondary);
+            padding: 4px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .audio-zone {
+            background: #ebf5fb;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--secondary);
+            margin: 20px 0;
+            text-align: center;
+        }
+        .audio-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .script-window {
+            margin-top: 15px;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            height: 250px; 
+            overflow-y: auto;
+            display: none;
+            text-align: left;
+        }
+        .script-line {
+            padding: 8px 10px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            transition: background 0.3s;
+            font-size: 0.95rem;
+        }
+        .script-line.active {
+            background-color: var(--highlight);
+            font-weight: bold;
+        }
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        .quiz-item {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .instruction {
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        .save-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .save-btn:hover {
+            background-color: #219150;
+        }
+        .mini-input {
+            width: 100px !important;
+            padding: 5px !important;
+            margin: 0 5px !important;
+            display: inline-block !important;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html#unit_13" class="back-to-dashboard">🏠 Back to Dashboard</a>
+    <header>
+        <h1>UNIT 13</h1>
+        <nav class="nav-links">
+            <a href="#intro-reading">0. Core Reading</a>
+            <a href="#section1">1. Listen & Read</a>
+            <a href="#section2">2. Speaking</a>
+            <a href="#section3">3. Writing</a>
+        </nav>
+    </header>
+    <div class="container">
+        
+<section id="intro-reading">
+    <h2>Core Reading: The Power of Culture: From Small Screens to Global Scenes</h2>
+    
+<div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+<p style="margin-top: 0;">Culture is not just about visiting a museum; it is a living part of our daily lives that shapes who we are and how we connect with others. Across the globe, people <b>have been discovering</b> new ways to express their passions through music, film, and art. Whether it is a low-budget movie from Nigeria or a classical concert in Venezuela, the world of culture is <b>amazing</b> and full of <b>surprising</b> stories.</p>
+<p>One of the most <strong><span class="vocab-link" id="text-fascinating" onclick="centralizeScroll('vocab-fascinating')">fascinating</span></strong> success stories in modern culture is the rise of "Nollywood." It might be <b>surprising</b> to learn that the third biggest film industry in the world—behind the United States and India—is based in Nigeria. For decades, Nigerian filmmakers <b>have been producing</b> over 500 films a year. Unlike Hollywood movies, which take a year to film, these movies take an average of just ten days to complete! Because they are made on tiny budgets, many viewers are <b>amazed</b> that they can generate so much money. Nollywood is the home of voodoo horror movies, and although the special effects aren't like Harry Potter, the stories are never <b>boring</b>. In fact, fans <b>have been buying</b> these DVDs at street stalls for years because they offer a way to escape from the <b>tiring</b> problems of everyday life.</p>
+<p>Similarly, music has the power to change lives. Take Gustavo, for example. He <b>has been playing</b> the trumpet for ten years with El Sistema, a program that helps young people from poor backgrounds. Without this opportunity, he might have been in a <strong><span class="vocab-link" id="text-depressing" onclick="centralizeScroll('vocab-depressing')">depressing</span></strong> situation, but instead, he <b>has been</b> <strong><span class="vocab-link" id="text-rehearsing" onclick="centralizeScroll('vocab-rehearsing')">rehearsing</span></strong> difficult Russian masterpieces like The Rite of Spring. He finds the music <b>fantastic</b> and believes it has given him a new future.</p>
+<p>On the other hand, some people find their passion in modern pop culture. Peter, a dedicated music fan, <b>has been learning</b> Turkish for two years because he is <b>interested</b> in the singer Sertab Erener. After hearing her win the Eurovision Song Contest, he became <strong><span class="vocab-link" id="text-obsessed" onclick="centralizeScroll('vocab-obsessed')">obsessed</span></strong> with her voice. He has even traveled to Istanbul to see her sing live! For Peter, culture is not just something to watch; it is a reason to learn a new language and explore a <b>wonderful</b> new country.</p>
+<p>However, culture also brings debate. When two friends discussed going to the movies after a <b>boring</b> lecture, they found that their tastes were very different. One friend had already seen the film Dust and Heat, but found it <b>disappointing</b> because the ending was too <strong><span class="vocab-link" id="text-predictable" onclick="centralizeScroll('vocab-predictable')">predictable</span></strong>. While one was <b>excited</b> about a horror movie, the other felt <strong><span class="vocab-link" id="text-frightened" onclick="centralizeScroll('vocab-frightened')">frightened</span></strong> by the genre and preferred something <b>lighter</b>. This shows that while some art is <strong><span class="vocab-link" id="text-brilliant" onclick="centralizeScroll('vocab-brilliant')">brilliant</span></strong> to one person, it can be <b>annoying</b> to another.</p>
+<p>Even literature and fine art are changing. Zelda <b>has been watching</b> a TV series based on the detective Wallander, but she feels <b>annoyed</b> because the main character is different from her imagination. Meanwhile, Mary, an art student, <b>has been studying</b> sculpture and recently saw an <strong><span class="vocab-link" id="text-extraordinary" onclick="centralizeScroll('vocab-extraordinary')">extraordinary</span></strong> <strong><span class="vocab-link" id="text-exhibition" onclick="centralizeScroll('vocab-exhibition')">exhibition</span></strong> by Giacometti. She was <b>fascinated</b> by his thin, strange sculptures.</p>
+<p>In conclusion, whether we <b>have been reading</b> crime thrillers or <b>have been making</b> low-budget films, culture remains <b>essential</b>. It provides <b>incredible</b> wealth to some and <b>satisfied</b> feelings to others. As we continue exploring, we realize that the world of culture is far more <b>diverse</b> and <b>exciting</b> than we ever imagined.</p>
+</div>
+<article style="margin-top: 3rem; border-top: 2px solid #eee;">
+    <h3 id="vocab-builder">Vocabulary Builder</h3>
+    <div class="vocab-grid">
+
+
+<div class="card" id="vocab-fascinating">
+<div class="card-content">
+<strong>Fascinating:</strong> Extremely interesting and able to hold your attention for a long time.
+
+<span class="return-btn" onclick="centralizeScroll('text-fascinating')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-depressing">
+<div class="card-content">
+<strong>Depressing:</strong> Making you feel very sad and without much hope for the future.
+
+<span class="return-btn" onclick="centralizeScroll('text-depressing')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-rehearsing">
+<div class="card-content">
+<strong>Rehearsing:</strong> Practising a play, a piece of music, or a dance before performing it in front of an audience.
+
+<span class="return-btn" onclick="centralizeScroll('text-rehearsing')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-obsessed">
+<div class="card-content">
+<strong>Obsessed:</strong> Thinking about someone or something all the time and being unable to think about anything else.
+
+<span class="return-btn" onclick="centralizeScroll('text-obsessed')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-predictable">
+<div class="card-content">
+<strong>Predictable:</strong> Happening in a way that is expected and not at all surprising.
+
+<span class="return-btn" onclick="centralizeScroll('text-predictable')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-frightened">
+<div class="card-content">
+<strong>Frightened:</strong> Feeling afraid or anxious because you think something bad or dangerous might happen.
+
+<span class="return-btn" onclick="centralizeScroll('text-frightened')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-brilliant">
+<div class="card-content">
+<strong>Brilliant:</strong> Extremely clever or highly skilled; another word for very good or excellent.
+
+<span class="return-btn" onclick="centralizeScroll('text-brilliant')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-extraordinary">
+<div class="card-content">
+<strong>Extraordinary:</strong> Very unusual, special, or much better than the usual level.
+
+<span class="return-btn" onclick="centralizeScroll('text-extraordinary')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-exhibition">
+<div class="card-content">
+<strong>Exhibition:</strong> A public event where objects such as paintings or sculptures are shown for people to look at.
+
+<span class="return-btn" onclick="centralizeScroll('text-exhibition')">Return to Text ↑</span>
+</div>
+</div>
+
+    </div>
+</article>
+</section>
+<section id="section1">
+            <h2>Section 1: Listening & Reading Integration</h2>
+<article>
+    <h3>1-1. Choosing a Movie (Dialogues)</h3>
+    
+    <div class="audio-zone" style="margin-bottom: 20px;">
+        <span class="audio-label">🎧 Listening 1: Choosing a Movie (CD2_Track 31)</span>
+        <audio id="main-player-1" style="width:100%;" controls src="CD2_Track 31.mp3"></audio>
+    </div>
+    <div id="script-container1" class="script-window" style="height: 450px; overflow-y: auto;"></div>
+</article>
+            <article style="margin-top: 3rem; border-top: 1px solid #eee; padding-top: 2rem;">
+                <h3>1-2. My Cultural Passions</h3>
+                
+                <div class="audio-zone">
+                    <span class="audio-label">🎁 Conversation 1 : A Passion for Turkish Music (CD2_Track 32)</span>
+                    <audio id="player-1" style="width:100%;" controls src="CD2_Track 32.mp3"></audio>
+                    <div id="script-1" class="script-window"></div>
+                </div>
+                <div class="audio-zone">
+                    <span class="audio-label">📦 Conversation 2 : Classical Music as a Life Changer (CD2_Track 33)</span>
+                    <audio id="player-2" style="width:100%;" controls src="CD2_Track 33.mp3"></audio>
+                    <div id="script-2" class="script-window"></div>
+                </div>
+                <div class="audio-zone">
+                    <span class="audio-label">👨‍💼 Conversation 3 : Books vs. TV Adaptations (CD2_Track 34)</span>
+                    <audio id="player-3" style="width:100%;" controls src="CD2_Track 34.mp3"></audio>
+                    <div id="script-3" class="script-window"></div>
+                </div>
+                <div class="audio-zone">
+                    <span class="audio-label">👨‍💼 Conversation 4 : From Portraits to Sculpture (CD2_Track 35)</span>
+                    <audio id="player-4" style="width:100%;" controls src="CD2_Track 35.mp3"></audio>
+                    <div id="script-4" class="script-window"></div>
+                </div>
+            </article>
+         <article style="margin-top: 3rem; border-top: 1px solid #eee; padding-top: 2rem;">
+    <h2>1-3. &#x1F4D6; Reading: Welcome to Nollywood!</h2>
+<div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+<p style="color: #555; font-style: italic; margin-bottom: 15px;">Femi Abulu introduces the weird and <b>wonderful</b> world of Nigerian cinema.</p>
+
+<p>
+    It might <b>surprise</b> you to learn that the third biggest film industry in the world – behind the United States and India – is based in Nigeria. <b>Producing</b> over 500 films a year, the industry generates around £160 million a year. The majority of films are made on budgets of between £10,000 and £20,000, and take an average of just ten days to complete. Compare this to the £65 million and year-long filming period needed to make the average Hollywood movie! However, while they may be cheap to produce, Nigerian films obviously still make good money.
+</p>
+
+<p>
+    They are not designed for the cinema. Instead, they are filmed on video cameras and copied directly onto video cassettes or DVDs, which are then sold at street stalls and tiny shops not just in Nigeria, but right across Africa. Most films are recorded in English, as it represents a common, neutral language in a country of 150 million people, where over 230 different languages are spoken. While Hollywood specialises in action movies and the Indian Bollywood studios produce <b>amazing</b> musicals, Nollywood – as the Nigerian film industry is known – is the home of voodoo horror movies: films about witchcraft and black magic.
+</p>
+
+<p>
+    It all began in 1992, with Living in Bondage, a <b>terrible</b> tale about a man who becomes <b>involved</b> with a religious cult that promises <b>incredible</b> wealth if he kills his wife. Since then, these kinds of movies have become increasingly popular, with Nigeria’s most famous director, Chico Ejiro, being at the centre of the boom. Ejiro has directed over 80 movies, and despite the poor sound quality and <b>predictable</b> endings, his films are much <b>loved</b>.
+</p>
+
+<p>
+    Not all Nollywood films are horror movies, though. Gangster movies are also popular, as are success stories. Some dramas deal with current issues such as AIDS, corruption and women’s rights. However, certain subjects are generally avoided and films are occasionally banned because they may cause tensions in a country with people from so many different backgrounds and which has experienced civil war.
+</p>
+
+<p>
+    In the end, the films about witches are popular for much the same reasons as Harry Potter or Lord of the Rings, even if they don't have quite the same special effects or <b>amazing</b> costumes. They are fantasies where the bad people are punished and the good people rewarded: the cheating husband loses his physical powers, or an evil love rival goes crazy, or the poor man becomes rich. Films are generally about escaping from the problems of everyday life and in a tough society like Nigeria this becomes even more <b>important</b>!
+</p>
+
+</div>
+            </article>
+    <div class="quiz-container" style="margin-top: 2rem; padding: 0 1rem;">
+        <h4 style="color: var(--secondary); margin-bottom: 1.5rem;">✅ Check your understanding (True or False)</h4>
+        <style>
+            .quiz-row { display: flex; align-items: center; margin-bottom: 15px; font-size: 1.05rem; flex-wrap: wrap; }
+            .quiz-question { margin-right: 12px; font-weight: 500; }
+            .btn-check-small { 
+                padding: 3px 10px; font-size: 0.85rem; cursor: pointer; border-radius: 6px; 
+                border: 1px solid var(--secondary); background: white; color: var(--secondary);
+                transition: 0.2s; margin-right: 10px;
+            }
+            .btn-check-small:hover { background: var(--secondary); color: white; }
+            .answer-text { color: var(--success); font-weight: bold; font-size: 0.95rem; }
+        </style>
+<div class="quiz-container" style="background: #fdfdfd; padding: 20px; border-radius: 12px; border: 1px solid #eee;">
+    
+<div class="quiz-container" style="background: #fff; padding: 20px; border-radius: 12px; border: 1px solid #eee;">
+
+<div class="quiz-row" id="tf-u13-q1" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+<span class="quiz-question">1. Nigeria has the second biggest film industry in the world, just behind the United States.</span>
+<div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+<button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+<button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+</div>
+<button onclick="validateTF('tf-u13-q1', 'F', 'False (Nigeria is actually the third biggest film industry, behind the United States and India.)')" class="btn-check-small" style="padding: 2px 8px; border: 1px solid #3498db; background: #3498db; color: white; cursor: pointer; border-radius: 4px;">Check</button>
+<span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-u13-q2" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+<span class="quiz-question">2. Most Nollywood films are intended to be shown in large, traditional cinemas.</span>
+<div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+<button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+<button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+</div>
+<button onclick="validateTF('tf-u13-q2', 'F', 'False (They are not designed for the cinema; instead, they are copied onto DVDs and sold at street stalls.)')" class="btn-check-small" style="padding: 2px 8px; border: 1px solid #3498db; background: #3498db; color: white; cursor: pointer; border-radius: 4px;">Check</button>
+<span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-u13-q3" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+<span class="quiz-question">3. English is the primary language for most Nigerian films to represent a neutral language for its diverse population.</span>
+<div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+<button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+<button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+</div>
+<button onclick="validateTF('tf-u13-q3', 'T', 'True (English is used as a common, neutral language in a country where over 230 different languages are spoken.)')" class="btn-check-small" style="padding: 2px 8px; border: 1px solid #3498db; background: #3498db; color: white; cursor: pointer; border-radius: 4px;">Check</button>
+<span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-u13-q4" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+<span class="quiz-question">4. The film industry began to boom in 1992 with the success of a movie called Living in Bondage.</span>
+<div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+<button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+<button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+</div>
+<button onclick="validateTF('tf-u13-q4', 'T', 'True (It all began in 1992, with Living in Bondage, which started the increasingly popular trend of these movies.)')" class="btn-check-small" style="padding: 2px 8px; border: 1px solid #3498db; background: #3498db; color: white; cursor: pointer; border-radius: 4px;">Check</button>
+<span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-u13-q5" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+<span class="quiz-question">5. Nollywood films are sometimes banned to avoid causing tensions related to the country&#39;s history of civil war.</span>
+<div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+<button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+<button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+</div>
+<button onclick="validateTF('tf-u13-q5', 'T', 'True (Certain subjects are avoided or banned because they might cause tensions in a country with so many different backgrounds.)')" class="btn-check-small" style="padding: 2px 8px; border: 1px solid #3498db; background: #3498db; color: white; cursor: pointer; border-radius: 4px;">Check</button>
+<span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+</div>
+
+
+<script>
+// T/F 버튼 선택 시 시각적 효과
+function selectTF(btn, val) {
+    const parent = btn.parentElement;
+    const btns = parent.querySelectorAll('.tf-btn');
+    btns.forEach(b => {
+        b.style.background = '#fff';
+        b.style.color = '#333';
+        b.classList.remove('selected');
+    });
+    btn.style.background = '#333';
+    btn.style.color = '#fff';
+    btn.classList.add('selected');
+    btn.dataset.value = val;
+}// 정답 확인 및 토글 함수
+function validateTF(rowId, correctVal, explanation) {
+    const row = document.getElementById(rowId);
+    const selectedBtn = row.querySelector('.tf-btn.selected');
+    const ansText = row.querySelector('.answer-text');
+    // 이미 정답이 보이고 있다면 -> 다시 숨기기 (토글)
+    if (ansText.style.display === 'inline') {
+        ansText.style.display = 'none';
+        row.style.background = '#fff'; // 배경색 초기화
+        return;
+    }
+    // 버튼을 선택하지 않았을 때
+    if (!selectedBtn) {
+        alert("Please select T or F first!");
+        return;
+    }
+    // 정답 확인 모드
+    const userVal = selectedBtn.dataset.value;
+    ansText.style.display = 'inline';
+    ansText.innerText = explanation;
+    if (userVal === correctVal) {
+        row.style.background = '#e8f5e9'; // 정답: 연한 초록색
+        ansText.style.color = '#2e7d32';
+    } else {
+        row.style.background = '#ffebee'; // 오답: 연한 빨간색
+        ansText.style.color = '#c62828';
+    }
+}</script>
+    </div>
+</article>
+        </section>
+<section id="section2">
+    <h2>Section 2: Speaking Practice</h2> 
+    
+    <article style="margin-top: 1rem;">
+        <h3>Interactive Dialogue (Easy Version)</h3>
+        <p class="instruction" style="margin-bottom: 20px;">
+            <i class="fas fa-headphones-alt"></i> Listen to the sentence (🔊), record your voice (🎤), and check your recording (▶).
+        </p>
+        <div class="quiz-item" style="background: #fff; padding: 25px; border-radius: 15px; border: 1px solid #ddd; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <div id="dialogue-container" style="display: flex; flex-direction: column; gap: 12px; font-size: 1.05rem;"></div>
+        </div>
+    </article>
+</section>
+<section id="section3">
+            <h2>Section 3: Writing Practice</h2>
+            <div id="final-quiz-area" style="margin-top: 40px; border-top: 2px solid var(--secondary); padding-top: 25px;">
+                <div class="quiz-item" style="background: #fcfcfc; padding: 20px; border-radius: 10px;">
+    <p style="margin-bottom: 15px;">
+        <strong style="font-size: 1.1rem; color: #3498db;">Step 1. Grammar & Vocabulary Check:</strong>
+    </p> 
+<div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+    <h3 style="text-align: center; color: #2c3e50; margin-bottom: 2rem; border-bottom: 3px double #3498db; padding-bottom: 10px; display: block; width: fit-content; margin-left: auto; margin-right: auto;">
+        <i class="fas fa-book-open" style="margin-right: 10px;"></i>Grammar Mastery
+    </h3>
+
+<h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-top: 0;">
+1. Present Perfect Continuous (Duration)</h3>
+<div style="background-color: #fff; padding: 15px; border-radius: 10px; border: 1px dashed #bdc3c7; margin-bottom: 15px;">
+<p style="margin: 5px 0;"><strong>• have/has + been + -ing</strong>: Used to talk about an action that <strong>started in the past</strong> and is <strong>still continuing</strong> now.</p>
+<p style="margin: 5px 0;"><strong>• for / since</strong>: Used with this tense to show <strong>how long</strong> the action has been happening.</p>
+</div>
+<ul style="list-style-type: none; padding-left: 10px;">
+<li style="margin-bottom: 15px;">
+<strong style="color: #e67e22;">• Example:</strong> "I <span style="color: #e67e22; font-weight: bold;">have been learning</span> Turkish for the last two years."
+
+<i style="color: #7f8c8d;">(Speaker 1 - Peter's language study)</i>
+</li>
+<li style="margin-bottom: 15px;">
+<strong style="color: #16a085;">• Example:</strong> "We <span style="color: #16a085; font-weight: bold;">have been rehearsing</span> The Rite of Spring recently."
+
+<i style="color: #7f8c8d;">(Speaker 2 - Gustavo's orchestra practice)</i>
+</li>
+</ul>
+
+<h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-top: 25px;">
+2. Adjectives with -ing (Describing Things)</h3>
+<div style="background-color: #fff; padding: 15px; border-radius: 10px; border: 1px dashed #bdc3c7; margin-bottom: 15px;">
+<p style="margin: 5px 0;"><strong>• -ing adjectives</strong>: Used to describe the <strong>characteristic</strong> of a person, thing, or situation.</p>
+<p style="margin: 5px 0;"><strong>• common words</strong>: amazing, fascinating, boring, tiring, surprising, frightening.</p>
+</div>
+<ul style="list-style-type: none; padding-left: 10px;">
+<li style="margin-bottom: 15px;">
+<strong style="color: #2980b9;">• Example:</strong> "The stories are <strong>extra</strong> <span style="color: #2980b9; font-weight: bold;">interesting</span>."
+
+<i style="color: #7f8c8d;">(Speaker 3 - Zelda's opinion on books)</i>
+</li>
+<li style="margin-bottom: 15px;">
+<strong style="color: #2980b9;">• Example:</strong> "He does these <b>beautiful, strange, thin</b> <span style="color: #2980b9; font-weight: bold;">sculptures</span>."
+
+<i style="color: #7f8c8d;">(Speaker 4 - Mary's description of art)</i>
+</li>
+</ul>
+
+<h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-top: 25px;">
+3. Adjectives with -ed (Describing Feelings)</h3>
+<div style="background-color: #fff; padding: 15px; border-radius: 10px; border: 1px dashed #bdc3c7; margin-bottom: 15px;">
+<p style="margin: 5px 0;"><strong>• -ed adjectives</strong>: Used to describe <strong>how a person feels</strong> about something.</p>
+<p style="margin: 5px 0;"><strong>• common words</strong>: interested, bored, excited, frightened, annoyed, worried.</p>
+</div>
+<ul style="list-style-type: none; padding-left: 10px;">
+<li style="margin-bottom: 15px;">
+<strong style="color: #d35400;">• Example:</strong> "I’ve become much more <span style="color: #d35400; font-weight: bold;">interested</span> in sculpture."
+
+<i style="color: #7f8c8d;">(Speaker 4 - Mary's change in taste)</i>
+</li>
+<li style="margin-bottom: 15px;">
+<strong style="color: #d35400;">• Example:</strong> "His films are much <span style="color: #d35400; font-weight: bold;">loved</span>."
+
+<i style="color: #7f8c8d;">(Reading - Fans' feelings toward Chico Ejiro)</i>
+</li>
+</ul>
+
+<hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
+<p style="margin-top: 20px;"><strong>Context from our Reading & Listening:</strong></p>
+<ul style="padding-left: 20px;">
+<li>"It might <span style="color: #d35400; font-weight: bold;">surprise</span> you to learn about Nollywood."</li>
+<li>"They’ve <span style="color: #d35400; font-weight: bold;">been showing</span> a series on TV based on the books."</li>
+<li>"People are <span style="color: #d35400; font-weight: bold;">amazed</span> that they can generate so much money."</li>
+</ul>
+
+</div>
+<div class="quiz-item" style="background: #fff; padding: 25px; border-radius: 15px; border: 1px solid #ddd; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+<div id="vocabulary-mastery-section">
+<h3 style="text-align: center; color: #2c3e50; margin-bottom: 2rem; border-bottom: 3px double #3498db; padding-bottom: 10px; display: block; width: fit-content; margin-left: auto; margin-right: auto; font-size: 1.6rem;">
+        <i class="fas fa-spell-check" style="margin-right: 10px;"></i>Vocabulary Check
+    </h3>
+ 
+<div style="background: #fff5f5; border: 1px solid #fed7d7; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #c53030; margin: 0; border-left: 4px solid #f56565; padding-left: 10px;">Group 1</h4>
+<span style="font-size: 0.85rem; background: #f56565; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: fascinating, depressing, rehearsing, obsessed, predictable
+</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+1. The documentary about Nollywood was absolutely <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......">.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: fascinating)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+2. I hate watching movies with such <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> endings; I knew what would happen!
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: predictable)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+3. The orchestra has been <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> for the big concert all week.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: rehearsing)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+4. He is so <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> with that singer that he bought all her albums.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: obsessed)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+5. I found the news about the war very <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> and sad.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: depressing)</span>
+</div>
+</div>
+
+<div style="background: #fffaf0; border: 1px solid #feebc8; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #c05621; margin: 0; border-left: 4px solid #ed8936; padding-left: 10px;">Group 2</h4>
+<span style="font-size: 0.85rem; background: #ed8936; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: frightened, brilliant, extraordinary, exhibition, culture
+</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+6. She was <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> by the loud noise in the dark.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: frightened)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+7. That was a <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> performance; everyone clapped for ten minutes!
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: brilliant)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+8. The museum is hosting a new art <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> next month.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: exhibition)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+9. It was an <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> achievement for such a young artist.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: extraordinary)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+10. Learning about a different <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> helps us understand the world.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: culture)</span>
+</div>
+</div>
+
+<div style="background: #f0fff4; border: 1px solid #c6f6d5; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #276749; margin: 0; border-left: 4px solid #48bb78; padding-left: 10px;">Group 3</h4>
+<span style="font-size: 0.85rem; background: #48bb78; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: sculptures, masterpieces, obsessed, generation, annoying
+</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+11. The art gallery displays many famous <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> from the 19th century.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: masterpieces)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+12. Giacometti created thin and tall <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> that look very strange.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: sculptures)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+13. My sister has been <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> with K-pop lately.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: obsessed)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+14. Nollywood films are enjoyed by every <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> in Nigeria.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: generation)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+15. The sound quality was very <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......">, so I couldn't hear the actors.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: annoying)</span>
+</div>
+</div>
+
+<div style="background: #ebf8ff; border: 1px solid #bee3f8; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #2c5282; margin: 0; border-left: 4px solid #4299e1; padding-left: 10px;">Group 4</h4>
+<span style="font-size: 0.85rem; background: #4299e1; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: genre, neutral, series, thriller, amazing
+</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+16. In Nigeria, English is used as a <input type="text" class="mini-input" style="width: 80px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> language for everyone.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: neutral)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+17. Horror is a popular movie <input type="text" class="mini-input" style="width: 80px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......">, but it's not for everyone.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: genre)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+18. I’ve been watching a crime <input type="text" class="mini-input" style="width: 80px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> on TV every Friday night.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: series)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+19. A crime <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> usually has a very exciting and tense plot.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: thriller)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+20. It's <input type="text" class="mini-input" style="width: 80px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> how many films they can produce in just ten days.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: amazing)</span>
+</div>
+</div>
+
+</div>
+</div>
+
+
+<div class="quiz-item" style="margin-top: 40px; padding: 25px; background: #fcfcfc; border-radius: 10px; border: 1px solid #eee;">
+<p style="margin-bottom: 15px;">
+<strong style="font-size: 1.1rem; color: #3498db;">Step 2. Content Check:</strong>
+</p>
+<p style="line-height: 1.6; color: #34495e; font-weight: 500;">
+The Core Reading and listening scripts introduced various cultural passions. How does <b>Nollywood</b> differ from Hollywood in terms of production, and what specific <b>cultural activities</b> have Peter and Gustavo <b>been doing</b> lately?
+</p>
+<div style="margin: 10px 0; font-size: 0.85rem; color: #7f8c8d;">
+<i class="fas fa-lightbulb" style="color: #f1c40f;"></i>
+<b>Key Keywords:</b> ten days, tiny budgets, learning Turkish, rehearsing trumpet, been producing, been playing
+</div>
+<textarea id="content-check-answer-u13" rows="3"
+style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; font-size: 0.95rem; line-height: 1.6; resize: vertical; display: block; margin-bottom: 10px; box-sizing: border-box;"
+placeholder="Explain the production of Nollywood and the activities of Peter and Gustavo..."></textarea>
+</div>
+
+<div class="quiz-item" style="background: #fcfcfc; padding: 25px; border-radius: 10px; margin-top: 20px; border: 1px solid #eee;">
+<p style="margin-bottom: 15px;">
+<strong style="font-size: 1.1rem; color: #3498db;">Step 3. Thinking about Cultural Passions:</strong>
+</p>
+<p style="color: #34495e; line-height: 1.6;">
+In the text, we saw that people become <b>obsessed</b> with things like music, sculpture, or crime thrillers. Some find these activities <b>fascinating</b>, while others might find them <b>boring</b> or <b>annoying</b>.
+
+
+<b>What is a cultural activity that you have been doing recently? Why do you find it interesting, and do you think other people might find it "disappointing" or "predictable"?</b>
+</p>
+<textarea rows="5" style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; box-sizing: border-box;"
+placeholder="Recently, I have been... I find it fascinating because... Others might think..."></textarea>
+</div>
+
+<div style="margin-top: 40px; padding: 30px; background: #fffde7; border-radius: 15px; border: 1px solid #fff176; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+<h3 style="margin-top: 0; color: #f57f17; display: flex; align-items: center;">
+<i class="fas fa-lightbulb" style="margin-right: 12px;"></i> Critical Thinking
+</h3>
+<p style="line-height: 1.7; color: #444;">
+We have explored how <b>CULTURE</b>—from Nigerian films to Venezuelan orchestras—can change lives and connect different people. We learned that culture isn't just entertainment; it can be a way to escape <b>depressing</b> situations or a tool for <b>extraordinary</b> social change.
+
+
+<b>Do you think "low-budget" culture (like Nollywood) is just as important as "high-budget" culture (like big Hollywood movies or expensive art exhibitions)?
+
+Support your answer by using the grammar we learned (Present Perfect Continuous) to describe a cultural trend you have been following and explain why it is essential for society.</b>
+</p>
+<textarea class="main-textarea"
+placeholder="Compare low-budget vs. high-budget culture. Describe a trend you have been following using 'have been -ing' and explain its importance..."
+rows="10"
+style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; font-size: 0.95rem; line-height: 1.6; resize: vertical; display: block; box-sizing: border-box; background: white;">
+</textarea>
+</div>
+
+
+<div style="margin-top: 30px; padding: 25px; background: #ffffff; border-radius: 15px; border: 2px solid #3498db; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="margin: 0; color: #2980b9;"><i class="fas fa-robot"></i> AI Solution</h3>
+        <span style="background: #3498db; color: white; padding: 5px 15px; border-radius: 50px; font-weight: bold; font-size: 1.1rem;">
+            Overall Score: <input type="text" class="mini-input" style="width: 50px !important; color: white; background: transparent; border: 1px solid rgba(255,255,255,0.5); text-align: center;" value="9.2"> / 10
+        </span>
+    </div>
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.95rem;">
+        <thead>
+            <tr style="background: #ebf5fb; text-align: left;">
+                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Evaluation Criteria</th>
+                <th style="padding: 12px; border-bottom: 2px solid #3498db; text-align: center;">Score</th>
+                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Detailed Feedback</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Content</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="10"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Deep reflection on career stages from 20s to 50s."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Logic</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="9.5"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Strong comparison between 'meaning' and 'success'."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Grammar</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="8"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Check comparative forms (e.g., more important than)."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Vocabulary</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="9"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Great use of 'exhausted', 'exploiting', and 'fulfillment'."></td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="background: #f4f7f6; padding: 15px; border-radius: 10px; border-left: 5px solid #27ae60;">
+        <p style="margin: 0 0 10px 0; font-weight: bold; color: #27ae60;"><i class="fas fa-check-circle"></i> Recommended Revision</p>
+        <textarea style="width: 100%; background: transparent; border: 1px dashed #27ae60; border-radius: 5px; padding: 10px; font-style: italic;" rows="8">"In my experience, I thought gaining experience was more important than anything else in my twenties. My companies might have been exploiting me with boring tasks, but I worked hard and struggled through it. In my thirties, I chased high salaries, but I still worked over ten hours a day. Now in my late forties, I was so exhausted that I retired after 30 years of practice. I currently work as a security officer for two hours a day and I am happy because there is no pressure. To me, a 'meaningful' job is more important than a 'successful' one, and that meaning depends on my current physical and mental well-being."</textarea>
+    </div>
+</div>
+            <button class="save-btn" style="margin-top: 20px;" onclick="saveProgress()">Save My Work</button>
+        </section>
+    </div>
+    <script>
+        // --- 데이터 정의 ---
+        const dialogueData = [
+    { name: "Peter", color: "#e74c3c", bg: "#fdedec", text: "I <b>have been learning</b> Turkish for two years.", char: "assistant" },
+    { name: "Gustavo", color: "#2ecc71", bg: "#eafaf1", text: "I <b>have been rehearsing</b> a <b>brilliant</b> trumpet piece.", char: "customer" },
+    { name: "Zelda", color: "#9b59b6", bg: "#f5eef8", text: "That sounds <b>fascinating</b>, but I prefer crime stories.", char: "assistant" },
+    { name: "Mary", color: "#e67e22", bg: "#fef5e7", text: "I'm <b>obsessed</b> with <b>extraordinary</b> sculptures recently.", char: "customer" },
+    { name: "Student A", color: "#34495e", bg: "#ebedef", text: "Did you know Nollywood makes <b>amazing</b> movies?", char: "assistant" },
+    { name: "Student B", color: "#1abc9c", bg: "#e8f8f5", text: "Yes! That fact is really <b>surprising</b> to me.", char: "customer" },
+    { name: "Zelda", color: "#9b59b6", bg: "#f5eef8", text: "But many movie endings are too <b>predictable</b>.", char: "assistant" },
+    { name: "Student A", color: "#34495e", bg: "#ebedef", text: "They are <b>exciting</b> because of voodoo magic.", char: "customer" },
+    { name: "Mary", color: "#e67e22", bg: "#fef5e7", text: "I'm <b>interested</b> in their <b>wonderful</b> costumes too.", char: "assistant" },
+    { name: "Gustavo", color: "#2ecc71", bg: "#eafaf1", text: "Culture is <b>brilliant</b> because it connects us.", char: "customer" }
+        ];
+const scriptData1_1_D1 = [
+    { start: 0, speaker: "Narrator", text: "Thirteen point one." },
+    { start: 3, speaker: "A", text: "What a boring lecture!" },
+    { start: 5, speaker: "B", text: "I know. It wasn't very good. I was starting to fall asleep near the end!" },
+    { start: 11, speaker: "A", text: "So what're you doing this afternoon? Have you got any plans?" },
+    { start: 15, speaker: "B", text: "Yeah, I'm thinking of going to see a movie and... um... listen, would you like to come with me?" },
+    { start: 21, speaker: "A", text: "Maybe. What's on?" },
+    { start: 23, speaker: "B", text: "Well, there's this film called Dust and Heat - directed by Umberto Collocini. It's supposed to be really good." },
+    { start: 31, speaker: "A", text: "Yeah, I've seen it already, actually. I saw it the other day." },
+    { start: 36, speaker: "B", text: "Oh yes? What was it like?" },
+    { start: 39, speaker: "A", text: "Not bad, but not as good as everyone is saying." },
+    { start: 42, speaker: "A", text: "The costumes were great and it's set in the Sahara, so it looks amazing." },
+    { start: 47, speaker: "B", text: "Yeah, that's what I'd heard. So what was wrong with it?" },
+    { start: 51, speaker: "A", text: "Oh, I don't know. I just found it a bit too slow. I got a bit bored with it after a while - and the ending was very predictable." },
+    { start: 61, speaker: "B", text: "Oh, right." },
+    { start: 62, speaker: "A", text: "And that Scottish actor's in it as well. You know. What's his name?" },
+    { start: 67, speaker: "B", text: "Bryan McFletcher?" },
+    { start: 69, speaker: "A", text: "Yeah, that's him. I just find him really, really annoying. He can't act!" },
+    { start: 74, speaker: "A", text: "Anyway, what else is on?" },
+    { start: 76, speaker: "B", text: "Um... let me see. Oh, there's The Redeadening." },
+    { start: 81, speaker: "A", text: "Yeah? What's that?" },
+    { start: 83, speaker: "B", text: "It's a new horror movie. It's supposed to be really scary." },
+    { start: 87, speaker: "A", text: "OK. To be honest, I don't really like horror movies. I'd rather see something a bit lighter, if possible." },
+    { start: 94, speaker: "B", text: "OK. Right. Well, how about this? It's A Love-Hate Thing." },
+    { start: 99, speaker: "B", text: "It's a romantic comedy set in Paris and New York and it stars Beatrice Binoche and Brad Schmidt." },
+    { start: 106, speaker: "A", text: "That sounds more like it! Where's it on?" },
+    { start: 109, speaker: "B", text: "The Galaxy in Cambridge Road." },
+    { start: 112, speaker: "A", text: "OK. And what time does it start?" },
+    { start: 115, speaker: "B", text: "There's one showing at 2:30 and then another one at quarter to five." },
+    { start: 121, speaker: "A", text: "So shall we try the half past two one? We could go and have a coffee or something first." },
+    { start: 127, speaker: "B", text: "OK. Great." }
+];
+const scriptData1_2_P1 = [
+    { start: 0, speaker: "Narrator", text: "Thirteen point two. Speaker one - Peter." },
+    { start: 4, speaker: "Peter", text: "I'm a big fan of a Turkish singer called Sertab Erener." },
+    { start: 8, speaker: "Peter", text: "I first heard her in 2003 when she won the Eurovision Song Contest and I've liked her ever since then." },
+    { start: 16, speaker: "Peter", text: "I think she's got an amazing voice. She actually trained as an opera singer." },
+    { start: 22, speaker: "Peter", text: "I've got five or six of her albums and last year I went to Istanbul to see her sing live." },
+    { start: 29, speaker: "Peter", text: "In fact, I've been learning Turkish for the last two years because I've discovered Turkey through her music and want to spend time there - and I can understand her songs better." },
+    { start: 41, speaker: "Peter", text: "My all-time favourite song is Life doesn't wait - Hayat Beklemez. Excuse my bad pronunciation." }
+];
+const scriptData1_2_P2 = [
+    { start: 0, speaker: "Narrator", text: "Speaker two - Gustavo." },
+    { start: 2, speaker: "Gustavo", text: "I've been playing the trumpet for ten years now with El Sistema," },
+    { start: 7, speaker: "Gustavo", text: "which is a programme that helps young people from poor backgrounds learn classical music." },
+    { start: 13, speaker: "Gustavo", text: "I really really love playing and without El Sistema I would probably be in a bad situation!" },
+    { start: 20, speaker: "Gustavo", text: "When I joined, I was only eight, but I was already in trouble with the police." },
+    { start: 26, speaker: "Gustavo", text: "My favourite composers are Russian - Shostakovich and Stravinsky." },
+    { start: 32, speaker: "Gustavo", text: "We've been rehearsing The Rite of Spring recently for a concert. It's fantastic - the best." }
+];
+const scriptData1_2_P3 = [
+    { start: 0, speaker: "Narrator", text: "Speaker three - Zelda." },
+    { start: 2, speaker: "Zelda", text: "My favourite author is the Swedish crime writer Henning Mankell, especially his stories with the detective Wallander." },
+    { start: 11, speaker: "Zelda", text: "The stories are good thrillers. They're unpredictable, but they're also about social issues, which makes them extra interesting." },
+    { start: 20, speaker: "Zelda", text: "For the last few weeks, they've been showing a series on TV based on the books." },
+    { start: 25, speaker: "Zelda", text: "It's OK, but the main character is different to the character in my imagination" },
+    { start: 31, speaker: "Zelda", text: "and, of course, there's less suspense because I've already read the books!" },
+    { start: 36, speaker: "Zelda", text: "I don't know if I'll keep watching." }
+];
+const scriptData1_2_P4 = [
+    { start: 0, speaker: "Narrator", text: "Speaker four - Mary." },
+    { start: 3, speaker: "Mary", text: "I'm at art school, where I'm studying Fine Art. I've known I wanted to be an artist since I was three." },
+    { start: 11, speaker: "Mary", text: "I've always been more of a painter, especially people - portraits, but recently I've become much more interested in sculpture." },
+    { start: 20, speaker: "Mary", text: "I think my favourite artist at the moment is a Swiss sculptor called Alberto Giacometti." },
+    { start: 27, speaker: "Mary", text: "He does these beautiful, strange, thin sculptures. I saw an exhibition of his work last year." },
+    { start: 34, speaker: "Mary", text: "I don't know why I liked it so much, I just did - especially a sculpture called Cat." }
+];
+        // --- 기능 함수 ---
+        let mediaRecorder;
+        let audioChunks = {};
+        function initDialogue() {
+            const container = document.getElementById('dialogue-container');
+            dialogueData.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.style = `padding: 12px 15px; background: ${item.bg}; border-radius: 12px; border-left: 6px solid ${item.color}; display: flex; align-items: center; justify-content: space-between; gap: 10px;`;
+                div.innerHTML = `
+                    <div style="flex: 1;"><strong style="color: ${item.color};">${item.name}:</strong> <span>${item.text}</span></div>
+                    <div style="display: flex; gap: 8px; flex-shrink: 0;">
+                        <button onclick="speakText(\`${item.text.replace(/<\/?[^>]+(>|$)/g, "")}\`, '${item.char}')" style="background: ${item.color}; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">🔊</button>
+                        <button id="rec-${index}" onclick="toggleRecord(${index})" style="background: #e74c3c; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">🎤</button>
+                        <button id="play-${index}" onclick="playMyVoice(${index})" style="background: #2ecc71; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: none;">▶</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+        function speakText(text, character) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.pitch = (character === 'maya') ? 1.5 : 1.1;
+            window.speechSynthesis.speak(utterance);
+        }
+async function toggleRecord(index) {
+    const btn = document.getElementById(`rec-${index}`);
+    if (mediaRecorder && mediaRecorder.state === "recording") {
+        mediaRecorder.stop();
+        btn.style.backgroundColor = "#e74c3c"; btn.innerText = "🎤";
+    } else {
+        const stream = await navigator.mediaDevices.getUserMedia({ 
+            audio: {
+                echoCancellation: true,
+                noiseSuppression: true,
+                autoGainControl: false, // 웅웅거림 방지를 위해 끔
+                channelCount: 1
+            } 
+        });
+        // --- 오디오 증폭 로직 시작 ---
+        const audioContext = new AudioContext();
+        const source = audioContext.createMediaStreamSource(stream);
+        const gainNode = audioContext.createGain();
+        
+        gainNode.gain.value = 2.0; // [조정 포인트] 소리를 3배 키웁니다 (1.0~5.0 사이 조절 가능)
+        
+        const destination = audioContext.createMediaStreamDestination();
+        source.connect(gainNode);
+        gainNode.connect(destination);
+        // --- 오디오 증폭 로직 끝 ---
+        // 증폭된 스트림으로 녹음 진행
+        mediaRecorder = new MediaRecorder(destination.stream);
+        const chunks = [];
+        mediaRecorder.ondataavailable = e => chunks.push(e.data);
+        mediaRecorder.onstop = () => {
+            const blob = new Blob(chunks, { type: 'audio/webm' });
+            audioChunks[index] = URL.createObjectURL(blob);
+            document.getElementById(`play-${index}`).style.display = "flex";
+            
+            stream.getTracks().forEach(track => track.stop());
+            audioContext.close();
+        };
+        mediaRecorder.start();
+        btn.style.backgroundColor = "#000"; btn.innerText = "⏹";
+    }
+}        function playMyVoice(index) {
+            if (audioChunks[index]) new Audio(audioChunks[index]).play();
+        }
+        function setupAudioSync(audioId, containerId, data, isDialogue = false) {
+    const audio = document.getElementById(audioId);
+    const container = document.getElementById(containerId);
+    if(!audio || !container) return;
+    
+    container.innerHTML = '';
+    data.forEach((line, index) => {
+        const div = document.createElement('div');
+        div.className = 'script-line';
+        div.id = `${containerId}-line-${index}`;
+        div.innerHTML = isDialogue ? `<strong>${line.speaker}:</strong> ${line.text}` : line.text;
+        container.appendChild(div);
+    });
+    // 오디오 재생 시 스크립트 창 보이기
+    audio.addEventListener('play', () => { 
+        container.style.display = 'block'; 
+    });
+    // 오디오 진행 시간에 맞춰 스크립트 하이라이트 및 스크롤
+    audio.addEventListener('timeupdate', () => {
+        let activeIdx = -1;
+        for (let i = 0; i < data.length; i++) {
+            if (audio.currentTime >= data[i].start) activeIdx = i; else break;
+        }
+        container.querySelectorAll('.script-line').forEach(l => l.classList.remove('active'));
+        if (activeIdx !== -1) {
+            const currentLine = document.getElementById(`${containerId}-line-${activeIdx}`);
+            if (currentLine) {
+                currentLine.classList.add('active');
+                container.scrollTo({ 
+                    top: currentLine.offsetTop - container.offsetTop - 80, 
+                    behavior: 'smooth' 
+                });
+            }
+        }
+    });
+    // 추가된 부분: 음성 재생이 끝나면 스크립트 창 숨기기
+    audio.addEventListener('ended', () => { 
+        container.style.display = 'none'; 
+    });
+}        function centralizeScroll(targetId) {
+            const element = document.getElementById(targetId);
+            if (!element) return;
+            const elementRect = element.getBoundingClientRect();
+            const middle = (elementRect.top + window.pageYOffset) - (window.innerHeight / 2) + (elementRect.height / 2);
+            window.scrollTo({ top: middle, behavior: 'smooth' });
+            if (targetId.startsWith('vocab')) {
+                document.querySelectorAll('.card').forEach(c => c.classList.remove('active-highlight'));
+                element.classList.add('active-highlight');
+                setTimeout(() => element.classList.remove('active-highlight'), 1500);
+            }
+        }
+        function toggleAnswer(btn) {
+            const answerSpan = btn.nextElementSibling;
+            if (answerSpan.style.display === "none") {
+                answerSpan.style.display = "inline"; btn.innerText = "Hide";
+            } else {
+                answerSpan.style.display = "none"; btn.innerText = "Check";
+            }
+        }
+        function saveProgress() {
+            const allInputs = document.querySelectorAll('input[type="text"], textarea');
+            allInputs.forEach((input, index) => {
+                localStorage.setItem(`UNIT13_all_data_${index}`, input.value);
+            });
+            alert('Your progress has been saved! ✅');
+        }
+        // --- 초기화 로직 ---
+        window.addEventListener('DOMContentLoaded', () => {
+            initDialogue();
+            setupAudioSync('main-player-1', 'script-container1', scriptData1_1_D1, true);
+            setupAudioSync('player-1', 'script-1', scriptData1_2_P1, true);
+            setupAudioSync('player-2', 'script-2', scriptData1_2_P2, true);
+            setupAudioSync('player-3', 'script-3', scriptData1_2_P3, true);
+            setupAudioSync('player-4', 'script-4', scriptData1_2_P4, true);
+            // ... 나머지 setupAudioSync 호출
+            // 저장된 데이터 불러오기
+            const allInputs = document.querySelectorAll('input[type="text"], textarea');
+            allInputs.forEach((input, index) => {
+                const savedValue = localStorage.getItem(`UNIT13_all_data_${index}`);
+                if (savedValue) input.value = savedValue;
+            });
+        });
+    </script>
+<script>
+function speak(text) {
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';
+    
+    const voices = window.speechSynthesis.getVoices();
+    // 여성 목소리 우선 선택
+    const femaleVoice = voices.find(v => v.name.includes('Female') || v.name.includes('Google US English') || v.name.includes('Samantha'));
+    
+    if (femaleVoice) {
+        utterance.voice = femaleVoice;
+    }
+    
+    utterance.pitch = 1.1; 
+    utterance.rate = 1.0; // 현대식 표준 영어 빠르기
+    window.speechSynthesis.speak(utterance);
+}window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.getVoices(); };
+</script>
+</body>
+</html>

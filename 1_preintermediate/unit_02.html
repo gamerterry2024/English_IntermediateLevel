@@ -1,0 +1,927 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNIT 02: SHOPS</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --bg: #f4f7f6;
+            --white: #ffffff;
+            --highlight: #fff59d;
+            --accent: #e67e22;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg);
+            color: var(--primary);
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        section {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            /* 상단 헤더 높이를 고려한 스크롤 위치 조정 */
+            scroll-margin-top: 90px;
+        }
+
+        .back-to-dashboard {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 1001;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        .back-to-dashboard:hover {
+            transform: scale(1.1);
+            background-color: var(--secondary);
+        }
+
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 20px;
+            padding-bottom: 300px; 
+        }
+
+        h2 {
+            border-left: 6px solid var(--secondary);
+            padding-left: 15px;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .reading-box {
+            background-color: #fffaf0;
+            border: 1px solid #f39c12;
+            padding: 25px;
+            border-radius: 12px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .vocab-link {
+            color: var(--secondary);
+            text-decoration: none;
+            border-bottom: 2px solid var(--secondary);
+            font-weight: bold;
+            padding: 0 2px;
+            cursor: pointer;
+        }
+
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .card {
+            border: 1px solid #eee;
+            padding: 20px;
+            border-radius: 10px;
+            background: #fff;
+            transition: all 0.4s ease;
+        }
+
+        .card.active-highlight {
+            border: 2px solid var(--accent);
+            background-color: #fffde7;
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .return-btn {
+            display: inline-block;
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: bold;
+            border: 1px solid var(--secondary);
+            padding: 4px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .audio-zone {
+            background: #ebf5fb;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--secondary);
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .audio-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .script-window {
+            margin-top: 15px;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            height: 250px; 
+            overflow-y: auto;
+            display: none;
+            text-align: left;
+        }
+
+        .script-line {
+            padding: 8px 10px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            transition: background 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .script-line.active {
+            background-color: var(--highlight);
+            font-weight: bold;
+        }
+
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        .quiz-item {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .instruction {
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .save-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .save-btn:hover {
+            background-color: #219150;
+        }
+
+        .mini-input {
+            width: 100px !important;
+            padding: 5px !important;
+            margin: 0 5px !important;
+            display: inline-block !important;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html#unit02" class="back-to-dashboard">🏠 Back to Dashboard</a>
+
+    <header>
+        <h1>UNIT 02</h1>
+        <nav class="nav-links">
+            <a href="#intro-reading">0. Core Reading</a>
+            <a href="#section1">1. Listen & Read</a>
+            <a href="#section2">2. Speaking</a>
+            <a href="#section3">3. Writing</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        
+<section id="intro-reading">
+    <h2>Core Reading: The Way We Shop</h2>
+    
+    <div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+        
+        <p style="margin-top: 0;">Everyone has different shopping habits, and the experience can vary greatly depending on where we go. Some people love visiting <strong>small, specialist shops</strong> or boutiques to find <strong>unique</strong> items. They enjoy the personal service and high-quality goods that aren't mass-produced for world consumption. Others prefer large department stores because they have a massive <strong>selection</strong> of everything in one place, making it easy to find exactly what they need under one roof.</p>
+
+        <p>When we buy a special present for an occasion, we often appreciate the extra care from the staff. A shop assistant might ask, "Would you like it <strong>wrapped</strong>?" This small gesture is a nice touch that makes a gift feel more personal. However, shopping isn't always a perfect experience. We have all felt frustrated when a shop is understaffed and we have to wait for ages when no one is <strong>serving</strong>, or when we find out that the specific item we want is <strong>out of stock</strong> and won't be back for a long time.</p>
+
+        <p>Even worse, sometimes we get home, open the box, and find that an item is <strong>damaged</strong>. Whether it’s a loose button or a serious <strong>manufacturing fault</strong>, these problems can be a real headache. In these cases, it is absolutely essential to keep your <strong>receipt</strong>. Without it, you cannot take the item back to the shop for a refund or an exchange. A <strong><span class="vocab-link" id="text-reliable" onclick="centralizeScroll('vocab-reliable')">reliable</span></strong> shop with good customer service will always help you solve these issues quickly and professionally.</p>
+
+        <p>For those who see shopping as an adventure, finding a place like Warsaw's <strong>Nowy Świat</strong> is like discovering a paradise. This famous street is special because it avoids loud music and neon lights, focusing instead on <strong><span class="vocab-link" id="text-exclusive" onclick="centralizeScroll('vocab-exclusive')">exclusive</span> cafes</strong> and high-quality boutiques. Whether you are looking for an <strong><span class="vocab-link" id="text-exquisite" onclick="centralizeScroll('vocab-exquisite')">exquisite</span> handmade suit</strong>, beautiful <strong>French baby clothes</strong>, or even expensive antiques, the key is the quality of the goods. In the end, shopping is not just about spending money; it's about the atmosphere, the <strong>lively</strong> experience, and the unique treasures you find along the way.</p>
+
+        <p>It is possible to find the same things for sale in every country, but the best shops are those that offer something truly unique and reliable service.</p>
+    </div>
+
+    <article style="margin-top: 3rem; border-top: 2px solid #eee;">
+        <h3 id="vocab-builder">Vocabulary Builder</h3>
+        <div class="vocab-grid">
+    
+            <div class="card" id="vocab-reliable">
+                <strong>Reliable:</strong> That can be trusted to do something well.
+                <br><span class="return-btn" onclick="centralizeScroll('text-reliable')">Return to Text ↑</span>
+            </div>
+
+        <div class="card" id="vocab-exclusive">
+                <strong>Exclusive:</strong> Only the richest or best people can use it.
+                <br><span class="return-btn" onclick="centralizeScroll('text-exclusive')">Return to Text ↑</span>
+            </div>
+            
+            <div class="card" id="vocab-exquisite">
+                <strong>Exquisite:</strong> Extremely beautiful and delicate.
+                <br><span class="return-btn" onclick="centralizeScroll('text-exquisite')">Return to Text ↑</span>
+            </div>
+        </div>
+    </article>
+</section>
+
+        <section id="section1">
+            <h2>Section 1: Listening & Reading Integration</h2>
+            
+            <article>
+                <h3>1-1. Weekend Catch-up at Work (Dialogue)</h3>
+                <div class="audio-zone">
+                    <span class="audio-label">🎧 Listening Practice: Track 9</span>
+                    <audio id="main-player" style="width:100%;" controls src="Track 9.mp3"></audio>
+                </div>
+                <div id="script-container" class="script-window" style="height: 400px;"></div>
+            </article>
+
+            <article style="margin-top: 3rem; border-top: 1px solid #eee; padding-top: 2rem;">
+                <h3>1-2. Three Conversations in a Shop</h3>
+                
+                <div class="audio-zone">
+                    <span class="audio-label">🎁 Conversation 1: Wrapping a Gift</span>
+                    <audio id="player-1" style="width:100%;" controls src="Track 11.mp3"></audio>
+                    <div id="script-1" class="script-window"></div>
+                </div>
+
+                <div class="audio-zone">
+                    <span class="audio-label">📦 Conversation 2: A Damaged Item</span>
+                    <audio id="player-2" style="width:100%;" controls src="Track 12.mp3"></audio>
+                    <div id="script-2" class="script-window"></div>
+                </div>
+
+                <div class="audio-zone">
+                    <span class="audio-label">👨‍💼 Conversation 3: Stock and Service</span>
+                    <audio id="player-3" style="width:100%;" controls src="Track 13.mp3"></audio>
+                    <div id="script-3" class="script-window"></div>
+                </div>
+
+            </article>
+
+         <article style="margin-top: 3rem; border-top: 1px solid #eee; padding-top: 2rem;">
+    <h2>1-3. &#x1F4D6; Reading: The Best Shopping Street in the World</h2>
+
+    <div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+        
+        <p style="margin-top: 0;">A recent survey has shown that the busiest shopping street in the world is not in London, New York, or Paris, but in Warsaw. It's called <strong>Nowy Świat</strong> (pronounced /nɔvɨ ɕvjat/), which means <em>New World</em>. An incredible 14,000 Poles walk down this main street every hour.</p>
+
+        <p>It is a lovely place to shop. The pavements are very wide. There are statues, palaces, attractive town houses, exclusive cafes, and high-class restaurants. The buildings aren't too tall. They look old, but in fact the whole city was rebuilt after World War II. There aren't any billboards or neon lights. There isn't any loud music, and there aren't many tourists. People think that Polish shops have nothing to sell, so nobody comes shopping here. The world doesn't know about this paradise for shoppers — yet.</p>
+
+        <p>It is now possible to buy almost everything in Warsaw. There are a lot of shops from the West, but the interesting thing is that Polish manufacturers are now producing high quality goods. They are good because they are not mass produced for world consumption.</p>
+
+        <p>Nowy Świat has a lot of small shops, specialist shops, and chic shops. It hasn't got the huge department stores that sell the same things everywhere. If you want an <strong>exquisite handmade suit</strong>, Nowy Świat is the place to go. It isn't cheap. You will pay up to £1,000.</p>
+        
+        <p>For beautiful French baby clothes, go to <strong>Petit Bateau</strong>. You will pay £50 for a pair of blue jeans for a baby. A dress for a baby girl is about £90. At <strong>Desa</strong>, a famous antique shop, a desk costs £5,000, and a 19th century Russian icon is £200.</p>
+
+        <p>Not everything is expensive. At the shop <strong>Pantera</strong> you can buy leather goods — handbags, purses, coats, and belts. <strong>Cepelia</strong> specializes in folk art. There are also book shops and record shops. And there are a lot of small boutiques that sell men's and women's clothes that aren't too expensive.</p>
+
+        <p>If you're tired, stop at <strong>Cafe Blikle</strong>. This is a fashionable place to meet. You'll find a lively atmosphere, and a lot of well-known Poles. The frozen yoghurt and ice-creams are excellent, and its famous doughnuts are delicious.</p>
+
+        <p>It is possible to travel the world and find the same things for sale in every country. But Warsaw is different because its shops are unique — and they're in Nowy Świat.</p>
+    </div>
+
+    <div class="quiz-container" style="margin-top: 2rem; padding: 0 1rem;">
+        <h4 style="color: var(--secondary); margin-bottom: 1.5rem;">&#x2705; Check your understanding (True or False)</h4>
+        
+        <style>
+            .quiz-row { display: flex; align-items: center; margin-bottom: 15px; font-size: 1.05rem; flex-wrap: wrap; }
+            .quiz-question { margin-right: 12px; font-weight: 500; }
+            .btn-check-small { 
+                padding: 3px 10px; font-size: 0.85rem; cursor: pointer; border-radius: 6px; 
+                border: 1px solid var(--secondary); background: white; color: var(--secondary);
+                transition: 0.2s; margin-right: 10px;
+            }
+            .btn-check-small:hover { background: var(--secondary); color: white; }
+            .answer-text { color: var(--success); font-weight: bold; font-size: 0.95rem; }
+        </style>
+
+<div class="quiz-container" style="background: #fdfdfd; padding: 20px; border-radius: 12px; border: 1px solid #eee;">
+    
+    <div class="quiz-row" id="tf-q1" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+        <span class="quiz-question">1. Nowy Świat is the busiest shopping street in London.</span>
+        <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+            <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+            <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+        </div>
+        <button onclick="validateTF('tf-q1', 'F', 'False (It,s in Warsaw.)')" class="btn-check-small">Check</button>
+        <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+    </div>
+
+    <div class="quiz-row" id="tf-q2" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+        <span class="quiz-question">2. Most of the buildings on the street are actually new.</span>
+        <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+            <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+            <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+        </div>
+        <button onclick="validateTF('tf-q2', 'T', 'True (Rebuilt after WWII.)')" class="btn-check-small">Check</button>
+        <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+    </div>
+
+    <div class="quiz-row" id="tf-q3" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+        <span class="quiz-question">3. You can find many exclusive and exquisite items at Cepelia.</span>
+        <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+            <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+            <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+        </div>
+        <button onclick="validateTF('tf-q3', 'T', 'True (Cepelia specializes in unique folk art and exclusive jewelry.)')" class="btn-check-small">Check</button>
+        <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+    </div>
+
+    <div class="quiz-row" id="tf-q4" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+        <span class="quiz-question">4. You can find some clothes that are not very expensive.</span>
+        <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+            <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+            <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+        </div>
+        <button onclick="validateTF('tf-q4', 'T', 'True (Small boutiques have cheaper options.)')" class="btn-check-small">Check</button>
+        <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+    </div>
+
+</div>
+
+<script>
+// T/F 버튼 선택 시 시각적 효과
+function selectTF(btn, val) {
+    const parent = btn.parentElement;
+    const btns = parent.querySelectorAll('.tf-btn');
+    btns.forEach(b => {
+        b.style.background = '#fff';
+        b.style.color = '#333';
+        b.classList.remove('selected');
+    });
+    btn.style.background = '#333';
+    btn.style.color = '#fff';
+    btn.classList.add('selected');
+    btn.dataset.value = val;
+}
+
+// 정답 확인 및 토글 함수
+function validateTF(rowId, correctVal, explanation) {
+    const row = document.getElementById(rowId);
+    const selectedBtn = row.querySelector('.tf-btn.selected');
+    const ansText = row.querySelector('.answer-text');
+
+    // 이미 정답이 보이고 있다면 -> 다시 숨기기 (토글)
+    if (ansText.style.display === 'inline') {
+        ansText.style.display = 'none';
+        row.style.background = '#fff'; // 배경색 초기화
+        return;
+    }
+
+    // 버튼을 선택하지 않았을 때
+    if (!selectedBtn) {
+        alert("Please select T or F first!");
+        return;
+    }
+
+    // 정답 확인 모드
+    const userVal = selectedBtn.dataset.value;
+    ansText.style.display = 'inline';
+    ansText.innerText = explanation;
+
+    if (userVal === correctVal) {
+        row.style.background = '#e8f5e9'; // 정답: 연한 초록색
+        ansText.style.color = '#2e7d32';
+    } else {
+        row.style.background = '#ffebee'; // 오답: 연한 빨간색
+        ansText.style.color = '#c62828';
+    }
+}
+</script>
+    </div>
+</article>
+
+
+        </section>
+
+<section id="section2">
+    <h2>Section 2: Speaking Practice</h2> 
+    
+    <article style="margin-top: 1rem;">
+        <h3>Interactive Dialogue (Easy Version)</h3>
+        <p class="instruction" style="margin-bottom: 20px;">
+            <i class="fas fa-headphones-alt"></i> Listen to the sentence (🔊), record your voice (🎤), and check your recording (▶️).
+        </p>
+        <div class="quiz-item" style="background: #fff; padding: 25px; border-radius: 15px; border: 1px solid #ddd; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <div id="dialogue-container" style="display: flex; flex-direction: column; gap: 12px; font-size: 1.05rem;"></div>
+        </div>
+    </article>
+</section>
+
+<section id="section3">
+            <h2>Section 3: Writing Practice</h2>
+            <div id="final-quiz-area" style="margin-top: 40px; border-top: 2px solid var(--secondary); padding-top: 25px;">
+                <div class="quiz-item" style="background: #fcfcfc; padding: 20px; border-radius: 10px;">
+    <p style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+        <strong style="font-size: 1.1rem;">Step 1. Vocabulary & Content Check:</strong>
+        <span style="font-size: 0.85rem; background: #3498db; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500; box-shadow: 0 2px 5px rgba(52, 152, 219, 0.3);">
+            <i class="fas fa-spell-check"></i> Word Bank: Reliable, Exclusive, Exquisite
+        </span>
+    </p>
+
+    <div style="line-height: 3; font-size: 1rem; color: #34495e;">
+
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+    1. These traditional crafts 
+    <span style="font-weight: bold; margin: 0 5px;">were</span>
+    <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #bdc3c7; background: transparent; text-align: center; font-weight: bold; color: #2980b9;" placeholder="......"> 
+    and sold at very high prices.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #3498db; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #e67e22;">(Ans: exquisite)</span>
+</div>
+
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+    2. The shop owner 
+    <span style="font-weight: bold; margin: 0 5px;">provided</span> a very 
+    <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #bdc3c7; background: transparent; text-align: center; font-weight: bold; color: #2980b9;" placeholder="......"> 
+    service to all his customers.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #3498db; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #e67e22;">(Ans: reliable)</span>
+</div>
+
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+    3. Access to the VIP lounge 
+    <span style="font-weight: bold; margin: 0 5px;">was</span> 
+    <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #bdc3c7; background: transparent; text-align: center; font-weight: bold; color: #2980b9;" placeholder="......"> 
+    to members only last year.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #3498db; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #e67e22;">(Ans: exclusive)</span>
+</div>
+
+    </div>
+
+</div>
+
+<div class="quiz-item" style="margin-top: 40px; padding: 25px; background: #fcfcfc; border-radius: 10px; border: 1px solid #eee;">
+    <p style="margin-bottom: 15px;">
+        <strong style="font-size: 1.1rem; color: var(--primary);">Step 2. Content Check:</strong>
+    </p>
+    
+    <p style="line-height: 1.6; color: #34495e; font-weight: 500;">
+        According to the text, why is <b>Nowy Świat</b> considered a "paradise for shoppers" and how is it different from other shopping streets?
+    </p>
+
+    <div style="margin: 10px 0; font-size: 0.85rem; color: #7f8c8d;">
+        <i class="fas fa-lightbulb" style="color: #f1c40f;"></i> 
+        <b>Key Keywords:</b> unique, no loud music, specialist shops, high quality, rebuilt
+    </div>
+
+    <textarea id="content-check-answer" rows="5" 
+        style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; font-size: 0.95rem; line-height: 1.6; resize: vertical; display: block; margin-bottom: 40px; box-sizing: border-box;" 
+        placeholder="Write your answer here based on the reading text..."></textarea>
+
+    <div style="margin-top: 20px; text-align: right; clear: both;">
+        <button onclick="toggleAnswer(this)" style="cursor: pointer; border: none; background: #3498db; color: white; border-radius: 4px; padding: 10px 20px; font-size: 0.85rem; font-weight: bold;">Check Model Answer</button>
+        
+        <div class="model-answer" style="display: none; margin-top: 15px; padding: 15px; background: #f1f8e9; border-radius: 8px; text-align: left; color: #2e7d32; font-size: 0.9rem; line-height: 1.6; border: 1px solid #c8e6c9; height: auto; min-height: 100px; overflow: visible; word-break: keep-all;">
+    <strong style="display: block; margin-bottom: 8px;">[Model Answer]</strong>
+    Nowy Świat is unique because it doesn't have loud music, neon lights, or huge department stores. 
+    <br><br> Instead, it features exclusive cafes, specialist shops, and high-quality goods that are not mass-produced.
+</div>
+
+    </div>
+</div>
+
+
+<script>
+function validateWrite(rowId, correctVal, explanation) {
+    const row = document.getElementById(rowId);
+    const userInput = row.querySelector('.write-input').value.trim().toLowerCase();
+    const ansText = row.querySelector('.answer-text');
+
+    // 토글 기능: 이미 답이 보이고 있다면 숨기기
+    if (ansText.style.display === 'block') {
+        ansText.style.display = 'none';
+        row.style.background = 'white';
+        return;
+    }
+
+    if (!userInput) {
+        alert("Please write the word first!");
+        return;
+    }
+
+    ansText.style.display = 'block';
+    ansText.innerText = explanation;
+
+    if (userInput === correctVal) {
+        row.style.background = '#e8f5e9'; // 정답 배경 (초록)
+        ansText.style.color = '#2e7d32';
+    } else {
+        row.style.background = '#ffebee'; // 오답 배경 (빨강)
+        ansText.style.color = '#c62828';
+    }
+}
+</script>
+
+                <div class="quiz-item" style="background: #fcfcfc; padding: 20px; border-radius: 10px; margin-top: 20px;">
+    <p><strong>Step 3. Thinking about Specialness:</strong></p>
+    <p style="color: #34495e;">
+        Some people like famous global brands (mass-produced), and others like local, handmade items. 
+        <b>Which one do you think is more special? Give one reason.</b>
+    </p>
+    <textarea rows="3" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-family: inherit;" placeholder="I think local items are more special because..."></textarea>
+</div>
+            </div>
+
+            <div style="margin-top: 40px; padding: 25px; background: #fffde7; border-radius: 15px; border: 1px solid #fff176;">
+                <h3 style="margin-top: 0; color: #f57f17;"><i class="fas fa-lightbulb"></i> Critical Thinking</h3>
+                <p>In the text, Polish goods in Nowy Świat are special because they are not mass-produced. In your opinion, is it better to buy expensive 'unique' items, or cheaper 'mass-produced' items? Use examples to explain your choice. </p>
+                <textarea class="main-textarea" 
+    placeholder="Write your thoughts here..." 
+    rows="5" 
+    style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; font-size: 0.95rem; line-height: 1.6; resize: vertical; display: block; box-sizing: border-box;">
+</textarea>
+            </div>
+
+            <div style="margin-top: 30px; padding: 25px; background: #ffffff; border-radius: 15px; border: 2px solid #3498db; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="margin: 0; color: #2980b9;"><i class="fas fa-robot"></i> AI Solution</h3>
+        <span style="background: #3498db; color: white; padding: 5px 15px; border-radius: 50px; font-weight: bold; font-size: 1.1rem;">
+            Overall Score: <input type="text" class="mini-input" style="width: 40px !important; color: white; background: transparent; border: 1px solid rgba(255,255,255,0.5); text-align: center;" value="8"> / 10
+        </span>
+    </div>
+
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.95rem;">
+        <thead>
+            <tr style="background: #ebf5fb; text-align: left;">
+                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Evaluation Criteria</th>
+                <th style="padding: 12px; border-bottom: 2px solid #3498db; text-align: center;">Score</th>
+                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Detailed Feedback</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Content</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="10"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Excellent use of specific examples from the text (Nowy Świat)."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Logic</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="9"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Strong logical contrast between mass-production and unique value."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Grammar</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="6"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Needs focus on subject-verb agreement (items are) and spelling."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Vocabulary</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="7"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Good usage of keywords like 'exquisite' and 'mass-produced'."></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div style="background: #f4f7f6; padding: 15px; border-radius: 10px; border-left: 5px solid #27ae60;">
+        <p style="margin: 0 0 10px 0; font-weight: bold; color: #27ae60;"><i class="fas fa-check-circle"></i> Recommended Revision</p>
+        <textarea style="width: 100%; background: transparent; border: 1px dashed #27ae60; border-radius: 5px; padding: 10px; font-style: italic;" rows="6">"I think unique items are more expensive than mass-produced ones. Item prices are determined by production and consumption. Famous global brands produce many identical items worldwide, but unique items offer high quality and special value. For instance, an exquisite handmade suit from Nowy Świat may cost up to £1,000, but its quality is superior to mass-produced goods."</textarea>
+    </div>
+</div>
+
+            <button class="save-btn" style="margin-top: 20px;" onclick="saveProgress()">Save My Work</button>
+        </section>
+    </div>
+
+
+
+    <script>
+        // --- 데이터 정의 ---
+        const dialogueData = [
+            { name: "Assistant", color: "#3498db", bg: "#ebf5fb", text: "Hello! Welcome. Are you looking for anything special?", char: "assistant" },
+            { name: "Customer", color: "#f39c12", bg: "#fdfaf0", text: "Hi. I am looking for an <b>exclusive</b> gift. I want something very special.", char: "customer" },
+            { name: "Assistant", color: "#3498db", bg: "#ebf5fb", text: "I see. We have an <b>exquisite</b> vase. A local artist made it by hand.", char: "assistant" },
+            { name: "Customer", color: "#f39c12", bg: "#fdfaf0", text: "Oh, it is very beautiful! I like the color. How much is it?", char: "customer" },
+            { name: "Assistant", color: "#3498db", bg: "#ebf5fb", text: "It is eighty pounds. This is a very <b>reliable</b> and unique item.", char: "assistant" },
+            { name: "Customer", color: "#f39c12", bg: "#fdfaf0", text: "That is a bit expensive, but I love it. Can I buy it?", char: "customer" },
+            { name: "Assistant", color: "#3498db", bg: "#ebf5fb", text: "Of course! You can pay with cash or a card.", char: "assistant" },
+            { name: "Customer", color: "#f39c12", bg: "#fdfaf0", text: "I will use my card. Is it okay?", char: "customer" },
+            { name: "Assistant", color: "#3498db", bg: "#ebf5fb", text: "Yes, that is fine. I will wrap it for you now.", char: "assistant" },
+            { name: "Customer", color: "#f39c12", bg: "#fdfaf0", text: "Thank you very much. Have a nice day!", char: "customer" },
+        ];
+
+
+const scriptData1_1 = [
+    { start: 0, speaker: "Narrator", text: "Two point one." },
+    { start: 3, speaker: "K", text: "Did you have a nice weekend?" },
+    { start: 5, speaker: "C", text: "Yeah, it was good." },
+    { start: 6, speaker: "K", text: "What did you do?" },
+    { start: 7, speaker: "C", text: "Oh, nothing much. I went for a walk with some friends round Sutton Park yesterday." },
+    { start: 13, speaker: "K", text: "Oh, nice. It was a lovely clear day." },
+    { start: 16, speaker: "C", text: "Yeah, it was a bit cold, but it was great. I was taking photos with my new camera." },
+    { start: 22, speaker: "K", text: "That one? Let's have a look. Oh wow! That's really neat. Where did you get it?" },
+    { start: 30, speaker: "C", text: "In Jessops in town. I'm really pleased with it. It's really good quality and it's got quite a few different functions." },
+    { start: 38, speaker: "K", text: "Really? Is it complicated to use?" },
+    { start: 41, speaker: "C", text: "No, not really. There are a few things I don't know yet, but it's okay." },
+    { start: 46, speaker: "K", text: "Yeah. Well, the pictures look good, and it's nice and light as well." },
+    { start: 52, speaker: "C", text: "Mm, yeah. It's cool, isn't it? Anyway, what about you two? Did you do anything?" },
+    { start: 57, speaker: "D", text: "Yeah, we went shopping." },
+    { start: 59, speaker: "C", text: "Oh okay. Did you buy anything nice?" },
+    { start: 62, speaker: "K", text: "Well, I got these earrings." },
+    { start: 65, speaker: "C", text: "They're lovely! They look quite old." },
+    { start: 68, speaker: "K", text: "Yeah, they are. I got them in a second-hand shop near here." },
+    { start: 72, speaker: "K", text: "They've got all kinds of things there—books, CDs, clothes. Dan got that jacket there." },
+    { start: 79, speaker: "C", text: "Really? I love it. It looks really nice and warm." },
+    { start: 83, speaker: "D", text: "Yeah, it is. It's pure wool and it's nice and thick. And it only cost fifteen pounds." },
+    { start: 90, speaker: "C", text: "You're joking! That's fantastic. It really suits you as well. It's a great style and colour." },
+    { start: 97, speaker: "D", text: "Thanks." },
+    { start: 98, speaker: "C", text: "Did you get any clothes, Keira?" },
+    { start: 100, speaker: "K", text: "No, there were some really nice things, but I didn't find anything that fitted me." },
+    { start: 105, speaker: "K", text: "Everything was either too big or too small." }
+];
+
+const scriptData1_2_P1 = [
+    { start: 0, speaker: "Narrator", text: "Conversation Two." },
+    { start: 3, speaker: "C", text: "Would you like it wrapped?" },
+    { start: 5, speaker: "D", text: "Um... what's the paper like?" },
+    { start: 7, speaker: "C", text: "It's this green paper." },
+    { start: 9, speaker: "D", text: "Hmm, it's a bit plain. Do you have anything a bit prettier? It's a special present." },
+    { start: 15, speaker: "C", text: "Well, there's quite a big selection in the stationery department." },
+    { start: 19, speaker: "C", text: "Do you want to choose something and bring it here and I'll wrap it for you?" },
+    { start: 23, speaker: "D", text: "Really? You don't mind?" },
+    { start: 25, speaker: "C", text: "Of course not." },
+    { start: 26, speaker: "D", text: "Thanks." }
+];
+
+const scriptData1_2_P2 = [
+    { start: 0, speaker: "Narrator", text: "Conversation Three." },
+    { start: 3, speaker: "E", text: "Yes sir. How can I help you?" },
+    { start: 5, speaker: "F", text: "I bought this the other day and it's damaged." },
+    { start: 8, speaker: "F", text: "When I got it home and took it out of the box, I found the button was loose and it's damaged here. Look, you see?" },
+    { start: 15, speaker: "E", text: "Are you sure you didn't drop it or anything?" },
+    { start: 18, speaker: "F", text: "No, of course not!" },
+    { start: 20, speaker: "E", text: "It's just that this kind of damage doesn't happen unless you do something. It's not a manufacturing fault." },
+    { start: 26, speaker: "F", text: "Honestly, when I got home I took it out of the box and it was already damaged." },
+    { start: 33, speaker: "E", text: "Have you got a receipt and the box?" },
+    { start: 35, speaker: "F", text: "I didn't bring the box. I've got the receipt, though." }
+];
+
+const scriptData1_2_P3 = [
+    { start: 0, speaker: "Narrator", text: "Conversation Four." },
+    { start: 3, speaker: "G", text: "Is there anyone serving here?" },
+    { start: 6, speaker: "H", text: "Yes, but I don't think you can pay here." },
+    { start: 9, speaker: "G", text: "That's OK. I just want to find out if they have something in stock." },
+    { start: 14, speaker: "H", text: "Well, there was a guy here and he said he would be back in a minute, but that was ten minutes ago." },
+    { start: 21, speaker: "G", text: "Oh right." },
+    { start: 23, speaker: "H", text: "It's typical! The service is always terrible here." },
+    { start: 26, speaker: "G", text: "Hmm." },
+    { start: 27, speaker: "H", text: "Hatton's is better really. Their service is much more reliable and their things are generally better quality." },
+    { start: 34, speaker: "G", text: "Really? Well, why didn't you go there?" },
+    { start: 37, speaker: "H", text: "Well, I do normally, but I saw in the window they had a sale here." },
+    { start: 43, speaker: "G", text: "Ah!" },
+    { start: 45, speaker: "H", text: "There he is! About time!" },
+    { start: 48, speaker: "I", text: "Sorry." },
+    { start: 49, speaker: "H", text: "That's OK." }
+];
+
+        // --- 기능 함수 ---
+        let mediaRecorder;
+        let audioChunks = {};
+
+        function initDialogue() {
+            const container = document.getElementById('dialogue-container');
+            dialogueData.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.style = `padding: 12px 15px; background: ${item.bg}; border-radius: 12px; border-left: 6px solid ${item.color}; display: flex; align-items: center; justify-content: space-between; gap: 10px;`;
+                div.innerHTML = `
+                    <div style="flex: 1;"><strong style="color: ${item.color};">${item.name}:</strong> <span>${item.text}</span></div>
+                    <div style="display: flex; gap: 8px; flex-shrink: 0;">
+                        <button onclick="speakText(\`${item.text.replace(/<\/?[^>]+(>|$)/g, "")}\`, '${item.char}')" style="background: ${item.color}; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">🔊</button>
+                        <button id="rec-${index}" onclick="toggleRecord(${index})" style="background: #e74c3c; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">🎤</button>
+                        <button id="play-${index}" onclick="playMyVoice(${index})" style="background: #2ecc71; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: none;">▶️</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function speakText(text, character) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.pitch = (character === 'maya') ? 1.5 : 1.1;
+            window.speechSynthesis.speak(utterance);
+        }
+
+async function toggleRecord(index) {
+    const btn = document.getElementById(`rec-${index}`);
+    if (mediaRecorder && mediaRecorder.state === "recording") {
+        mediaRecorder.stop();
+        btn.style.backgroundColor = "#e74c3c"; btn.innerText = "🎤";
+    } else {
+        const stream = await navigator.mediaDevices.getUserMedia({ 
+            audio: {
+                echoCancellation: true,
+                noiseSuppression: true,
+                autoGainControl: false, // 웅웅거림 방지를 위해 끔
+                channelCount: 1
+            } 
+        });
+
+        // --- 오디오 증폭 로직 시작 ---
+        const audioContext = new AudioContext();
+        const source = audioContext.createMediaStreamSource(stream);
+        const gainNode = audioContext.createGain();
+        
+        gainNode.gain.value = 2.0; // [조정 포인트] 소리를 3배 키웁니다 (1.0~5.0 사이 조절 가능)
+        
+        const destination = audioContext.createMediaStreamDestination();
+        source.connect(gainNode);
+        gainNode.connect(destination);
+        // --- 오디오 증폭 로직 끝 ---
+
+        // 증폭된 스트림으로 녹음 진행
+        mediaRecorder = new MediaRecorder(destination.stream);
+        const chunks = [];
+        mediaRecorder.ondataavailable = e => chunks.push(e.data);
+        mediaRecorder.onstop = () => {
+            const blob = new Blob(chunks, { type: 'audio/webm' });
+            audioChunks[index] = URL.createObjectURL(blob);
+            document.getElementById(`play-${index}`).style.display = "flex";
+            
+            stream.getTracks().forEach(track => track.stop());
+            audioContext.close();
+        };
+        mediaRecorder.start();
+        btn.style.backgroundColor = "#000"; btn.innerText = "⏹";
+    }
+}
+        function playMyVoice(index) {
+            if (audioChunks[index]) new Audio(audioChunks[index]).play();
+        }
+
+        function setupAudioSync(audioId, containerId, data, isDialogue = false) {
+    const audio = document.getElementById(audioId);
+    const container = document.getElementById(containerId);
+    if(!audio || !container) return;
+    
+    container.innerHTML = '';
+    data.forEach((line, index) => {
+        const div = document.createElement('div');
+        div.className = 'script-line';
+        div.id = `${containerId}-line-${index}`;
+        div.innerHTML = isDialogue ? `<strong>${line.speaker}:</strong> ${line.text}` : line.text;
+        container.appendChild(div);
+    });
+
+    // 오디오 재생 시 스크립트 창 보이기
+    audio.addEventListener('play', () => { 
+        container.style.display = 'block'; 
+    });
+
+    // 오디오 진행 시간에 맞춰 스크립트 하이라이트 및 스크롤
+    audio.addEventListener('timeupdate', () => {
+        let activeIdx = -1;
+        for (let i = 0; i < data.length; i++) {
+            if (audio.currentTime >= data[i].start) activeIdx = i; else break;
+        }
+        container.querySelectorAll('.script-line').forEach(l => l.classList.remove('active'));
+        if (activeIdx !== -1) {
+            const currentLine = document.getElementById(`${containerId}-line-${activeIdx}`);
+            if (currentLine) {
+                currentLine.classList.add('active');
+                container.scrollTo({ 
+                    top: currentLine.offsetTop - container.offsetTop - 80, 
+                    behavior: 'smooth' 
+                });
+            }
+        }
+    });
+
+    // 추가된 부분: 음성 재생이 끝나면 스크립트 창 숨기기
+    audio.addEventListener('ended', () => { 
+        container.style.display = 'none'; 
+    });
+}
+
+        function centralizeScroll(targetId) {
+            const element = document.getElementById(targetId);
+            if (!element) return;
+            const elementRect = element.getBoundingClientRect();
+            const middle = (elementRect.top + window.pageYOffset) - (window.innerHeight / 2) + (elementRect.height / 2);
+            window.scrollTo({ top: middle, behavior: 'smooth' });
+            if (targetId.startsWith('vocab')) {
+                document.querySelectorAll('.card').forEach(c => c.classList.remove('active-highlight'));
+                element.classList.add('active-highlight');
+                setTimeout(() => element.classList.remove('active-highlight'), 1500);
+            }
+        }
+
+        function toggleAnswer(btn) {
+            const answerSpan = btn.nextElementSibling;
+            if (answerSpan.style.display === "none") {
+                answerSpan.style.display = "inline"; btn.innerText = "Hide";
+            } else {
+                answerSpan.style.display = "none"; btn.innerText = "Check";
+            }
+        }
+
+        function saveProgress() {
+            const allInputs = document.querySelectorAll('input[type="text"], textarea');
+            allInputs.forEach((input, index) => {
+                localStorage.setItem(`unit02_all_data_${index}`, input.value);
+            });
+            alert('Your progress has been saved! ✅');
+        }
+
+        // --- 초기화 로직 ---
+        window.addEventListener('DOMContentLoaded', () => {
+            initDialogue();
+            setupAudioSync('main-player', 'script-container', scriptData1_1, true);
+            setupAudioSync('player-1', 'script-1', scriptData1_2_P1, true);
+            setupAudioSync('player-2', 'script-2', scriptData1_2_P2, true);
+            setupAudioSync('player-3', 'script-3', scriptData1_2_P3, true);
+            // ... 나머지 setupAudioSync 호출
+
+            // 저장된 데이터 불러오기
+            const allInputs = document.querySelectorAll('input[type="text"], textarea');
+            allInputs.forEach((input, index) => {
+                const savedValue = localStorage.getItem(`unit02_all_data_${index}`);
+                if (savedValue) input.value = savedValue;
+            });
+        });
+    </script>
+
+<script>
+function speak(text) {
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';
+    
+    const voices = window.speechSynthesis.getVoices();
+    // 여성 목소리 우선 선택
+    const femaleVoice = voices.find(v => v.name.includes('Female') || v.name.includes('Google US English') || v.name.includes('Samantha'));
+    
+    if (femaleVoice) {
+        utterance.voice = femaleVoice;
+    }
+    
+    utterance.pitch = 1.1; 
+    utterance.rate = 1.0; // 현대식 표준 영어 빠르기
+    window.speechSynthesis.speak(utterance);
+}
+
+window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.getVoices(); };
+</script>
+</body>
+</html>

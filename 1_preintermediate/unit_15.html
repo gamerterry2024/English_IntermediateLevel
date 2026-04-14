@@ -1,0 +1,1190 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNIT 15: MONEY</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --bg: #f4f7f6;
+            --white: #ffffff;
+            --highlight: #fff59d;
+            --accent: #e67e22;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg);
+            color: var(--primary);
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+        section {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            /* 상단 헤더 높이를 고려한 스크롤 위치 조정 */
+            scroll-margin-top: 90px;
+        }
+        .back-to-dashboard {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 1001;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        .back-to-dashboard:hover {
+            transform: scale(1.1);
+            background-color: var(--secondary);
+        }
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 20px;
+            padding-bottom: 300px; 
+        }
+        h2 {
+            border-left: 6px solid var(--secondary);
+            padding-left: 15px;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        .reading-box {
+            background-color: #fffaf0;
+            border: 1px solid #f39c12;
+            padding: 25px;
+            border-radius: 12px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .vocab-link {
+            color: var(--secondary);
+            text-decoration: none;
+            border-bottom: 2px solid var(--secondary);
+            font-weight: bold;
+            padding: 0 2px;
+            cursor: pointer;
+        }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .card {
+            border: 1px solid #eee;
+            padding: 20px;
+            border-radius: 10px;
+            background: #fff;
+            transition: all 0.4s ease;
+        }
+        .card.active-highlight {
+            border: 2px solid var(--accent);
+            background-color: #fffde7;
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .return-btn {
+            display: inline-block;
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: bold;
+            border: 1px solid var(--secondary);
+            padding: 4px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .audio-zone {
+            background: #ebf5fb;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--secondary);
+            margin: 20px 0;
+            text-align: center;
+        }
+        .audio-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .script-window {
+            margin-top: 15px;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            height: 250px; 
+            overflow-y: auto;
+            display: none;
+            text-align: left;
+        }
+        .script-line {
+            padding: 8px 10px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            transition: background 0.3s;
+            font-size: 0.95rem;
+        }
+        .script-line.active {
+            background-color: var(--highlight);
+            font-weight: bold;
+        }
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        .quiz-item {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .instruction {
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        .save-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .save-btn:hover {
+            background-color: #219150;
+        }
+        .mini-input {
+            width: 100px !important;
+            padding: 5px !important;
+            margin: 0 5px !important;
+            display: inline-block !important;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html#unit_15" class="back-to-dashboard">🏠 Back to Dashboard</a>
+    <header>
+        <h1>UNIT 15</h1>
+        <nav class="nav-links">
+            <a href="#intro-reading">0. Core Reading</a>
+            <a href="#section1">1. Listen & Read</a>
+            <a href="#section2">2. Speaking</a>
+            <a href="#section3">3. Writing</a>
+        </nav>
+    </header>
+    <div class="container">
+        
+<section id="intro-reading">
+    <h2>Core Reading: The Hidden Value of Wealth: From Daily Choices to a Secret Legacy</h2>
+    
+    <div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+<p style="margin-top: 0;">
+The story of wealth is often less about how much someone earns and more about the <strong><span class="vocab-link" id="text-perspective" onclick="centralizeScroll('vocab-perspective')">perspective</span></strong> they choose to have on life. When Laima and Aidan discussed their economic situations, it became clear that the <strong><span class="vocab-link" id="text-climate" onclick="centralizeScroll('vocab-climate')">climate</span></strong> of the market and <strong><span class="vocab-link" id="text-unemployment" onclick="centralizeScroll('vocab-unemployment')">unemployment</span></strong> opportunities dictate many personal decisions. Aidan <b>had been living</b> in a beautiful coastal area for <b>almost two years</b>. However, because the economy <b>had been doing</b> badly and <b>unemployment</b> <b>had gone up</b> <b>over the last few months</b>, he decided to move back to Canada. He <b>had realized</b> that salaries were higher back home, even though inflation <b>had made</b> everything more expensive. He <b>knew</b> that <b>if he stays</b> in his current location, he might not have a job <b>in a year’s time</b>.</p>
+<p>While some move for better opportunities, others <strong><span class="vocab-link" id="text-accumulate" onclick="centralizeScroll('vocab-accumulate')">accumulate</span></strong> wealth through <strong><span class="vocab-link" id="text-persistent" onclick="centralizeScroll('vocab-persistent')">persistent</span></strong> <strong><span class="vocab-link" id="text-frugality" onclick="centralizeScroll('vocab-frugality')">frugality</span></strong>. A lawyer recently revealed a <strong><span class="vocab-link" id="text-staggering" onclick="centralizeScroll('vocab-staggering')">staggering</span></strong> secret about a man who <b>had died</b> <b>two months earlier</b>. For sixteen years, his children <b>had assumed</b> they were <strong><span class="vocab-link" id="text-impoverished" onclick="centralizeScroll('vocab-impoverished')">impoverished</span></strong> because they <b>had worn</b> second-hand clothes and <b>had never been</b> bought toys. Their father <b>had been</b> <strong><span class="vocab-link" id="text-extraordinarily" onclick="centralizeScroll('vocab-extraordinarily')">extraordinarily</span></strong> <strong><span class="vocab-link" id="text-shrewd" onclick="centralizeScroll('vocab-shrewd')">shrewd</span></strong> at investing. In 1965, he <b>had bought</b> shares that <b>had grown</b> into a fortune of £2.7 million <b>by the time</b> he passed away.</p>
+<p>The children were <strong><span class="vocab-link" id="text-astonished" onclick="centralizeScroll('vocab-astonished')">astonished</span></strong> to learn that their father <b>had lived</b> so simply despite his <strong><span class="vocab-link" id="text-inheritances" onclick="centralizeScroll('vocab-inheritances')">inheritances</span></strong>. He <b>had decided</b> to leave most of his money to a <strong><span class="vocab-link" id="text-charity" onclick="centralizeScroll('vocab-charity')">charity</span></strong> for teenagers. This <strong><span class="vocab-link" id="text-demonstrate" onclick="centralizeScroll('vocab-demonstrate')">demonstrate</span></strong>s that the love they <b>had shared</b> as a family <b>was more important</b> than the money they <b>had lacked</b> in their childhood.</p>
+<p>In daily life, financial <strong><span class="vocab-link" id="text-transactions" onclick="centralizeScroll('vocab-transactions')">transactions</span></strong> often lead to more <strong><span class="vocab-link" id="text-mundane" onclick="centralizeScroll('vocab-mundane')">mundane</span></strong> <strong><span class="vocab-link" id="text-complications" onclick="centralizeScroll('vocab-complications')">complications</span></strong>. At a dinner, a man <b>had intended</b> to treat his friend, but he suddenly realized he <b>had left</b> his wallet at home. He promised, "I'll pay you back <b>as soon as I can</b>." In another situation, a customer was <strong><span class="vocab-link" id="text-bargaining" onclick="centralizeScroll('vocab-bargaining')">bargaining</span></strong> for a vintage jacket, but the seller refused to lower the price further, saying he <b>had already lost</b> money on the deal. Meanwhile, a student was worried because bus <strong><span class="vocab-link" id="text-fares" onclick="centralizeScroll('vocab-fares')">fares</span></strong> <b>had just gone up</b>, making it harder to save for a car.</p>
+<p>Finally, we must exercise <strong><span class="vocab-link" id="text-caution" onclick="centralizeScroll('vocab-caution')">caution</span></strong> in the digital age. One woman was told by her bank that they <strong><span class="vocab-link" id="text-suspected" onclick="centralizeScroll('vocab-suspected')">suspected</span></strong> her card <b>had been copied</b>. Someone <b>had used</b> it for irregular activity overseas. <b>After she receives</b> her new card, she will be able to use her account again safely. Whether it is a small purchase or a multi-million pound legacy, these stories show that money <b>had always been</b> a complex part of the human experience.</p>
+<p>By looking at these examples, we see how past actions—whether saving money or investing wisely—shape our future. <b>If we manage</b> our finances with a long-term <b>perspective</b>, we <b>will be</b> better prepared for whatever happens <b>after a while</b>.</p>
+    </div>
+
+
+<article style="margin-top: 3rem; border-top: 2px solid #eee;">
+    <h3 id="vocab-builder">Vocabulary Builder</h3>
+    <div class="vocab-grid">
+ 
+
+<div class="card" id="vocab-perspective">
+<div class="card-content">
+<strong>Perspective:</strong> A particular way of thinking about something or a point of view.
+
+<span class="return-btn" onclick="centralizeScroll('text-perspective')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-climate">
+<div class="card-content">
+<strong>Climate:</strong> The general situation or set of conditions in a particular area.
+
+<span class="return-btn" onclick="centralizeScroll('text-climate')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-unemployment">
+<div class="card-content">
+<strong>Unemployment:</strong> The state of not having a job, or the number of people without work.
+
+<span class="return-btn" onclick="centralizeScroll('text-unemployment')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-accumulate">
+<div class="card-content">
+<strong>Accumulate:</strong> To gradually collect or increase in amount over a period of time.
+
+<span class="return-btn" onclick="centralizeScroll('text-accumulate')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-persistent">
+<div class="card-content">
+<strong>Persistent:</strong> Continuing to do something or exist for a long time, especially despite difficulties.
+
+<span class="return-btn" onclick="centralizeScroll('text-persistent')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-frugality">
+<div class="card-content">
+<strong>Frugality:</strong> The habit of being careful with money and avoiding waste.
+
+<span class="return-btn" onclick="centralizeScroll('text-frugality')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-staggering">
+<div class="card-content">
+<strong>Staggering:</strong> Very shocking or surprising because of being so large or unusual.
+
+<span class="return-btn" onclick="centralizeScroll('text-staggering')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-impoverished">
+<div class="card-content">
+<strong>Impoverished:</strong> Extremely poor; lacking the money or resources needed for a good life.
+
+<span class="return-btn" onclick="centralizeScroll('text-impoverished')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-extraordinarily">
+<div class="card-content">
+<strong>Extraordinarily:</strong> In a way that is very unusual, special, or much greater than normal.
+
+<span class="return-btn" onclick="centralizeScroll('text-extraordinarily')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-shrewd">
+<div class="card-content">
+<strong>Shrewd:</strong> Good at making practical decisions, especially in business or financial matters.
+
+<span class="return-btn" onclick="centralizeScroll('text-shrewd')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-astonished">
+<div class="card-content">
+<strong>Astonished:</strong> Feeling very surprised or amazed by something.
+
+<span class="return-btn" onclick="centralizeScroll('text-astonished')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-inheritances">
+<div class="card-content">
+<strong>Inheritances:</strong> Money, property, or assets received from someone who has died.
+
+<span class="return-btn" onclick="centralizeScroll('text-inheritances')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-charity">
+<div class="card-content">
+<strong>Charity:</strong> An organization that collects money to help people in need.
+
+<span class="return-btn" onclick="centralizeScroll('text-charity')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-demonstrate">
+<div class="card-content">
+<strong>Demonstrate:</strong> To show or prove something clearly by giving examples or evidence.
+
+<span class="return-btn" onclick="centralizeScroll('text-demonstrate')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-transactions">
+<div class="card-content">
+<strong>Transactions:</strong> The process of buying or selling something; business deals.
+
+<span class="return-btn" onclick="centralizeScroll('text-transactions')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-mundane">
+<div class="card-content">
+<strong>Mundane:</strong> Ordinary and not interesting or exciting.
+
+<span class="return-btn" onclick="centralizeScroll('text-mundane')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-complications">
+<div class="card-content">
+<strong>Complications:</strong> Problems or difficulties that make a situation more complex.
+
+<span class="return-btn" onclick="centralizeScroll('text-complications')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-bargaining">
+<div class="card-content">
+<strong>Bargaining:</strong> Discussing the price of something to try to make it cheaper.
+
+<span class="return-btn" onclick="centralizeScroll('text-bargaining')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-fares">
+<div class="card-content">
+<strong>Fares:</strong> The money paid for a journey on public transport (bus, train, etc.).
+
+<span class="return-btn" onclick="centralizeScroll('text-fares')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-caution">
+<div class="card-content">
+<strong>Caution:</strong> Care taken to avoid danger or mistakes.
+
+<span class="return-btn" onclick="centralizeScroll('text-caution')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-suspected">
+<div class="card-content">
+<strong>Suspected:</strong> Believed to be true or likely, but without certain proof.
+
+<span class="return-btn" onclick="centralizeScroll('text-suspected')">Return to Text ↑</span>
+</div>
+</div>
+
+
+    </div>
+</article>
+</section>
+<section id="section1">
+            <h2>Section 1: Listening & Reading Integration</h2>
+<article>
+    <h3>1-1. Perspectives on Money: Staying, Leaving, and Giving (Dialogues)</h3>
+    
+    <div class="audio-zone" style="margin-bottom: 20px;">
+        <span class="audio-label">🎧 Listening 1: A Move Back Home (CD2_Track 42)</span>
+        <audio id="main-player-1" style="width:100%;" controls src="CD2_Track 42.mp3"></audio>
+    </div>
+    <div id="script-container1" class="script-window" style="height: 450px; overflow-y: auto;"></div>
+    <div class="audio-zone" style="margin-bottom: 20px;">
+        <span class="audio-label">🎧 Listening 2: A Father's Hidden Fortune (CD2_Track 43)</span>
+        <audio id="main-player-2" style="width:100%;" controls src="CD2_Track 43.mp3"></audio>
+    </div>
+    <div id="script-container2" class="script-window" style="height: 450px; overflow-y: auto;"></div>
+        
+</article>
+            <article style="margin-top: 3rem; border-top: 1px solid #eee; padding-top: 2rem;">
+                <h3>1-2. Money Matters: From Dining to Fraud</h3>
+                
+                <div class="audio-zone">
+                    <span class="audio-label">🎁 Conversation 1 : An Embarrassing Dinner Date (CD2_Track 46)</span>
+                    <audio id="player-1" style="width:100%;" controls src="CD2_Track 46.mp3"></audio>
+                    <div id="script-1" class="script-window"></div>
+                </div>
+                <div class="audio-zone">
+                    <span class="audio-label">📦 Conversation 2 : Haggling for Vintage (CD2_Track 47)</span>
+                    <audio id="player-2" style="width:100%;" controls src="CD2_Track 47.mp3"></audio>
+                    <div id="script-2" class="script-window"></div>
+                </div>
+                <div class="audio-zone">
+                    <span class="audio-label">👨‍💼 Conversation 3 : Investing in a First Car (CD2_Track 48)</span>
+                    <audio id="player-3" style="width:100%;" controls src="CD2_Track 48.mp3"></audio>
+                    <div id="script-3" class="script-window"></div>
+                </div>
+                <div class="audio-zone">
+                    <span class="audio-label">👨‍💼 Conversation 4 : A Security Alert (CD2_Track 49)</span>
+                    <audio id="player-4" style="width:100%;" controls src="CD2_Track 49.mp3"></audio>
+                    <div id="script-4" class="script-window"></div>
+                </div>
+            </article>
+
+         <article style="margin-top: 3rem; border-top: 1px solid #eee; padding-top: 2rem;">
+    <h2>1-3. &#x1F4D6; Reading: WILL POWER</h2>
+    <div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+        <p style="margin-top: 0;">None of us <b>had any idea what was going to happen when we arrived</b> at the lawyer's office. Dad <b>had died two months earlier</b> in his bed in the same two-bedroom house where we<b>'d grown up</b>. Apart from the house, we didn't expect Dad to leave anything of value. I mean, <b>for years after my mum died</b>, he<b>'d gone</b> to a neighbour's house to watch TV. I offered to buy him a TV once, but he just said, 'Never buy what you can borrow!' That was typical of him. I guess he liked his neighbour's company as well.</p>
+<p>My mum <b>had never worked</b> and Dad was an insurance salesman. We assumed he wasn't successful because we <b>were never bought toys</b> and we <b>wore second-hand clothes</b>. We just thought he couldn't afford these things. Dad <b>used to find</b> bits of wood and turn them into toy boats and dolls. Mum taught us to make and repair clothes, which we <b>used to do together at night</b>. They had funny little sayings that they<b>'d repeat whenever we complained</b> about things: 'Money's silver, but a needle and thread is gold!'; 'Early to bed, early to rise, makes a man healthy, wealthy and wise'; 'Never buy what you can borrow, never throw away what you can repair.' We <b>used to laugh</b> at them, and sometimes invented our own silly sayings: 'A fool spends what the wise man saves'; 'A glass of water is worth all the tea in China.' We laughed, but having so little money <b>was often annoying</b>. I think we were the only family in our school without a TV; we never drank soft drinks, and <b>sharing a rom with two big sisters for sixteen years</b> was difficult.</p>
+<p>So we walked into the lawyer's office and sat down. We were serious, but not sad any more. Dad <b>had had a good life</b>. The lawyer started reading; I <b>was hardly paying attention</b>, really, but then the numbers seemed to continue without end. 'Wait, I'm sorry,' I said. 'How much did you say he had?' The lawyer smiled, 'Yes, I imagine it does need repeating. <b>Two million, seven hundred and eighty-one thousand, six hundred and fifty three pounds and eighteen pence.</b>'</p>
+<p>We didn't know what to say! Nearly three million pounds! How? Why? We <b>had so many questions</b>, so many feelings.</p>
+    </div>
+	</article>
+
+    <div class="quiz-container" style="margin-top: 2rem; padding: 0 1rem;">
+        <h4 style="color: var(--secondary); margin-bottom: 1.5rem;">✅ Check your understanding (True or False)</h4>
+        <style>
+            .quiz-row { display: flex; align-items: center; margin-bottom: 15px; font-size: 1.05rem; flex-wrap: wrap; }
+            .quiz-question { margin-right: 12px; font-weight: 500; }
+            .btn-check-small { 
+                padding: 3px 10px; font-size: 0.85rem; cursor: pointer; border-radius: 6px; 
+                border: 1px solid var(--secondary); background: white; color: var(--secondary);
+                transition: 0.2s; margin-right: 10px;
+            }
+            .btn-check-small:hover { background: var(--secondary); color: white; }
+            .answer-text { color: var(--success); font-weight: bold; font-size: 0.95rem; }
+        </style>
+<div class="quiz-container" style="background: #fdfdfd; padding: 20px; border-radius: 12px; border: 1px solid #eee;">
+    
+<div class="quiz-row" id="tf-q1" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+<span class="quiz-question">1. The family <b>had expected</b> to find a large fortune when they arrived at the lawyer's office.</span>
+<div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+<button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+<button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+</div>
+<button onclick="validateTF('tf-q1', 'F', 'False (The narrator states they didn&#39;t expect their dad to leave anything of value apart from the house.)')" class="btn-check-small">Check</button>
+<span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-q2" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+<span class="quiz-question">2. For many years, the father <b>had preferred</b> borrowing a TV from a neighbour rather than buying one.</span>
+<div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+<button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+<button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+</div>
+<button onclick="validateTF('tf-q2', 'T', 'True (He often said, &#39;Never buy what you can borrow!&#39; and went to a neighbour&#39;s house to watch TV.)')" class="btn-check-small">Check</button>
+<span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-q3" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+<span class="quiz-question">3. Before the lawyer read the will, the children <b>had assumed</b> their father was unsuccessful because they wore second-hand clothes.</span>
+<div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+<button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+<button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+</div>
+<button onclick="validateTF('tf-q3', 'T', 'True (They thought he couldn&#39;t afford toys or new clothes because his insurance sales job wasn&#39;t successful.)')" class="btn-check-small">Check</button>
+<span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-q4" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+<span class="quiz-question">4. The narrator <b>had lived</b> in a room with two sisters <b>for sixteen years</b>, which she found difficult.</span>
+<div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+<button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+<button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+</div>
+<button onclick="validateTF('tf-q4', 'T', 'True (The narrator mentions that sharing a room with two big sisters for sixteen years was difficult.)')" class="btn-check-small">Check</button>
+<span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-q5" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+<span class="quiz-question">5. By the time they <b>had arrived</b> at the office, they already knew that the father <b>had saved</b> over two million pounds.</span>
+<div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+<button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+<button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+</div>
+<button onclick="validateTF('tf-q5', 'F', 'False (They didn&#39;t know what to say and were shocked when the lawyer read the final amount.)')" class="btn-check-small">Check</button>
+<span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+</div>
+<script>
+// T/F 버튼 선택 시 시각적 효과
+function selectTF(btn, val) {
+    const parent = btn.parentElement;
+    const btns = parent.querySelectorAll('.tf-btn');
+    btns.forEach(b => {
+        b.style.background = '#fff';
+        b.style.color = '#333';
+        b.classList.remove('selected');
+    });
+    btn.style.background = '#333';
+    btn.style.color = '#fff';
+    btn.classList.add('selected');
+    btn.dataset.value = val;
+}// 정답 확인 및 토글 함수
+function validateTF(rowId, correctVal, explanation) {
+    const row = document.getElementById(rowId);
+    const selectedBtn = row.querySelector('.tf-btn.selected');
+    const ansText = row.querySelector('.answer-text');
+    // 이미 정답이 보이고 있다면 -> 다시 숨기기 (토글)
+    if (ansText.style.display === 'inline') {
+        ansText.style.display = 'none';
+        row.style.background = '#fff'; // 배경색 초기화
+        return;
+    }
+    // 버튼을 선택하지 않았을 때
+    if (!selectedBtn) {
+        alert("Please select T or F first!");
+        return;
+    }
+    // 정답 확인 모드
+    const userVal = selectedBtn.dataset.value;
+    ansText.style.display = 'inline';
+    ansText.innerText = explanation;
+    if (userVal === correctVal) {
+        row.style.background = '#e8f5e9'; // 정답: 연한 초록색
+        ansText.style.color = '#2e7d32';
+    } else {
+        row.style.background = '#ffebee'; // 오답: 연한 빨간색
+        ansText.style.color = '#c62828';
+    }
+}</script>
+    </div>
+</article>
+        </section>
+<section id="section2">
+    <h2>Section 2: Speaking Practice</h2> 
+    
+    <article style="margin-top: 1rem;">
+        <h3>Interactive Dialogue (Easy Version)</h3>
+        <p class="instruction" style="margin-bottom: 20px;">
+            <i class="fas fa-headphones-alt"></i> Listen to the sentence (🔊), record your voice (🎤), and check your recording (▶).
+        </p>
+        <div class="quiz-item" style="background: #fff; padding: 25px; border-radius: 15px; border: 1px solid #ddd; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <div id="dialogue-container" style="display: flex; flex-direction: column; gap: 12px; font-size: 1.05rem;"></div>
+        </div>
+    </article>
+</section>
+<section id="section3">
+            <h2>Section 3: Writing Practice</h2>
+            <div id="final-quiz-area" style="margin-top: 40px; border-top: 2px solid var(--secondary); padding-top: 25px;">
+                <div class="quiz-item" style="background: #fcfcfc; padding: 20px; border-radius: 10px;">
+    <p style="margin-bottom: 15px;">
+        <strong style="font-size: 1.1rem; color: #3498db;">Step 1. Grammar & Vocabulary Check:</strong>
+    </p> 
+<div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+    <h3 style="text-align: center; color: #2c3e50; margin-bottom: 2rem; border-bottom: 3px double #3498db; padding-bottom: 10px; display: block; width: fit-content; margin-left: auto; margin-right: auto;">
+        <i class="fas fa-book-open" style="margin-right: 10px;"></i>Grammar Mastery
+    </h3>
+
+
+<h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-top: 0;">
+1. The Past Perfect (Background Events)</h3>
+<div style="background-color: #fff; padding: 15px; border-radius: 10px; border: 1px dashed #bdc3c7; margin-bottom: 15px;">
+<p style="margin: 5px 0;"><strong>• had + past participle</strong>: Used to talk about an action that happened <strong>before</strong> another action in the past.</p>
+<p style="margin: 5px 0;"><strong>• Negative (hadn't)</strong>: Used to say that something had <strong>not happened</strong> by a certain time in the past.</p>
+</div>
+<ul style="list-style-type: none; padding-left: 10px;">
+<li style="margin-bottom: 15px;">
+<strong style="color: #e67e22;">• Example:</strong> "Dad <span style="color: #e67e22; font-weight: bold;">had died</span> two months earlier before we went to the office."
+
+<i style="color: #7f8c8d;">(Reading - The sequence of events)</i>
+</li>
+<li style="margin-bottom: 15px;">
+<strong style="color: #16a085;">• Example:</strong> "I <span style="color: #16a085; font-weight: bold;">had assumed</span> he was poor because of his old clothes."
+
+<i style="color: #7f8c8d;">(Reading - A past belief before the discovery)</i>
+</li>
+</ul>
+
+<h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-top: 25px;">
+2. Future Time Clauses (Plans & Conditions)</h3>
+<div style="background-color: #fff; padding: 15px; border-radius: 10px; border: 1px dashed #bdc3c7; margin-bottom: 15px;">
+<p style="margin: 5px 0;"><strong>• when / after / as soon as + Present Simple</strong>: Used to talk about <strong>future</strong> events. Even though we mean the future, we use the <strong>present tense</strong> after these words.</p>
+<p style="margin: 5px 0;"><strong>• Main Clause (will + verb)</strong>: Used to describe the result or the next action.</p>
+</div>
+<ul style="list-style-type: none; padding-left: 10px;">
+<li style="margin-bottom: 15px;">
+<strong style="color: #2980b9;">• Example:</strong> "<span style="color: #2980b9; font-weight: bold;">As soon as I get</span> home, I will talk to my sisters."
+
+<i style="color: #7f8c8d;">(Dialogue - Future plan after the meeting)</i>
+</li>
+<li style="margin-bottom: 15px;">
+<strong style="color: #2980b9;">• Example:</strong> "You will receive a new PIN <span style="color: #2980b9; font-weight: bold;">after you receive</span> the card."
+
+<i style="color: #7f8c8d;">(Listening - Bank security instruction)</i>
+</li>
+</ul>
+
+<h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-top: 25px;">
+3. Conditionals with If (Possibility)</h3>
+<div style="background-color: #fff; padding: 15px; border-radius: 10px; border: 1px dashed #bdc3c7; margin-bottom: 15px;">
+<p style="margin: 5px 0;"><strong>• If + Present Simple</strong>: Used to describe a <strong>possible future condition</strong>.</p>
+<p style="margin: 5px 0;"><strong>• Result (will / might)</strong>: Used to show what the outcome will be.</p>
+</div>
+<ul style="list-style-type: none; padding-left: 10px;">
+<li style="margin-bottom: 15px;">
+<strong style="color: #d35400;">• Example:</strong> "<span style="color: #d35400; font-weight: bold;">If I don't buy</span> it, someone else will."
+
+<i style="color: #7f8c8d;">(Listening - Buying a car)</i>
+</li>
+<li style="margin-bottom: 15px;">
+<strong style="color: #d35400;">• Example:</strong> "<span style="color: #d35400; font-weight: bold;">If unemployment stays</span> high, he will move to Canada."
+
+<i style="color: #7f8c8d;">(Listening - Economic decision)</i>
+</li>
+</ul>
+
+<hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
+
+<p style="margin-top: 20px;"><strong>Context from our Unit:</strong></p>
+<ul style="padding-left: 20px;">
+<li>"We <span style="color: #d35400; font-weight: bold;">had shared</span> a room for sixteen years before we moved."</li>
+<li>"I'll pay you back <span style="color: #d35400; font-weight: bold;">when I have</span> the money."</li>
+<li>"He <span style="color: #d35400; font-weight: bold;">had been</span> extraordinarily shrewd with his investments."</li>
+</ul>
+
+
+</div>
+<div class="quiz-item" style="background: #fff; padding: 25px; border-radius: 15px; border: 1px solid #ddd; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+<div id="vocabulary-mastery-section">
+<h3 style="text-align: center; color: #2c3e50; margin-bottom: 2rem; border-bottom: 3px double #3498db; padding-bottom: 10px; display: block; width: fit-content; margin-left: auto; margin-right: auto; font-size: 1.6rem;">
+        <i class="fas fa-spell-check" style="margin-right: 10px;"></i>Vocabulary Check
+    </h3>
+ 
+
+<div style="background: #fff5f5; border: 1px solid #fed7d7; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #c53030; margin: 0; border-left: 4px solid #f56565; padding-left: 10px;">Group 1: Financial Success</h4>
+<span style="font-size: 0.85rem; background: #f56565; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: accumulate, shrewd, staggering, transactions, inheritances
+</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+1. It takes many years to <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> such a large amount of wealth.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: accumulate)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+2. The lawyer was shocked by the <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> amount of money in the account.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: staggering)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+3. My father was very <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> when it came to making investments.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: shrewd)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+4. The bank recorded several irregular <input type="text" class="mini-input" style="width: 120px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> in his account.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: transactions)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+5. They were surprised to receive large <input type="text" class="mini-input" style="width: 120px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> from their father.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: inheritances)</span>
+</div>
+</div>
+
+<div style="background: #fffaf0; border: 1px solid #feebc8; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #c05621; margin: 0; border-left: 4px solid #ed8936; padding-left: 10px;">Group 2: Lifestyle & Economy</h4>
+<span style="font-size: 0.85rem; background: #ed8936; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: frugality, impoverished, unemployment, climate, perspective
+</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+6. Because of his <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......">, he never spent money on luxury items.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: frugality)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+7. The economic <input type="text" class="mini-input" style="width: 80px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> is currently very difficult for new businesses.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: climate)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+8. Many people lost their jobs when the rate of <input type="text" class="mini-input" style="width: 120px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> increased.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: unemployment)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+9. Traveling to different countries gives you a new <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> on life.
+<button onclick="toggleAnswer(this)" style="margin-left: 08px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: perspective)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+10. They grew up in an <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> neighborhood with very few resources.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: impoverished)</span>
+</div>
+</div>
+
+<div style="background: #f0fff4; border: 1px solid #c6f6d5; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #276749; margin: 0; border-left: 4px solid #48bb78; padding-left: 10px;">Group 3: Daily Challenges</h4>
+<span style="font-size: 0.85rem; background: #48bb78; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: mundane, complications, bargaining, fares, persistent
+</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+11. Cleaning the house is a <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> task that I do every Saturday.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: mundane)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+12. There were several <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> during the legal process of the will.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: complications)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+13. I enjoy <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> for a better price at local markets.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: bargaining)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+14. Bus <input type="text" class="mini-input" style="width: 70px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> have gone up twice already this year.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: fares)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+15. He has a <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> cough that hasn't gone away for weeks.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: persistent)</span>
+</div>
+</div>
+
+<div style="background: #ebf8ff; border: 1px solid #bee3f8; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #2c5282; margin: 0; border-left: 4px solid #4299e1; padding-left: 10px;">Group 4: Trust & Ethics</h4>
+<span style="font-size: 0.85rem; background: #4299e1; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: charity, demonstrate, caution, suspected, astonished
+</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+16. The rich man donated half of his fortune to a local <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......">.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: charity)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+17. Please use <input type="text" class="mini-input" style="width: 80px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> when giving out your personal information online.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: caution)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+18. The police <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> that the store was selling stolen goods.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: suspected)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+19. His kind actions <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> that he is a good person.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: demonstrate)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+20. Everyone was <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> when the quiet student won the singing contest.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: astonished)</span>
+</div>
+</div>
+
+
+</div>
+</div>
+
+
+<div class="quiz-item" style="margin-top: 40px; padding: 25px; background: #fcfcfc; border-radius: 10px; border: 1px solid #eee;">
+<p style="margin-bottom: 15px;">
+<strong style="font-size: 1.1rem; color: #3498db;">Step 2. Content Check:</strong>
+</p>
+<p style="line-height: 1.6; color: #34495e; font-weight: 500;">
+The story of the secret fortune <b>"A Secret Legacy"</b> reveals a father's hidden wealth. How did the father manage to <b>accumulate</b> such a large fortune, and why did the children feel <b>impoverished</b> during their childhood?
+</p>
+<div style="margin: 10px 0; font-size: 0.85rem; color: #7f8c8d;">
+<i class="fas fa-lightbulb" style="color: #f1c40f;"></i>
+<b>Key Keywords:</b> frugality, shrewd investor, blue-chip shares, second-hand clothes, persistent habit, staggering amount
+</div>
+<textarea id="content-check-answer-u15" rows="3"
+style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; font-size: 0.95rem; line-height: 1.6; resize: vertical; display: block; margin-bottom: 10px; box-sizing: border-box;"
+placeholder="Explain how the father saved money and why the children didn't know about the wealth..."></textarea>
+</div>
+
+<div class="quiz-item" style="background: #fcfcfc; padding: 25px; border-radius: 10px; margin-top: 20px; border: 1px solid #eee;">
+<p style="margin-bottom: 15px;">
+<strong style="font-size: 1.1rem; color: #3498db;">Step 3. Thinking about Frugality:</strong>
+</p>
+<p style="color: #34495e; line-height: 1.6;">
+In the unit, we saw how <b>frugality</b> and being <b>shrewd</b> allowed a man to leave a massive <b>charity</b> donation. However, his children lived without many things they wanted.
+
+
+<b>In your perspective, is it better to live very simply to save for the future, or should we enjoy our money while we are young? What are the possible "complications" of being too frugal?</b>
+</p>
+<textarea rows="5" style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; box-sizing: border-box;"
+placeholder="I believe that... because... On the other hand, too much frugality might cause..."></textarea>
+</div>
+
+<div style="margin-top: 40px; padding: 30px; background: #fffde7; border-radius: 15px; border: 1px solid #fff176; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+<h3 style="margin-top: 0; color: #f57f17; display: flex; align-items: center;">
+<i class="fas fa-lightbulb" style="margin-right: 12px;"></i> Critical Thinking
+</h3>
+<p style="line-height: 1.7; color: #444;">
+We have explored how <b>MONEY</b>, <b>perspective</b>, and <b>personal choices</b> shape our lives. We learned that wealth isn't just about what you spend, but how you manage what you have through <b>caution</b> and <b>persistent</b> effort.
+
+
+<b>If you inherited a "staggering" amount of money (like £2.7 million), how would your life change? Would you continue your "mundane" daily routine, or would you change everything?
+
+Support your answer by using the grammar we learned (Past Perfect to describe your life before the money, and Future Time Clauses like "As soon as" or "When" to describe your future plans).</b>
+</p>
+<textarea class="main-textarea"
+placeholder="Describe your life before the inheritance using 'had' (e.g., I had always wanted...). Then explain your plans using future time clauses (e.g., As soon as I receive the money, I will...)..."
+rows="10"
+style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; font-size: 0.95rem; line-height: 1.6; resize: vertical; display: block; box-sizing: border-box; background: white;">
+</textarea>
+</div>
+
+
+<div style="margin-top: 30px; padding: 25px; background: #ffffff; border-radius: 15px; border: 2px solid #3498db; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="margin: 0; color: #2980b9;"><i class="fas fa-robot"></i> AI Solution</h3>
+        <span style="background: #3498db; color: white; padding: 5px 15px; border-radius: 50px; font-weight: bold; font-size: 1.1rem;">
+            Overall Score: <input type="text" class="mini-input" style="width: 50px !important; color: white; background: transparent; border: 1px solid rgba(255,255,255,0.5); text-align: center;" value="9.2"> / 10
+        </span>
+    </div>
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.95rem;">
+        <thead>
+            <tr style="background: #ebf5fb; text-align: left;">
+                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Evaluation Criteria</th>
+                <th style="padding: 12px; border-bottom: 2px solid #3498db; text-align: center;">Score</th>
+                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Detailed Feedback</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Content</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="10"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Deep reflection on career stages from 20s to 50s."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Logic</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="9.5"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Strong comparison between 'meaning' and 'success'."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Grammar</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="8"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Check comparative forms (e.g., more important than)."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Vocabulary</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="9"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Great use of 'exhausted', 'exploiting', and 'fulfillment'."></td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="background: #f4f7f6; padding: 15px; border-radius: 10px; border-left: 5px solid #27ae60;">
+        <p style="margin: 0 0 10px 0; font-weight: bold; color: #27ae60;"><i class="fas fa-check-circle"></i> Recommended Revision</p>
+        <textarea style="width: 100%; background: transparent; border: 1px dashed #27ae60; border-radius: 5px; padding: 10px; font-style: italic;" rows="8">"In my experience, I thought gaining experience was more important than anything else in my twenties. My companies might have been exploiting me with boring tasks, but I worked hard and struggled through it. In my thirties, I chased high salaries, but I still worked over ten hours a day. Now in my late forties, I was so exhausted that I retired after 30 years of practice. I currently work as a security officer for two hours a day and I am happy because there is no pressure. To me, a 'meaningful' job is more important than a 'successful' one, and that meaning depends on my current physical and mental well-being."</textarea>
+    </div>
+</div>
+            <button class="save-btn" style="margin-top: 20px;" onclick="saveProgress()">Save My Work</button>
+        </section>
+    </div>
+    <script>
+        // --- 데이터 정의 ---
+        const dialogueData = [
+{ name: "Lawyer", color: "#3498db", bg: "#ebf5fb", text: "We must discuss your father's <b>inheritances</b> now.", char: "assistant" },
+{ name: "Son", color: "#f39c12", bg: "#fdfaf0", text: "I <b>had assumed</b> he was <b>very poor</b>.", char: "customer" },
+{ name: "Lawyer", color: "#3498db", bg: "#ebf5fb", text: "Actually, he <b>had been</b> extraordinarily <b>shrewd</b>.", char: "assistant" },
+{ name: "Son", color: "#f39c12", bg: "#fdfaf0", text: "I'm <b>astonished</b>! He lived such a <b>mundane</b> life.", char: "customer" },
+{ name: "Lawyer", color: "#3498db", bg: "#ebf5fb", text: "His <b>frugality</b> helped him <b>accumulate</b> a fortune.", char: "assistant" },
+{ name: "Son", color: "#f39c12", bg: "#fdfaf0", text: "We <b>had lived</b> like <b>impoverished</b> people.", char: "customer" },
+{ name: "Lawyer", color: "#3498db", bg: "#ebf5fb", text: "He <b>had</b> many <b>staggering</b> bank <b>transactions</b>.", char: "assistant" },
+{ name: "Son", color: "#f39c12", bg: "#fdfaf0", text: "His wealth <b>demonstrated</b> a <b>persistent</b> habit.", char: "customer" },
+{ name: "Lawyer", color: "#3498db", bg: "#ebf5fb", text: "Most money <b>will go</b> to a <b>charity</b>.", char: "assistant" },
+{ name: "Son", color: "#f39c12", bg: "#fdfaf0", text: "We <b>will use</b> the rest with <b>caution</b>.", char: "customer" }
+        ];
+const scriptData1_1_D1 = [
+{ "start": 0, "speaker": "Narrator", "text": "15.1" },
+    { "start": 3, "speaker": "Laima", "text": "So <b>how long have you been living</b> here?" },
+    { "start": 5, "speaker": "Aidan", "text": "Almost two years." },
+    { "start": 7, "speaker": "Laima", "text": "Wow! You must like it." },
+    { "start": 9, "speaker": "Aidan", "text": "Yeah, it's nice. I have a good quality of life here—warm climate, near the beach, not too much work." },
+    { "start": 16, "speaker": "Laima", "text": "It sounds fantastic." },
+    { "start": 18, "speaker": "Aidan", "text": "Yeah, it's great, but I'm actually <b>going back to Canada in a few months</b>." },
+    { "start": 23, "speaker": "Laima", "text": "Forever?" },
+    { "start": 24, "speaker": "Aidan", "text": "Yeah, I think so." },
+    { "start": 26, "speaker": "Laima", "text": "Why? It sounds perfect here." },
+    { "start": 28, "speaker": "Aidan", "text": "Well, the <b>economy's</b> doing quite badly <b>at the moment</b>. I mean, <b>unemployment</b> has gone up quite a lot <b>over the last few months</b>, so I'm not sure I'm going to have a job <b>in a year's time</b>." },
+    { "start": 41, "speaker": "Laima", "text": "Really?" },
+    { "start": 42, "speaker": "Aidan", "text": "Yeah, and also <b>salaries</b> aren't so high here, you know. I could get paid a lot more back home." },
+    { "start": 49, "speaker": "Laima", "text": "Sure, but I bet the <b>cost of living's</b> a lot higher in Canada as well. Everything's so cheap here. I mean, eating out is twice the price in my country. You can get a three-course meal for about six dollars here." },
+    { "start": 64, "speaker": "Aidan", "text": "Yeah, that's true, but it used to be cheaper <b>in the past</b>. <b>Inflation's</b> gone up <b>over the last two years</b> and <b>if it stays high</b>, well, you know, it won't be so cheap." },
+    { "start": 77, "speaker": "Laima", "text": "I know, but it's still a big difference, no?" },
+    { "start": 80, "speaker": "Aidan", "text": "Yeah, maybe, but anyway, <b>in the end</b>, I miss my family and friends. And maybe money isn't so important, but I'll still have more opportunities back home, I think, so work might be more interesting there." },
+    { "start": 94, "speaker": "Laima", "text": "I guess so. It seems a shame, though. It's so nice here. Won't you miss the heat?" },
+    { "start": 100, "speaker": "Aidan", "text": "Yeah, probably, but I don't mind the cold weather so much. You get used to it <b>after a while</b>." },
+    { "start": 106, "speaker": "Laima", "text": "Mmm." },
+    { "start": 108, "speaker": "Aidan", "text": "So what about your country? How are things there? Is it a good place to live?" }
+];
+const scriptData1_1_D2 = [
+    { "start": 0, "speaker": "Narrator", "text": "15.2" },
+    { "start": 3, "speaker": "Narrator", "text": "The lawyer continued reading. It seemed Dad had actually been a <b>good salesman</b>." },
+    { "start": 9, "speaker": "Narrator", "text": "He <b>earned</b> quite a good salary, but he just preferred to <b>save it</b>. And he had been good at <b>investing money</b> too." },
+    { "start": 18, "speaker": "Narrator", "text": "The most expensive technology he had was a radio, but he <b>bought shares</b> in some camera and electronic shops." },
+    { "start": 26, "speaker": "Narrator", "text": "In 1965, the shares cost <b>eight pence each</b> and he sold them <b>35 years later</b> for <b>four pounds twelve each</b>." },
+    { "start": 36, "speaker": "Narrator", "text": "Of the <b>2.7 million pounds</b> he was leaving, he had decided to <b>give two million to a charity</b> that looked after teenagers with problems. The rest was <b>divided</b> between me and my sisters." },
+    { "start": 52, "speaker": "Narrator", "text": "For a moment, I <b>felt angry</b>. Why hadn't he said anything? Why had we lived like poor people? Why was he giving the money to other children?" },
+    { "start": 62, "speaker": "Narrator", "text": "But then I thought, it's stupid to think like that. Really, I had a <b>happy childhood</b> and I'm very happy now." },
+    { "start": 70, "speaker": "Narrator", "text": "I remembered my parents reading us books they'd <b>borrowed from the library</b> and the hours we played cards together. It was fantastic what my parents had done." },
+    { "start": 81, "speaker": "Narrator", "text": "The <b>love we had</b> was <b>more important than money</b>, but now maybe the money they saved can bring some love to others." },
+    { "start": 90, "speaker": "Narrator", "text": "The only problem I have now is what to do with a <b>quarter of a million pounds</b>—when I honestly don't really need anything!" }
+];
+const scriptData1_2_P1 = [
+    { "start": 0, "speaker": "Narrator", "text": "15.5 Conversation One." },
+    { "start": 3, "speaker": "Server", "text": "Yes, sir?" },
+    { "start": 4, "speaker": "Man", "text": "Can we <b>get the bill</b>, please?" },
+    { "start": 6, "speaker": "Server", "text": "Certainly. One moment." },
+    { "start": 10, "speaker": "Man", "text": "Thanks." },
+    { "start": 11, "speaker": "Woman", "text": "How much is it?" },
+    { "start": 12, "speaker": "Man", "text": "Don't worry. I'll get this. <b>It's my treat</b>." },
+    { "start": 15, "speaker": "Woman", "text": "Are you sure? I don't mind <b>paying half</b>." },
+    { "start": 18, "speaker": "Man", "text": "No, really. It's fine. After all, I asked you out." },
+    { "start": 21, "speaker": "Woman", "text": "Thanks. It's really kind of you." },
+    { "start": 24, "speaker": "Man", "text": "Oh no!" },
+    { "start": 25, "speaker": "Woman", "text": "What's up?" },
+    { "start": 26, "speaker": "Man", "text": "I've just realised I <b>left my wallet</b> in my other jacket. It's got all my credit cards and cash in it! I'll have to go and get it." },
+    { "start": 34, "speaker": "Woman", "text": "Don't be silly. It's too far to go. <b>I'll pay today</b>." },
+    { "start": 38, "speaker": "Man", "text": "Are you sure? I'll <b>pay you back</b> as soon as I can, I promise." },
+    { "start": 42, "speaker": "Woman", "text": "No, it's fine. Honestly. Oh! Wow! Right. That's a lot! I hope they accept my credit card!" }
+];
+const scriptData1_2_P2 = [
+    { "start": 0, "speaker": "Narrator", "text": "Conversation Two." },
+    { "start": 2, "speaker": "Seller", "text": "Whoa, that looks great on you." },
+    { "start": 4, "speaker": "Customer", "text": "Really?" },
+    { "start": 5, "speaker": "Seller", "text": "Yeah, really suits you." },
+    { "start": 7, "speaker": "Customer", "text": "Maybe. <b>How much is it</b>?" },
+    { "start": 9, "speaker": "Seller", "text": "Well, it's <b>vintage sixties</b>." },
+    { "start": 11, "speaker": "Customer", "text": "Sorry?" },
+    { "start": 12, "speaker": "Seller", "text": "It's very old. From the 1960s. It's hard to find things like that in this condition." },
+    { "start": 18, "speaker": "Customer", "text": "Oh. Yes. So how much?" },
+    { "start": 21, "speaker": "Seller", "text": "Let's call it <b>two hundred</b>." },
+    { "start": 23, "speaker": "Customer", "text": "Pounds?" },
+    { "start": 24, "speaker": "Seller", "text": "Yes, of course pounds." },
+    { "start": 26, "speaker": "Customer", "text": "Two hundred pounds! But it's not in perfect condition. Look—there's a mark here." },
+    { "start": 32, "speaker": "Seller", "text": "OK. So let's say <b>one eighty</b>." },
+    { "start": 35, "speaker": "Customer", "text": "No, sorry. It's <b>too much</b>. Thank you." },
+    { "start": 38, "speaker": "Seller", "text": "OK, OK. <b>The best price I can manage</b> is a hundred and fifty. Any lower than that and I'll lose money." }
+];
+const scriptData1_2_P3 = [
+    { "start": 0, "speaker": "Narrator", "text": "Conversation Three." },
+    { "start": 2, "speaker": "Son", "text": "But if I don't buy it, someone else will." },
+    { "start": 5, "speaker": "Mother", "text": "So you've said, but <b>a thousand pounds</b> is a thousand pounds." },
+    { "start": 9, "speaker": "Son", "text": "I know, but if I don't have a car, then I'll have to keep getting the bus into town. And that's not cheap either. <b>Fares</b> have just gone up." },
+    { "start": 17, "speaker": "Mother", "text": "OK, OK. Look, you did well in your exams and we'd be happy to help, but it is a lot of money. You're working now, so why don't you <b>pay half</b>?" },
+    { "start": 27, "speaker": "Son", "text": "I would if I could, mum, honestly, but I haven't managed to <b>save much</b> yet!" },
+    { "start": 32, "speaker": "Mother", "text": "Well, maybe we can <b>borrow some money from the bank</b>." },
+    { "start": 36, "speaker": "Son", "text": "Really? Oh, that'd be brilliant!" },
+    { "start": 39, "speaker": "Mother", "text": "And you <b>pay us half back</b> when you have the money, OK?" }
+];
+const scriptData1_2_P4 = [
+    { "start": 0, "speaker": "Narrator", "text": "Conversation Four." },
+    { "start": 2, "speaker": "Bank Officer", "text": "Your card was <b>cancelled</b> because of some <b>irregular activity</b> that we noticed." },
+    { "start": 7, "speaker": "Customer", "text": "Irregular activity? What do you mean?" },
+    { "start": 10, "speaker": "Bank Officer", "text": "Well, for instance, did you have lunch in Singapore last week?" },
+    { "start": 14, "speaker": "Customer", "text": "No. I've never been there in my life." },
+    { "start": 17, "speaker": "Bank Officer", "text": "Exactly. We suspect that your card was <b>copied</b> sometime last month and that someone then used it <b>overseas</b>." },
+    { "start": 24, "speaker": "Customer", "text": "Oh no! How did they manage to do that? And will I get a <b>refund</b>?" },
+    { "start": 29, "speaker": "Bank Officer", "text": "Everything is <b>covered by your insurance</b> and we're sending out a <b>new card</b> today. You'll receive your new PIN number after you get the card. They're sent separately for security reasons." }
+];
+        // --- 기능 함수 ---
+        let mediaRecorder;
+        let audioChunks = {};
+        function initDialogue() {
+            const container = document.getElementById('dialogue-container');
+            dialogueData.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.style = `padding: 12px 15px; background: ${item.bg}; border-radius: 12px; border-left: 6px solid ${item.color}; display: flex; align-items: center; justify-content: space-between; gap: 10px;`;
+                div.innerHTML = `
+                    <div style="flex: 1;"><strong style="color: ${item.color};">${item.name}:</strong> <span>${item.text}</span></div>
+                    <div style="display: flex; gap: 8px; flex-shrink: 0;">
+                        <button onclick="speakText(\`${item.text.replace(/<\/?[^>]+(>|$)/g, "")}\`, '${item.char}')" style="background: ${item.color}; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">🔊</button>
+                        <button id="rec-${index}" onclick="toggleRecord(${index})" style="background: #e74c3c; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">🎤</button>
+                        <button id="play-${index}" onclick="playMyVoice(${index})" style="background: #2ecc71; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: none;">▶</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+        function speakText(text, character) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.pitch = (character === 'maya') ? 1.5 : 1.1;
+            window.speechSynthesis.speak(utterance);
+        }
+async function toggleRecord(index) {
+    const btn = document.getElementById(`rec-${index}`);
+    if (mediaRecorder && mediaRecorder.state === "recording") {
+        mediaRecorder.stop();
+        btn.style.backgroundColor = "#e74c3c"; btn.innerText = "🎤";
+    } else {
+        const stream = await navigator.mediaDevices.getUserMedia({ 
+            audio: {
+                echoCancellation: true,
+                noiseSuppression: true,
+                autoGainControl: false, // 웅웅거림 방지를 위해 끔
+                channelCount: 1
+            } 
+        });
+        // --- 오디오 증폭 로직 시작 ---
+        const audioContext = new AudioContext();
+        const source = audioContext.createMediaStreamSource(stream);
+        const gainNode = audioContext.createGain();
+        
+        gainNode.gain.value = 2.0; // [조정 포인트] 소리를 3배 키웁니다 (1.0~5.0 사이 조절 가능)
+        
+        const destination = audioContext.createMediaStreamDestination();
+        source.connect(gainNode);
+        gainNode.connect(destination);
+        // --- 오디오 증폭 로직 끝 ---
+        // 증폭된 스트림으로 녹음 진행
+        mediaRecorder = new MediaRecorder(destination.stream);
+        const chunks = [];
+        mediaRecorder.ondataavailable = e => chunks.push(e.data);
+        mediaRecorder.onstop = () => {
+            const blob = new Blob(chunks, { type: 'audio/webm' });
+            audioChunks[index] = URL.createObjectURL(blob);
+            document.getElementById(`play-${index}`).style.display = "flex";
+            
+            stream.getTracks().forEach(track => track.stop());
+            audioContext.close();
+        };
+        mediaRecorder.start();
+        btn.style.backgroundColor = "#000"; btn.innerText = "⏹";
+    }
+}        function playMyVoice(index) {
+            if (audioChunks[index]) new Audio(audioChunks[index]).play();
+        }
+        function setupAudioSync(audioId, containerId, data, isDialogue = false) {
+    const audio = document.getElementById(audioId);
+    const container = document.getElementById(containerId);
+    if(!audio || !container) return;
+    
+    container.innerHTML = '';
+    data.forEach((line, index) => {
+        const div = document.createElement('div');
+        div.className = 'script-line';
+        div.id = `${containerId}-line-${index}`;
+        div.innerHTML = isDialogue ? `<strong>${line.speaker}:</strong> ${line.text}` : line.text;
+        container.appendChild(div);
+    });
+    // 오디오 재생 시 스크립트 창 보이기
+    audio.addEventListener('play', () => { 
+        container.style.display = 'block'; 
+    });
+    // 오디오 진행 시간에 맞춰 스크립트 하이라이트 및 스크롤
+    audio.addEventListener('timeupdate', () => {
+        let activeIdx = -1;
+        for (let i = 0; i < data.length; i++) {
+            if (audio.currentTime >= data[i].start) activeIdx = i; else break;
+        }
+        container.querySelectorAll('.script-line').forEach(l => l.classList.remove('active'));
+        if (activeIdx !== -1) {
+            const currentLine = document.getElementById(`${containerId}-line-${activeIdx}`);
+            if (currentLine) {
+                currentLine.classList.add('active');
+                container.scrollTo({ 
+                    top: currentLine.offsetTop - container.offsetTop - 80, 
+                    behavior: 'smooth' 
+                });
+            }
+        }
+    });
+    // 추가된 부분: 음성 재생이 끝나면 스크립트 창 숨기기
+    audio.addEventListener('ended', () => { 
+        container.style.display = 'none'; 
+    });
+}        function centralizeScroll(targetId) {
+            const element = document.getElementById(targetId);
+            if (!element) return;
+            const elementRect = element.getBoundingClientRect();
+            const middle = (elementRect.top + window.pageYOffset) - (window.innerHeight / 2) + (elementRect.height / 2);
+            window.scrollTo({ top: middle, behavior: 'smooth' });
+            if (targetId.startsWith('vocab')) {
+                document.querySelectorAll('.card').forEach(c => c.classList.remove('active-highlight'));
+                element.classList.add('active-highlight');
+                setTimeout(() => element.classList.remove('active-highlight'), 1500);
+            }
+        }
+        function toggleAnswer(btn) {
+            const answerSpan = btn.nextElementSibling;
+            if (answerSpan.style.display === "none") {
+                answerSpan.style.display = "inline"; btn.innerText = "Hide";
+            } else {
+                answerSpan.style.display = "none"; btn.innerText = "Check";
+            }
+        }
+        function saveProgress() {
+            const allInputs = document.querySelectorAll('input[type="text"], textarea');
+            allInputs.forEach((input, index) => {
+                localStorage.setItem(`UNIT15_all_data_${index}`, input.value);
+            });
+            alert('Your progress has been saved! ✅');
+        }
+        // --- 초기화 로직 ---
+        window.addEventListener('DOMContentLoaded', () => {
+            initDialogue();
+            setupAudioSync('main-player-1', 'script-container1', scriptData1_1_D1, true);
+            setupAudioSync('main-player-2', 'script-container2', scriptData1_1_D2, true);
+            setupAudioSync('player-1', 'script-1', scriptData1_2_P1, true);
+            setupAudioSync('player-2', 'script-2', scriptData1_2_P2, true);
+            setupAudioSync('player-3', 'script-3', scriptData1_2_P3, true);
+            setupAudioSync('player-4', 'script-4', scriptData1_2_P4, true);
+            // ... 나머지 setupAudioSync 호출
+            // 저장된 데이터 불러오기
+            const allInputs = document.querySelectorAll('input[type="text"], textarea');
+            allInputs.forEach((input, index) => {
+                const savedValue = localStorage.getItem(`UNIT15_all_data_${index}`);
+                if (savedValue) input.value = savedValue;
+            });
+        });
+    </script>
+<script>
+function speak(text) {
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';
+    
+    const voices = window.speechSynthesis.getVoices();
+    // 여성 목소리 우선 선택
+    const femaleVoice = voices.find(v => v.name.includes('Female') || v.name.includes('Google US English') || v.name.includes('Samantha'));
+    
+    if (femaleVoice) {
+        utterance.voice = femaleVoice;
+    }
+    
+    utterance.pitch = 1.1; 
+    utterance.rate = 1.0; // 현대식 표준 영어 빠르기
+    window.speechSynthesis.speak(utterance);
+}window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.getVoices(); };
+</script>
+</body>
+</html>

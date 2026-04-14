@@ -1,0 +1,1132 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNIT 09: SCIENCE AND NATURE</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --bg: #f4f7f6;
+            --white: #ffffff;
+            --highlight: #fff59d;
+            --accent: #e67e22;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg);
+            color: var(--primary);
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+        section {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            /* 상단 헤더 높이를 고려한 스크롤 위치 조정 */
+            scroll-margin-top: 90px;
+        }
+        .back-to-dashboard {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 1001;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        .back-to-dashboard:hover {
+            transform: scale(1.1);
+            background-color: var(--secondary);
+        }
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 20px;
+            padding-bottom: 300px; 
+        }
+        h2 {
+            border-left: 6px solid var(--secondary);
+            padding-left: 15px;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        .reading-box {
+            background-color: #fffaf0;
+            border: 1px solid #f39c12;
+            padding: 25px;
+            border-radius: 12px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .vocab-link {
+            color: var(--secondary);
+            text-decoration: none;
+            border-bottom: 2px solid var(--secondary);
+            font-weight: bold;
+            padding: 0 2px;
+            cursor: pointer;
+        }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .card {
+            border: 1px solid #eee;
+            padding: 20px;
+            border-radius: 10px;
+            background: #fff;
+            transition: all 0.4s ease;
+        }
+        .card.active-highlight {
+            border: 2px solid var(--accent);
+            background-color: #fffde7;
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .return-btn {
+            display: inline-block;
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: bold;
+            border: 1px solid var(--secondary);
+            padding: 4px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .audio-zone {
+            background: #ebf5fb;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--secondary);
+            margin: 20px 0;
+            text-align: center;
+        }
+        .audio-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .script-window {
+            margin-top: 15px;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            height: 250px; 
+            overflow-y: auto;
+            display: none;
+            text-align: left;
+        }
+        .script-line {
+            padding: 8px 10px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            transition: background 0.3s;
+            font-size: 0.95rem;
+        }
+        .script-line.active {
+            background-color: var(--highlight);
+            font-weight: bold;
+        }
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        .quiz-item {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .instruction {
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        .save-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .save-btn:hover {
+            background-color: #219150;
+        }
+        .mini-input {
+            width: 100px !important;
+            padding: 5px !important;
+            margin: 0 5px !important;
+            display: inline-block !important;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html#unit_09" class="back-to-dashboard">🏠 Back to Dashboard</a>
+    <header>
+        <h1>UNIT 09</h1>
+        <nav class="nav-links">
+            <a href="#intro-reading">0. Core Reading</a>
+            <a href="#section1">1. Listen & Read</a>
+            <a href="#section2">2. Speaking</a>
+            <a href="#section3">3. Writing</a>
+        </nav>
+    </header>
+    <div class="container">
+        
+<section id="intro-reading">
+    <h2>Core Reading: Core Reading: Not Just All in the Mind</h2>
+    
+    <div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+
+<p style="margin-top: 0;">Part 1: The Delicate Balance of Nature</p>
+<p>
+    In our modern world, we often receive news that reminds us how deeply we <b>depend on</b> the environment. 
+    Recently, an <b>alarming</b> article revealed that honeybees have been dying for <b>unknown</b> reasons. 
+    This is <b>critical</b> because if bees become 
+    <strong><span class="vocab-link" id="text-extinct" onclick="centralizeScroll('vocab-extinct')">extinct</span></strong>, 
+    the lack of <strong><span class="vocab-link" id="text-pollination" onclick="centralizeScroll('vocab-pollination')">pollination</span></strong> 
+    would mean we won't have any fruit or vegetables to eat. 
+    While some people simply enjoy a <b>forecast</b> of hot and sunny weather to plan a trip to the beach, 
+    others are looking at the <b>bigger picture</b> of <b>conservation</b>. 
+</p>
+<p>
+    In Morovia, for instance, the government decided to pull down several <b>horrible</b> houses 
+    that <b>had been built</b> along the coast to create a new <b>national park</b> instead. 
+    These stories <b>highlight</b> a growing need for <b>green spaces</b> and research <b>funding</b> to protect the countryside. 
+    Nature is not just a <b>backdrop</b> for our lives; it is a complex system that requires active protection and scientific <b>understanding</b>.
+</p>
+
+<p style="margin-top: 2rem;">Part 2: Man’s Best Friends and Unexpected Allies</p>
+<p>
+    Our relationship with the animal kingdom often produces <b>extraordinary</b> stories that 
+    <strong><span class="vocab-link" id="text-defy" onclick="centralizeScroll('vocab-defy')">defy</span></strong> 
+    common expectations. Animals are not just pets; they are <b>participants</b> in our social and <b>functional</b> lives. 
+    For example, a couple in Dorset got married with their dogs as part of the ceremony because the pets 
+    <b>had brought</b> the couple together when they first met on a beach. 
+</p>
+<p>
+    Science also shows that how we treat animals affects their <b>productivity</b>. 
+    Researchers found that cows <b>that had been given names</b> produced 300 litres more milk 
+    than <b>those which hadn't been named</b>. 
+    Even animals with "bad <strong><span class="vocab-link" id="text-reputations" onclick="centralizeScroll('vocab-reputations')">reputations</span></strong>," like rats, are saving lives in Africa. 
+    Because they are small and have an <strong><span class="vocab-link" id="text-incredible" onclick="centralizeScroll('vocab-incredible')">incredible</span></strong> sense of smell, 
+    they can <strong><span class="vocab-link" id="text-detect" onclick="centralizeScroll('vocab-detect')">detect</span></strong> landmines 
+    without making them <strong><span class="vocab-link" id="text-explode" onclick="centralizeScroll('vocab-explode')">explode</span></strong>. 
+</p>
+<p>
+    However, our <strong><span class="vocab-link" id="text-interaction" onclick="centralizeScroll('vocab-interaction')">interaction</span></strong> with nature is not always positive. 
+    A very rare megamouth shark recently died in a net after <b>it had been caught by mistake</b>. 
+    Despite efforts to <strong><span class="vocab-link" id="text-persuade" onclick="centralizeScroll('vocab-persuade')">persuade</span></strong> the fisherman to save the body for science, 
+    it was used for a traditional dish. 
+    From parrots taking orders in Japanese restaurants to a dog named Scooby appearing in court 
+    because <b>he had been present</b> at a crime scene, 
+    animals continue to play <strong><span class="vocab-link" id="text-pivotal" onclick="centralizeScroll('vocab-pivotal')">pivotal</span></strong> roles in the human world. 
+</p>
+
+<p style="margin-top: 2rem;">Part 3: The Science of Human Nature</p>
+<p>
+    While we study the nature of animals, science also <b>investigates</b> the darker side of human nature through psychology. 
+    One of the most famous studies was <strong><span class="vocab-link" id="text-conducted" onclick="centralizeScroll('vocab-conducted')">conducted</span></strong> by Stanley Milgram 
+    to understand why people <b>participated</b> in <b>terrible</b> crimes during the Second World War. 
+</p>
+<p>
+    In the experiment, "teachers" were told to give electric shocks to "learners". 
+    Although the shocks were fake, the teachers believed they were real because the learners, 
+    who were actually actors, <b>had complained</b> of heart problems or <b>had shouted</b> in pain. 
+    When the teachers wanted to stop, a "scientist" in a white coat told them they <b>must go on</b>. 
+</p>
+<p>
+    The <b>results</b> were <b>shocking</b>: 65% of participants gave the final 450-volt shock 
+    just because a person in <b>authority</b> told them to. 
+    This study showed that <b>ordinary</b> people find it <b>extremely</b> difficult to say "no" to authority figures, especially those in uniform. 
+    It revealed that the <strong><span class="vocab-link" id="text-impulse" onclick="centralizeScroll('vocab-impulse')">impulse</span></strong> to <b>obey</b> 
+    can sometimes <strong><span class="vocab-link" id="text-override" onclick="centralizeScroll('vocab-override')">override</span></strong> a person’s own <b>conscience</b>. 
+</p>
+    </div>
+
+<article style="margin-top: 3rem; border-top: 2px solid #eee;">
+    <h3 id="vocab-builder">Vocabulary Builder</h3>
+    <div class="vocab-grid">
+ 
+<div class="card" id="vocab-extinct">
+    <div class="card-content">
+        <strong>Extinct:</strong> When a type of animal or plant has died out and no longer exists in the world.
+        <br><span class="return-btn" onclick="centralizeScroll('text-extinct')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-pollination">
+    <div class="card-content">
+        <strong>Pollination:</strong> The process where pollen is moved to a flower so that it can make new seeds.
+        <br><span class="return-btn" onclick="centralizeScroll('text-pollination')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-defy">
+    <div class="card-content">
+        <strong>Defy:</strong> To be very different from what people usually expect or believe is possible.
+        <br><span class="return-btn" onclick="centralizeScroll('text-defy')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-reputations">
+    <div class="card-content">
+        <strong>Reputations:</strong> The general opinions or ideas that people have about someone or something.
+        <br><span class="return-btn" onclick="centralizeScroll('text-reputations')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-incredible">
+    <div class="card-content">
+        <strong>Incredible:</strong> Something that is so amazing, large, or good that it is difficult to believe.
+        <br><span class="return-btn" onclick="centralizeScroll('text-incredible')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-detect">
+    <div class="card-content">
+        <strong>Detect:</strong> To find or notice something that is hidden or very difficult to see.
+        <br><span class="return-btn" onclick="centralizeScroll('text-detect')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-explode">
+    <div class="card-content">
+        <strong>Explode:</strong> To burst suddenly with a very loud noise and cause a lot of damage.
+        <br><span class="return-btn" onclick="centralizeScroll('text-explode')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-interaction">
+    <div class="card-content">
+        <strong>Interaction:</strong> The way that two things communicate with each other or work together.
+        <br><span class="return-btn" onclick="centralizeScroll('text-interaction')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-persuade">
+    <div class="card-content">
+        <strong>Persuade:</strong> To make someone agree to do something by giving them good reasons.
+        <br><span class="return-btn" onclick="centralizeScroll('text-persuade')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-pivotal">
+    <div class="card-content">
+        <strong>Pivotal:</strong> Extremely important because other things depend on it to be successful.
+        <br><span class="return-btn" onclick="centralizeScroll('text-pivotal')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-conducted">
+    <div class="card-content">
+        <strong>Conducted:</strong> To have organized and performed a specific task, such as an experiment or a test.
+        <br><span class="return-btn" onclick="centralizeScroll('text-conducted')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-impulse">
+    <div class="card-content">
+        <strong>Impulse:</strong> A sudden and strong feeling that you must do something immediately.
+        <br><span class="return-btn" onclick="centralizeScroll('text-impulse')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-override">
+    <div class="card-content">
+        <strong>Override:</strong> To be more important than someone else's opinion and change their decision.
+        <br><span class="return-btn" onclick="centralizeScroll('text-override')">Return to Text ↑</span>
+    </div>
+</div>
+    </div>
+</article>
+</section>
+<section id="section1">
+            <h2>Section 1: Listening & Reading Integration</h2>
+<article>
+    <h3>1-1. The Science of Obedience: Human Nature Revealed (Dialogues)</h3>
+    
+    <div class="audio-zone" style="margin-bottom: 20px;">
+        <span class="audio-label">🎧 Listening 1: The Shocking Truth: How the Experiment Was Conducted (CD2_Track 6)</span>
+        <audio id="main-player-1" style="width:100%;" controls src="CD2_Track 6.mp3"></audio>
+    </div>
+    <div id="script-container1" class="script-window" style="height: 450px; overflow-y: auto;"></div>
+    <div class="audio-zone" style="margin-bottom: 20px;">
+        <span class="audio-label">🎧 Listening 2: The Power of Authority: Why We Obey (CD2_Track 7)</span>
+        <audio id="main-player-2" style="width:100%;" controls src="CD2_Track 7.mp3"></audio>
+    </div>
+    <div id="script-container2" class="script-window" style="height: 450px; overflow-y: auto;"></div>
+        
+</article>
+            <article style="margin-top: 3rem; border-top: 1px solid #eee; padding-top: 2rem;">
+                <h3>1-2. Nature’s Voice: Daily News on Our Environment</h3>
+                
+                <div class="audio-zone">
+                    <span class="audio-label">🎁 Conversation 1 : The Vanishing Bees: A Threat to Our Food (CD2_Track 2)</span>
+                    <audio id="player-1" style="width:100%;" controls src="CD2_Track 2.mp3"></audio>
+                    <div id="script-1" class="script-window"></div>
+                </div>
+                <div class="audio-zone">
+                    <span class="audio-label">📦 Conversation 2 : A Break in the Clouds: Planning a Sunny Day Out (CD2_Track 3)</span>
+                    <audio id="player-2" style="width:100%;" controls src="CD2_Track 3.mp3"></audio>
+                    <div id="script-2" class="script-window"></div>
+                </div>
+                <div class="audio-zone">
+                    <span class="audio-label">👨‍💼 Conversation 3 : Restoring Nature: From Buildings to National Parks (CD2_Track 4)</span>
+                    <audio id="player-3" style="width:100%;" controls src="CD2_Track 4.mp3"></audio>
+                    <div id="script-3" class="script-window"></div>
+                </div>
+            </article>
+
+         <article style="margin-top: 3rem; border-top: 1px solid #eee; padding-top: 2rem;">
+    <h2>1-3. &#x1F4D6; Reading: Breakfast around the world</h2>
+    <div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+        <p style="font-weight: bold; font-size: 1.2rem; color: #2c3e50; margin-bottom: 1.5rem; text-align: center;">MAN'S BEST FRIENDS</p>
+        <p>1. A Dorset couple, Andrew and Harriet Athay, got married with their dogs acting as best man and maids of honour on the big day because <b>they had brought the couple together</b>. Andrew and Harriet met when they were walking their respective pets along a beach. They started chatting when the dogs were playing with each other.</p>
+        <p>2. A very rare shark, <b>which has only been seen on 40 occasions</b>, has been eaten by a Filipino fisherman. The megamouth shark died in a net after <b>it had been caught by mistake</b>. The World Wildlife Fund, which wants to protect the sharks from extinction, tried to persuade the fisherman to let scientists have the body, but the fisherman insisted on using it to prepare a traditional Filipino dish called kinunot.</p>
+        <p>3. A Japanese restaurant is employing two parrots as waiters. The parrots take drinks orders from customers and repeat them to a waiter at the bar, who then brings the drinks to the table. <b>The parrots had previously lived in a cage</b> in a corner of the restaurant. One day the owner, Mr Otusaka, heard the parrots copying his customers' requests and after that, he trained them to actually take orders.</p>
+        <p>4. Rats may have a bad reputation, but, says a spokesman for the charity HeroRats, they are saving hundreds of lives in Africa because of their incredible sense of smell and intelligence. <b>The rats are trained to detect mines and bombs</b> lying in the ground. Being so small, they don't cause the mines to explode when they stand on them. They can also detect some diseases in humans.</p>
+        <p>5. Researchers from Newcastle University have discovered that farmers who are friendly and talk to their cows can boost milk production. They found that <b>cows that had been given names</b> by their farmers produced over 300 litres more milk a year than <b>those which hadn't been named</b>.</p>
+        <p>6. A dog called Scooby has appeared in court in a murder case. The animal's owner <b>had been found dead</b> in her flat and the family <b>had asked for an investigation</b>. Scooby, <b>who had been in the flat</b>, was brought into court to see how he would react to the man suspected of the crime. It barked very loudly. The police now need to decide if there is enough evidence to take the case further.</p>
+    </div>
+	</article>
+
+    <div class="quiz-container" style="margin-top: 2rem; padding: 0 1rem;">
+        <h4 style="color: var(--secondary); margin-bottom: 1.5rem;">✅ Check your understanding (True or False)</h4>
+        <style>
+            .quiz-row { display: flex; align-items: center; margin-bottom: 15px; font-size: 1.05rem; flex-wrap: wrap; }
+            .quiz-question { margin-right: 12px; font-weight: 500; }
+            .btn-check-small { 
+                padding: 3px 10px; font-size: 0.85rem; cursor: pointer; border-radius: 6px; 
+                border: 1px solid var(--secondary); background: white; color: var(--secondary);
+                transition: 0.2s; margin-right: 10px;
+            }
+            .btn-check-small:hover { background: var(--secondary); color: white; }
+            .answer-text { color: var(--success); font-weight: bold; font-size: 0.95rem; }
+        </style>
+<div class="quiz-container" style="background: #fdfdfd; padding: 20px; border-radius: 12px; border: 1px solid #eee;">
+    
+<div class="quiz-row" id="tf-q1" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+    <span class="quiz-question">1. Andrew and Harriet Athay met each other while they were working at a pet shop.</span>
+    <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+        <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+        <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+    </div>
+    <button onclick="validateTF('tf-q1', 'F', 'False (They actually met on a beach while walking their pets.)')" class="btn-check-small">Check</button>
+    <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-q2" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+    <span class="quiz-question">2. The Filipino fisherman decided to give the rare shark's body to scientists for research.</span>
+    <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+        <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+        <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+    </div>
+    <button onclick="validateTF('tf-q2', 'F', 'False (The fisherman insisted on using the shark to prepare a traditional dish called kinunot.)')" class="btn-check-small">Check</button>
+    <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-q3" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+    <span class="quiz-question">3. The owner trained the parrots after hearing them copy the requests of his customers.</span>
+    <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+        <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+        <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+    </div>
+    <button onclick="validateTF('tf-q3', 'T', 'True (Mr. Otusaka trained them after he noticed them copying customer orders.)')" class="btn-check-small">Check</button>
+    <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-q4" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+    <span class="quiz-question">4. Trained rats are useful for finding mines because they are light enough not to make them explode.</span>
+    <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+        <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+        <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+    </div>
+    <button onclick="validateTF('tf-q4', 'T', 'True (Being small, they don\'t cause the mines to explode when they stand on them.)')" class="btn-check-small">Check</button>
+    <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-q5" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+    <span class="quiz-question">5. Cows that were given names by their farmers produced less milk than those without names.</span>
+    <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+        <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+        <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+    </div>
+    <button onclick="validateTF('tf-q5', 'F', 'False (Named cows actually produced over 300 litres more milk a year than those which hadn\'t been named.)')" class="btn-check-small">Check</button>
+    <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+</div>
+<script>
+// T/F 버튼 선택 시 시각적 효과
+function selectTF(btn, val) {
+    const parent = btn.parentElement;
+    const btns = parent.querySelectorAll('.tf-btn');
+    btns.forEach(b => {
+        b.style.background = '#fff';
+        b.style.color = '#333';
+        b.classList.remove('selected');
+    });
+    btn.style.background = '#333';
+    btn.style.color = '#fff';
+    btn.classList.add('selected');
+    btn.dataset.value = val;
+}// 정답 확인 및 토글 함수
+function validateTF(rowId, correctVal, explanation) {
+    const row = document.getElementById(rowId);
+    const selectedBtn = row.querySelector('.tf-btn.selected');
+    const ansText = row.querySelector('.answer-text');
+    // 이미 정답이 보이고 있다면 -> 다시 숨기기 (토글)
+    if (ansText.style.display === 'inline') {
+        ansText.style.display = 'none';
+        row.style.background = '#fff'; // 배경색 초기화
+        return;
+    }
+    // 버튼을 선택하지 않았을 때
+    if (!selectedBtn) {
+        alert("Please select T or F first!");
+        return;
+    }
+    // 정답 확인 모드
+    const userVal = selectedBtn.dataset.value;
+    ansText.style.display = 'inline';
+    ansText.innerText = explanation;
+    if (userVal === correctVal) {
+        row.style.background = '#e8f5e9'; // 정답: 연한 초록색
+        ansText.style.color = '#2e7d32';
+    } else {
+        row.style.background = '#ffebee'; // 오답: 연한 빨간색
+        ansText.style.color = '#c62828';
+    }
+}</script>
+    </div>
+</article>
+        </section>
+
+
+<section id="section2">
+    <h2>Section 2: Speaking Practice</h2> 
+    
+    <article style="margin-top: 1rem;">
+        <h3>Interactive Dialogue (Easy Version)</h3>
+        <p class="instruction" style="margin-bottom: 20px;">
+            <i class="fas fa-headphones-alt"></i> Listen to the sentence (🔊), record your voice (🎤), and check your recording (▶).
+        </p>
+        <div class="quiz-item" style="background: #fff; padding: 25px; border-radius: 15px; border: 1px solid #ddd; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <div id="dialogue-container" style="display: flex; flex-direction: column; gap: 12px; font-size: 1.05rem;"></div>
+        </div>
+    </article>
+</section>
+<section id="section3">
+            <h2>Section 3: Writing Practice</h2>
+            <div id="final-quiz-area" style="margin-top: 40px; border-top: 2px solid var(--secondary); padding-top: 25px;">
+                <div class="quiz-item" style="background: #fcfcfc; padding: 20px; border-radius: 10px;">
+    <p style="margin-bottom: 15px;">
+        <strong style="font-size: 1.1rem; color: #3498db;">Step 1. Grammar & Vocabulary Check:</strong>
+    </p> 
+
+<div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+    <h3 style="text-align: center; color: #2c3e50; margin-bottom: 2rem; border-bottom: 3px double #3498db; padding-bottom: 10px; display: block; width: fit-content; margin-left: auto; margin-right: auto;">
+        <i class="fas fa-book-open" style="margin-right: 10px;"></i>Grammar Mastery
+    </h3>
+
+    <h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-top: 0;">
+        1. Form and Structure (had + past participle)
+    </h3>
+    <div style="background-color: #fff; padding: 15px; border-radius: 10px; border: 1px dashed #bdc3c7; margin-bottom: 15px;">
+        <p style="margin: 5px 0;"><strong>• Affirmative</strong>: Subject + <strong>had</strong> + past participle (e.g., worked, seen).</p>
+        <p style="margin: 5px 0;"><strong>• Negative</strong>: Subject + <strong>hadn't (had not)</strong> + past participle.</p>
+    </div>
+    <ul style="list-style-type: none; padding-left: 10px;">
+        <li style="margin-bottom: 15px;">
+            <strong style="color: #e67e22;">• Example:</strong> "The pets <span style="color: #e67e22; font-weight: bold;">had brought</span> the couple together."
+            <br><i style="color: #7f8c8d;">(Section 1 - How Andrew and Harriet met)</i>
+        </li>
+        <li style="margin-bottom: 15px;">
+            <strong style="color: #16a085;">• Example:</strong> "The cows <span style="color: #16a085; font-weight: bold;">hadn't been named</span> by the farmers."
+            <br><i style="color: #7f8c8d;">(Section 1 - Comparison of milk production)</i>
+        </li>
+    </ul>
+
+    <h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-top: 25px;">
+        2. Expressing "The Past of the Past"
+    </h3>
+    <div style="background-color: #fff; padding: 15px; border-radius: 10px; border: 1px dashed #bdc3c7; margin-bottom: 15px;">
+        <p style="margin: 5px 0;"><strong>• Usage</strong>: We use the past perfect to talk about an action that happened <strong>before</strong> another action in the past.</p>
+        <p style="margin: 5px 0;"><strong>• Sequence</strong>: Past Perfect (1st Action) → Past Simple (2nd Action).</p>
+    </div>
+    <ul style="list-style-type: none; padding-left: 10px;">
+        <li style="margin-bottom: 15px;">
+            <strong style="color: #2980b9;">• Example:</strong> "The shark died after it <span style="color: #2980b9; font-weight: bold;">had been caught</span>."
+            <br><i style="color: #7f8c8d;">(Section 1 - Caught in the net came before dying)</i>
+        </li>
+        <li style="margin-bottom: 15px;">
+            <strong style="color: #2980b9;">• Example:</strong> "The owner <span style="color: #2980b9; font-weight: bold;">had been found</span> dead in her flat."
+            <br><i style="color: #7f8c8d;">(Section 1 - The death happened before the investigation started)</i>
+        </li>
+    </ul>
+
+    <h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-top: 25px;">
+        3. Questions and Short Answers
+    </h3>
+    <div style="background-color: #fff; padding: 15px; border-radius: 10px; border: 1px dashed #bdc3c7; margin-bottom: 15px;">
+        <p style="margin: 5px 0;"><strong>• Question</strong>: <strong>Had</strong> + Subject + past participle...?</p>
+        <p style="margin: 5px 0;"><strong>• Short Answer</strong>: Yes, I <strong>had</strong>. / No, I <strong>hadn't</strong>.</p>
+    </div>
+    <ul style="list-style-type: none; padding-left: 10px;">
+        <li style="margin-bottom: 15px;">
+            <strong style="color: #d35400;">• Example:</strong> "<span style="color: #d35400; font-weight: bold;">Had</span> the parrots <span style="color: #d35400; font-weight: bold;">lived</span> in a cage before?"
+            <br><i style="color: #7f8c8d;">(Section 1 - Yes, they had lived there previously)</i>
+        </li>
+    </ul>
+
+    <hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
+    <p style="margin-top: 20px;"><strong>Context from our Reading:</strong></p>
+    <ul style="padding-left: 20px;">
+        <li>"They decided to pull down houses that <span style="color: #d35400; font-weight: bold;">had been built</span> along the coast."</li>
+        <li>"The learners <span style="color: #d35400; font-weight: bold;">had complained</span> of heart problems."</li>
+        <li>"The family <span style="color: #d35400; font-weight: bold;">had asked</span> for an investigation."</li>
+    </ul>
+
+</div>
+
+<div class="quiz-item" style="background: #fff; padding: 25px; border-radius: 15px; border: 1px solid #ddd; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+<div id="vocabulary-mastery-section">
+<h3 style="text-align: center; color: #2c3e50; margin-bottom: 2rem; border-bottom: 3px double #3498db; padding-bottom: 10px; display: block; width: fit-content; margin-left: auto; margin-right: auto; font-size: 1.6rem;">
+        <i class="fas fa-spell-check" style="margin-right: 10px;"></i>Vocabulary Check
+    </h3>
+
+<div style="background: #fff5f5; border: 1px solid #fed7d7; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #c53030; margin: 0; border-left: 4px solid #f56565; padding-left: 10px;">Group 1</h4>
+<span style="font-size: 0.85rem; background: #f56565; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: extinct, pollination, conservation, national park, funding
+</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+1. If honeybees die out completely, they will become <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......">.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: extinct)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+2. Bees are essential for <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......">, helping plants grow fruits.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: pollination)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+3. The government is focusing on nature <input type="text" class="mini-input" style="width: 120px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> to protect wildlife.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: conservation)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+4. They turned the coastal area into a new <input type="text" class="mini-input" style="width: 120px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> for the public.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: national park)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+5. Scientific research requires a lot of <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> from the state.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: funding)</span>
+</div>
+</div>
+
+<div style="background: #fffaf0; border: 1px solid #feebc8; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #c05621; margin: 0; border-left: 4px solid #ed8936; padding-left: 10px;">Group 2</h4>
+<span style="font-size: 0.85rem; background: #ed8936; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: defy, reputations, incredible, detect, explode
+</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+6. The parrot's intelligence <input type="text" class="mini-input" style="width: 70px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> all common expectations.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: defies)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+7. Even animals with bad <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......">, like rats, can be helpful.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: reputations)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+8. Rats have an <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> sense of smell to find landmines.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: incredible)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+9. These trained animals can <input type="text" class="mini-input" style="width: 80px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> hidden bombs in the ground.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: detect)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+10. The rats are small enough that they don't make the mines <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......">.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: explode)</span>
+</div>
+</div>
+
+<div style="background: #f0fff4; border: 1px solid #c6f6d5; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #276749; margin: 0; border-left: 4px solid #48bb78; padding-left: 10px;">Group 3</h4>
+<span style="font-size: 0.85rem; background: #48bb78; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: interaction, persuade, pivotal, conducted, extraordinary
+</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+11. Our <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> with nature is not always a positive one.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: interaction)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+12. It was hard to <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> the fisherman to give up the rare shark.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: persuade)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+13. Animals play <input type="text" class="mini-input" style="width: 80px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> roles in our social and functional lives.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: pivotal)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+14. Stanley Milgram <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> a famous experiment on obedience.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: conducted)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+15. Our relationship with animals often produces <input type="text" class="mini-input" style="width: 120px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> stories.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: extraordinary)</span>
+</div>
+</div>
+
+<div style="background: #ebf8ff; border: 1px solid #bee3f8; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #2c5282; margin: 0; border-left: 4px solid #4299e1; padding-left: 10px;">Group 4</h4>
+<span style="font-size: 0.85rem; background: #4299e1; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: impulse, override, conscience, authority, productivity
+</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+16. The sudden <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> to obey can be very strong.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: impulse)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+17. Can the need to follow orders <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> your own morals?
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: override)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+18. People often feel guilty when they go against their <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......">.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: conscience)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+19. 65% of people obeyed the person in <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......">.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: authority)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+20. Talking to cows can significantly increase their milk <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......">.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: productivity)</span>
+</div>
+</div>
+
+</div>
+</div>
+
+<div class="section-container" style="font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; max-width: 900px; margin: auto;">
+
+    <div class="quiz-item" style="margin-top: 40px; padding: 25px; background: #fcfcfc; border-radius: 10px; border: 1px solid #eee;">
+        <p style="margin-bottom: 15px;">
+            <strong style="font-size: 1.1rem; color: #3498db;">Step 2. Content Check:</strong>
+        </p> 
+        <p style="line-height: 1.6; color: #34495e; font-weight: 500;">
+            The text introduces various stories about animals. <b>How did the rats help people in Africa</b>, and <b>what was the surprising discovery</b> about naming cows?
+        </p>
+        <div style="margin: 10px 0; font-size: 0.85rem; color: #7f8c8d;">
+            <i class="fas fa-lightbulb" style="color: #f1c40f;"></i> 
+            <b>Key Keywords:</b> detect landmines, incredible sense of smell, hadn't been named, productivity
+        </div>
+        <textarea id="content-check-answer-u9" rows="3" 
+            style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; font-size: 0.95rem; line-height: 1.6; resize: vertical; display: block; margin-bottom: 10px; box-sizing: border-box;" 
+            placeholder="Explain how rats save lives and how naming cows affects their milk production..."></textarea>
+    </div>
+
+    <div class="quiz-item" style="background: #fcfcfc; padding: 25px; border-radius: 10px; margin-top: 20px; border: 1px solid #eee;">
+        <p style="margin-bottom: 15px;">
+            <strong style="font-size: 1.1rem; color: #3498db;">Step 3. Thinking about Human Nature:</strong>
+        </p>
+        <p style="color: #34495e; line-height: 1.6;">
+            In the <b>Milgram Experiment</b>, many participants continued to give shocks because an <b>authority figure</b> told them to. This shows that the <b>impulse</b> to obey can sometimes <b>override</b> our conscience.
+            <br><br><b>Do you think it is always right to obey authority? In what situation should we follow our own conscience instead?</b>
+        </p>
+        <textarea rows="5" style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; box-sizing: border-box;" 
+            placeholder="I think we should obey when... However, we must follow our conscience if..."></textarea>
+    </div>
+
+    <div style="margin-top: 40px; padding: 30px; background: #fffde7; border-radius: 15px; border: 1px solid #fff176; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+        <h3 style="margin-top: 0; color: #f57f17; display: flex; align-items: center;">
+            <i class="fas fa-lightbulb" style="margin-right: 12px;"></i> Critical Thinking
+        </h3>
+        <p style="line-height: 1.7; color: #444;">
+            We have explored how <b>SCIENCE AND NATURE</b> are interconnected. We learned about <b>conservation</b> and the <b>extraordinary roles</b> animals play in our lives.
+            <br><br>
+            <b>Between "Protecting the Environment" and "Human Development," which do you think is more pivotal for our future? 
+            <br>Support your answer by using the Past Perfect Simple (had + p.p.) to describe a situation from the past.</b>
+        </p>
+        <textarea class="main-textarea" 
+            placeholder="Compare conservation vs. development. Use the Past Perfect (e.g., 'Before we knew the danger, we had destroyed...') to support your ideas..." 
+            rows="10" 
+            style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; font-size: 0.95rem; line-height: 1.6; resize: vertical; display: block; box-sizing: border-box; background: white;">
+        </textarea>
+    </div>
+
+</div>
+<div style="margin-top: 30px; padding: 25px; background: #ffffff; border-radius: 15px; border: 2px solid #3498db; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="margin: 0; color: #2980b9;"><i class="fas fa-robot"></i> AI Solution</h3>
+        <span style="background: #3498db; color: white; padding: 5px 15px; border-radius: 50px; font-weight: bold; font-size: 1.1rem;">
+            Overall Score: <input type="text" class="mini-input" style="width: 50px !important; color: white; background: transparent; border: 1px solid rgba(255,255,255,0.5); text-align: center;" value="9.2"> / 10
+        </span>
+    </div>
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.95rem;">
+        <thead>
+            <tr style="background: #ebf5fb; text-align: left;">
+                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Evaluation Criteria</th>
+                <th style="padding: 12px; border-bottom: 2px solid #3498db; text-align: center;">Score</th>
+                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Detailed Feedback</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Content</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="10"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Deep reflection on career stages from 20s to 50s."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Logic</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="9.5"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Strong comparison between 'meaning' and 'success'."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Grammar</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="8"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Check comparative forms (e.g., more important than)."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Vocabulary</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="9"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Great use of 'exhausted', 'exploiting', and 'fulfillment'."></td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="background: #f4f7f6; padding: 15px; border-radius: 10px; border-left: 5px solid #27ae60;">
+        <p style="margin: 0 0 10px 0; font-weight: bold; color: #27ae60;"><i class="fas fa-check-circle"></i> Recommended Revision</p>
+        <textarea style="width: 100%; background: transparent; border: 1px dashed #27ae60; border-radius: 5px; padding: 10px; font-style: italic;" rows="8">"In my experience, I thought gaining experience was more important than anything else in my twenties. My companies might have been exploiting me with boring tasks, but I worked hard and struggled through it. In my thirties, I chased high salaries, but I still worked over ten hours a day. Now in my late forties, I was so exhausted that I retired after 30 years of practice. I currently work as a security officer for two hours a day and I am happy because there is no pressure. To me, a 'meaningful' job is more important than a 'successful' one, and that meaning depends on my current physical and mental well-being."</textarea>
+    </div>
+</div>
+            <button class="save-btn" style="margin-top: 20px;" onclick="saveProgress()">Save My Work</button>
+        </section>
+    </div>
+    <script>
+        // --- 데이터 정의 ---
+        const dialogueData = [
+    { name: "Minho", color: "#3498db", bg: "#ebf5fb", text: "Did you read about the <b>extinct</b> species news?", char: "assistant" },
+    { name: "Sarah", color: "#f39c12", bg: "#fdfaf0", text: "Yes. It’s <b>critical</b> for our nature’s balance.", char: "customer" },
+    { name: "Minho", color: "#3498db", bg: "#ebf5fb", text: "I saw a story about an <b>incredible</b> dog.", char: "assistant" },
+    { name: "Sarah", color: "#f39c12", bg: "#fdfaf0", text: "Was it the one <b>conducted</b> in a court?", char: "customer" },
+    { name: "Minho", color: "#3498db", bg: "#ebf5fb", text: "Yes! Its <b>interaction</b> with the suspect was shocking.", char: "assistant" },
+    { name: "Sarah", color: "#f39c12", bg: "#fdfaf0", text: "I also read about cows with names.", char: "customer" },
+    { name: "Minho", color: "#3498db", bg: "#ebf5fb", text: "Does that really improve their <b>productivity</b>?", char: "assistant" },
+    { name: "Sarah", color: "#f39c12", bg: "#fdfaf0", text: "Yes. Kindness <b>persuades</b> them to produce more milk.", char: "customer" },
+    { name: "Minho", color: "#3498db", bg: "#ebf5fb", text: "My <b>impulse</b> is to be kinder to nature.", char: "assistant" },
+    { name: "Sarah", color: "#f39c12", bg: "#fdfaf0", text: "Good. Don't let laziness <b>override</b> your conscience.", char: "customer" }
+        ];
+
+const scriptData1_1_D1 = [
+    { "start": 0.0, "speaker": "Narrator", "text": "9.2" },
+    { "start": 2.0, "speaker": "Speaker", "text": "The people who were the teachers believed that the learners were receiving real electric shocks," },
+    { "start": 7.5, "speaker": "Speaker", "text": "but, in fact, there were none." },
+    { "start": 10.5, "speaker": "Speaker", "text": "When the 'teacher' pressed the electric shock button, it simply turned on a light in front of the 'learner'." },
+    { "start": 18.0, "speaker": "Speaker", "text": "After a while, the actor who was playing the 'learner' started to bang on the wall between him and the 'teacher' and to shout in pain." },
+    { "start": 28.5, "speaker": "Speaker", "text": "At one point, the 'learner' - who was an actor, remember - then complained about having a heart problem." },
+    { "start": 37.0, "speaker": "Speaker", "text": "Then, as the false shocks got stronger and stronger, the 'learner' went silent." },
+    { "start": 44.0, "speaker": "Speaker", "text": "Some of the 'teachers' began to laugh nervously or show other signs of stress when they heard the screams coming from the 'learner'." },
+    { "start": 54.5, "speaker": "Speaker", "text": "Many people asked to stop the experiment and wanted to check that the learner was OK." },
+    { "start": 61.5, "speaker": "Speaker", "text": "However, the 'scientist' told them to \"please continue\"." },
+    { "start": 66.0, "speaker": "Speaker", "text": "When the 'teachers' asked the 'scientist' if he was sure," },
+    { "start": 70.5, "speaker": "Speaker", "text": "the 'scientist' said that the experiment required them to continue." },
+    { "start": 76.0, "speaker": "Speaker", "text": "He then said it was absolutely essential that they continued." },
+    { "start": 81.0, "speaker": "Speaker", "text": "Finally, the scientist told any people who still complained, \"You have no other choice. You must go on.\"" },
+    { "start": 90.0, "speaker": "Speaker", "text": "At the end of the experiment, 65% of participants had given the final 450-volt shock," },
+    { "start": 98.0, "speaker": "Speaker", "text": "although many were very uncomfortable doing so;" },
+    { "start": 103.0, "speaker": "Speaker", "text": "at some point, every teacher stopped and questioned what the purpose of the experiment was," },
+    { "start": 110.0, "speaker": "Speaker", "text": "but only one person out of the forty absolutely refused to give shocks before reaching the 300-volt level -" },
+    { "start": 119.0, "speaker": "Speaker", "text": "a level which could still kill you." }
+];
+
+const scriptData1_1_D2 = [
+    { "start": 0.0, "speaker": "Narrator", "text": "9.3" },
+    { "start": 2.5, "speaker": "Speaker", "text": "So what was the real purpose of the experiment?" },
+    { "start": 6.8, "speaker": "Speaker", "text": "During the Second World War," },
+    { "start": 9.5, "speaker": "Speaker", "text": "soldiers had participated in some terrible crimes that caused the deaths of millions of innocents." },
+    { "start": 17.0, "speaker": "Speaker", "text": "People couldn't understand it. How could they all be so cruel?" },
+    { "start": 23.5, "speaker": "Speaker", "text": "Why didn't anyone stop the killing?" },
+    { "start": 26.5, "speaker": "Speaker", "text": "Milgram wanted to investigate these issues." },
+    { "start": 30.5, "speaker": "Speaker", "text": "The experiment showed that people found it very difficult to say no to people in authority -" },
+    { "start": 38.0, "speaker": "Speaker", "text": "people more important than them and who wore a uniform." },
+    { "start": 43.5, "speaker": "Speaker", "text": "All the ordinary people who took part in Milgram's experiment" },
+    { "start": 48.0, "speaker": "Speaker", "text": "agreed to cause pain to another person" },
+    { "start": 51.0, "speaker": "Speaker", "text": "just because a 'scientist' in a white coat told them to." },
+    { "start": 56.5, "speaker": "Speaker", "text": "Most continued long enough to kill someone." }
+];
+
+const scriptData1_2_P1 = [
+    { "start": 0.0, "speaker": "Narrator", "text": "Nine point one. Conversation one." },
+    { "start": 3.0, "speaker": "A", "text": "Did you read this article about bees?" },
+    { "start": 6.5, "speaker": "B", "text": "No." },
+    { "start": 7.5, "speaker": "A", "text": "They're all dying for some unknown reason." },
+    { "start": 10.5, "speaker": "B", "text": "Really? That's terrible!" },
+    { "start": 13.0, "speaker": "A", "text": "I know. It's really bad news because we really depend on bees. If bees become extinct, we won't have any fruit or vegetables." },
+    { "start": 23.0, "speaker": "B", "text": "I hadn't thought about that. They should do something - fund research or something." },
+    { "start": 29.5, "speaker": "A", "text": "Absolutely." }
+];
+
+const scriptData1_2_P2 = [
+    { "start": 0.0, "speaker": "Narrator", "text": "Conversation two." },
+    { "start": 2.0, "speaker": "C", "text": "Did you see the forecast for tomorrow?" },
+    { "start": 4.5, "speaker": "D", "text": "No." },
+    { "start": 5.5, "speaker": "C", "text": "It's going to be nice - really hot and sunny." },
+    { "start": 9.5, "speaker": "D", "text": "Really? That's great!" },
+    { "start": 12.0, "speaker": "C", "text": "I know. It's good. It's been so wet and windy recently." },
+    { "start": 17.5, "speaker": "D", "text": "We should go out, then - go to the beach or somewhere." },
+    { "start": 22.0, "speaker": "C", "text": "Yeah, that's a good idea." }
+];
+
+const scriptData1_2_P3 = [
+    { "start": 0.0, "speaker": "Narrator", "text": "Conversation three." },
+    { "start": 2.5, "speaker": "E", "text": "Did you hear what they want to do in Morovia?" },
+    { "start": 6.0, "speaker": "F", "text": "No. What?" },
+    { "start": 7.5, "speaker": "E", "text": "It said on the news that they're going to pull down a lot of the horrible houses they've built along the coast and create a national park instead." },
+    { "start": 18.0, "speaker": "F", "text": "Really? That's great." },
+    { "start": 20.5, "speaker": "E", "text": "I know. It's good news." },
+    { "start": 22.5, "speaker": "F", "text": "They should do more to protect the countryside here too." },
+    { "start": 27.0, "speaker": "E", "text": "Definitely. We need more green spaces." }
+];
+
+        // --- 기능 함수 ---
+        let mediaRecorder;
+        let audioChunks = {};
+        function initDialogue() {
+            const container = document.getElementById('dialogue-container');
+            dialogueData.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.style = `padding: 12px 15px; background: ${item.bg}; border-radius: 12px; border-left: 6px solid ${item.color}; display: flex; align-items: center; justify-content: space-between; gap: 10px;`;
+                div.innerHTML = `
+                    <div style="flex: 1;"><strong style="color: ${item.color};">${item.name}:</strong> <span>${item.text}</span></div>
+                    <div style="display: flex; gap: 8px; flex-shrink: 0;">
+                        <button onclick="speakText(\`${item.text.replace(/<\/?[^>]+(>|$)/g, "")}\`, '${item.char}')" style="background: ${item.color}; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">🔊</button>
+                        <button id="rec-${index}" onclick="toggleRecord(${index})" style="background: #e74c3c; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">🎤</button>
+                        <button id="play-${index}" onclick="playMyVoice(${index})" style="background: #2ecc71; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: none;">▶</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+        function speakText(text, character) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.pitch = (character === 'maya') ? 1.5 : 1.1;
+            window.speechSynthesis.speak(utterance);
+        }
+async function toggleRecord(index) {
+    const btn = document.getElementById(`rec-${index}`);
+    if (mediaRecorder && mediaRecorder.state === "recording") {
+        mediaRecorder.stop();
+        btn.style.backgroundColor = "#e74c3c"; btn.innerText = "🎤";
+    } else {
+        const stream = await navigator.mediaDevices.getUserMedia({ 
+            audio: {
+                echoCancellation: true,
+                noiseSuppression: true,
+                autoGainControl: false, // 웅웅거림 방지를 위해 끔
+                channelCount: 1
+            } 
+        });
+        // --- 오디오 증폭 로직 시작 ---
+        const audioContext = new AudioContext();
+        const source = audioContext.createMediaStreamSource(stream);
+        const gainNode = audioContext.createGain();
+        
+        gainNode.gain.value = 2.0; // [조정 포인트] 소리를 3배 키웁니다 (1.0~5.0 사이 조절 가능)
+        
+        const destination = audioContext.createMediaStreamDestination();
+        source.connect(gainNode);
+        gainNode.connect(destination);
+        // --- 오디오 증폭 로직 끝 ---
+        // 증폭된 스트림으로 녹음 진행
+        mediaRecorder = new MediaRecorder(destination.stream);
+        const chunks = [];
+        mediaRecorder.ondataavailable = e => chunks.push(e.data);
+        mediaRecorder.onstop = () => {
+            const blob = new Blob(chunks, { type: 'audio/webm' });
+            audioChunks[index] = URL.createObjectURL(blob);
+            document.getElementById(`play-${index}`).style.display = "flex";
+            
+            stream.getTracks().forEach(track => track.stop());
+            audioContext.close();
+        };
+        mediaRecorder.start();
+        btn.style.backgroundColor = "#000"; btn.innerText = "⏹";
+    }
+}        function playMyVoice(index) {
+            if (audioChunks[index]) new Audio(audioChunks[index]).play();
+        }
+        function setupAudioSync(audioId, containerId, data, isDialogue = false) {
+    const audio = document.getElementById(audioId);
+    const container = document.getElementById(containerId);
+    if(!audio || !container) return;
+    
+    container.innerHTML = '';
+    data.forEach((line, index) => {
+        const div = document.createElement('div');
+        div.className = 'script-line';
+        div.id = `${containerId}-line-${index}`;
+        div.innerHTML = isDialogue ? `<strong>${line.speaker}:</strong> ${line.text}` : line.text;
+        container.appendChild(div);
+    });
+    // 오디오 재생 시 스크립트 창 보이기
+    audio.addEventListener('play', () => { 
+        container.style.display = 'block'; 
+    });
+    // 오디오 진행 시간에 맞춰 스크립트 하이라이트 및 스크롤
+    audio.addEventListener('timeupdate', () => {
+        let activeIdx = -1;
+        for (let i = 0; i < data.length; i++) {
+            if (audio.currentTime >= data[i].start) activeIdx = i; else break;
+        }
+        container.querySelectorAll('.script-line').forEach(l => l.classList.remove('active'));
+        if (activeIdx !== -1) {
+            const currentLine = document.getElementById(`${containerId}-line-${activeIdx}`);
+            if (currentLine) {
+                currentLine.classList.add('active');
+                container.scrollTo({ 
+                    top: currentLine.offsetTop - container.offsetTop - 80, 
+                    behavior: 'smooth' 
+                });
+            }
+        }
+    });
+    // 추가된 부분: 음성 재생이 끝나면 스크립트 창 숨기기
+    audio.addEventListener('ended', () => { 
+        container.style.display = 'none'; 
+    });
+}        function centralizeScroll(targetId) {
+            const element = document.getElementById(targetId);
+            if (!element) return;
+            const elementRect = element.getBoundingClientRect();
+            const middle = (elementRect.top + window.pageYOffset) - (window.innerHeight / 2) + (elementRect.height / 2);
+            window.scrollTo({ top: middle, behavior: 'smooth' });
+            if (targetId.startsWith('vocab')) {
+                document.querySelectorAll('.card').forEach(c => c.classList.remove('active-highlight'));
+                element.classList.add('active-highlight');
+                setTimeout(() => element.classList.remove('active-highlight'), 1500);
+            }
+        }
+        function toggleAnswer(btn) {
+            const answerSpan = btn.nextElementSibling;
+            if (answerSpan.style.display === "none") {
+                answerSpan.style.display = "inline"; btn.innerText = "Hide";
+            } else {
+                answerSpan.style.display = "none"; btn.innerText = "Check";
+            }
+        }
+        function saveProgress() {
+            const allInputs = document.querySelectorAll('input[type="text"], textarea');
+            allInputs.forEach((input, index) => {
+                localStorage.setItem(`UNIT09_all_data_${index}`, input.value);
+            });
+            alert('Your progress has been saved! ✅');
+        }
+        // --- 초기화 로직 ---
+        window.addEventListener('DOMContentLoaded', () => {
+            initDialogue();
+            setupAudioSync('main-player-1', 'script-container1', scriptData1_1_D1, true);
+            setupAudioSync('main-player-2', 'script-container2', scriptData1_1_D2, true);
+            setupAudioSync('player-1', 'script-1', scriptData1_2_P1, true);
+            setupAudioSync('player-2', 'script-2', scriptData1_2_P2, true);
+            setupAudioSync('player-3', 'script-3', scriptData1_2_P3, true);
+            // ... 나머지 setupAudioSync 호출
+            // 저장된 데이터 불러오기
+            const allInputs = document.querySelectorAll('input[type="text"], textarea');
+            allInputs.forEach((input, index) => {
+                const savedValue = localStorage.getItem(`UNIT09_all_data_${index}`);
+                if (savedValue) input.value = savedValue;
+            });
+        });
+    </script>
+<script>
+function speak(text) {
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';
+    
+    const voices = window.speechSynthesis.getVoices();
+    // 여성 목소리 우선 선택
+    const femaleVoice = voices.find(v => v.name.includes('Female') || v.name.includes('Google US English') || v.name.includes('Samantha'));
+    
+    if (femaleVoice) {
+        utterance.voice = femaleVoice;
+    }
+    
+    utterance.pitch = 1.1; 
+    utterance.rate = 1.0; // 현대식 표준 영어 빠르기
+    window.speechSynthesis.speak(utterance);
+}window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.getVoices(); };
+</script>
+</body>
+</html>

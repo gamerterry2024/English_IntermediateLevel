@@ -1,0 +1,1095 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNIT 10: SCHOOL AND UNIVERSITY</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --bg: #f4f7f6;
+            --white: #ffffff;
+            --highlight: #fff59d;
+            --accent: #e67e22;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg);
+            color: var(--primary);
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+        section {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            /* 상단 헤더 높이를 고려한 스크롤 위치 조정 */
+            scroll-margin-top: 90px;
+        }
+        .back-to-dashboard {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 1001;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        .back-to-dashboard:hover {
+            transform: scale(1.1);
+            background-color: var(--secondary);
+        }
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 20px;
+            padding-bottom: 300px; 
+        }
+        h2 {
+            border-left: 6px solid var(--secondary);
+            padding-left: 15px;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        .reading-box {
+            background-color: #fffaf0;
+            border: 1px solid #f39c12;
+            padding: 25px;
+            border-radius: 12px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .vocab-link {
+            color: var(--secondary);
+            text-decoration: none;
+            border-bottom: 2px solid var(--secondary);
+            font-weight: bold;
+            padding: 0 2px;
+            cursor: pointer;
+        }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .card {
+            border: 1px solid #eee;
+            padding: 20px;
+            border-radius: 10px;
+            background: #fff;
+            transition: all 0.4s ease;
+        }
+        .card.active-highlight {
+            border: 2px solid var(--accent);
+            background-color: #fffde7;
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .return-btn {
+            display: inline-block;
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: bold;
+            border: 1px solid var(--secondary);
+            padding: 4px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .audio-zone {
+            background: #ebf5fb;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--secondary);
+            margin: 20px 0;
+            text-align: center;
+        }
+        .audio-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .script-window {
+            margin-top: 15px;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            height: 250px; 
+            overflow-y: auto;
+            display: none;
+            text-align: left;
+        }
+        .script-line {
+            padding: 8px 10px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            transition: background 0.3s;
+            font-size: 0.95rem;
+        }
+        .script-line.active {
+            background-color: var(--highlight);
+            font-weight: bold;
+        }
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        .quiz-item {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .instruction {
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        .save-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .save-btn:hover {
+            background-color: #219150;
+        }
+        .mini-input {
+            width: 100px !important;
+            padding: 5px !important;
+            margin: 0 5px !important;
+            display: inline-block !important;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html#unit_10" class="back-to-dashboard">🏠 Back to Dashboard</a>
+    <header>
+        <h1>UNIT 10</h1>
+        <nav class="nav-links">
+            <a href="#intro-reading">0. Core Reading</a>
+            <a href="#section1">1. Listen & Read</a>
+            <a href="#section2">2. Speaking</a>
+            <a href="#section3">3. Writing</a>
+        </nav>
+    </header>
+    <div class="container">
+        
+<section id="intro-reading">
+    <h2>Core Reading: Core Reading: Not Just All in the Mind</h2>
+    <div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+<p>Education is a journey that looks different for everyone, whether they are switching schools across borders or <b>navigating</b> the digital world. Rebecca, for instance, experienced a major change when she moved from England to Spain. In her English primary school, she <b>could enjoy</b> group work and creative projects with the same teacher all day. However, in Spain, she <b>had to change</b> teachers for different subjects and face a much heavier workload. She remembers crying because she <b>had to do</b> hours of homework every night, whereas her friends back in England <b>could finish</b> their tasks much faster. This contrast shows how educational environments can vary <strong><span class="vocab-link" id="text-significantly" onclick="centralizeScroll('vocab-significantly')">significantly</span></strong> between countries.</p>
+    <p>This shift in how we study is also being shaped by technology. As explored in <i>"A Web of Lies?"</i>, the Internet has made information more accessible, but it has also made cheating easier. In the past, if a student wanted to write an essay, they <b>had to go</b> to a library and physically copy words from books. Nowadays, <strong><span class="vocab-link" id="text-plagiarism" onclick="centralizeScroll('vocab-plagiarism')">plagiarism</span></strong> is a huge concern for teachers. <b>If a student copies</b> an entire essay from a website, they <b>will not learn</b> the actual material. Furthermore, <b>if they rely</b> only on the Web, they <b>will lose</b> the ability to think critically. However, technology also brings solutions; <b>if teachers use</b> <strong><span class="vocab-link" id="text-sophisticated" onclick="centralizeScroll('vocab-sophisticated')">sophisticated</span></strong> software, they <b>will</b> <strong><span class="vocab-link" id="text-detect" onclick="centralizeScroll('vocab-detect')">detect</span></strong> copied work immediately.</p>
+    <p>Beyond the classroom, the road to the future is filled with different choices. Ollie, a Year 9 student, is already <strong><span class="vocab-link" id="text-contemplating" onclick="centralizeScroll('vocab-contemplating')">contemplating</span></strong> his life after school. <b>If he saves</b> enough money, he <b>will try</b> to take a gap year to travel. His father, however, wants him to stay in the academic system and go straight to university to study Business. On the other hand, students like Pep are already <strong><span class="vocab-link" id="text-encountering" onclick="centralizeScroll('vocab-encountering')">encountering</span></strong> the reality of higher education. Studying Pure Mathematics is intellectually demanding, especially since he <b>has to do</b> his whole degree in English. Pep knows that <b>if he gets</b> the required grades, he <b>will probably apply</b> for a Master’s degree in Astrophysics to follow his passion.</p>
+    <p>Even after university, the learning process never truly ends. Dhanya studied International Law in France, but she found the courses very <strong><span class="vocab-link" id="text-theoretical" onclick="centralizeScroll('vocab-theoretical')">theoretical</span></strong>. She believes she has learned much more since she started working. As she says, "You can't beat the university of life." This reminds us that while we <b>had to learn</b> academic facts in school, practical experience is just as important. <b>If you work</b> hard and remain ambitious for success, you <b>will find</b> that every challenge is an opportunity to grow. The tutors and supportive peers we meet along the way also play a crucial role in our development.</p>
+    <p>In conclusion, whether we are dealing with the stress of exams, the <strong><span class="vocab-link" id="text-temptation" onclick="centralizeScroll('vocab-temptation')">temptation</span></strong> of the Internet, or the pressure of choosing a career, our education shapes who we become. <b>If we</b> <strong><span class="vocab-link" id="text-embrace" onclick="centralizeScroll('vocab-embrace')">embrace</span></strong> both modern technology and traditional values, we <b>will be</b> better prepared for the diverse world that waits for us after graduation. Education is not just about knowledge acquisition; it is about developing social skills and responsibility for our own future.</p>
+
+    </div>
+<article style="margin-top: 3rem; border-top: 2px solid #eee;">
+    <h3 id="vocab-builder">Vocabulary Builder</h3>
+    <div class="vocab-grid">
+
+<div class="card" id="vocab-significantly">
+    <div class="card-content">
+        <strong>Significantly:</strong> In a way that is large or important enough to be noticed.
+        <br><span class="return-btn" onclick="centralizeScroll('text-significantly')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-plagiarism">
+    <div class="card-content">
+        <strong>Plagiarism:</strong> Copying someone else's words or ideas and pretending they are your own.
+        <br><span class="return-btn" onclick="centralizeScroll('text-plagiarism')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-sophisticated">
+    <div class="card-content">
+        <strong>Sophisticated:</strong> Very advanced and using complex ideas or modern technology.
+        <br><span class="return-btn" onclick="centralizeScroll('text-sophisticated')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-detect">
+    <div class="card-content">
+        <strong>Detect:</strong> To notice or find something that is difficult to see or hidden.
+        <br><span class="return-btn" onclick="centralizeScroll('text-detect')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-contemplating">
+    <div class="card-content">
+        <strong>Contemplating:</strong> Thinking deeply or carefully about something for a long time.
+        <br><span class="return-btn" onclick="centralizeScroll('text-contemplating')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-encountering">
+    <div class="card-content">
+        <strong>Encountering:</strong> Experiencing or meeting something, especially a problem or a challenge.
+        <br><span class="return-btn" onclick="centralizeScroll('text-encountering')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-theoretical">
+    <div class="card-content">
+        <strong>Theoretical:</strong> Based on ideas and rules rather than on practical experience or use.
+        <br><span class="return-btn" onclick="centralizeScroll('text-theoretical')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-temptation">
+    <div class="card-content">
+        <strong>Temptation:</strong> A strong feeling that you want to do something, even if you know it is wrong.
+        <br><span class="return-btn" onclick="centralizeScroll('text-temptation')">Return to Text ↑</span>
+    </div>
+</div>
+
+<div class="card" id="vocab-embrace">
+    <div class="card-content">
+        <strong>Embrace:</strong> To eagerly accept a new idea, opinion, or way of doing something.
+        <br><span class="return-btn" onclick="centralizeScroll('text-embrace')">Return to Text ↑</span>
+    </div>
+</div>
+
+    </div>
+</article>
+</section>
+<section id="section1">
+            <h2>Section 1: Listening & Reading Integration</h2>
+<article>
+    <h3>1-1. A Comparative Look at School Life: Experiences and Perspectives on the Spanish and British Education Systems (Dialogues)</h3>
+    
+    <div class="audio-zone" style="margin-bottom: 20px;">
+        <span class="audio-label">🎧 Listening 1: Rebecca's School Experience (CD2_Track 12)</span>
+        <audio id="main-player-1" style="width:100%;" controls src="CD2_Track 12.mp3"></audio>
+    </div>
+    <div id="script-container1" class="script-window" style="height: 450px; overflow-y: auto;"></div>
+    <div class="audio-zone" style="margin-bottom: 20px;">
+        <span class="audio-label">🎧 Listening 2: Commentary on Education (CD2_Track 13)</span>
+        <audio id="main-player-2" style="width:100%;" controls src="CD2_Track 13.mp3"></audio>
+    </div>
+    <div id="script-container2" class="script-window" style="height: 450px; overflow-y: auto;"></div>
+        
+</article>
+            <article style="margin-top: 3rem; border-top: 1px solid #eee; padding-top: 2rem;">
+                <h3>1-2. Educational Journeys and Future Aspirations: Conversations on Academic Life and Career Paths</h3>
+                
+                <div class="audio-zone">
+                    <span class="audio-label">🎁 Conversation 1 : Ollie and Parent (CD2_Track 8)</span>
+                    <audio id="player-1" style="width:100%;" controls src="CD2_Track 8.mp3"></audio>
+                    <div id="script-1" class="script-window"></div>
+                </div>
+                <div class="audio-zone">
+                    <span class="audio-label">📦 Conversation 2 : Pep and Friend (CD2_Track 9)</span>
+                    <audio id="player-2" style="width:100%;" controls src="CD2_Track 9.mp3"></audio>
+                    <div id="script-2" class="script-window"></div>
+                </div>
+                <div class="audio-zone">
+                    <span class="audio-label">👨‍💼 Conversation 3 : Dhanya's Experience (CD2_Track 10)</span>
+                    <audio id="player-3" style="width:100%;" controls src="CD2_Track 10.mp3"></audio>
+                    <div id="script-3" class="script-window"></div>
+                </div>
+            </article>
+
+         <article style="margin-top: 3rem; border-top: 1px solid #eee; padding-top: 2rem;">
+    <h2>1-3. &#x1F4D6; Reading: Breakfast around the world</h2>
+    <div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+<p style="margin-top: 0;"><b>A WEB OF LIES?</b></p>
+    
+    <p>Jane Wilshere explores the effect that the World Wide Web is having on school life. The incredible growth of the Internet over recent years has caused problems for parents and teachers. Parents worry about which sites their children spend time on, while for teachers, the main worry is the way the <b>Internet makes cheating easier</b>!</p>
+
+    <p>Schools and universities say there has been a huge increase in <b>plagiarism</b> – taking other people's words and ideas and pretending that they are your own. In the past, anyone who wanted to copy <b>had to go to a library</b>, find the right books, read through them, find the sections they needed and then physically write down the words they wanted to use.</p>
+
+    <p>Nowadays, though, students can simply copy extracts from websites. Despite all this, we shouldn't assume that the Internet only brings problems. Indeed, <b>you could say</b> that for every problem the Internet creates, it also brings a solution. New software now helps teachers to detect copied work immediately.</p>
+
+    <p>"Some students suddenly start using words they can't possibly understand," explains one teacher. "In fact, one of my students recently gave me an essay he'd copied from the Web and it even <b>contained Web advertisements</b> – AND the name of the original author!"</p>
+
+    <p>As more and more schools install computers, the role of the teacher is changing. Making sure students don't just copy things and do learn how to quote work properly is part of their job. My 13-year-old son is currently working on a project about trees in our town. <b>He has to photograph them</b> and write about their characteristics.</p>
+
+    <p>This is all uploaded onto a website, and his group discusses their work online. <b>If they finish the project</b>, they <b>will give a PowerPoint presentation</b> about their ideas to the class. Instead of helping him cheat, the Web is actually helping him learn about school subjects, while also developing his life skills!</p>
+    </div>
+	</article>
+
+    <div class="quiz-container" style="margin-top: 2rem; padding: 0 1rem;">
+        <h4 style="color: var(--secondary); margin-bottom: 1.5rem;">✅ Check your understanding (True or False)</h4>
+        <style>
+            .quiz-row { display: flex; align-items: center; margin-bottom: 15px; font-size: 1.05rem; flex-wrap: wrap; }
+            .quiz-question { margin-right: 12px; font-weight: 500; }
+            .btn-check-small { 
+                padding: 3px 10px; font-size: 0.85rem; cursor: pointer; border-radius: 6px; 
+                border: 1px solid var(--secondary); background: white; color: var(--secondary);
+                transition: 0.2s; margin-right: 10px;
+            }
+            .btn-check-small:hover { background: var(--secondary); color: white; }
+            .answer-text { color: var(--success); font-weight: bold; font-size: 0.95rem; }
+        </style>
+<div class="quiz-container" style="background: #fdfdfd; padding: 20px; border-radius: 12px; border: 1px solid #eee;">
+    
+<div class="quiz-row" id="tf-q1" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+    <span class="quiz-question">1. Plagiarism means taking someone else's ideas and pretending they are your own.</span>
+    <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+        <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+        <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+    </div>
+    <button onclick="validateTF('tf-q1', 'T', 'True (Plagiarism is defined as taking other people\'s words and ideas and pretending they are your own.)')" class="btn-check-small">Check</button>
+    <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-q2" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+    <span class="quiz-question">2. In the past, students had to use the Internet to find books in the library.</span>
+    <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+        <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+        <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+    </div>
+    <button onclick="validateTF('tf-q2', 'F', 'False (In the past, students had to physically go to a library and write down words by hand without the Internet.)')" class="btn-check-small">Check</button>
+    <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-q3" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+    <span class="quiz-question">3. Teachers can use new software to detect if a student has copied work from the Web.</span>
+    <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+        <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+        <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+    </div>
+    <button onclick="validateTF('tf-q3', 'T', 'True (The text mentions that new software helps teachers to detect copied work immediately.)')" class="btn-check-small">Check</button>
+    <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-q4" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+    <span class="quiz-question">4. The author believes the Internet only brings problems to school life and has no solutions.</span>
+    <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+        <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+        <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+    </div>
+    <button onclick="validateTF('tf-q4', 'F', 'False (The author states that we shouldn\'t assume the Internet only brings problems; it also brings solutions.)')" class="btn-check-small">Check</button>
+    <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-q5" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+    <span class="quiz-question">5. If the author's son finishes his project, his group will give a PowerPoint presentation.</span>
+    <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+        <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+        <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+    </div>
+    <button onclick="validateTF('tf-q5', 'T', 'True (The text says they will give a PowerPoint presentation about their ideas to the class.)')" class="btn-check-small">Check</button>
+    <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+</div>
+<script>
+// T/F 버튼 선택 시 시각적 효과
+function selectTF(btn, val) {
+    const parent = btn.parentElement;
+    const btns = parent.querySelectorAll('.tf-btn');
+    btns.forEach(b => {
+        b.style.background = '#fff';
+        b.style.color = '#333';
+        b.classList.remove('selected');
+    });
+    btn.style.background = '#333';
+    btn.style.color = '#fff';
+    btn.classList.add('selected');
+    btn.dataset.value = val;
+}// 정답 확인 및 토글 함수
+function validateTF(rowId, correctVal, explanation) {
+    const row = document.getElementById(rowId);
+    const selectedBtn = row.querySelector('.tf-btn.selected');
+    const ansText = row.querySelector('.answer-text');
+    // 이미 정답이 보이고 있다면 -> 다시 숨기기 (토글)
+    if (ansText.style.display === 'inline') {
+        ansText.style.display = 'none';
+        row.style.background = '#fff'; // 배경색 초기화
+        return;
+    }
+    // 버튼을 선택하지 않았을 때
+    if (!selectedBtn) {
+        alert("Please select T or F first!");
+        return;
+    }
+    // 정답 확인 모드
+    const userVal = selectedBtn.dataset.value;
+    ansText.style.display = 'inline';
+    ansText.innerText = explanation;
+    if (userVal === correctVal) {
+        row.style.background = '#e8f5e9'; // 정답: 연한 초록색
+        ansText.style.color = '#2e7d32';
+    } else {
+        row.style.background = '#ffebee'; // 오답: 연한 빨간색
+        ansText.style.color = '#c62828';
+    }
+}</script>
+    </div>
+</article>
+        </section>
+
+<section id="section2">
+    <h2>Section 2: Speaking Practice</h2> 
+    
+    <article style="margin-top: 1rem;">
+        <h3>Interactive Dialogue (Easy Version)</h3>
+        <p class="instruction" style="margin-bottom: 20px;">
+            <i class="fas fa-headphones-alt"></i> Listen to the sentence (🔊), record your voice (🎤), and check your recording (▶).
+        </p>
+        <div class="quiz-item" style="background: #fff; padding: 25px; border-radius: 15px; border: 1px solid #ddd; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <div id="dialogue-container" style="display: flex; flex-direction: column; gap: 12px; font-size: 1.05rem;"></div>
+        </div>
+    </article>
+</section>
+<section id="section3">
+            <h2>Section 3: Writing Practice</h2>
+            <div id="final-quiz-area" style="margin-top: 40px; border-top: 2px solid var(--secondary); padding-top: 25px;">
+                <div class="quiz-item" style="background: #fcfcfc; padding: 20px; border-radius: 10px;">
+    <p style="margin-bottom: 15px;">
+        <strong style="font-size: 1.1rem; color: #3498db;">Step 1. Grammar & Vocabulary Check:</strong>
+    </p> 
+<div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+    <h3 style="text-align: center; color: #2c3e50; margin-bottom: 2rem; border-bottom: 3px double #3498db; padding-bottom: 10px; display: block; width: fit-content; margin-left: auto; margin-right: auto;">
+        <i class="fas fa-book-open" style="margin-right: 10px;"></i>Grammar Mastery
+    </h3>
+
+<h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-top: 0;">
+1. Past Necessity and Ability (had to / could)
+</h3>
+<div style="background-color: #fff; padding: 15px; border-radius: 10px; border: 1px dashed #bdc3c7; margin-bottom: 15px;">
+<p style="margin: 5px 0;"><strong>• had to</strong>: Used to express an obligation or necessity in the past (The past of 'must' or 'have to').</p>
+<p style="margin: 5px 0;"><strong>• could</strong>: Used to express a general ability or permission in the past (The past of 'can').</p>
+</div>
+<ul style="list-style-type: none; padding-left: 10px;">
+<li style="margin-bottom: 15px;">
+<strong style="color: #e67e22;">• Example:</strong> "Rebecca <span style="color: #e67e22; font-weight: bold;">had to finish</span> loads of homework every night."
+
+<i style="color: #7f8c8d;">(Section 1 - Her experience in the Spanish school system)</i>
+</li>
+<li style="margin-bottom: 15px;">
+<strong style="color: #16a085;">• Example:</strong> "In England, students <span style="color: #16a085; font-weight: bold;">could enjoy</span> more group work."
+
+<i style="color: #7f8c8d;">(Section 1 - Comparison of classroom activities)</i>
+</li>
+</ul>
+
+<h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-top: 25px;">
+2. First Conditional (Real Possibilities)
+</h3>
+<div style="background-color: #fff; padding: 15px; border-radius: 10px; border: 1px dashed #bdc3c7; margin-bottom: 15px;">
+<p style="margin: 5px 0;"><strong>• Structure</strong>: <strong>If</strong> + Subject + <strong>Present Simple</strong>, Subject + <strong>will</strong> + verb.</p>
+<p style="margin: 5px 0;"><strong>• Usage</strong>: To talk about a possible future situation and its result.</p>
+</div>
+<ul style="list-style-type: none; padding-left: 10px;">
+<li style="margin-bottom: 15px;">
+<strong style="color: #2980b9;">• Example:</strong> "If Ollie <span style="color: #2980b9; font-weight: bold;">saves</span> enough money, he <span style="color: #2980b9; font-weight: bold;">will take</span> a gap year."
+
+<i style="color: #7f8c8d;">(Section 1 - Ollie's future travel plans)</i>
+</li>
+<li style="margin-bottom: 15px;">
+<strong style="color: #2980b9;">• Example:</strong> "If students <span style="color: #2980b9; font-weight: bold;">copy</span> from the web, they <span style="color: #2980b9; font-weight: bold;">will not develop</span> critical thinking."
+
+<i style="color: #7f8c8d;">(Section 1 - The risk of plagiarism)</i>
+</li>
+</ul>
+
+<h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-top: 25px;">
+3. Questions with "will" and "had to"
+</h3>
+<div style="background-color: #fff; padding: 15px; border-radius: 10px; border: 1px dashed #bdc3c7; margin-bottom: 15px;">
+<p style="margin: 5px 0;"><strong>• Past Question</strong>: <strong>Did</strong> + Subject + <strong>have to</strong> + verb...?</p>
+<p style="margin: 5px 0;"><strong>• Future Question</strong>: <strong>What will</strong> + Subject + <strong>do if</strong>...?</p>
+</div>
+<ul style="list-style-type: none; padding-left: 10px;">
+<li style="margin-bottom: 15px;">
+<strong style="color: #d35400;">• Example:</strong> "<span style="color: #d35400; font-weight: bold;">Did</span> Rebecca <span style="color: #d35400; font-weight: bold;">have to</span> change teachers every hour?"
+
+<i style="color: #7f8c8d;">(Section 1 - Yes, she did in Spain)</i>
+</li>
+<li style="margin-bottom: 15px;">
+<strong style="color: #d35400;">• Example:</strong> "What <span style="color: #d35400; font-weight: bold;">will Pep do</span> if he <span style="color: #d35400; font-weight: bold;">gets</span> good grades?"
+
+<i style="color: #7f8c8d;">(Section 1 - He will apply for a Master's degree)</i>
+</li>
+</ul>
+
+<hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
+<p style="margin-top: 20px;"><strong>Context from our Reading:</strong></p>
+<ul style="padding-left: 20px;">
+<li>"In the past, anyone who wanted to copy <span style="color: #d35400; font-weight: bold;">had to go</span> to a library."</li>
+<li>"If they <span style="color: #d35400; font-weight: bold;">finish</span> the project, they <span style="color: #d35400; font-weight: bold;">will give</span> a PowerPoint presentation."</li>
+<li>"She <span style="color: #d35400; font-weight: bold;">could finish</span> her tasks much faster in England."</li>
+</ul>
+</div>
+
+<div class="quiz-item" style="background: #fff; padding: 25px; border-radius: 15px; border: 1px solid #ddd; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+<div id="vocabulary-mastery-section">
+<h3 style="text-align: center; color: #2c3e50; margin-bottom: 2rem; border-bottom: 3px double #3498db; padding-bottom: 10px; display: block; width: fit-content; margin-left: auto; margin-right: auto; font-size: 1.6rem;">
+        <i class="fas fa-spell-check" style="margin-right: 10px;"></i>Vocabulary Check
+    </h3>
+
+<div style="background: #fff5f5; border: 1px solid #fed7d7; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #c53030; margin: 0; border-left: 4px solid #f56565; padding-left: 10px;">Group 1</h4>
+<span style="font-size: 0.85rem; background: #f56565; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: hiccups, indigestion, stitches, infection, depression
+</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+    1. I can't stop making a loud noise in my throat; I have the <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......">.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: hiccups)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+    2. Eating too fast often leads to stomach pain or <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......">.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: indigestion)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+    3. The cut was so deep that the doctor had to use five <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> to close it.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: stitches)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+    4. You should keep the wound clean to prevent a serious <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......">.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: infection)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+    5. Severe mental sadness that lasts for a long time is called <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......">.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: depression)</span>
+</div>
+</div>
+<div style="background: #fffaf0; border: 1px solid #feebc8; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #c05621; margin: 0; border-left: 4px solid #ed8936; padding-left: 10px;">Group 2</h4>
+<span style="font-size: 0.85rem; background: #ed8936; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: ache, anxiety, chemist's, tablets, therapy
+</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+    6. After the long workout, my legs began to <input type="text" class="mini-input" style="width: 70px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......">.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: ache)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+    7. Many people suffer from <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> before a big exam.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: anxiety)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+    8. You should go to the <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> to buy some medicine.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: chemist's)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+    9. The doctor gave me some <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> for my hay fever.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: tablets)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+    10. Speaking with a counselor is a common form of <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......">.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: therapy)</span>
+</div>
+</div>
+<div style="background: #f0fff4; border: 1px solid #c6f6d5; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #276749; margin: 0; border-left: 4px solid #48bb78; padding-left: 10px;">Group 3</h4>
+<span style="font-size: 0.85rem; background: #48bb78; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: recover, mild, attitude, physical, liquid
+</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+    11. It takes about a week to <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> from the flu.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: recover)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+    12. Most mental health problems are <input type="text" class="mini-input" style="width: 80px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> and not very serious.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: mild)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+    13. Society needs to change its negative <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> toward mental illness.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: attitude)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+    14. Some illnesses have a <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> cause in the brain.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: physical)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+    15. You must mix the medicine with a little <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> before drinking it.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: liquid)</span>
+</div>
+</div>
+<div style="background: #ebf8ff; border: 1px solid #bee3f8; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #2c5282; margin: 0; border-left: 4px solid #4299e1; padding-left: 10px;">Group 4</h4>
+<span style="font-size: 0.85rem; background: #4299e1; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: weak, sneezing, swallow, cream, dressing
+</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+    16. If you have the flu, you will likely feel very <input type="text" class="mini-input" style="width: 80px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> and tired.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: weak)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+    17. I can't stop <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> because of the pollen in the air.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: sneezing)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+    18. It is painful to <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> food when you have a sore throat.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: swallow)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+    19. Apply some antiseptic <input type="text" class="mini-input" style="width: 80px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> to the burn to help it heal.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: cream)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+    20. The nurse will put a fresh <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> on your wound every day.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: dressing)</span>
+</div>
+</div>
+
+</div>
+</div>
+
+
+ <div class="quiz-item" style="margin-top: 40px; padding: 25px; background: #fcfcfc; border-radius: 10px; border: 1px solid #eee;">
+
+<p style="margin-bottom: 15px;">
+
+<strong style="font-size: 1.1rem; color: #3498db;">Step 2. Content Check:</strong>
+
+</p>
+
+<p style="line-height: 1.6; color: #34495e; font-weight: 500;">
+
+The text compares different educational experiences and the impact of technology. Based on the reading, what were the <b>main differences</b> between Rebecca’s school life in Spain and England, and how has the <b>internet</b> changed the way students approach their projects?
+
+</p>
+
+<div style="margin: 10px 0; font-size: 0.85rem; color: #7f8c8d;">
+
+<i class="fas fa-lightbulb" style="color: #f1c40f;"></i>
+
+<b>Key Keywords:</b> had to, homework, could, group work, plagiarism, sophisticated, detect, temptation
+
+</div>
+
+<textarea id="content-check-answer-u10" rows="3"
+
+style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; font-size: 0.95rem; line-height: 1.6; resize: vertical; display: block; margin-bottom: 10px; box-sizing: border-box;"
+
+placeholder="Explain the differences in Rebecca's experience and the effect of the internet on students' work..."></textarea>
+
+</div>
+
+
+<div class="quiz-item" style="background: #fcfcfc; padding: 25px; border-radius: 10px; margin-top: 20px; border: 1px solid #eee;">
+
+<p style="margin-bottom: 15px;">
+
+<strong style="font-size: 1.1rem; color: #3498db;">Step 3. Thinking about Technology and Integrity:</strong>
+
+</p>
+
+<p style="color: #34495e; line-height: 1.6;">
+
+Our reading, <b>"A Web of Lies?"</b>, highlights that while the internet is a great tool, it also brings the <b>temptation</b> of <b>plagiarism</b>. Many students now use <b>sophisticated</b> AI tools, making it harder for teachers to <b>detect</b> original work.
+
+
+
+<b>In your opinion, if a student uses AI to write their entire essay, is it still "their work"? Why do you think some students choose to copy instead of developing their own critical thinking?</b>
+
+</p>
+
+<textarea rows="5" style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; box-sizing: border-box;"
+
+placeholder="I think using AI for everything is... Some students copy because..."></textarea>
+
+</div>
+
+
+<div style="margin-top: 40px; padding: 30px; background: #fffde7; border-radius: 15px; border: 1px solid #fff176; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+
+<h3 style="margin-top: 0; color: #f57f17; display: flex; align-items: center;">
+
+<i class="fas fa-lightbulb" style="margin-right: 12px;"></i> Critical Thinking
+
+</h3>
+
+<p style="line-height: 1.7; color: #444;">
+
+We have explored various aspects of <b>SCHOOL AND UNIVERSITY</b>, from personal stories like Rebecca's to the <b>theoretical</b> challenges of modern technology. We learned that education is a <b>journey</b> that requires both <b>honesty</b> and <b>effort</b>.
+
+
+
+<b>If you could design the "perfect" university, what rules would you change? For example, would you strictly ban AI, or would you embrace it?
+
+
+Support your answer by using the First Conditional (If... will) and talk about what you "had to" do in your past school that you would change in your new university.</b>
+
+</p>
+
+<textarea class="main-textarea"
+
+placeholder="Describe your perfect university. Use 'If I design..., students will...' and 'In the past, I had to... but now...' to explain your ideas..."
+
+rows="10"
+
+style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; font-size: 0.95rem; line-height: 1.6; resize: vertical; display: block; box-sizing: border-box; background: white;">
+
+</textarea>
+
+</div> 
+
+<div style="margin-top: 30px; padding: 25px; background: #ffffff; border-radius: 15px; border: 2px solid #3498db; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="margin: 0; color: #2980b9;"><i class="fas fa-robot"></i> AI Solution</h3>
+        <span style="background: #3498db; color: white; padding: 5px 15px; border-radius: 50px; font-weight: bold; font-size: 1.1rem;">
+            Overall Score: <input type="text" class="mini-input" style="width: 50px !important; color: white; background: transparent; border: 1px solid rgba(255,255,255,0.5); text-align: center;" value="9.2"> / 10
+        </span>
+    </div>
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.95rem;">
+        <thead>
+            <tr style="background: #ebf5fb; text-align: left;">
+                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Evaluation Criteria</th>
+                <th style="padding: 12px; border-bottom: 2px solid #3498db; text-align: center;">Score</th>
+                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Detailed Feedback</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Content</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="10"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Deep reflection on career stages from 20s to 50s."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Logic</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="9.5"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Strong comparison between 'meaning' and 'success'."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Grammar</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="8"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Check comparative forms (e.g., more important than)."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Vocabulary</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="9"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Great use of 'exhausted', 'exploiting', and 'fulfillment'."></td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="background: #f4f7f6; padding: 15px; border-radius: 10px; border-left: 5px solid #27ae60;">
+        <p style="margin: 0 0 10px 0; font-weight: bold; color: #27ae60;"><i class="fas fa-check-circle"></i> Recommended Revision</p>
+        <textarea style="width: 100%; background: transparent; border: 1px dashed #27ae60; border-radius: 5px; padding: 10px; font-style: italic;" rows="8">"In my experience, I thought gaining experience was more important than anything else in my twenties. My companies might have been exploiting me with boring tasks, but I worked hard and struggled through it. In my thirties, I chased high salaries, but I still worked over ten hours a day. Now in my late forties, I was so exhausted that I retired after 30 years of practice. I currently work as a security officer for two hours a day and I am happy because there is no pressure. To me, a 'meaningful' job is more important than a 'successful' one, and that meaning depends on my current physical and mental well-being."</textarea>
+    </div>
+</div>
+            <button class="save-btn" style="margin-top: 20px;" onclick="saveProgress()">Save My Work</button>
+        </section>
+    </div>
+    <script>
+        // --- 데이터 정의 ---
+        const dialogueData = [
+    { name: "Rebecca", color: "#3498db", bg: "#ebf5fb", text: "I <b>had to</b> do much homework in Spain.", char: "assistant" },
+    { name: "Pep", color: "#f39c12", bg: "#fdfaf0", text: "That sounds hard. I <b>could</b> study more freely.", char: "customer" },
+    { name: "Rebecca", color: "#3498db", bg: "#ebf5fb", text: "<b>If I fail</b>, I <b>will repeat</b> the year.", char: "assistant" },
+    { name: "Pep", color: "#f39c12", bg: "#fdfaf0", text: "Don't worry. <b>If you study</b>, you <b>will pass</b>.", char: "customer" },
+    { name: "Rebecca", color: "#3498db", bg: "#ebf5fb", text: "In England, I <b>could</b> do more group work.", char: "assistant" },
+    { name: "Pep", color: "#f39c12", bg: "#fdfaf0", text: "I <b>had to</b> learn everything in English here.", char: "customer" },
+    { name: "Rebecca", color: "#3498db", bg: "#ebf5fb", text: "Is university life very difficult for you?", char: "assistant" },
+    { name: "Pep", color: "#f39c12", bg: "#fdfaf0", text: "Yes. <b>If I graduate</b>, I <b>will start</b> a Master's.", char: "customer" },
+    { name: "Rebecca", color: "#3498db", bg: "#ebf5fb", text: "I <b>had to</b> change teachers for every subject.", char: "assistant" },
+    { name: "Pep", color: "#f39c12", bg: "#fdfaf0", text: "<b>If you stay</b> positive, school <b>will be</b> fun.", char: "customer" }
+        ];
+const scriptData1_1_D1 = [
+    { start: 0, speaker: "Narrator", text: "Ten point three." },
+    { start: 2, speaker: "I", text: "So how did you find school when you came here?" },
+    { start: 5, speaker: "R", text: "A bit mixed. I made friends quickly. I knew a bit of Spanish and people were friendly, but I remember that to begin with, my brother just stood in the corner of the playground watching everyone play. It was sad!" },
+    { start: 20, speaker: "I", text: "But he made friends in the end?" },
+    { start: 23, speaker: "R", text: "Yeah." },
+    { start: 24, speaker: "I", text: "So you could speak Spanish?" },
+    { start: 27, speaker: "R", text: "A bit, but in class I hardly understood anything. It was horrible, but I sat with a girl that had an Australian dad and she sometimes translated for me." },
+    { start: 38, speaker: "I", text: "That's lucky. Were classes very different?" },
+    { start: 42, speaker: "R", text: "Primary was. For some reason, I did the last year of primary here, although I'd already done it in England. Maybe it was because they have five years of secondary school in England, but there are only four here. Sorry, what was the question?" },
+    { start: 58, speaker: "I", text: "Were classes different?" },
+    { start: 60, speaker: "R", text: "Oh yeah. Basically, in primary in England we had the same teacher all day, but here we changed teachers. I liked some, but some - like Don Miguel - were really boring! He just read from the book. We didn't use textbooks much in England - we did more group work and arty things." },
+    { start: 81, speaker: "I", text: "Right." },
+    { start: 82, speaker: "R", text: "And we had lots of homework! I hardly had any in primary in England - maybe some reading or sums and once a term we did a project. Here, I had loads - maybe an hour or more each night. I remember really crying about it. My friends in England complain when they have to do 45 minutes in secondary school and I often have two hours - and we study for tests all the time." },
+    { start: 108, speaker: "I", text: "So which do you prefer?" },
+    { start: 110, speaker: "R", text: "It's difficult to say. Now I'm at instituto ..." },
+    { start: 114, speaker: "I", text: "Instituto?" },
+    { start: 115, speaker: "R", text: "Sorry, secondary school. We finish at two o'clock every day and then we get almost three months off in the summer whereas in England my friends finish at four and they only get six weeks' summer holiday. I chat to my friends in England on Messenger and they say school is boring too and they get stressed when they have assignments, but then they have this thing here, where if your teacher fails you some subjects, you have to repeat the whole year! I don't like that stress." }
+];
+const scriptData1_1_D2 = [
+    { start: 0, speaker: "Narrator", text: "Ten point four." },
+    { start: 2, speaker: "Speaker", text: "You hear politicians and parents here saying education is bad, but you get the same complaints in Britain where there are generally more resources. Parents send their kids to private schools or move house to be near good state schools." },
+    { start: 18, speaker: "Speaker", text: "From what Rebecca says, Spanish teachers are generally more traditional in their approach, but that's OK. Students probably learn to listen and concentrate better and get more knowledge. It all depends on the teacher - and the students, of course. There's good and bad everywhere." },
+    { start: 36, speaker: "Speaker", text: "Luckily, Rebecca's very responsible and she has some great teachers. She's happy and the school has a good atmosphere, small classes and there's no violence or bullying - that's the most important thing." },
+    { start: 51, speaker: "Speaker", text: "The only policies I don't like here are books and holidays. I spend 400 euros on books every year. In Britain, they're free. Schools buy the books and the students borrow them. Then in summer here, it's difficult looking after the kids for three months when both parents work." }
+];
+const scriptData1_2_P1 = [
+    { start: 0, speaker: "Narrator", text: "Ten point one. Conversation one." },
+    { start: 5, speaker: "A", text: "So how's school, Ollie? Your father told me you're doing well." },
+    { start: 9, speaker: "B", text: "It's OK, I suppose. Some bits are good." },
+    { start: 13, speaker: "A", text: "Yeah? What're your favourite subjects?" },
+    { start: 16, speaker: "B", text: "Spanish and Art. And History's OK as well." },
+    { start: 21, speaker: "A", text: "And what year are you in now?" },
+    { start: 23, speaker: "B", text: "Year Nine." },
+    { start: 25, speaker: "A", text: "So how long have you got left?" },
+    { start: 27, speaker: "B", text: "Two more years." },
+    { start: 29, speaker: "A", text: "What are you going to do when you finish? Have you got any plans?" },
+    { start: 34, speaker: "B", text: "Well, if I can save enough money between now and then, I'll try and take a year off. Dad doesn't want me to, though." },
+    { start: 43, speaker: "A", text: "No?" },
+    { start: 44, speaker: "B", text: "No, he just wants me to stay in the system and go straight to university and study Business or something and graduate and become just like him." },
+    { start: 55, speaker: "A", text: "Yeah, well. He's probably just worried about you." },
+    { start: 58, speaker: "B", text: "Yeah, right. Whatever!" }
+];
+const scriptData1_2_P2 = [
+    { start: 0, speaker: "Narrator", text: "Conversation two." },
+    { start: 3, speaker: "C", text: "So what course are you doing, Pep?" },
+    { start: 6, speaker: "D", text: "Pure Mathematics." },
+    { start: 8, speaker: "C", text: "Wow! OK. That sounds hard." },
+    { start: 11, speaker: "D", text: "Yeah, it can be, but I'm really enjoying it. To be honest, the most difficult thing for me is doing the whole degree in English, but my tutors are great. Everybody has been very supportive." },
+    { start: 24, speaker: "C", text: "What year are you in?" },
+    { start: 26, speaker: "D", text: "My third, unfortunately. I've got my finals next April!" },
+    { start: 31, speaker: "C", text: "Oh, OK. Well, good luck!" },
+    { start: 34, speaker: "D", text: "Thanks!" },
+    { start: 35, speaker: "C", text: "What're you going to do after you graduate? Any plans?" },
+    { start: 39, speaker: "D", text: "Well, if I get the grades I want, I'll probably do a Master's somewhere." },
+    { start: 45, speaker: "C", text: "Oh, OK. What in? The same subject?" },
+    { start: 48, speaker: "D", text: "Maybe. I'm not sure. I'm thinking of maybe doing Astrophysics, actually." },
+    { start: 54, speaker: "C", text: "Oh, right. Have you applied anywhere yet?" },
+    { start: 57, speaker: "D", text: "No, I haven't, actually - not yet. But I probably should!" }
+];
+const scriptData1_2_P3 = [
+    { start: 0, speaker: "Narrator", text: "Conversation three." },
+    { start: 3, speaker: "E", text: "So did you go to university, Dhanya?" },
+    { start: 6, speaker: "D", text: "Yes, I did. The Paul Cezanne University in Marseille. It's one of the oldest universities in France." },
+    { start: 14, speaker: "E", text: "Oh, OK. What did you study?" },
+    { start: 17, speaker: "F", text: "International Law." },
+    { start: 19, speaker: "E", text: "And did you enjoy it?" },
+    { start: 21, speaker: "F", text: "Yes, up to a point, I suppose, but to be honest, it was quite theoretical. It wasn't very practical and I think I've learned much more since I started working." },
+    { start: 33, speaker: "E", text: "I know what you mean! I mean, I left school at 16 and started working straight away. To begin with, I did lots of horrible jobs, but I learnt a lot as well and it made me hungry for success. I was running my own business by the time I was 22. I'm not sure many university graduates can say the same!" },
+    { start: 54, speaker: "F", text: "You can't beat the university of life, eh!" }
+];
+        // --- 기능 함수 ---
+        let mediaRecorder;
+        let audioChunks = {};
+        function initDialogue() {
+            const container = document.getElementById('dialogue-container');
+            dialogueData.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.style = `padding: 12px 15px; background: ${item.bg}; border-radius: 12px; border-left: 6px solid ${item.color}; display: flex; align-items: center; justify-content: space-between; gap: 10px;`;
+                div.innerHTML = `
+                    <div style="flex: 1;"><strong style="color: ${item.color};">${item.name}:</strong> <span>${item.text}</span></div>
+                    <div style="display: flex; gap: 8px; flex-shrink: 0;">
+                        <button onclick="speakText(\`${item.text.replace(/<\/?[^>]+(>|$)/g, "")}\`, '${item.char}')" style="background: ${item.color}; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">🔊</button>
+                        <button id="rec-${index}" onclick="toggleRecord(${index})" style="background: #e74c3c; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">🎤</button>
+                        <button id="play-${index}" onclick="playMyVoice(${index})" style="background: #2ecc71; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: none;">▶</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+        function speakText(text, character) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.pitch = (character === 'maya') ? 1.5 : 1.1;
+            window.speechSynthesis.speak(utterance);
+        }
+async function toggleRecord(index) {
+    const btn = document.getElementById(`rec-${index}`);
+    if (mediaRecorder && mediaRecorder.state === "recording") {
+        mediaRecorder.stop();
+        btn.style.backgroundColor = "#e74c3c"; btn.innerText = "🎤";
+    } else {
+        const stream = await navigator.mediaDevices.getUserMedia({ 
+            audio: {
+                echoCancellation: true,
+                noiseSuppression: true,
+                autoGainControl: false, // 웅웅거림 방지를 위해 끔
+                channelCount: 1
+            } 
+        });
+        // --- 오디오 증폭 로직 시작 ---
+        const audioContext = new AudioContext();
+        const source = audioContext.createMediaStreamSource(stream);
+        const gainNode = audioContext.createGain();
+        
+        gainNode.gain.value = 2.0; // [조정 포인트] 소리를 3배 키웁니다 (1.0~5.0 사이 조절 가능)
+        
+        const destination = audioContext.createMediaStreamDestination();
+        source.connect(gainNode);
+        gainNode.connect(destination);
+        // --- 오디오 증폭 로직 끝 ---
+        // 증폭된 스트림으로 녹음 진행
+        mediaRecorder = new MediaRecorder(destination.stream);
+        const chunks = [];
+        mediaRecorder.ondataavailable = e => chunks.push(e.data);
+        mediaRecorder.onstop = () => {
+            const blob = new Blob(chunks, { type: 'audio/webm' });
+            audioChunks[index] = URL.createObjectURL(blob);
+            document.getElementById(`play-${index}`).style.display = "flex";
+            
+            stream.getTracks().forEach(track => track.stop());
+            audioContext.close();
+        };
+        mediaRecorder.start();
+        btn.style.backgroundColor = "#000"; btn.innerText = "⏹";
+    }
+}        function playMyVoice(index) {
+            if (audioChunks[index]) new Audio(audioChunks[index]).play();
+        }
+        function setupAudioSync(audioId, containerId, data, isDialogue = false) {
+    const audio = document.getElementById(audioId);
+    const container = document.getElementById(containerId);
+    if(!audio || !container) return;
+    
+    container.innerHTML = '';
+    data.forEach((line, index) => {
+        const div = document.createElement('div');
+        div.className = 'script-line';
+        div.id = `${containerId}-line-${index}`;
+        div.innerHTML = isDialogue ? `<strong>${line.speaker}:</strong> ${line.text}` : line.text;
+        container.appendChild(div);
+    });
+    // 오디오 재생 시 스크립트 창 보이기
+    audio.addEventListener('play', () => { 
+        container.style.display = 'block'; 
+    });
+    // 오디오 진행 시간에 맞춰 스크립트 하이라이트 및 스크롤
+    audio.addEventListener('timeupdate', () => {
+        let activeIdx = -1;
+        for (let i = 0; i < data.length; i++) {
+            if (audio.currentTime >= data[i].start) activeIdx = i; else break;
+        }
+        container.querySelectorAll('.script-line').forEach(l => l.classList.remove('active'));
+        if (activeIdx !== -1) {
+            const currentLine = document.getElementById(`${containerId}-line-${activeIdx}`);
+            if (currentLine) {
+                currentLine.classList.add('active');
+                container.scrollTo({ 
+                    top: currentLine.offsetTop - container.offsetTop - 80, 
+                    behavior: 'smooth' 
+                });
+            }
+        }
+    });
+    // 추가된 부분: 음성 재생이 끝나면 스크립트 창 숨기기
+    audio.addEventListener('ended', () => { 
+        container.style.display = 'none'; 
+    });
+}        function centralizeScroll(targetId) {
+            const element = document.getElementById(targetId);
+            if (!element) return;
+            const elementRect = element.getBoundingClientRect();
+            const middle = (elementRect.top + window.pageYOffset) - (window.innerHeight / 2) + (elementRect.height / 2);
+            window.scrollTo({ top: middle, behavior: 'smooth' });
+            if (targetId.startsWith('vocab')) {
+                document.querySelectorAll('.card').forEach(c => c.classList.remove('active-highlight'));
+                element.classList.add('active-highlight');
+                setTimeout(() => element.classList.remove('active-highlight'), 1500);
+            }
+        }
+        function toggleAnswer(btn) {
+            const answerSpan = btn.nextElementSibling;
+            if (answerSpan.style.display === "none") {
+                answerSpan.style.display = "inline"; btn.innerText = "Hide";
+            } else {
+                answerSpan.style.display = "none"; btn.innerText = "Check";
+            }
+        }
+        function saveProgress() {
+            const allInputs = document.querySelectorAll('input[type="text"], textarea');
+            allInputs.forEach((input, index) => {
+                localStorage.setItem(`UNIT10_all_data_${index}`, input.value);
+            });
+            alert('Your progress has been saved! ✅');
+        }
+        // --- 초기화 로직 ---
+        window.addEventListener('DOMContentLoaded', () => {
+            initDialogue();
+            setupAudioSync('main-player-1', 'script-container1', scriptData1_1_D1, true);
+            setupAudioSync('main-player-2', 'script-container2', scriptData1_1_D2, true);
+            setupAudioSync('player-1', 'script-1', scriptData1_2_P1, true);
+            setupAudioSync('player-2', 'script-2', scriptData1_2_P2, true);
+            setupAudioSync('player-3', 'script-3', scriptData1_2_P3, true);
+            // ... 나머지 setupAudioSync 호출
+            // 저장된 데이터 불러오기
+            const allInputs = document.querySelectorAll('input[type="text"], textarea');
+            allInputs.forEach((input, index) => {
+                const savedValue = localStorage.getItem(`UNIT10_all_data_${index}`);
+                if (savedValue) input.value = savedValue;
+            });
+        });
+    </script>
+<script>
+function speak(text) {
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';
+    
+    const voices = window.speechSynthesis.getVoices();
+    // 여성 목소리 우선 선택
+    const femaleVoice = voices.find(v => v.name.includes('Female') || v.name.includes('Google US English') || v.name.includes('Samantha'));
+    
+    if (femaleVoice) {
+        utterance.voice = femaleVoice;
+    }
+    
+    utterance.pitch = 1.1; 
+    utterance.rate = 1.0; // 현대식 표준 영어 빠르기
+    window.speechSynthesis.speak(utterance);
+}window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.getVoices(); };
+</script>
+</body>
+</html>

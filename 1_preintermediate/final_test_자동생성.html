@@ -1,0 +1,216 @@
+﻿<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="UTF-8">
+<title>FINAL TEST</title>
+<style>
+body { font-family: Arial; padding:20px; }
+.quiz-item { margin-bottom:20px; }
+hr { margin:20px 0; }
+</style>
+</head>
+<body>
+
+<h1>🎓 FINAL TEST</h1>
+
+<button onclick="startTest()">시험 시작</button>
+<div id="quiz"></div>
+<button onclick="submitQuiz()">제출</button>
+<h2 id="result"></h2>
+
+<script src="vocab_data.js"></script>
+
+<script>
+// 공통
+function shuffle(arr){ return arr.sort(()=>Math.random()-0.5); }
+
+let questions = [];
+
+// =====================
+// PART 1: VOCAB (10)
+// =====================
+function vocabPart() {
+  return shuffle(vocabData).slice(0,10).map(v=>{
+    const wrong = shuffle(
+      vocabData.filter(d=>d.word!==v.word)
+    ).slice(0,3).map(d=>d.meaning);
+
+    const choices = shuffle([v.meaning,...wrong]);
+
+    return {
+      question: `What does "${v.word}" mean?`,
+      choices,
+      answer: choices.indexOf(v.meaning)
+    };
+  });
+}
+
+// =====================
+// PART 2: GRAMMAR (20)
+// =====================
+const grammarTemplates = [
+{
+q:"While I ___ for the bus, it started to snow.",
+c:["waited","was waiting","have waited","used to wait"],
+a:1
+},
+{
+q:"She ___ to the gym every morning.",
+c:["go","is going","goes","has gone"],
+a:2
+},
+{
+q:"You ___ smoke here.",
+c:["don't have to","mustn't","might","could"],
+a:1
+},
+{
+q:"If you ___ hard, you will pass.",
+c:["study","will study","studied","would study"],
+a:0
+},
+{
+q:"I have lived here ___ 5 years.",
+c:["for","since","during","from"],
+a:0
+}
+];
+
+function grammarPart() {
+  let result = [];
+  for(let i=0;i<20;i++){
+    let g = grammarTemplates[i % grammarTemplates.length];
+    result.push({
+      question: g.q,
+      choices: g.c,
+      answer: g.a
+    });
+  }
+  return result;
+}
+
+// =====================
+// PART 3: READING (10)
+// =====================
+const readingText = `
+A gift doesn’t have to be expensive to be meaningful.
+Napping improves concentration but is sometimes seen as lazy.
+`;
+
+const readingQuestions = [
+["The gift was expensive.", false],
+["The gift was meaningful.", true],
+["Napping helps concentration.", true],
+["Everyone thinks napping is good.", false],
+["Napping is useless.", false]
+];
+
+function readingPart() {
+  let result = [];
+  readingQuestions.forEach(r=>{
+    result.push({
+      question: r[0],
+      choices:["True","False"],
+      answer: r[1]?0:1
+    });
+  });
+  return result.concat(result); // 10문제
+}
+
+// =====================
+// PART 4 (10)
+// =====================
+const advancedTemplates = [
+{
+q:'Which sentence correctly uses "used to"?',
+c:["I use to play.","I used to play.","I am used to play.","I was used to play."],
+a:1
+},
+{
+q:'Which sentence is correct?',
+c:["He have finished.","He has finished.","He finish.","He finishing."],
+a:1
+},
+{
+q:'Choose correct advice.',
+c:["You should rest.","You rest.","You resting.","You rested."],
+a:0
+},
+{
+q:'Fill blank: I ___ English for 2 years.',
+c:["learn","learned","have been learning","learning"],
+a:2
+}
+];
+
+function advancedPart() {
+  let result = [];
+  for(let i=0;i<10;i++){
+    let t = advancedTemplates[i % advancedTemplates.length];
+    result.push({
+      question: t.q,
+      choices: t.c,
+      answer: t.a
+    });
+  }
+  return result;
+}
+
+// =====================
+// TEST 생성
+// =====================
+function startTest() {
+  questions = [
+    ...vocabPart(),
+    ...grammarPart(),
+    ...readingPart(),
+    ...advancedPart()
+  ];
+
+  renderQuiz();
+}
+
+// =====================
+// 화면 출력
+// =====================
+function renderQuiz(){
+  const quiz = document.getElementById("quiz");
+  quiz.innerHTML = "";
+
+  questions.forEach((q,i)=>{
+    let html = `<div class="quiz-item">
+    <p>${i+1}. ${q.question}</p>`;
+
+    q.choices.forEach((c,idx)=>{
+      html += `<label>
+      <input type="radio" name="q${i}" value="${idx}"> ${c}
+      </label><br>`;
+    });
+
+    html += `</div><hr>`;
+    quiz.innerHTML += html;
+  });
+}
+
+// =====================
+// 채점
+// =====================
+function submitQuiz(){
+  let score = 0;
+
+  questions.forEach((q,i)=>{
+    let selected = document.querySelector(`input[name="q${i}"]:checked`);
+    if(selected && Number(selected.value)===q.answer){
+      score++;
+    }
+  });
+
+  let percent = Math.round(score/50*100);
+
+  document.getElementById("result").innerText =
+    `점수: ${score}/50 (${percent}점)`;
+}
+</script>
+
+</body>
+</html>

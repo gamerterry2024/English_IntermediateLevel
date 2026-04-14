@@ -1,0 +1,1064 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNIT 14: MIND AND BODY</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --bg: #f4f7f6;
+            --white: #ffffff;
+            --highlight: #fff59d;
+            --accent: #e67e22;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg);
+            color: var(--primary);
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+        section {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            /* 상단 헤더 높이를 고려한 스크롤 위치 조정 */
+            scroll-margin-top: 90px;
+        }
+        .back-to-dashboard {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 1001;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        .back-to-dashboard:hover {
+            transform: scale(1.1);
+            background-color: var(--secondary);
+        }
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 20px;
+            padding-bottom: 300px; 
+        }
+        h2 {
+            border-left: 6px solid var(--secondary);
+            padding-left: 15px;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        .reading-box {
+            background-color: #fffaf0;
+            border: 1px solid #f39c12;
+            padding: 25px;
+            border-radius: 12px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .vocab-link {
+            color: var(--secondary);
+            text-decoration: none;
+            border-bottom: 2px solid var(--secondary);
+            font-weight: bold;
+            padding: 0 2px;
+            cursor: pointer;
+        }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .card {
+            border: 1px solid #eee;
+            padding: 20px;
+            border-radius: 10px;
+            background: #fff;
+            transition: all 0.4s ease;
+        }
+        .card.active-highlight {
+            border: 2px solid var(--accent);
+            background-color: #fffde7;
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .return-btn {
+            display: inline-block;
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: bold;
+            border: 1px solid var(--secondary);
+            padding: 4px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .audio-zone {
+            background: #ebf5fb;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--secondary);
+            margin: 20px 0;
+            text-align: center;
+        }
+        .audio-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .script-window {
+            margin-top: 15px;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            height: 250px; 
+            overflow-y: auto;
+            display: none;
+            text-align: left;
+        }
+        .script-line {
+            padding: 8px 10px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            transition: background 0.3s;
+            font-size: 0.95rem;
+        }
+        .script-line.active {
+            background-color: var(--highlight);
+            font-weight: bold;
+        }
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        .quiz-item {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .instruction {
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        .save-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .save-btn:hover {
+            background-color: #219150;
+        }
+        .mini-input {
+            width: 100px !important;
+            padding: 5px !important;
+            margin: 0 5px !important;
+            display: inline-block !important;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html#unit_14" class="back-to-dashboard">🏠 Back to Dashboard</a>
+    <header>
+        <h1>UNIT 14</h1>
+        <nav class="nav-links">
+            <a href="#intro-reading">0. Core Reading</a>
+            <a href="#section1">1. Listen & Read</a>
+            <a href="#section2">2. Speaking</a>
+            <a href="#section3">3. Writing</a>
+        </nav>
+    </header>
+    <div class="container">
+        
+<section id="intro-reading">
+    <h2>Core Reading: Things, Choices, and Our Planet</h2>
+    
+<div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);"> 
+
+    <p style="margin-top: 0;">Every day, we are surrounded by things. Some are <b>the objects that we buy to make our lives easier</b>, while others are <b>the presents that we receive from people we love</b>. However, as Professor Liam Taylor points out, every object has a story and an <b>environmental cost</b>. Whether it is <b>the machine that makes hot water in your kitchen</b> or <b>the mountain bike that you ride to work</b>, we <b>must</b> think about what we own and how we use it.</p>
+    <p>When moving into a new place, we often <b>realize</b> how many <b>basic items</b> we <b>lack</b>. In a conversation between three friends, they discuss <b>the things that they need for cleaning and daily life</b>. They talk about <b>a dustpan</b>, which is <b>the thing that you use to get</b> <strong><span class="vocab-link" id="text-rubbish" onclick="centralizeScroll('vocab-rubbish')">rubbish</span></strong> <b>from the floor with a brush</b>, and <strong><span class="vocab-link" id="text-bleach" onclick="centralizeScroll('vocab-bleach')">bleach</span></strong>, which is <b>a kind of strong chemical liquid that is good for cleaning the floor</b>.</p>
+    <p>They also need to care for their clothes. They look for <b>an iron</b>, which is <b>the machine that you use for the clothes after you wash them</b>, and <b>an ironing board</b>, which is <b>the thing that you put the clothes on when you use the iron</b>. In the bathroom, they need <b>a shower curtain</b>, which is <b>the plastic thing that stops the water from leaving the shower</b>, and <b>a shower rail</b> to hold it. Finally, they cannot live without a <strong><span class="vocab-link" id="text-kettle" onclick="centralizeScroll('vocab-kettle')">kettle</span></strong>, which is <b>the machine that makes hot water for tea</b>.</p>
+    <p>The objects we own often come to us as gifts. These gifts can be digital, practical, or even strange. One person received <b>his own website</b>, which was <b>something fun that he and his sister could work on together</b>. Another person got <b>a mountain bike</b>, which has become <b>one of the most useful presents ever</b> because it <b>saves him loads of money on petrol</b>. However, not all gifts are perfect. One woman describes <b>an iron</b> as a "bad present" from an <b>ex-boyfriend</b> because of the <b>message</b> it sent about their <b>relationship</b>. On the other hand, a simple <b>rock from a beach</b> can be a great gift. Although it seemed like <b>a thing that was a bit stupid</b> at first, it became a <strong><span class="vocab-link" id="text-precious" onclick="centralizeScroll('vocab-precious')">precious</span></strong> memory because it was <b>something that he would never forget</b>.</p>
+    <p>While we enjoy these objects, we <b>must</b> <b>consider</b> their <b>impact</b> on the planet. Professor Taylor explains that <b>there are laws of nature that we cannot ignore</b>, such as <b>gravity</b> and <b>waste</b>. Everything we <b>consume</b> leads to <b>waste</b>. For example, <b>kiwi fruits that are covered in clear plastic</b> and flown thousands of miles create a <b>huge amount</b> of carbon <strong><span class="vocab-link" id="text-dioxide" onclick="centralizeScroll('vocab-dioxide')">dioxide</span></strong>.</p>
+    <p>The <b>materials</b> used in our products are also important. We <b>must</b> remember that <b>the aluminium in soda cans is bad</b> because companies <b>must mine four tonnes of rock</b> just to get one tonne of aluminium. The <b>transport costs</b> are higher because glass is heavier. If you <b>must</b> have soft drinks, you should buy them in <b>recyclable plastic bottles</b> that are the largest size, as they are more <b>efficient</b>.</p>
+    <p>We often believe that <strong><span class="vocab-link" id="text-biodegradable" onclick="centralizeScroll('vocab-biodegradable')">biodegradable</span></strong> items disappear, but <strong><span class="vocab-link" id="text-archaeologists" onclick="centralizeScroll('vocab-archaeologists')">archaeologists</span></strong> recently <b>investigated</b> sites and found <b>newspapers that were thirty years old</b> and perfectly <strong><span class="vocab-link" id="text-preserved" onclick="centralizeScroll('vocab-preserved')">preserved</span></strong> sausages. Therefore, we <b>mustn't</b> be <b>careless</b> with our <b>choices</b>. We <b>must</b> accept our <strong><span class="vocab-link" id="text-responsibility" onclick="centralizeScroll('vocab-responsibility')">responsibility</span></strong> to buy <b>local products</b> and avoid <b>unnecessary packaging</b>. By understanding <b>the things that we use every day</b>, we can make better decisions for our future.</p>
+
+</div>
+
+<article style="margin-top: 3rem; border-top: 2px solid #eee;">
+    <h3 id="vocab-builder">Vocabulary Builder</h3>
+    <div class="vocab-grid">
+ 
+<div class="card" id="vocab-rubbish">
+<div class="card-content">
+<strong>Rubbish:</strong> Things that are no longer wanted or needed and are thrown away; waste material.
+
+<span class="return-btn" onclick="centralizeScroll('text-rubbish')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-bleach">
+<div class="card-content">
+<strong>Bleach:</strong> A strong chemical liquid used for cleaning and for making things white or removing stains.
+
+<span class="return-btn" onclick="centralizeScroll('text-bleach')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-kettle">
+<div class="card-content">
+<strong>Kettle:</strong> A metal or plastic container with a lid and handle, used for boiling water to make tea or coffee.
+
+<span class="return-btn" onclick="centralizeScroll('text-kettle')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-precious">
+<div class="card-content">
+<strong>Precious:</strong> Very valuable or important to someone, often because of sentimental or emotional reasons.
+
+<span class="return-btn" onclick="centralizeScroll('text-precious')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-dioxide">
+<div class="card-content">
+<strong>Dioxide (Carbon):</strong> A gas without color or smell that is produced when things are burned or when we breathe out.
+
+<span class="return-btn" onclick="centralizeScroll('text-dioxide')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-biodegradable">
+<div class="card-content">
+<strong>Biodegradable:</strong> Able to decay naturally and be changed into a harmless form by bacteria, without damaging the environment.
+
+<span class="return-btn" onclick="centralizeScroll('text-biodegradable')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-archaeologists">
+<div class="card-content">
+<strong>Archaeologists:</strong> People who study human history by digging up and examining objects and buildings from the past.
+
+<span class="return-btn" onclick="centralizeScroll('text-archaeologists')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-preserved">
+<div class="card-content">
+<strong>Preserved:</strong> Kept in its original state or in good condition for a long time by preventing it from decaying.
+
+<span class="return-btn" onclick="centralizeScroll('text-preserved')">Return to Text ↑</span>
+</div>
+</div>
+
+<div class="card" id="vocab-responsibility">
+<div class="card-content">
+<strong>Responsibility:</strong> Something that it is your job or duty to deal with or take care of.
+
+<span class="return-btn" onclick="centralizeScroll('text-responsibility')">Return to Text ↑</span>
+</div>
+</div>
+
+</div>
+</article>
+</section>
+<section id="section1">
+            <h2>Section 1: Listening & Reading Integration</h2>
+<article>
+    <h3>1-1. Shopping for the New Place (Dialogues)</h3>
+    
+    <div class="audio-zone" style="margin-bottom: 20px;">
+        <span class="audio-label">🎧 Listening 1: Shopping for the New Place (CD2_Track 37)</span>
+        <audio id="main-player-1" style="width:100%;" controls src="CD2_Track 37.mp3"></audio>
+    </div>
+    <div id="script-container1" class="script-window" style="height: 450px; overflow-y: auto;"></div>
+</article>
+
+            <article style="margin-top: 3rem; border-top: 1px solid #eee; padding-top: 2rem;">
+                <h3>1-2. Presents and Possessions</h3>
+                
+                <div class="audio-zone">
+                    <span class="audio-label">🎁 Conversation 1 : The Digital Gift (CD2_Track 38)</span>
+                    <audio id="player-1" style="width:100%;" controls src="CD2_Track 38.mp3"></audio>
+                    <div id="script-1" class="script-window"></div>
+                </div>
+                <div class="audio-zone">
+                    <span class="audio-label">📦 Conversation 2 : The Useful Present (CD2_Track 39)</span>
+                    <audio id="player-2" style="width:100%;" controls src="CD2_Track 39.mp3"></audio>
+                    <div id="script-2" class="script-window"></div>
+                </div>
+                <div class="audio-zone">
+                    <span class="audio-label">👨‍💼 Conversation 3 : The King of Bad Presents (CD2_Track 40)</span>
+                    <audio id="player-3" style="width:100%;" controls src="CD2_Track 40.mp3"></audio>
+                    <div id="script-3" class="script-window"></div>
+                </div>
+                <div class="audio-zone">
+                    <span class="audio-label">👨‍💼 Conversation 4 : A Rock to Remember (CD2_Track 41)</span>
+                    <audio id="player-4" style="width:100%;" controls src="CD2_Track 41.mp3"></audio>
+                    <div id="script-4" class="script-window"></div>
+                </div>
+            </article>
+         <article style="margin-top: 3rem; border-top: 1px solid #eee; padding-top: 2rem;">
+    <h2>1-3. &#x1F4D6; Reading: RUBBISH FOOD</h2>
+    <div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+<p style="margin-top: 0;">There are laws of nature that we can't ignore, like gravity and waste. We know <b>what goes up must come down</b> and, similarly, we can't avoid the fact that everything we produce and consume leads to waste. In the case of my supermarket shopping, there's loads of waste. Professor Liam Taylor, an expert on the environment, is trying to convince me I could waste less.</p>
+<p>From my shopping basket, he picks up a <b>polystyrene tray of six New Zealand kiwi fruits covered in clear plastic</b>. "These probably caused three tons of carbon dioxide by being flown twelve thousand miles. To make things worse, <b>this kind of plastic is almost impossible to recycle</b>. What's wrong with local apples?"</p>
+<p>'Nothing', I weakly reply, 'I just prefer kiwis.'</p>
+<p>'Hmm. Well, <b>if you must have them, eat Italian ones</b> – and buy them with no packaging.'</p>
+<p>He looks at the bottles of water and cans of cola. Before he can say anything, I say, 'I'm always careful to recycle those.'</p>
+<p>'Well, that's good, but the aluminium in those cans is bad. <b>They must mine four tonnes of rock to get one tonne of aluminium</b>, and the transport costs of the cans and glass bottles are higher as they are heavier than plastic. Anyway, what's wrong with having tap water? It's much more efficient.'</p>
+<p>'I... er ... prefer ... .' The professor's look stops me from finishing the sentence!</p>
+<p>'<b>If you must have soft drinks, buy them in recyclable plastic bottles</b> and get the largest size, because they use less plastic than lots of small bottles. The same is true of <b>those small boxes of cereal</b>.'</p>
+<p>The next problem is the amount of meat I've bought. He tells me the chicken is OK, but generally meat is bad for the environment. Firstly, cows and sheep produce a lot of natural gas which causes global warming. Secondly, they're an inefficient way to get food energy. Better to be vegetarian, especially <b>if the vegetables are locally grown</b> and you don't eat too many dairy products.'</p>
+<p>I am becoming depressed as all my favourite things get crossed off my shopping list. 'What about those cakes?' I say. 'They were made in the supermarket bakery and the <b>packaging is biodegradable</b>.'</p>
+<p>He laughs. 'Well, I guess the cake is OK, but forget about biodegradable! Apparently, a <b>team of archaeologists recently investigated sites where rubbish had been buried</b>. They found newspapers that were thirty years old, and which you could still read, next to perfectly preserved sausages!'</p>
+<p>I feel slightly sick and very, very guilty.</p>
+    </div>
+	</article>
+
+    <div class="quiz-container" style="margin-top: 2rem; padding: 0 1rem;">
+        <h4 style="color: var(--secondary); margin-bottom: 1.5rem;">✅ Check your understanding (True or False)</h4>
+        <style>
+            .quiz-row { display: flex; align-items: center; margin-bottom: 15px; font-size: 1.05rem; flex-wrap: wrap; }
+            .quiz-question { margin-right: 12px; font-weight: 500; }
+            .btn-check-small { 
+                padding: 3px 10px; font-size: 0.85rem; cursor: pointer; border-radius: 6px; 
+                border: 1px solid var(--secondary); background: white; color: var(--secondary);
+                transition: 0.2s; margin-right: 10px;
+            }
+            .btn-check-small:hover { background: var(--secondary); color: white; }
+            .answer-text { color: var(--success); font-weight: bold; font-size: 0.95rem; }
+        </style>
+<div class="quiz-container" style="background: #fdfdfd; padding: 20px; border-radius: 12px; border: 1px solid #eee;">
+    
+<div class="quiz-row" id="tf-q1" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+<span class="quiz-question">1. The clear plastic used to cover New Zealand kiwi fruits is easy to recycle.</span>
+<div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+<button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+<button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+</div>
+<button onclick="validateTF('tf-q1', 'F', 'False (The text states that this kind of plastic is almost impossible to recycle.)')" class="btn-check-small">Check</button>
+<span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-q2" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+<span class="quiz-question">2. Professor Taylor suggests eating Italian kiwis without packaging if one must have them.</span>
+<div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+<button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+<button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+</div>
+<button onclick="validateTF('tf-q2', 'T', 'True (The professor suggests that if you must have kiwis, choose Italian ones with no packaging.)')" class="btn-check-small">Check</button>
+<span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-q3" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+<span class="quiz-question">3. Aluminium cans are better for the environment than plastic because they are lighter to transport.</span>
+<div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+<button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+<button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+</div>
+<button onclick="validateTF('tf-q3', 'F', 'False (The text says cans and glass are heavier than plastic, making transport costs higher.)')" class="btn-check-small">Check</button>
+<span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-q4" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+<span class="quiz-question">4. Buying a single large recyclable plastic bottle is better than buying many small ones.</span>
+<div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+<button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+<button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+</div>
+<button onclick="validateTF('tf-q4', 'T', 'True (The professor notes that larger sizes use less plastic than lots of small bottles.)')" class="btn-check-small">Check</button>
+<span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+<div class="quiz-row" id="tf-q5" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+<span class="quiz-question">5. "Biodegradable" items always disappear quickly once they are buried in rubbish sites.</span>
+<div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+<button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+<button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+</div>
+<button onclick="validateTF('tf-q5', 'F', 'False (The text mentions that archaeologists found 30-year-old newspapers and preserved sausages buried in rubbish sites.)')" class="btn-check-small">Check</button>
+<span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+</div>
+
+</div>
+<script>
+// T/F 버튼 선택 시 시각적 효과
+function selectTF(btn, val) {
+    const parent = btn.parentElement;
+    const btns = parent.querySelectorAll('.tf-btn');
+    btns.forEach(b => {
+        b.style.background = '#fff';
+        b.style.color = '#333';
+        b.classList.remove('selected');
+    });
+    btn.style.background = '#333';
+    btn.style.color = '#fff';
+    btn.classList.add('selected');
+    btn.dataset.value = val;
+}// 정답 확인 및 토글 함수
+function validateTF(rowId, correctVal, explanation) {
+    const row = document.getElementById(rowId);
+    const selectedBtn = row.querySelector('.tf-btn.selected');
+    const ansText = row.querySelector('.answer-text');
+    // 이미 정답이 보이고 있다면 -> 다시 숨기기 (토글)
+    if (ansText.style.display === 'inline') {
+        ansText.style.display = 'none';
+        row.style.background = '#fff'; // 배경색 초기화
+        return;
+    }
+    // 버튼을 선택하지 않았을 때
+    if (!selectedBtn) {
+        alert("Please select T or F first!");
+        return;
+    }
+    // 정답 확인 모드
+    const userVal = selectedBtn.dataset.value;
+    ansText.style.display = 'inline';
+    ansText.innerText = explanation;
+    if (userVal === correctVal) {
+        row.style.background = '#e8f5e9'; // 정답: 연한 초록색
+        ansText.style.color = '#2e7d32';
+    } else {
+        row.style.background = '#ffebee'; // 오답: 연한 빨간색
+        ansText.style.color = '#c62828';
+    }
+}</script>
+    </div>
+</article>
+        </section>
+<section id="section2">
+    <h2>Section 2: Speaking Practice</h2> 
+    
+    <article style="margin-top: 1rem;">
+        <h3>Interactive Dialogue (Easy Version)</h3>
+        <p class="instruction" style="margin-bottom: 20px;">
+            <i class="fas fa-headphones-alt"></i> Listen to the sentence (🔊), record your voice (🎤), and check your recording (▶).
+        </p>
+        <div class="quiz-item" style="background: #fff; padding: 25px; border-radius: 15px; border: 1px solid #ddd; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <div id="dialogue-container" style="display: flex; flex-direction: column; gap: 12px; font-size: 1.05rem;"></div>
+        </div>
+    </article>
+</section>
+<section id="section3">
+            <h2>Section 3: Writing Practice</h2>
+            <div id="final-quiz-area" style="margin-top: 40px; border-top: 2px solid var(--secondary); padding-top: 25px;">
+                <div class="quiz-item" style="background: #fcfcfc; padding: 20px; border-radius: 10px;">
+    <p style="margin-bottom: 15px;">
+        <strong style="font-size: 1.1rem; color: #3498db;">Step 1. Grammar & Vocabulary Check:</strong>
+    </p> 
+<div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+    <h3 style="text-align: center; color: #2c3e50; margin-bottom: 2rem; border-bottom: 3px double #3498db; padding-bottom: 10px; display: block; width: fit-content; margin-left: auto; margin-right: auto;">
+        <i class="fas fa-book-open" style="margin-right: 10px;"></i>Grammar Mastery
+    </h3>
+
+<h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-top: 0;">
+1. Relative Clauses (Describing Things)</h3>
+<div style="background-color: #fff; padding: 15px; border-radius: 10px; border: 1px dashed #bdc3c7; margin-bottom: 15px;">
+<p style="margin: 5px 0;"><strong>• that / which</strong>: Used to <strong>give more information</strong> about an object or to define what something is.</p>
+<p style="margin: 5px 0;"><strong>• describing purpose</strong>: Often used with "the thing that..." or "the machine that..." to explain what an object does.</p>
+</div>
+<ul style="list-style-type: none; padding-left: 10px;">
+<li style="margin-bottom: 15px;">
+<strong style="color: #e67e22;">• Example:</strong> "It's the machine <span style="color: #e67e22; font-weight: bold;">that makes hot water</span> for tea."
+
+<i style="color: #7f8c8d;">(Section 1 - Describing a kettle)</i>
+</li>
+<li style="margin-bottom: 15px;">
+<strong style="color: #16a085;">• Example:</strong> "I bought a dress <span style="color: #16a085; font-weight: bold;">that he really liked</span>."
+
+<i style="color: #7f8c8d;">(Section 2 - Present from an ex-boyfriend)</i>
+</li>
+</ul>
+
+<h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-top: 25px;">
+2. Strong Obligation & Necessity</h3>
+<div style="background-color: #fff; padding: 15px; border-radius: 10px; border: 1px dashed #bdc3c7; margin-bottom: 15px;">
+<p style="margin: 5px 0;"><strong>• must</strong>: Used to express a <strong>strong necessity</strong> or a rule that we cannot ignore.</p>
+<p style="margin: 5px 0;"><strong>• mustn't</strong>: Used to say that something is <strong>prohibited</strong> or a very bad idea.</p>
+</div>
+<ul style="list-style-type: none; padding-left: 10px;">
+<li style="margin-bottom: 15px;">
+<strong style="color: #2980b9;">• Example:</strong> "We <span style="color: #2980b9; font-weight: bold;">must think</span> about what we own."
+
+<i style="color: #7f8c8d;">(Core Reading - Environmental responsibility)</i>
+</li>
+<li style="margin-bottom: 15px;">
+<strong style="color: #2980b9;">• Example:</strong> "We <span style="color: #2980b9; font-weight: bold;">mustn't be careless</span> with our choices."
+
+<i style="color: #7f8c8d;">(Reading - Advice on waste)</i>
+</li>
+</ul>
+
+<h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-top: 25px;">
+3. Conditional Advice</h3>
+<div style="background-color: #fff; padding: 15px; border-radius: 10px; border: 1px dashed #bdc3c7; margin-bottom: 15px;">
+<p style="margin: 5px 0;"><strong>• If + must...</strong>: Used to give <strong>specific advice</strong> or alternatives when someone insists on doing something.</p>
+</div>
+<ul style="list-style-type: none; padding-left: 10px;">
+<li style="margin-bottom: 15px;">
+<strong style="color: #d35400;">• Example:</strong> "<span style="color: #d35400; font-weight: bold;">If you must have</span> them, eat Italian ones."
+
+<i style="color: #7f8c8d;">(Reading - Choosing local fruit)</i>
+</li>
+<li style="margin-bottom: 15px;">
+<strong style="color: #d35400;">• Example:</strong> "<span style="color: #d35400; font-weight: bold;">If you must have</span> soft drinks, buy large bottles."
+
+<i style="color: #7f8c8d;">(Reading - Tips for recycling)</i>
+</li>
+</ul>
+
+<hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
+
+<p style="margin-top: 20px;"><strong>Context from our Reading:</strong></p>
+<ul style="padding-left: 20px;">
+<li>"There are laws of nature <span style="color: #d35400; font-weight: bold;">that we can't ignore</span>."</li>
+<li>"They <span style="color: #d35400; font-weight: bold;">must mine</span> four tonnes of rock for aluminium."</li>
+<li>"It is <span style="color: #d35400; font-weight: bold;">something that</span> he would never forget."</li>
+</ul>
+
+</div>
+<div class="quiz-item" style="background: #fff; padding: 25px; border-radius: 15px; border: 1px solid #ddd; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+<div id="vocabulary-mastery-section">
+<h3 style="text-align: center; color: #2c3e50; margin-bottom: 2rem; border-bottom: 3px double #3498db; padding-bottom: 10px; display: block; width: fit-content; margin-left: auto; margin-right: auto; font-size: 1.6rem;">
+        <i class="fas fa-spell-check" style="margin-right: 10px;"></i>Vocabulary Check
+    </h3>
+
+
+<div style="background: #fff5f5; border: 1px solid #feb2b2; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #c53030; margin: 0; border-left: 4px solid #f56565; padding-left: 10px;">Group 1</h4>
+<span style="font-size: 0.85rem; background: #f56565; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: rubbish, bleach, kettle, iron, dustpan
+</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+1. Don't throw that in the street; put your <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> in the bin.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: rubbish)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+2. Use some <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> to kill the germs and clean the white tiles.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: bleach)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+3. I'll turn on the <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> so we can make some hot tea.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: kettle)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+4. Your shirt is very wrinkled; you should use an <input type="text" class="mini-input" style="width: 80px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> to make it flat.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: iron)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+5. After you sweep the floor, use a <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> to pick up the dirt.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: dustpan)</span>
+</div>
+</div>
+
+<div style="background: #fffaf0; border: 1px solid #feebc8; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #c05621; margin: 0; border-left: 4px solid #ed8936; padding-left: 10px;">Group 2</h4>
+<span style="font-size: 0.85rem; background: #ed8936; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: precious, dioxide, consume, packaging, material
+</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+6. That ring is very <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> to her because it belonged to her grandmother.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: precious)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+7. Cars and factories produce too much carbon <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......">.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: dioxide)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+8. We should try to <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> less energy to save the planet.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: consume)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+9. Modern supermarkets use too much plastic <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> on their fruit.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: packaging)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+10. Wood is a natural <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> used for making furniture.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: material)</span>
+</div>
+</div>
+
+<div style="background: #f0fff4; border: 1px solid #c6f6d5; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #276749; margin: 0; border-left: 4px solid #48bb78; padding-left: 10px;">Group 3</h4>
+<span style="font-size: 0.85rem; background: #48bb78; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: biodegradable, archaeologists, preserved, responsibility, impact
+</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+11. Paper is <input type="text" class="mini-input" style="width: 120px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......">, so it breaks down naturally.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: biodegradable)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+12. The <input type="text" class="mini-input" style="width: 120px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> found ancient coins buried under the field.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: archaeologists)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+13. The freezing cold weather <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> the fruit perfectly.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: preserved)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+14. It is our <input type="text" class="mini-input" style="width: 120px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> to protect the environment for our children.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: responsibility)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+15. Global warming has a serious <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> on the world's weather.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: impact)</span>
+</div>
+</div>
+
+<div style="background: #ebf8ff; border: 1px solid #bee3f8; border-radius: 12px; padding: 20px; margin-bottom: 25px; box-shadow: 0 4px 6px rgba(0,0,0,0.02);">
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+<h4 style="color: #2c5282; margin: 0; border-left: 4px solid #4299e1; padding-left: 10px;">Group 4</h4>
+<span style="font-size: 0.85rem; background: #4299e1; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500;">
+<i class="fas fa-spell-check"></i> Word Bank: efficient, recyclable, ignore, investigated, various
+</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+16. LED light bulbs are more <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> than old ones.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: efficient)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+17. Glass and aluminium are <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> materials that can be used again.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: recyclable)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+18. You shouldn't <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> the warnings about climate change.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: ignore)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+19. The police <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> the trash site to see what people threw away.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: investigated)</span>
+</div>
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+20. People have <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> reasons for wanting to protect the ocean.
+<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: various)</span>
+</div>
+</div>
+
+
+</div>
+</div>
+
+
+<div class="quiz-item" style="margin-top: 40px; padding: 25px; background: #fcfcfc; border-radius: 10px; border: 1px solid #eee;">
+<p style="margin-bottom: 15px;">
+<strong style="font-size: 1.1rem; color: #3498db;">Step 2. Content Check:</strong>
+</p>
+<p style="line-height: 1.6; color: #34495e; font-weight: 500;">
+The text "Rubbish Food" explains the <b>environmental cost</b> of the things we buy. What are some specific <b>environmental problems</b> caused by items like kiwi fruits and soda cans, and what <b>advice</b> does Professor Taylor give?
+</p>
+<div style="margin: 10px 0; font-size: 0.85rem; color: #7f8c8d;">
+<i class="fas fa-lightbulb" style="color: #f1c40f;"></i>
+<b>Key Keywords:</b> carbon dioxide, plastic packaging, aluminium mining, transport costs, buy local, recyclable, largest size
+</div>
+<textarea id="content-check-answer-u14" rows="3"
+style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; font-size: 0.95rem; line-height: 1.6; resize: vertical; display: block; margin-bottom: 10px; box-sizing: border-box;"
+placeholder="Explain the environmental impact of transport and materials, and the advice for better shopping..."></textarea>
+</div>
+
+<div class="quiz-item" style="background: #fcfcfc; padding: 25px; border-radius: 10px; margin-top: 20px; border: 1px solid #eee;">
+<p style="margin-bottom: 15px;">
+<strong style="font-size: 1.1rem; color: #3498db;">Step 3. Thinking about Possessions & Gifts:</strong>
+</p>
+<p style="color: #34495e; line-height: 1.6;">
+We learned that objects can have different meanings. For example, an <b>iron</b> can be a "bad gift" that sends a negative message, while a simple <b>rock from a beach</b> can become a <b>precious memory</b>.
+
+
+<b>In your opinion, what makes a gift "valuable"? Is it the price of the object, or the "story" behind it? Give an example of a precious thing you own.</b>
+</p>
+<textarea rows="5" style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; box-sizing: border-box;"
+placeholder="I think a gift is valuable when... One precious thing I own is... because..."></textarea>
+</div>
+
+<div style="margin-top: 40px; padding: 30px; background: #fffde7; border-radius: 15px; border: 1px solid #fff176; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+<h3 style="margin-top: 0; color: #f57f17; display: flex; align-items: center;">
+<i class="fas fa-lightbulb" style="margin-right: 12px;"></i> Critical Thinking
+</h3>
+<p style="line-height: 1.7; color: #444;">
+We have explored the <b>hidden life of things</b>—from the shopping lists for a new home to the <b>responsibility</b> we have for our planet's future. We learned that even <b>biodegradable</b> items can stay <b>preserved</b> for decades in a rubbish site.
+
+
+<b>Do you agree that we have a "moral responsibility" to change our shopping habits, or should companies be more responsible for the waste they create?
+
+Support your answer by using the grammar we learned (must, mustn't, relative clauses) to describe how we can reduce our impact on the environment.</b>
+</p>
+<textarea class="main-textarea"
+placeholder="Discuss personal vs. company responsibility. Use 'must/mustn't' and 'the things that...' to describe better choices for the planet..."
+rows="10"
+style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; font-size: 0.95rem; line-height: 1.6; resize: vertical; display: block; box-sizing: border-box; background: white;">
+</textarea>
+</div>
+
+
+<div style="margin-top: 30px; padding: 25px; background: #ffffff; border-radius: 15px; border: 2px solid #3498db; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="margin: 0; color: #2980b9;"><i class="fas fa-robot"></i> AI Solution</h3>
+        <span style="background: #3498db; color: white; padding: 5px 15px; border-radius: 50px; font-weight: bold; font-size: 1.1rem;">
+            Overall Score: <input type="text" class="mini-input" style="width: 50px !important; color: white; background: transparent; border: 1px solid rgba(255,255,255,0.5); text-align: center;" value="9.2"> / 10
+        </span>
+    </div>
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.95rem;">
+        <thead>
+            <tr style="background: #ebf5fb; text-align: left;">
+                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Evaluation Criteria</th>
+                <th style="padding: 12px; border-bottom: 2px solid #3498db; text-align: center;">Score</th>
+                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Detailed Feedback</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Content</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="10"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Deep reflection on career stages from 20s to 50s."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Logic</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="9.5"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Strong comparison between 'meaning' and 'success'."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Grammar</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="8"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Check comparative forms (e.g., more important than)."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Vocabulary</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="9"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Great use of 'exhausted', 'exploiting', and 'fulfillment'."></td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="background: #f4f7f6; padding: 15px; border-radius: 10px; border-left: 5px solid #27ae60;">
+        <p style="margin: 0 0 10px 0; font-weight: bold; color: #27ae60;"><i class="fas fa-check-circle"></i> Recommended Revision</p>
+        <textarea style="width: 100%; background: transparent; border: 1px dashed #27ae60; border-radius: 5px; padding: 10px; font-style: italic;" rows="8">"In my experience, I thought gaining experience was more important than anything else in my twenties. My companies might have been exploiting me with boring tasks, but I worked hard and struggled through it. In my thirties, I chased high salaries, but I still worked over ten hours a day. Now in my late forties, I was so exhausted that I retired after 30 years of practice. I currently work as a security officer for two hours a day and I am happy because there is no pressure. To me, a 'meaningful' job is more important than a 'successful' one, and that meaning depends on my current physical and mental well-being."</textarea>
+    </div>
+</div>
+            <button class="save-btn" style="margin-top: 20px;" onclick="saveProgress()">Save My Work</button>
+        </section>
+    </div>
+    <script>
+        // --- 데이터 정의 ---
+        const dialogueData = [
+{ name: "Leo", color: "#3498db", bg: "#ebf5fb", text: "This place is nice, but it is <b>very dirty</b>.", char: "assistant" },
+    { name: "Sarah", color: "#e74c3c", bg: "#fdedec", text: "We <b>must</b> make a list of <b>things that we need</b>.", char: "customer" },
+    { name: "Emma", color: "#27ae60", bg: "#eafaf1", text: "We need <b>the thing that you put rubbish in</b>.", char: "other" },
+    { name: "Leo", color: "#3498db", bg: "#ebf5fb", text: "You mean a <b>rubbish bin</b>? I’ll add it.", char: "assistant" },
+    { name: "Sarah", color: "#e74c3c", bg: "#fdedec", text: "We <b>must</b> buy <b>the machine that makes hot water</b>.", char: "customer" },
+    { name: "Emma", color: "#27ae60", bg: "#eafaf1", text: "A <b>kettle</b>! I <b>must</b> have my morning tea.", char: "other" },
+    { name: "Leo", color: "#3498db", bg: "#ebf5fb", text: "Do we need <b>the machine that irons clothes</b>?", char: "assistant" },
+    { name: "Sarah", color: "#e74c3c", bg: "#fdedec", text: "Yes, an <b>iron</b> and <b>the board that you use</b>.", char: "customer" },
+    { name: "Emma", color: "#27ae60", bg: "#eafaf1", text: "We <b>mustn't</b> forget <b>the curtain that stops water</b>.", char: "other" },
+    { name: "Leo", color: "#3498db", bg: "#ebf5fb", text: "Okay, let’s go to <b>the shops that are nearby</b>.", char: "assistant" }
+        ];
+const scriptData1_1_D1 = [
+{ "start": 0, "speaker": "Narrator", "text": "14.1" },
+    { "start": 1, "speaker": "A", "text": "It's nice." },
+    { "start": 2, "speaker": "B", "text": "Yes, it is, but it's also very dirty." },
+    { "start": 5, "speaker": "C", "text": "I know. We'll have to give everything a good clean and sort the place out. Maybe we should go into town and buy some stuff." },
+    { "start": 12, "speaker": "A", "text": "Yeah, it's a good idea. One minute. I'll get a pen and we can write a list. OK. So..." },
+    { "start": 19, "speaker": "B", "text": "Well, we need those things for cleaning. A brush and a... I don't know the name. The thing that you put rubbish in. What's the name?" },
+    { "start": 28, "speaker": "C", "text": "Do you mean a rubbish bin?" },
+    { "start": 30, "speaker": "B", "text": "No, not that. You use it to get rubbish from the floor with the brush." },
+    { "start": 35, "speaker": "C", "text": "Oh, you mean a dustpan. A dustpan and brush." },
+    { "start": 39, "speaker": "B", "text": "A dustpan and brush. Yes, that's very useful." },
+    { "start": 42, "speaker": "C", "text": "And maybe we should get some cleaning stuff as well. Have we got any bleach?" },
+    { "start": 47, "speaker": "A", "text": "What is bleach?" },
+    { "start": 49, "speaker": "C", "text": "Oh, it's a kind of liquid that's really good for cleaning things, you know, like for cleaning the floor and the toilet. It's a kind of chemical. Quite strong." },
+    { "start": 58, "speaker": "A", "text": "Oh, we have some. It's in the kitchen. In the cupboard under the sink." },
+    { "start": 63, "speaker": "C", "text": "Oh, OK. I didn't notice that, but that's good." },
+    { "start": 66, "speaker": "B", "text": "We need to buy that machine that you use for the clothes. After you wash them. I can't remember the name. Oh, and I know this word as well." },
+    { "start": 76, "speaker": "A", "text": "You mean an iron?" },
+    { "start": 78, "speaker": "B", "text": "Yes, an iron! And also the thing that you put the clothes on when you use the iron." },
+    { "start": 83, "speaker": "C", "text": "Yeah, an ironing board. OK. What else?" },
+    { "start": 86, "speaker": "A", "text": "Oh, for the bathroom we need a thing for the shower. You know, the plastic thing that stops the water from leaving the shower - and the metal thing that holds it." },
+    { "start": 96, "speaker": "C", "text": "A shower curtain and a shower rail. Yeah, I noticed there wasn't anything like that in the bathroom. It's crazy, isn't it? Why doesn't the landlord provide things like that? It's so basic." },
+    { "start": 107, "speaker": "B", "text": "I know!" },
+    { "start": 108, "speaker": "A", "text": "We should charge the landlord for these things." },
+    { "start": 111, "speaker": "B", "text": "Oh, one more thing. Before I forget. We need the machine that makes hot water - to make tea and coffee." },
+    { "start": 118, "speaker": "C", "text": "Oh, yes, of course. A kettle! I can't live without a kettle! I need my tea in the morning!" }
+];
+
+const scriptData1_2_P1 = [
+    { "start": 0, "speaker": "Narrator", "text": "14.2" },
+    { "start": 1, "speaker": "Narrator", "text": "1" },
+    { "start": 2, "speaker": "A", "text": "For my birthday this year, my big sister bought me my own website." },
+    { "start": 7, "speaker": "A", "text": "She's really good with computers and I'm not, but the website has become something fun we work on together." },
+    { "start": 14, "speaker": "A", "text": "I also loved the way she told me." },
+    { "start": 17, "speaker": "A", "text": "She sent me an email where she gave me clues about the present for me to guess what it was, but I didn't know." },
+    { "start": 25, "speaker": "A", "text": "Then she sent me another email with a link to a website." },
+    { "start": 29, "speaker": "A", "text": "When I clicked on the link, I understood everything and I realised that the site was the present." },
+    { "start": 35, "speaker": "A", "text": "I was really excited!" },
+    { "start": 37, "speaker": "A", "text": "It's my favourite ever gift because, as I said, it's something we do together." }
+];
+const scriptData1_2_P2 = [
+    { "start": 0, "speaker": "Narrator", "text": "2" },
+    { "start": 2, "speaker": "A", "text": "I got a mountain bike for Christmas a few years ago and it's been one of the most useful presents ever." },
+    { "start": 9, "speaker": "A", "text": "Over the last year, I've lived close enough to work to be able to cycle and so I've saved loads of money on petrol." },
+    { "start": 18, "speaker": "A", "text": "A birthday present that also saves me money. Excellent." },
+    { "start": 23, "speaker": "A", "text": "I'm also fitter and have lost weight." }
+];
+const scriptData1_2_P3 = [
+    { "start": 0, "speaker": "Narrator", "text": "3" },
+    { "start": 2, "speaker": "A", "text": "One of my ex-boyfriends was the king of bad presents." },
+    { "start": 6, "speaker": "A", "text": "One year, he gave me an iron for my birthday! An iron!" },
+    { "start": 11, "speaker": "A", "text": "I mean, what kind of message does that send about our relationship and the way that he saw me?" },
+    { "start": 18, "speaker": "A", "text": "The following year, he bought me a dress that he really liked and told me that he wanted me to start wearing more clothes like that from then on - because they would make me more attractive." },
+    { "start": 31, "speaker": "A", "text": "I couldn't believe it! A couple of weeks after that, we broke up!" }
+];
+const scriptData1_2_P4 = [
+    { "start": 0, "speaker": "Narrator", "text": "4" },
+    { "start": 2, "speaker": "A", "text": "A few years ago, I went out with a girl and as we were getting out of the taxi to go to dinner, she suddenly said, 'I got you a present.'" },
+    { "start": 11, "speaker": "A", "text": "I was quite embarrassed because it was our first date and I hadn't thought of getting her anything." },
+    { "start": 17, "speaker": "A", "text": "Then she handed me a rock from a beach." },
+    { "start": 21, "speaker": "A", "text": "I was confused. Why had she given me this thing?" },
+    { "start": 25, "speaker": "A", "text": "She said, 'I wanted to give you something you'd never forget and you could tell your children about'." },
+    { "start": 32, "speaker": "A", "text": "I said thanks to be polite, but I actually thought it was a bit stupid and it was a bad start to the evening!" },
+    { "start": 40, "speaker": "A", "text": "Now, though, I use that rock to stop papers on my desk blowing away and that girl is my wife!" }
+];
+        // --- 기능 함수 ---
+        let mediaRecorder;
+        let audioChunks = {};
+        function initDialogue() {
+            const container = document.getElementById('dialogue-container');
+            dialogueData.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.style = `padding: 12px 15px; background: ${item.bg}; border-radius: 12px; border-left: 6px solid ${item.color}; display: flex; align-items: center; justify-content: space-between; gap: 10px;`;
+                div.innerHTML = `
+                    <div style="flex: 1;"><strong style="color: ${item.color};">${item.name}:</strong> <span>${item.text}</span></div>
+                    <div style="display: flex; gap: 8px; flex-shrink: 0;">
+                        <button onclick="speakText(\`${item.text.replace(/<\/?[^>]+(>|$)/g, "")}\`, '${item.char}')" style="background: ${item.color}; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">🔊</button>
+                        <button id="rec-${index}" onclick="toggleRecord(${index})" style="background: #e74c3c; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">🎤</button>
+                        <button id="play-${index}" onclick="playMyVoice(${index})" style="background: #2ecc71; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: none;">▶</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+        function speakText(text, character) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.pitch = (character === 'maya') ? 1.5 : 1.1;
+            window.speechSynthesis.speak(utterance);
+        }
+async function toggleRecord(index) {
+    const btn = document.getElementById(`rec-${index}`);
+    if (mediaRecorder && mediaRecorder.state === "recording") {
+        mediaRecorder.stop();
+        btn.style.backgroundColor = "#e74c3c"; btn.innerText = "🎤";
+    } else {
+        const stream = await navigator.mediaDevices.getUserMedia({ 
+            audio: {
+                echoCancellation: true,
+                noiseSuppression: true,
+                autoGainControl: false, // 웅웅거림 방지를 위해 끔
+                channelCount: 1
+            } 
+        });
+        // --- 오디오 증폭 로직 시작 ---
+        const audioContext = new AudioContext();
+        const source = audioContext.createMediaStreamSource(stream);
+        const gainNode = audioContext.createGain();
+        
+        gainNode.gain.value = 2.0; // [조정 포인트] 소리를 3배 키웁니다 (1.0~5.0 사이 조절 가능)
+        
+        const destination = audioContext.createMediaStreamDestination();
+        source.connect(gainNode);
+        gainNode.connect(destination);
+        // --- 오디오 증폭 로직 끝 ---
+        // 증폭된 스트림으로 녹음 진행
+        mediaRecorder = new MediaRecorder(destination.stream);
+        const chunks = [];
+        mediaRecorder.ondataavailable = e => chunks.push(e.data);
+        mediaRecorder.onstop = () => {
+            const blob = new Blob(chunks, { type: 'audio/webm' });
+            audioChunks[index] = URL.createObjectURL(blob);
+            document.getElementById(`play-${index}`).style.display = "flex";
+            
+            stream.getTracks().forEach(track => track.stop());
+            audioContext.close();
+        };
+        mediaRecorder.start();
+        btn.style.backgroundColor = "#000"; btn.innerText = "⏹";
+    }
+}        function playMyVoice(index) {
+            if (audioChunks[index]) new Audio(audioChunks[index]).play();
+        }
+        function setupAudioSync(audioId, containerId, data, isDialogue = false) {
+    const audio = document.getElementById(audioId);
+    const container = document.getElementById(containerId);
+    if(!audio || !container) return;
+    
+    container.innerHTML = '';
+    data.forEach((line, index) => {
+        const div = document.createElement('div');
+        div.className = 'script-line';
+        div.id = `${containerId}-line-${index}`;
+        div.innerHTML = isDialogue ? `<strong>${line.speaker}:</strong> ${line.text}` : line.text;
+        container.appendChild(div);
+    });
+    // 오디오 재생 시 스크립트 창 보이기
+    audio.addEventListener('play', () => { 
+        container.style.display = 'block'; 
+    });
+    // 오디오 진행 시간에 맞춰 스크립트 하이라이트 및 스크롤
+    audio.addEventListener('timeupdate', () => {
+        let activeIdx = -1;
+        for (let i = 0; i < data.length; i++) {
+            if (audio.currentTime >= data[i].start) activeIdx = i; else break;
+        }
+        container.querySelectorAll('.script-line').forEach(l => l.classList.remove('active'));
+        if (activeIdx !== -1) {
+            const currentLine = document.getElementById(`${containerId}-line-${activeIdx}`);
+            if (currentLine) {
+                currentLine.classList.add('active');
+                container.scrollTo({ 
+                    top: currentLine.offsetTop - container.offsetTop - 80, 
+                    behavior: 'smooth' 
+                });
+            }
+        }
+    });
+    // 추가된 부분: 음성 재생이 끝나면 스크립트 창 숨기기
+    audio.addEventListener('ended', () => { 
+        container.style.display = 'none'; 
+    });
+}        function centralizeScroll(targetId) {
+            const element = document.getElementById(targetId);
+            if (!element) return;
+            const elementRect = element.getBoundingClientRect();
+            const middle = (elementRect.top + window.pageYOffset) - (window.innerHeight / 2) + (elementRect.height / 2);
+            window.scrollTo({ top: middle, behavior: 'smooth' });
+            if (targetId.startsWith('vocab')) {
+                document.querySelectorAll('.card').forEach(c => c.classList.remove('active-highlight'));
+                element.classList.add('active-highlight');
+                setTimeout(() => element.classList.remove('active-highlight'), 1500);
+            }
+        }
+        function toggleAnswer(btn) {
+            const answerSpan = btn.nextElementSibling;
+            if (answerSpan.style.display === "none") {
+                answerSpan.style.display = "inline"; btn.innerText = "Hide";
+            } else {
+                answerSpan.style.display = "none"; btn.innerText = "Check";
+            }
+        }
+        function saveProgress() {
+            const allInputs = document.querySelectorAll('input[type="text"], textarea');
+            allInputs.forEach((input, index) => {
+                localStorage.setItem(`UNIT14_all_data_${index}`, input.value);
+            });
+            alert('Your progress has been saved! ✅');
+        }
+        // --- 초기화 로직 ---
+        window.addEventListener('DOMContentLoaded', () => {
+            initDialogue();
+            setupAudioSync('main-player-1', 'script-container1', scriptData1_1_D1, true);
+            setupAudioSync('player-1', 'script-1', scriptData1_2_P1, true);
+            setupAudioSync('player-2', 'script-2', scriptData1_2_P2, true);
+            setupAudioSync('player-3', 'script-3', scriptData1_2_P3, true);
+            setupAudioSync('player-4', 'script-4', scriptData1_2_P4, true);
+            // ... 나머지 setupAudioSync 호출
+            // 저장된 데이터 불러오기
+            const allInputs = document.querySelectorAll('input[type="text"], textarea');
+            allInputs.forEach((input, index) => {
+                const savedValue = localStorage.getItem(`UNIT14_all_data_${index}`);
+                if (savedValue) input.value = savedValue;
+            });
+        });
+    </script>
+<script>
+function speak(text) {
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';
+    
+    const voices = window.speechSynthesis.getVoices();
+    // 여성 목소리 우선 선택
+    const femaleVoice = voices.find(v => v.name.includes('Female') || v.name.includes('Google US English') || v.name.includes('Samantha'));
+    
+    if (femaleVoice) {
+        utterance.voice = femaleVoice;
+    }
+    
+    utterance.pitch = 1.1; 
+    utterance.rate = 1.0; // 현대식 표준 영어 빠르기
+    window.speechSynthesis.speak(utterance);
+}window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.getVoices(); };
+</script>
+</body>
+</html>

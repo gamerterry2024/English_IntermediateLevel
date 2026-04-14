@@ -1,0 +1,892 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNIT 03: EAT</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --bg: #f4f7f6;
+            --white: #ffffff;
+            --highlight: #fff59d;
+            --accent: #e67e22;
+        }
+
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg);
+            color: var(--primary);
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+
+        section {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            /* 상단 헤더 높이를 고려한 스크롤 위치 조정 */
+            scroll-margin-top: 90px;
+        }
+
+        .back-to-dashboard {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 1001;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        .back-to-dashboard:hover {
+            transform: scale(1.1);
+            background-color: var(--secondary);
+        }
+
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: bold;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 20px;
+            padding-bottom: 300px; 
+        }
+
+        h2 {
+            border-left: 6px solid var(--secondary);
+            padding-left: 15px;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+
+        .reading-box {
+            background-color: #fffaf0;
+            border: 1px solid #f39c12;
+            padding: 25px;
+            border-radius: 12px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+
+        .vocab-link {
+            color: var(--secondary);
+            text-decoration: none;
+            border-bottom: 2px solid var(--secondary);
+            font-weight: bold;
+            padding: 0 2px;
+            cursor: pointer;
+        }
+
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+
+        .card {
+            border: 1px solid #eee;
+            padding: 20px;
+            border-radius: 10px;
+            background: #fff;
+            transition: all 0.4s ease;
+        }
+
+        .card.active-highlight {
+            border: 2px solid var(--accent);
+            background-color: #fffde7;
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+
+        .return-btn {
+            display: inline-block;
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: bold;
+            border: 1px solid var(--secondary);
+            padding: 4px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        .audio-zone {
+            background: #ebf5fb;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--secondary);
+            margin: 20px 0;
+            text-align: center;
+        }
+
+        .audio-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+
+        .script-window {
+            margin-top: 15px;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            height: 250px; 
+            overflow-y: auto;
+            display: none;
+            text-align: left;
+        }
+
+        .script-line {
+            padding: 8px 10px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            transition: background 0.3s;
+            font-size: 0.95rem;
+        }
+
+        .script-line.active {
+            background-color: var(--highlight);
+            font-weight: bold;
+        }
+
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+
+        .quiz-item {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+
+        .instruction {
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+
+        .save-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+
+        .save-btn:hover {
+            background-color: #219150;
+        }
+
+        .mini-input {
+            width: 100px !important;
+            padding: 5px !important;
+            margin: 0 5px !important;
+            display: inline-block !important;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+
+    <a href="index.html#unit03" class="back-to-dashboard">🏠 Back to Dashboard</a>
+
+    <header>
+        <h1>UNIT 03</h1>
+        <nav class="nav-links">
+            <a href="#intro-reading">0. Core Reading</a>
+            <a href="#section1">1. Listen & Read</a>
+            <a href="#section2">2. Speaking</a>
+            <a href="#section3">3. Writing</a>
+        </nav>
+    </header>
+
+    <div class="container">
+        
+<section id="intro-reading">
+    <h2>Core Reading: What Our Food Choices Reveal About Us</h2>
+    
+    <div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+        
+        <p style="margin-top: 0;">Choosing where to eat is much more than a simple decision about hunger; it is a complex process that involves balancing personal tastes, cultural identity, and social needs. In our daily lives, we often face the challenge of finding a restaurant that satisfies everyone in a group. As we explored in the dialogue between friends, this often requires careful discussion. One person might suggest a Thai place because they enjoy spicy flavors, while another might prefer a steakhouse near a large department store. However, personal preferences like avoiding red meat or not feeling like having spicy food can make the choice difficult. In the end, finding a restaurant with a wide selection of dishes, such as a Turkish establishment, is often the best solution because it offers something for everyone, from meat lovers to those who prefer lighter options.</p>
+
+        <p>Once the group finally chooses a location, the social experience of dining out continues with practical arrangements. In a busy city, popular restaurants are often crowded, which means you might need to book a table in advance to avoid a long wait. Upon arriving, the interaction with the staff becomes a central part of the meal. Families with young children might need to ask for a high chair or <strong><span class="vocab-link" id="text-inquire" onclick="centralizeScroll('vocab-inquire')">inquire</span></strong> about special facilities. For those with specific dietary requirements, communication is even more essential. A vegetarian customer, for instance, must be careful to check if a "country stew" contains lamb or other meats before ordering. Whether you are choosing grilled squid, stuffed aubergines, or a fresh avocado salad, these interactions at the table are universal habits that connect people across different cultures.</p>
+
+        <p>Beyond the restaurant walls, our food choices are deeply connected to our cultural background. The reading "Breakfast around the world" <strong><span class="vocab-link" id="text-illustrates" onclick="centralizeScroll('vocab-illustrates')">illustrates</span></strong> that while we might be open to trying exotic foreign foods for lunch or dinner, we tend to be "people of habit" in the morning. Most people are not adventurous enough to experiment with their first meal of the day, preferring familiar tastes that offer comfort. This is why a Bulgarian person might rely on their local yoghurt for a long life, or an Irish person might start the day with a traditional fry consisting of bacon and sausages. These morning habits are so strong that they stay with us even in extreme situations. A famous example is the first Korean astronaut who carried specially prepared kimchi to the space station, proving that our traditional food is a vital link to our home, no matter where we are.</p>
+
+        <p>In conclusion, the simple act of choosing where and what to eat tells a powerful story about who we are. It reflects our lifestyle, our willingness to try new things, and our respect for tradition. Whether you are grabbing a quick coffee during a busy workday in Seoul, enjoying a slow meal at a street stall in Egypt, or sharing a variety of dishes with friends at a local restaurant, food remains the most important bridge between our personal habits and the wider world. By understanding these diverse eating customs, we learn to <strong><span class="vocab-link" id="text-appreciate" onclick="centralizeScroll('vocab-appreciate')">appreciate</span></strong> not only the flavors of the world but also the different ways people live and connect with one another every day.</p>
+
+    </div>
+
+    <article style="margin-top: 3rem; border-top: 2px solid #eee;">
+        <h3 id="vocab-builder">Vocabulary Builder</h3>
+        <div class="vocab-grid">
+    
+            <div class="card" id="vocab-inquire">
+                <strong>Inquire:</strong> To ask for information in a polite or formal way.
+                <br><span class="return-btn" onclick="centralizeScroll('text-inquire')">Return to Text ↑</span>
+            </div>
+
+        <div class="card" id="vocab-illustrates">
+                <strong>Illustrate:</strong> To show or explain something clearly with an example.
+                <br><span class="return-btn" onclick="centralizeScroll('text-illustrates')">Return to Text ↑</span>
+            </div>
+            
+            <div class="card" id="vocab-appreciate">
+                <strong>Appreciate:</strong> To understand and enjoy the value of something.
+                <br><span class="return-btn" onclick="centralizeScroll('text-appreciate')">Return to Text ↑</span>
+            </div>
+        </div>
+    </article>
+</section>
+
+        <section id="section1">
+            <h2>Section 1: Listening & Reading Integration</h2>
+            
+            <article>
+                <h3>1-1. Where Shall We Go? (Dialogue)</h3>
+                <div class="audio-zone">
+                    <span class="audio-label">🎧 Listening Practice</span>
+                    <audio id="main-player" style="width:100%;" controls src="Track 17.mp3"></audio>
+                </div>
+                <div id="script-container" class="script-window" style="height: 400px;"></div>
+            </article>
+
+            <article style="margin-top: 3rem; border-top: 1px solid #eee; padding-top: 2rem;">
+                <h3>1-2. At the Restaurant</h3>
+                
+                <div class="audio-zone">
+                    <span class="audio-label">🎁 Conversation 1</span>
+                    <audio id="player-1" style="width:100%;" controls src="Track 18.mp3"></audio>
+                    <div id="script-1" class="script-window"></div>
+                </div>
+
+                <div class="audio-zone">
+                    <span class="audio-label">📦 Conversation 2</span>
+                    <audio id="player-2" style="width:100%;" controls src="Track 19.mp3"></audio>
+                    <div id="script-2" class="script-window"></div>
+                </div>
+
+                <div class="audio-zone">
+                    <span class="audio-label">👨‍💼 Conversation 3</span>
+                    <audio id="player-3" style="width:100%;" controls src="Track 20.mp3"></audio>
+                    <div id="script-3" class="script-window"></div>
+                </div>
+
+            </article>
+
+         <article style="margin-top: 3rem; border-top: 1px solid #eee; padding-top: 2rem;">
+    <h2>1-3. &#x1F4D6; Reading: Breakfast around the world</h2>
+
+    <div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+        
+        <p style="margin-top: 0;">They say breakfast is the most important meal of the day. Maybe that's why most people don't like to change their morning eating habits. While we may be open to foreign food at lunch or dinner, at breakfast we are people of habit and we aren't usually adventurous enough to experiment. Below, we look at typical breakfasts in five different countries. Would you try any of them?</p>
+
+        <p>South Korea</p>
+
+        <p>Obviously, city life and busy lifestyles mean plenty of Koreans just grab a quick coffee and some cereal or toast, but many others still find time for the traditional breakfast of rice and soup. People then choose extra dishes such as grilled fish, vegetables and kimchi, which is pickled cabbage with chillies. The dish is so popular that the first Korean astronaut took special kimchi with him to his space station!</p>
+
+        <p>Bulgaria</p>
+        
+        <p>Breakfast in Bulgaria includes tea or strong coffee, sesame bread and butter, cheese made from sheep's milk, honey, olives, boiled eggs and - most importantly - kiselo mlyako, a local yoghurt. Bulgaria has a lot of people aged over 100 and many believe that the secret behind this is their yoghurt, which most Bulgarians eat every day.</p>
+
+        <p>Costa Rica</p>
+
+        <p>Many Costa Ricans start their day with the national dish, gallo pinto, which is a mixture of fried rice and black beans. It's lightly spiced and often served with fried plantain (a kind of banana used like a vegetable in a lot of Central American and Caribbean cooking), cream and fried eggs. There's usually some strong local coffee as well - or perhaps some agua dulce ('sweet water'), which is made from sugar cane juice.</p>
+
+        <p>Egypt</p>
+
+        <p>Visit any town in Egypt in the morning and you'll find street stalls selling ful medammes - broad beans cooked with tomatoes and onions - and eaten with a boiled egg on top and lots of flat bread. Pickled vegetables are usually served as a side dish. For many poorer Egyptians, this is the main meal until dinner. They say the dish is 'a rock in the stomach'.</p>
+
+        <p>Ireland</p>
+
+        <p>The traditional Irish breakfast is called a fry and is not good for vegetarians! It consists of bacon, black pudding (a kind of sausage made with blood), white pudding (another kind of sausage), fried eggs, fried mushrooms and toast - all accompanied by strong Irish tea!</p>
+
+    </div>
+
+    <div class="quiz-container" style="margin-top: 2rem; padding: 0 1rem;">
+        <h4 style="color: var(--secondary); margin-bottom: 1.5rem;">&#x2705; Check your understanding (True or False)</h4>
+        
+        <style>
+            .quiz-row { display: flex; align-items: center; margin-bottom: 15px; font-size: 1.05rem; flex-wrap: wrap; }
+            .quiz-question { margin-right: 12px; font-weight: 500; }
+            .btn-check-small { 
+                padding: 3px 10px; font-size: 0.85rem; cursor: pointer; border-radius: 6px; 
+                border: 1px solid var(--secondary); background: white; color: var(--secondary);
+                transition: 0.2s; margin-right: 10px;
+            }
+            .btn-check-small:hover { background: var(--secondary); color: white; }
+            .answer-text { color: var(--success); font-weight: bold; font-size: 0.95rem; }
+        </style>
+
+<div class="quiz-container" style="background: #fdfdfd; padding: 20px; border-radius: 12px; border: 1px solid #eee;">
+    
+    <div class="quiz-row" id="tf-q1" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+        <span class="quiz-question">1. Most people are very willing to try adventurous and exotic foods for breakfast.</span>
+        <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+            <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+            <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+        </div>
+        <button onclick="validateTF('tf-q1', 'F', 'False (People of habit / Not adventurous at breakfast.)')" class="btn-check-small">Check</button>
+        <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+    </div>
+
+
+    <div class="quiz-row" id="tf-q2" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+        <span class="quiz-question">2. The first Korean astronaut carried kimchi with him into space because of its popularity.</span>
+        <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+            <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+            <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+        </div>
+        <button onclick="validateTF('tf-q2', 'T', 'True (Kimchi taken to the space station by the first Korean astronaut.)')" class="btn-check-small">Check</button>
+        <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+    </div>
+
+    <div class="quiz-row" id="tf-q3" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+        <span class="quiz-question">3. Bulgarians believe that their local yoghurt, kiselo mlyako, is a secret to a long life.</span>
+        <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+            <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+            <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+        </div>
+        <button onclick="validateTF('tf-q3', 'T', 'True (Yoghurt believed to be the secret behind living over 100.)')" class="btn-check-small">Check</button>
+        <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+    </div>
+
+    <div class="quiz-row" id="tf-q4" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+        <span class="quiz-question">4. In Costa Rica, 'agua dulce' is a type of local coffee made from roasted beans.</span>
+        <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+            <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+            <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+        </div>
+        <button onclick="validateTF('tf-q4', 'F', 'False (Agua dulce is made from sugar cane juice, not coffee.)')" class="btn-check-small">Check</button>
+        <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+    </div>
+
+    <div class="quiz-row" id="tf-q5" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+        <span class="quiz-question">5. The traditional Irish breakfast is a great meal choice for people who are vegetarians.</span>
+        <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+            <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+            <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+        </div>
+        <button onclick="validateTF('tf-q5', 'F', 'False (Not good for vegetarians ;contains bacon and sausages.)')" class="btn-check-small">Check</button>
+        <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+    </div>
+
+</div>
+
+<script>
+// T/F 버튼 선택 시 시각적 효과
+function selectTF(btn, val) {
+    const parent = btn.parentElement;
+    const btns = parent.querySelectorAll('.tf-btn');
+    btns.forEach(b => {
+        b.style.background = '#fff';
+        b.style.color = '#333';
+        b.classList.remove('selected');
+    });
+    btn.style.background = '#333';
+    btn.style.color = '#fff';
+    btn.classList.add('selected');
+    btn.dataset.value = val;
+}
+
+// 정답 확인 및 토글 함수
+function validateTF(rowId, correctVal, explanation) {
+    const row = document.getElementById(rowId);
+    const selectedBtn = row.querySelector('.tf-btn.selected');
+    const ansText = row.querySelector('.answer-text');
+
+    // 이미 정답이 보이고 있다면 -> 다시 숨기기 (토글)
+    if (ansText.style.display === 'inline') {
+        ansText.style.display = 'none';
+        row.style.background = '#fff'; // 배경색 초기화
+        return;
+    }
+
+    // 버튼을 선택하지 않았을 때
+    if (!selectedBtn) {
+        alert("Please select T or F first!");
+        return;
+    }
+
+    // 정답 확인 모드
+    const userVal = selectedBtn.dataset.value;
+    ansText.style.display = 'inline';
+    ansText.innerText = explanation;
+
+    if (userVal === correctVal) {
+        row.style.background = '#e8f5e9'; // 정답: 연한 초록색
+        ansText.style.color = '#2e7d32';
+    } else {
+        row.style.background = '#ffebee'; // 오답: 연한 빨간색
+        ansText.style.color = '#c62828';
+    }
+}
+</script>
+    </div>
+</article>
+
+
+        </section>
+
+<section id="section2">
+    <h2>Section 2: Speaking Practice</h2> 
+    
+    <article style="margin-top: 1rem;">
+        <h3>Interactive Dialogue (Easy Version)</h3>
+        <p class="instruction" style="margin-bottom: 20px;">
+            <i class="fas fa-headphones-alt"></i> Listen to the sentence (🔊), record your voice (🎤), and check your recording (▶️).
+        </p>
+        <div class="quiz-item" style="background: #fff; padding: 25px; border-radius: 15px; border: 1px solid #ddd; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <div id="dialogue-container" style="display: flex; flex-direction: column; gap: 12px; font-size: 1.05rem;"></div>
+        </div>
+    </article>
+</section>
+
+<section id="section3">
+            <h2>Section 3: Writing Practice</h2>
+            <div id="final-quiz-area" style="margin-top: 40px; border-top: 2px solid var(--secondary); padding-top: 25px;">
+                <div class="quiz-item" style="background: #fcfcfc; padding: 20px; border-radius: 10px;">
+    <p style="display: flex; align-items: center; gap: 10px; margin-bottom: 20px;">
+        <strong style="font-size: 1.1rem;">Step 1. Vocabulary & Content Check:</strong>
+        <span style="font-size: 0.85rem; background: #3498db; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500; box-shadow: 0 2px 5px rgba(52, 152, 219, 0.3);">
+            <i class="fas fa-spell-check"></i> Word Bank: Inquire, Illustrates, Appreciate
+        </span>
+    </p>
+
+    <div style="line-height: 3; font-size: 1rem; color: #34495e;">
+
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+    1. The story of the Korean astronaut 
+    <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #bdc3c7; background: transparent; text-align: center; font-weight: bold; color: #2980b9;" placeholder="......"> 
+    how important traditional food is to our identity.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #3498db; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #e67e22;">(Ans: illustrates)</span>
+</div>
+
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+    2. If you have a special diet, you should 
+    <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #bdc3c7; background: transparent; text-align: center; font-weight: bold; color: #2980b9;" placeholder="......"> 
+    about the ingredients before you order.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #3498db; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #e67e22;">(Ans: inquire)</span>
+</div>
+
+<div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+    3. By trying different breakfasts, we can learn to 
+    <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #bdc3c7; background: transparent; text-align: center; font-weight: bold; color: #2980b9;" placeholder="......"> 
+    diverse cultures around the world.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #3498db; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #e67e22;">(Ans: appreciate)</span>
+</div>
+
+
+    </div>
+
+</div>
+
+<div class="quiz-item" style="margin-top: 40px; padding: 25px; background: #fcfcfc; border-radius: 10px; border: 1px solid #eee;">
+    <p style="margin-bottom: 15px;">
+        <strong style="font-size: 1.1rem; color: var(--primary);">Step 2. Content Check:</strong>
+    </p>
+    
+    <p style="line-height: 1.6; color: #34495e; font-weight: 500;">
+        According to the text, why is choosing what we eat considered more than just "satisfying hunger," and what does it reveal about us?
+    </p>
+
+    <div style="margin: 10px 0; font-size: 0.85rem; color: #7f8c8d;">
+        <i class="fas fa-lightbulb" style="color: #f1c40f;"></i> 
+        <b>Key Keywords:</b> identity, cultural background, habit, connection, respect for tradition
+    </div>
+
+    <textarea id="content-check-answer" rows="3" 
+        style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; font-size: 0.95rem; line-height: 1.6; resize: vertical; display: block; margin-bottom: 40px; box-sizing: border-box;" 
+        placeholder="Write your answer here based on the reading text..."></textarea>
+
+</div>
+
+                <div class="quiz-item" style="background: #fcfcfc; padding: 20px; border-radius: 10px; margin-top: 20px;">
+    <p><strong>Step 3. Thinking about Food:</strong></p>
+    <p style="color: #34495e;">
+        The text says that traditional food, like kimchi in space, is a "vital link to our home."
+        <br><b>If you had to live in a foreign country for a year, which specific food from your home would you miss the most? Give one reason why.</b>
+    </p>
+    <textarea rows="7" style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; font-family: inherit;" placeholder="I think local items are more special because..."></textarea>
+</div>
+            </div>
+
+            <div style="margin-top: 40px; padding: 25px; background: #fffde7; border-radius: 15px; border: 1px solid #fff176;">
+                <h3 style="margin-top: 0; color: #f57f17;"><i class="fas fa-lightbulb"></i> Critical Thinking</h3>
+                <p>The text describes us as "people of habit" at breakfast, but the world is becoming more globalized with diverse food options.
+                <br><b>In your opinion, is it better to stick to your traditional morning habits for health and comfort, or is it better to actively try global breakfast cultures to become more "open-minded"? Explain your view with a reason.</b> </p>
+                <textarea class="main-textarea" 
+    placeholder="Write your thoughts here..." 
+    rows="10" 
+    style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; font-size: 0.95rem; line-height: 1.6; resize: vertical; display: block; box-sizing: border-box;">
+</textarea>
+            </div>
+
+<div style="margin-top: 30px; padding: 25px; background: #ffffff; border-radius: 15px; border: 2px solid #3498db; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="margin: 0; color: #2980b9;"><i class="fas fa-robot"></i> AI Solution</h3>
+        <span style="background: #3498db; color: white; padding: 5px 15px; border-radius: 50px; font-weight: bold; font-size: 1.1rem;">
+            Overall Score: <input type="text" class="mini-input" style="width: 50px !important; color: white; background: transparent; border: 1px solid rgba(255,255,255,0.5); text-align: center;" value="8.5"> / 10
+        </span>
+    </div>
+
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.95rem;">
+        <thead>
+            <tr style="background: #ebf5fb; text-align: left;">
+                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Evaluation Criteria</th>
+                <th style="padding: 12px; border-bottom: 2px solid #3498db; text-align: center;">Score</th>
+                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Detailed Feedback</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Content</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="10"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Excellent connection between cultural identity and biological needs."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Logic</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="9"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Strong argument for traditional food based on physical health."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Grammar</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="7"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Watch subject-verb agreement (e.g., My body doesn't fit)."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Vocabulary</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="8"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Good use of 'complex process' and 'identity'."></td>
+            </tr>
+        </tbody>
+    </table>
+
+    <div style="background: #f4f7f6; padding: 15px; border-radius: 10px; border-left: 5px solid #27ae60;">
+        <p style="margin: 0 0 10px 0; font-weight: bold; color: #27ae60;"><i class="fas fa-check-circle"></i> Recommended Revision</p>
+        <textarea style="width: 100%; background: transparent; border: 1px dashed #27ae60; border-radius: 5px; padding: 10px; font-style: italic;" rows="6">"The world is becoming more globalized with diverse food options. Choosing what to eat is a complex process involving personal tastes and cultural identity. If I had to live abroad, I would miss 'Kkadugi' most because it is a food my body remembers. Since flour-based foods give me a stomach upset (배탈), it is important to eat meals that match my biological state. Therefore, I prefer traditional breakfasts with Kimchi."</textarea>
+    </div>
+</div>
+            <button class="save-btn" style="margin-top: 20px;" onclick="saveProgress()">Save My Work</button>
+        </section>
+    </div>
+
+
+
+    <script>
+        // --- 데이터 정의 ---
+        const dialogueData = [
+            { name: "Minho", color: "#3498db", bg: "#ebf5fb", text: "I’m getting hungry. Do you want to grab some dinner after class?", char: "assistant" },
+    { name: "Sarah", color: "#f39c12", bg: "#fdfaf0", text: "Sounds good! What kind of food are you thinking of?", char: "customer" },
+    { name: "Minho", color: "#3498db", bg: "#ebf5fb", text: "How about that new Thai place? I want to try something <b>exotic</b> today.", char: "assistant" },
+    { name: "Sarah", color: "#f39c12", bg: "#fdfaf0", text: "To be honest, I don’t really like spicy food. I’m a person of habit, so I usually prefer familiar tastes.", char: "customer" },
+    { name: "Minho", color: "#3498db", bg: "#ebf5fb", text: "Oh, I see. Then should we go to the Turkish restaurant instead? It has a wide <b>variety</b> of dishes.", char: "assistant" },
+    { name: "Sarah", color: "#f39c12", bg: "#fdfaf0", text: "That’s a great idea! I heard they have excellent <b>vegetarian</b> options too.", char: "customer" },
+    { name: "Minho", color: "#3498db", bg: "#ebf5fb", text: "Perfect. I’ll call them now to <b>inquire</b> about a table for two.", char: "assistant" },
+    { name: "Sarah", color: "#f39c12", bg: "#fdfaf0", text: "Good thinking. It’s a popular place, so we should probably book a table in advance.", char: "customer" },
+    { name: "Minho", color: "#3498db", bg: "#ebf5fb", text: "You know, I really <b>appreciate</b> how food choices <b>illustrate</b> our different personalities.", char: "assistant" },
+    { name: "Sarah", color: "#f39c12", bg: "#fdfaf0", text: "Exactly! Now let’s go and enjoy a delicious meal together.", char: "customer" }
+        ];
+
+const scriptData1_1 = [
+    { start: 0, speaker: "Narrator", text: "Three point one." },
+    { start: 3, speaker: "A", text: "Are you hungry?" },
+    { start: 4, speaker: "B", text: "Yeah, a bit." },
+    { start: 5, speaker: "A", text: "Do you want to get something to eat?" },
+    { start: 7, speaker: "B", text: "I'd love to, yeah. Where are you thinking of going?" },
+    { start: 10, speaker: "A", text: "Well, there's a really nice Thai place just down the road. Do you know it?" },
+    { start: 15, speaker: "B", text: "I've seen it, but I've never eaten there. I don't really feel like spicy food today, though, so..." },
+    { start: 23, speaker: "A", text: "OK. No problem. I'm happy to go somewhere else." },
+    { start: 26, speaker: "B", text: "There's a great steak restaurant near the big department store in the centre of town. How about that?" },
+    { start: 32, speaker: "A", text: "To be honest, I don't really like red meat." },
+    { start: 36, speaker: "B", text: "Well, we could go to Sofra instead. Have you been there?" },
+    { start: 40, speaker: "A", text: "No, I've never heard of it. Where is it?" },
+    { start: 43, speaker: "B", text: "It's about fifteen minutes' walk from here. It's just round the corner from the bus station." },
+    { start: 47, speaker: "A", text: "Oh, OK. And what kind of restaurant is it?" },
+    { start: 52, speaker: "B", text: "It's Turkish. It's really good. I go there almost every week." },
+    { start: 56, speaker: "A", text: "Really?" },
+    { start: 57, speaker: "B", text: "Yeah, the food's delicious — and they've got a really good selection of dishes, so there's plenty to choose from." },
+    { start: 63, speaker: "A", text: "Oh, it sounds great." },
+    { start: 65, speaker: "B", text: "Yeah. The only problem is that it gets really busy. Sometimes you have to wait to get a table, so maybe we should phone and book." },
+    { start: 74 , speaker: "A", text: "Yeah. That's probably a good idea." }
+]; 
+
+const scriptData1_2_P1 = [
+    { "start": 0, "speaker": "Narrator", "text": "Three point two. Conversation one." },
+    { "start": 6, "speaker": "Waiter", "text": "How many people is it?" },
+    { "start": 8, "speaker": "Client 1", "text": "There are three of us." },
+    { "start": 9, "speaker": "Waiter", "text": "And have you booked?" },
+    { "start": 11, "speaker": "Client 1", "text": "No. Is that a problem?" },
+    { "start": 13, "speaker": "Waiter", "text": "No, but do you mind waiting?" },
+    { "start": 16, "speaker": "Client 1", "text": "How long?" },
+    { "start": 17, "speaker": "Waiter", "text": "Maybe ten or fifteen minutes." },
+    { "start": 20, "speaker": "Client 2", "text": "OK. That's fine." },
+    { "start": 22, "speaker": "Client 1", "text": "Could I change the baby somewhere?" },
+    { "start": 24, "speaker": "Waiter", "text": "I'm afraid we don't have any special facilities. You can use the toilet. It's not very big, though." },
+    { "start": 31, "speaker": "Client 1", "text": "That's OK." },
+    { "start": 32, "speaker": "Waiter", "text": "It's just at the end there, down the stairs." }
+];
+
+const scriptData1_2_P2 = [
+   { "start": 0, "speaker": "Narrator", "text": "Conversation two." },
+    { "start": 4, "speaker": "Waiter", "text": "Is this table here OK?" },
+    { "start": 5, "speaker": "Client 1", "text": "Yeah, this is fine. Thank you." },
+    { "start": 7, "speaker": "Waiter", "text": "Would you like a high chair for the little girl?" },
+    { "start": 9, "speaker": "Client 1", "text": "That'd be great. Thanks. He's actually a boy, though!" },
+    { "start": 14, "speaker": "Waiter", "text": "Oh, I'm so sorry! Anyway, here are your menus. I'll get the chair." }
+];
+
+const scriptData1_2_P3 = [
+    { "start": 0, "speaker": "Narrator", "text": "Conversation three." },
+    { "start": 3, "speaker": "Waiter", "text": "Are you ready to order?" },
+    { "start": 5, "speaker": "Client 1", "text": "Not quite. Could you just give us two more minutes?" },
+    { "start": 8, "speaker": "Waiter", "text": "Yes, of course." },
+    { "start": 12, "speaker": "Client 2", "text": "Right. OK. Could I have the grilled squid for starters, please? And for my main course, I think I'll have the chicken." },
+    { "start": 19, "speaker": "Waiter", "text": "And what kind of potatoes would you like?" },
+    { "start": 22, "speaker": "Client 2", "text": "Roast potatoes, please." },
+    { "start": 23, "speaker": "Waiter", "text": "OK." },
+    { "start": 24, "speaker": "Client 1", "text": "I'll go for the aubergines stuffed with rice for my main course, please. And the country stew? Does it contain any meat? I'm vegetarian." },
+    { "start": 35, "speaker": "Waiter", "text": "Yes, sorry. It's got lamb in it. I could ask them to take it out." },
+    { "start": 39, "speaker": "Client 1", "text": "No, it's OK. I'll just have the tomato and avocado salad. And can we get some water as well?" },
+    { "start": 46, "speaker": "Waiter", "text": "Of course. Sparkling or still?" },
+    { "start": 49, "speaker": "Client 1", "text": "Just tap water, please, if possible." },
+    { "start": 51, "speaker": "Waiter", "text": "Sure." },
+    { "start": 52, "speaker": "Client 2", "text": "And could we have a small plate for our son? We're going to share our dishes with him." }
+];
+
+        // --- 기능 함수 ---
+        let mediaRecorder;
+        let audioChunks = {};
+
+        function initDialogue() {
+            const container = document.getElementById('dialogue-container');
+            dialogueData.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.style = `padding: 12px 15px; background: ${item.bg}; border-radius: 12px; border-left: 6px solid ${item.color}; display: flex; align-items: center; justify-content: space-between; gap: 10px;`;
+                div.innerHTML = `
+                    <div style="flex: 1;"><strong style="color: ${item.color};">${item.name}:</strong> <span>${item.text}</span></div>
+                    <div style="display: flex; gap: 8px; flex-shrink: 0;">
+                        <button onclick="speakText(\`${item.text.replace(/<\/?[^>]+(>|$)/g, "")}\`, '${item.char}')" style="background: ${item.color}; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">🔊</button>
+                        <button id="rec-${index}" onclick="toggleRecord(${index})" style="background: #e74c3c; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">🎤</button>
+                        <button id="play-${index}" onclick="playMyVoice(${index})" style="background: #2ecc71; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: none;">▶️</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+
+        function speakText(text, character) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.pitch = (character === 'maya') ? 1.5 : 1.1;
+            window.speechSynthesis.speak(utterance);
+        }
+
+async function toggleRecord(index) {
+    const btn = document.getElementById(`rec-${index}`);
+    if (mediaRecorder && mediaRecorder.state === "recording") {
+        mediaRecorder.stop();
+        btn.style.backgroundColor = "#e74c3c"; btn.innerText = "🎤";
+    } else {
+        const stream = await navigator.mediaDevices.getUserMedia({ 
+            audio: {
+                echoCancellation: true,
+                noiseSuppression: true,
+                autoGainControl: false, // 웅웅거림 방지를 위해 끔
+                channelCount: 1
+            } 
+        });
+
+        // --- 오디오 증폭 로직 시작 ---
+        const audioContext = new AudioContext();
+        const source = audioContext.createMediaStreamSource(stream);
+        const gainNode = audioContext.createGain();
+        
+        gainNode.gain.value = 2.0; // [조정 포인트] 소리를 3배 키웁니다 (1.0~5.0 사이 조절 가능)
+        
+        const destination = audioContext.createMediaStreamDestination();
+        source.connect(gainNode);
+        gainNode.connect(destination);
+        // --- 오디오 증폭 로직 끝 ---
+
+        // 증폭된 스트림으로 녹음 진행
+        mediaRecorder = new MediaRecorder(destination.stream);
+        const chunks = [];
+        mediaRecorder.ondataavailable = e => chunks.push(e.data);
+        mediaRecorder.onstop = () => {
+            const blob = new Blob(chunks, { type: 'audio/webm' });
+            audioChunks[index] = URL.createObjectURL(blob);
+            document.getElementById(`play-${index}`).style.display = "flex";
+            
+            stream.getTracks().forEach(track => track.stop());
+            audioContext.close();
+        };
+        mediaRecorder.start();
+        btn.style.backgroundColor = "#000"; btn.innerText = "⏹";
+    }
+}
+        function playMyVoice(index) {
+            if (audioChunks[index]) new Audio(audioChunks[index]).play();
+        }
+
+        function setupAudioSync(audioId, containerId, data, isDialogue = false) {
+    const audio = document.getElementById(audioId);
+    const container = document.getElementById(containerId);
+    if(!audio || !container) return;
+    
+    container.innerHTML = '';
+    data.forEach((line, index) => {
+        const div = document.createElement('div');
+        div.className = 'script-line';
+        div.id = `${containerId}-line-${index}`;
+        div.innerHTML = isDialogue ? `<strong>${line.speaker}:</strong> ${line.text}` : line.text;
+        container.appendChild(div);
+    });
+
+    // 오디오 재생 시 스크립트 창 보이기
+    audio.addEventListener('play', () => { 
+        container.style.display = 'block'; 
+    });
+
+    // 오디오 진행 시간에 맞춰 스크립트 하이라이트 및 스크롤
+    audio.addEventListener('timeupdate', () => {
+        let activeIdx = -1;
+        for (let i = 0; i < data.length; i++) {
+            if (audio.currentTime >= data[i].start) activeIdx = i; else break;
+        }
+        container.querySelectorAll('.script-line').forEach(l => l.classList.remove('active'));
+        if (activeIdx !== -1) {
+            const currentLine = document.getElementById(`${containerId}-line-${activeIdx}`);
+            if (currentLine) {
+                currentLine.classList.add('active');
+                container.scrollTo({ 
+                    top: currentLine.offsetTop - container.offsetTop - 80, 
+                    behavior: 'smooth' 
+                });
+            }
+        }
+    });
+
+    // 추가된 부분: 음성 재생이 끝나면 스크립트 창 숨기기
+    audio.addEventListener('ended', () => { 
+        container.style.display = 'none'; 
+    });
+}
+
+        function centralizeScroll(targetId) {
+            const element = document.getElementById(targetId);
+            if (!element) return;
+            const elementRect = element.getBoundingClientRect();
+            const middle = (elementRect.top + window.pageYOffset) - (window.innerHeight / 2) + (elementRect.height / 2);
+            window.scrollTo({ top: middle, behavior: 'smooth' });
+            if (targetId.startsWith('vocab')) {
+                document.querySelectorAll('.card').forEach(c => c.classList.remove('active-highlight'));
+                element.classList.add('active-highlight');
+                setTimeout(() => element.classList.remove('active-highlight'), 1500);
+            }
+        }
+
+        function toggleAnswer(btn) {
+            const answerSpan = btn.nextElementSibling;
+            if (answerSpan.style.display === "none") {
+                answerSpan.style.display = "inline"; btn.innerText = "Hide";
+            } else {
+                answerSpan.style.display = "none"; btn.innerText = "Check";
+            }
+        }
+
+        function saveProgress() {
+            const allInputs = document.querySelectorAll('input[type="text"], textarea');
+            allInputs.forEach((input, index) => {
+                localStorage.setItem(`unit03_all_data_${index}`, input.value);
+            });
+            alert('Your progress has been saved! ✅');
+        }
+
+        // --- 초기화 로직 ---
+        window.addEventListener('DOMContentLoaded', () => {
+            initDialogue();
+            setupAudioSync('main-player', 'script-container', scriptData1_1, true);
+            setupAudioSync('player-1', 'script-1', scriptData1_2_P1, true);
+            setupAudioSync('player-2', 'script-2', scriptData1_2_P2, true);
+            setupAudioSync('player-3', 'script-3', scriptData1_2_P3, true);
+            // ... 나머지 setupAudioSync 호출
+
+            // 저장된 데이터 불러오기
+            const allInputs = document.querySelectorAll('input[type="text"], textarea');
+            allInputs.forEach((input, index) => {
+                const savedValue = localStorage.getItem(`unit03_all_data_${index}`);
+                if (savedValue) input.value = savedValue;
+            });
+        });
+    </script>
+
+<script>
+function speak(text) {
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';
+    
+    const voices = window.speechSynthesis.getVoices();
+    // 여성 목소리 우선 선택
+    const femaleVoice = voices.find(v => v.name.includes('Female') || v.name.includes('Google US English') || v.name.includes('Samantha'));
+    
+    if (femaleVoice) {
+        utterance.voice = femaleVoice;
+    }
+    
+    utterance.pitch = 1.1; 
+    utterance.rate = 1.0; // 현대식 표준 영어 빠르기
+    window.speechSynthesis.speak(utterance);
+}
+
+window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.getVoices(); };
+</script>
+</body>
+</html>

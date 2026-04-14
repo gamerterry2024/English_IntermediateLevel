@@ -1,0 +1,1097 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>UNIT 05: RELAX</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #2c3e50;
+            --secondary: #3498db;
+            --success: #27ae60;
+            --bg: #f4f7f6;
+            --white: #ffffff;
+            --highlight: #fff59d;
+            --accent: #e67e22;
+        }
+        body {
+            font-family: 'Segoe UI', sans-serif;
+            line-height: 1.6;
+            background-color: var(--bg);
+            color: var(--primary);
+            margin: 0;
+            padding: 0;
+            scroll-behavior: smooth;
+        }
+        section {
+            background: var(--white);
+            padding: 2.5rem;
+            border-radius: 15px;
+            margin-bottom: 2.5rem;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+            /* 상단 헤더 높이를 고려한 스크롤 위치 조정 */
+            scroll-margin-top: 90px;
+        }
+        .back-to-dashboard {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 1001;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+        .back-to-dashboard:hover {
+            transform: scale(1.1);
+            background-color: var(--secondary);
+        }
+        header {
+            background: var(--primary);
+            color: white;
+            padding: 1rem 5%;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            margin-left: 20px;
+            font-weight: bold;
+        }
+        .container {
+            max-width: 900px;
+            margin: 2rem auto;
+            padding: 0 20px;
+            padding-bottom: 300px; 
+        }
+        h2 {
+            border-left: 6px solid var(--secondary);
+            padding-left: 15px;
+            color: var(--primary);
+            margin-bottom: 1.5rem;
+        }
+        .reading-box {
+            background-color: #fffaf0;
+            border: 1px solid #f39c12;
+            padding: 25px;
+            border-radius: 12px;
+            line-height: 1.8;
+            margin-bottom: 20px;
+        }
+        .vocab-link {
+            color: var(--secondary);
+            text-decoration: none;
+            border-bottom: 2px solid var(--secondary);
+            font-weight: bold;
+            padding: 0 2px;
+            cursor: pointer;
+        }
+        .vocab-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        .card {
+            border: 1px solid #eee;
+            padding: 20px;
+            border-radius: 10px;
+            background: #fff;
+            transition: all 0.4s ease;
+        }
+        .card.active-highlight {
+            border: 2px solid var(--accent);
+            background-color: #fffde7;
+            transform: scale(1.05);
+            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
+        }
+        .return-btn {
+            display: inline-block;
+            margin-top: 12px;
+            font-size: 0.85rem;
+            color: var(--secondary);
+            text-decoration: none;
+            font-weight: bold;
+            border: 1px solid var(--secondary);
+            padding: 4px 10px;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .audio-zone {
+            background: #ebf5fb;
+            padding: 20px;
+            border-radius: 12px;
+            border: 1px solid var(--secondary);
+            margin: 20px 0;
+            text-align: center;
+        }
+        .audio-label {
+            display: block;
+            margin-bottom: 10px;
+            font-weight: bold;
+            color: var(--primary);
+        }
+        .script-window {
+            margin-top: 15px;
+            padding: 20px;
+            background-color: #ffffff;
+            border: 1px solid #eee;
+            border-radius: 12px;
+            height: 250px; 
+            overflow-y: auto;
+            display: none;
+            text-align: left;
+        }
+        .script-line {
+            padding: 8px 10px;
+            border-radius: 5px;
+            margin-bottom: 5px;
+            transition: background 0.3s;
+            font-size: 0.95rem;
+        }
+        .script-line.active {
+            background-color: var(--highlight);
+            font-weight: bold;
+        }
+        textarea, input[type="text"] {
+            width: 100%;
+            padding: 14px;
+            margin-top: 10px;
+            border: 1px solid #ddd;
+            border-radius: 8px;
+            box-sizing: border-box;
+        }
+        .quiz-item {
+            margin-bottom: 25px;
+            padding-bottom: 15px;
+            border-bottom: 1px solid #f0f0f0;
+        }
+        .instruction {
+            font-style: italic;
+            color: #7f8c8d;
+            font-size: 0.9rem;
+        }
+        .save-btn {
+            background: var(--success);
+            color: white;
+            border: none;
+            padding: 12px 25px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: bold;
+        }
+        .save-btn:hover {
+            background-color: #219150;
+        }
+        .mini-input {
+            width: 100px !important;
+            padding: 5px !important;
+            margin: 0 5px !important;
+            display: inline-block !important;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+    </style>
+</head>
+<body>
+    <a href="index.html#unit_05" class="back-to-dashboard">🏠 Back to Dashboard</a>
+    <header>
+        <h1>UNIT 05</h1>
+        <nav class="nav-links">
+            <a href="#intro-reading">0. Core Reading</a>
+            <a href="#section1">1. Listen & Read</a>
+            <a href="#section2">2. Speaking</a>
+            <a href="#section3">3. Writing</a>
+        </nav>
+    </header>
+    <div class="container">
+        
+<section id="intro-reading">
+    <h2>Core Reading: The Diverse Ways We Relax and Play</h2>
+    
+    <div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+        
+<p style="margin-top: 0;">The concept of relaxation varies significantly across different cultures, yet the fundamental need to "take it easy" remains a universal human <strong><span class="vocab-link" id="text-trait" onclick="centralizeScroll('vocab-trait')">trait</span></strong>. Whether it is through physical activity, <strong><span class="vocab-link" id="text-spectator" onclick="centralizeScroll('vocab-spectator')">spectator</span></strong> sports, or simply catching up on sleep, how we choose to spend our free time defines our lifestyle and well-being. This unit <strong><span class="vocab-link" id="text-explores" onclick="centralizeScroll('vocab-explores')">explores</span></strong> the <strong><span class="vocab-link" id="text-fascinating" onclick="centralizeScroll('vocab-fascinating')">fascinating</span></strong> balance between active leisure and essential rest.</p>
+    <p>For many, the weekend is the primary time to recharge. Some people prefer high-energy outdoor activities, such as hiking in the mountains or camping in the forest with family. These plans often depend on the weather forecast, as a sunny and warm weekend provides the perfect opportunity for a walk in nature or a refreshing swim in a clear river. Others, however, choose a more <strong><span class="vocab-link" id="text-sedentary" onclick="centralizeScroll('vocab-sedentary')">sedentary</span></strong> approach, <strong><span class="vocab-link" id="text-opting" onclick="centralizeScroll('vocab-opting')">opting</span></strong> to stay at home, read a book, or watch a movie to recover from a long work week.</p>
+    <p>When it comes to entertainment, sports play a <strong><span class="vocab-link" id="text-massive" onclick="centralizeScroll('vocab-massive')">massive</span></strong> role in global culture. Football, often <strong><span class="vocab-link" id="text-cited" onclick="centralizeScroll('vocab-cited')">cited</span></strong> as the world’s most popular sport, attracts billions of viewers. Its <strong><span class="vocab-link" id="text-simplicity" onclick="centralizeScroll('vocab-simplicity')">simplicity</span></strong>—requiring no expensive gear or complex skills to start—makes it accessible to everyone. Even when a big game ends in a boring nil-nil draw, the <strong><span class="vocab-link" id="text-unpredictability" onclick="centralizeScroll('vocab-unpredictability')">unpredictability</span></strong> of the next match keeps fans coming back. However, beyond mainstream football, many countries <strong><span class="vocab-link" id="text-cherish" onclick="centralizeScroll('vocab-cherish')">cherish</span></strong> their own unique national traditions. In Argentina, 'Pato' combines history and horsemanship, while in Japan, 'Keirin' turns cycling into a high-speed, high-<strong><span class="vocab-link" id="text-stakes" onclick="centralizeScroll('vocab-stakes')">stakes</span></strong> <strong><span class="vocab-link" id="text-spectator" onclick="centralizeScroll('vocab-spectator')">spectator</span></strong> event. Newer inventions like 'Bossaball' even blend music and gymnastics, showing that the way we play is <strong><span class="vocab-link" id="text-constantly" onclick="centralizeScroll('vocab-constantly')">constantly</span></strong> <strong><span class="vocab-link" id="text-evolving" onclick="centralizeScroll('vocab-evolving')">evolving</span></strong>.</p>
+    <p>While active sports are exciting, the importance of rest cannot be <strong><span class="vocab-link" id="text-overlooked" onclick="centralizeScroll('vocab-overlooked')">overlooked</span></strong>. In Spain, the tradition of the 'siesta'—a short nap after lunch—has long been a cultural <strong><span class="vocab-link" id="text-staple" onclick="centralizeScroll('vocab-staple')">staple</span></strong>. Although modern work schedules have made it a luxury for some, recent research highlights its <strong><span class="vocab-link" id="text-immense" onclick="centralizeScroll('vocab-immense')">immense</span></strong> benefits. A short nap can increase energy levels, improve mood, and make workers more productive. In fact, companies in cities like New York and London are now installing high-tech napping pods, recognizing that tired employees lose <strong><span class="vocab-link" id="text-concentration" onclick="centralizeScroll('vocab-concentration')">concentration</span></strong> and make more mistakes.</p>
+    <p><strong><span class="vocab-link" id="text-ultimately" onclick="centralizeScroll('vocab-ultimately')">Ultimately</span></strong>, whether we are dancing at a birthday party, betting on a fast-paced cycle race, or enjoying a quiet nap, the goal is the same: to find a healthy balance. Relaxing isn't just about being lazy; it's about staying healthy, reducing stress, and making the most of our time so we can stay happy and productive in our daily lives.</p>
+    </div>
+<article style="margin-top: 3rem; border-top: 2px solid #eee;">
+    <h3 id="vocab-builder">Vocabulary Builder</h3>
+    <div class="vocab-grid">
+        <div class="card" id="vocab-trait">
+        <div class="card-content">
+            <strong>Trait:</strong> a particular quality in your personality or body
+            <br><span class="return-btn" onclick="centralizeScroll('text-trait')">Return to Text ↑</span>
+        </div>
+    </div>
+    <div class="card" id="vocab-spectator">
+        <div class="card-content">
+            <strong>Spectator:</strong> a person who watches a sport or an event
+            <br><span class="return-btn" onclick="centralizeScroll('text-spectator')">Return to Text ↑</span>
+        </div>
+    </div>
+    <div class="card" id="vocab-explores">
+        <div class="card-content">
+            <strong>Explores:</strong> to examine or talk about something to learn more
+            <br><span class="return-btn" onclick="centralizeScroll('text-explores')">Return to Text ↑</span>
+        </div>
+    </div>
+    <div class="card" id="vocab-fascinating">
+        <div class="card-content">
+            <strong>Fascinating:</strong> extremely interesting
+            <br><span class="return-btn" onclick="centralizeScroll('text-fascinating')">Return to Text ↑</span>
+        </div>
+    </div>
+    <div class="card" id="vocab-sedentary">
+        <div class="card-content">
+            <strong>Sedentary:</strong> spending a lot of time sitting down and not moving
+            <br><span class="return-btn" onclick="centralizeScroll('text-sedentary')">Return to Text ↑</span>
+        </div>
+    </div>
+    <div class="card" id="vocab-opting">
+        <div class="card-content">
+            <strong>Opting:</strong> choosing one thing instead of another
+            <br><span class="return-btn" onclick="centralizeScroll('text-opting')">Return to Text ↑</span>
+        </div>
+    </div>
+    <div class="card" id="vocab-massive">
+        <div class="card-content">
+            <strong>Massive:</strong> very, very big or powerful
+            <br><span class="return-btn" onclick="centralizeScroll('text-massive')">Return to Text ↑</span>
+        </div>
+    </div>
+    <div class="card" id="vocab-cited">
+        <div class="card-content">
+            <strong>Cited:</strong> mentioned as an example or a reason
+            <br><span class="return-btn" onclick="centralizeScroll('text-cited')">Return to Text ↑</span>
+        </div>
+    </div>
+    <div class="card" id="vocab-simplicity">
+        <div class="card-content">
+            <strong>Simplicity:</strong> the quality of being easy to understand or do
+            <br><span class="return-btn" onclick="centralizeScroll('text-simplicity')">Return to Text ↑</span>
+        </div>
+    </div>
+    <div class="card" id="vocab-unpredictability">
+        <div class="card-content">
+            <strong>Unpredictability:</strong> the quality of being difficult to know what will happen next
+            <br><span class="return-btn" onclick="centralizeScroll('text-unpredictability')">Return to Text ↑</span>
+        </div>
+    </div>
+    <div class="card" id="vocab-cherish">
+        <div class="card-content">
+            <strong>Cherish:</strong> to love and keep something as a very important thing
+            <br><span class="return-btn" onclick="centralizeScroll('text-cherish')">Return to Text ↑</span>
+        </div>
+    </div>
+    <div class="card" id="vocab-stakes">
+        <div class="card-content">
+            <strong>Stakes:</strong> the money or risk involved in a game or event
+            <br><span class="return-btn" onclick="centralizeScroll('text-stakes')">Return to Text ↑</span>
+        </div>
+    </div>
+    <div class="card" id="vocab-constantly">
+        <div class="card-content">
+            <strong>Constantly:</strong> all the time or very often
+            <br><span class="return-btn" onclick="centralizeScroll('text-constantly')">Return to Text ↑</span>
+        </div>
+    </div>
+    <div class="card" id="vocab-evolving">
+        <div class="card-content">
+            <strong>Evolving:</strong> changing and developing slowly over time
+            <br><span class="return-btn" onclick="centralizeScroll('text-evolving')">Return to Text ↑</span>
+        </div>
+    </div>
+    <div class="card" id="vocab-overlooked">
+        <div class="card-content">
+            <strong>Overlooked:</strong> not noticed or not thought to be important
+            <br><span class="return-btn" onclick="centralizeScroll('text-overlooked')">Return to Text ↑</span>
+        </div>
+    </div>
+    <div class="card" id="vocab-staple">
+        <div class="card-content">
+            <strong>Staple:</strong> a main or very important part of a culture or diet
+            <br><span class="return-btn" onclick="centralizeScroll('text-staple')">Return to Text ↑</span>
+        </div>
+    </div>
+    <div class="card" id="vocab-immense">
+        <div class="card-content">
+            <strong>Immense:</strong> extremely large or great
+            <br><span class="return-btn" onclick="centralizeScroll('text-immense')">Return to Text ↑</span>
+        </div>
+    </div>
+    <div class="card" id="vocab-concentration">
+        <div class="card-content">
+            <strong>Concentration:</strong> the ability to think carefully about one thing
+            <br><span class="return-btn" onclick="centralizeScroll('text-concentration')">Return to Text ↑</span>
+        </div>
+    </div>
+    <div class="card" id="vocab-ultimately">
+        <div class="card-content">
+            <strong>Ultimately:</strong> used to emphasize the most important or final result
+            <br><span class="return-btn" onclick="centralizeScroll('text-ultimately')">Return to Text ↑</span>
+        </div>
+    </div>
+    </div>
+</article>
+</section>
+        <section id="section1">
+            <h2>Section 1: Listening & Reading Integration</h2>
+            
+<article>
+    <h3>1-1. A Weekend Trip to the Mountains</h3>
+    
+    <div class="audio-zone" style="margin-bottom: 20px;">
+        <span class="audio-label">🎧 Listening (Track 37)</span>
+        <audio id="main-player-1" style="width:100%;" controls src="Track 37.mp3"></audio>
+    </div>
+    <div id="script-container1" class="script-window" style="height: 450px; overflow-y: auto;"></div>
+</article>
+            <article style="margin-top: 3rem; border-top: 1px solid #eee; padding-top: 2rem;">
+                <h3>1-2. Ways to Relax and Enjoy Life</h3>
+                
+                <div class="audio-zone">
+                    <span class="audio-label">🎁 Conversation 1 : The Magic of the World's Favorite Sport</span>
+                    <audio id="player-1" style="width:100%;" controls src="Track 38.mp3"></audio>
+                    <div id="script-1" class="script-window"></div>
+                </div>
+                <div class="audio-zone">
+                    <span class="audio-label">📦 Conversation 2 : Phrases for Everyday Life</span>
+                    <audio id="player-2" style="width:100%;" controls src="Track 39.mp3"></audio>
+                    <div id="script-2" class="script-window"></div>
+                </div>
+                <div class="audio-zone">
+                    <span class="audio-label">👨‍💼 Conversation 3 : The Power of the Siesta</span>
+                    <audio id="player-3" style="width:100%;" controls src="Track 40.mp3"></audio>
+                    <div id="script-3" class="script-window"></div>
+                </div>
+            </article>
+         <article style="margin-top: 3rem; border-top: 1px solid #eee; padding-top: 2rem;">
+    <h2>1-3. &#x1F4D6; Reading: Unique Sports Around the World</h2>
+    <div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+        <p style="margin-top: 0;">Pato: The National Sport of Argentina</p>
+        <p>Although it doesn't attract big crowds or money, Pato is the national sport of Argentina. It was invented in the 17th century and originally involved two teams on horses trying to prevent each other from carrying a duck (pato in Spanish) to their farmhouse. The sport was banned for a while because of violence - not only to the duck, but also to other players. Some were killed in fights or from being kicked by the horses. The modern game (sometimes also known as Horseball) is a lot safer. Teams of four riders fight for the 'duck' (now a ball with handles) and throw and catch it to try and score in their opponent's net.</p>
+        <p style="margin-top: 0;">Keirin: Japan's High-Speed Cycle Racing</p>
+        <p>Since 1948, Keirin has become one of Japan's biggest spectator sports with over 20 million a year attending events. People now bet over $15 billion dollars on the outcome of the races. Keirin is like horseracing, but with cyclists. Nine competitors ride round a track following a cyclist who sets the pace at about 50km/h. He then leaves the track so the riders can race each other for the remaining two laps, reaching speeds of 70km/h. There are often crashes as there is so little space to race in. Riders have to train 15 hours a day in special schools to be able to race and can win millions of dollars.</p>
+        <p style="margin-top: 0;">Bossaball: A Fusion of Music and Sport</p>
+        <p>Bossaball is a new game with a small but growing support. It was invented in Belgium a few years ago. It's played on a special inflatable pitch and is a mixture of volleyball, football, gymnastics and dance. Players bounce up and down and aim to pass, kick and head the ball over the net. The rules are a little complicated, but you basically lose a point when the ball touches the floor. The referee is also a DJ who plays Brazilian music as the teams play.</p>
+    </div>
+    <div class="quiz-container" style="margin-top: 2rem; padding: 0 1rem;">
+        <h4 style="color: var(--secondary); margin-bottom: 1.5rem;">✅ Check your understanding (True or False)</h4>
+        <style>
+            .quiz-row { display: flex; align-items: center; margin-bottom: 15px; font-size: 1.05rem; flex-wrap: wrap; }
+            .quiz-question { margin-right: 12px; font-weight: 500; }
+            .btn-check-small { 
+                padding: 3px 10px; font-size: 0.85rem; cursor: pointer; border-radius: 6px; 
+                border: 1px solid var(--secondary); background: white; color: var(--secondary);
+                transition: 0.2s; margin-right: 10px;
+            }
+            .btn-check-small:hover { background: var(--secondary); color: white; }
+            .answer-text { color: var(--success); font-weight: bold; font-size: 0.95rem; }
+        </style>
+<div class="quiz-container" style="background: #fdfdfd; padding: 20px; border-radius: 12px; border: 1px solid #eee;">
+    
+    <div class="quiz-row" id="tf-q1" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+        <span class="quiz-question">1. Pato was originally played by teams on horses using a ball with handles.</span>
+        <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+            <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+            <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+        </div>
+        <button onclick="validateTF('tf-q1', 'F', 'False (It originally used a real duck.)')" class="btn-check-small">Check</button>
+        <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+    </div>
+    <div class="quiz-row" id="tf-q2" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+        <span class="quiz-question">2. The modern version of Pato, also known as Horseball, is safer than the original game.</span>
+        <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+            <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+            <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+        </div>
+        <button onclick="validateTF('tf-q2', 'T', 'True (The modern game _sometimes also known as Horseball_ is a lot safer.)')" class="btn-check-small">Check</button>
+        <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+    </div>
+    <div class="quiz-row" id="tf-q3" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+        <span class="quiz-question">3. More than 20 million people attend Keirin events in Japan every year.</span>
+        <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+            <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+            <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+        </div>
+        <button onclick="validateTF('tf-q3', 'T', 'True (Keirin has become one of Japan,s biggest spectator sports with over 20 million a year attending events.)')" class="btn-check-small">Check</button>
+        <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+    </div>
+    <div class="quiz-row" id="tf-q4" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+        <span class="quiz-question">4. In Keirin, a pace-setting cyclist stays on the track until the very end of the race.</span>
+        <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+            <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+            <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+        </div>
+        <button onclick="validateTF('tf-q4', 'F', 'False (He leaves the track for the final two laps.)')" class="btn-check-small">Check</button>
+        <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+    </div>
+    <div class="quiz-row" id="tf-q5" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
+        <span class="quiz-question">5. In Bossaball, teams lose a point if the ball touches the inflatable floor.</span>
+        <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
+            <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
+            <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
+        </div>
+        <button onclick="validateTF('tf-q5', 'T', 'True (You basically lose a point when the ball touches the floor.)')" class="btn-check-small">Check</button>
+        <span class="answer-text" style="display:none; margin-left: 10px; font-weight: bold;"></span>
+    </div>
+</div>
+<script>
+// T/F 버튼 선택 시 시각적 효과
+function selectTF(btn, val) {
+    const parent = btn.parentElement;
+    const btns = parent.querySelectorAll('.tf-btn');
+    btns.forEach(b => {
+        b.style.background = '#fff';
+        b.style.color = '#333';
+        b.classList.remove('selected');
+    });
+    btn.style.background = '#333';
+    btn.style.color = '#fff';
+    btn.classList.add('selected');
+    btn.dataset.value = val;
+}// 정답 확인 및 토글 함수
+function validateTF(rowId, correctVal, explanation) {
+    const row = document.getElementById(rowId);
+    const selectedBtn = row.querySelector('.tf-btn.selected');
+    const ansText = row.querySelector('.answer-text');
+    // 이미 정답이 보이고 있다면 -> 다시 숨기기 (토글)
+    if (ansText.style.display === 'inline') {
+        ansText.style.display = 'none';
+        row.style.background = '#fff'; // 배경색 초기화
+        return;
+    }
+    // 버튼을 선택하지 않았을 때
+    if (!selectedBtn) {
+        alert("Please select T or F first!");
+        return;
+    }
+    // 정답 확인 모드
+    const userVal = selectedBtn.dataset.value;
+    ansText.style.display = 'inline';
+    ansText.innerText = explanation;
+    if (userVal === correctVal) {
+        row.style.background = '#e8f5e9'; // 정답: 연한 초록색
+        ansText.style.color = '#2e7d32';
+    } else {
+        row.style.background = '#ffebee'; // 오답: 연한 빨간색
+        ansText.style.color = '#c62828';
+    }
+}</script>
+    </div>
+</article>
+        </section>
+<section id="section2">
+    <h2>Section 2: Speaking Practice</h2> 
+    
+    <article style="margin-top: 1rem;">
+        <h3>Interactive Dialogue (Easy Version)</h3>
+        <p class="instruction" style="margin-bottom: 20px;">
+            <i class="fas fa-headphones-alt"></i> Listen to the sentence (🔊), record your voice (🎤), and check your recording (▶).
+        </p>
+        <div class="quiz-item" style="background: #fff; padding: 25px; border-radius: 15px; border: 1px solid #ddd; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+            <div id="dialogue-container" style="display: flex; flex-direction: column; gap: 12px; font-size: 1.05rem;"></div>
+        </div>
+    </article>
+</section>
+
+<section id="section3">
+            <h2>Section 3: Writing Practice</h2>
+            <div id="final-quiz-area" style="margin-top: 40px; border-top: 2px solid var(--secondary); padding-top: 25px;">
+                <div class="quiz-item" style="background: #fcfcfc; padding: 20px; border-radius: 10px;">
+    <p style="margin-bottom: 15px;">
+        <strong style="font-size: 1.1rem; color: #3498db;">Step 1. Grammar & Vocabulary Check:</strong>
+    </p> 
+<div class="reading-box" style="background-color: #f9f9f9; padding: 2.5rem; border-radius: 15px; margin: 1.5rem 0; line-height: 1.8; color: #333; box-shadow: inset 0 0 10px rgba(0,0,0,0.02);">
+    <h3 style="text-align: center; color: #2c3e50; margin-bottom: 2rem; border-bottom: 3px double #3498db; padding-bottom: 10px; display: block; width: fit-content; margin-left: auto; margin-right: auto;">
+        <i class="fas fa-book-open" style="margin-right: 10px;"></i>Grammar Mastery
+    </h3>
+    <h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px; margin-top: 0;">1. Talking About the Future</h3>
+    <p>In English, we choose different forms depending on how <strong>sure</strong> we are about a plan.</p>
+    
+    <ul style="list-style-type: none; padding-left: 10px;">
+        <li style="margin-bottom: 15px;">
+            <strong style="color: #e67e22;">• Might + Verb:</strong> Used for <strong>possibility</strong>. You are not 100% sure.
+            <br><i style="color: #7f8c8d;">Example (Section 2):</i> "The weather forecast says it <span style="color: #e67e22; font-weight: bold;">might rain</span>."
+        </li>
+        <li style="margin-bottom: 15px;">
+            <strong style="color: #2980b9;">• Present Continuous (am/is/are + -ing):</strong> Used for <strong>fixed arrangements</strong>. The plan is already made.
+            <br><i style="color: #7f8c8d;">Example (Section 2):</i> "I’<span style="color: #2980b9; font-weight: bold;">m watching</span> Bossaball this weekend."
+        </li>
+        <li style="margin-bottom: 15px;">
+            <strong style="color: #16a085;">• Be going to + Verb:</strong> Used for <strong>intentions</strong> or plans decided before speaking.
+            <br><i style="color: #7f8c8d;">Example (Section 0):</i> "Some people <span style="color: #16a085; font-weight: bold;">are going to stay</span> at home to recover."
+        </li>
+    </ul>
+    <hr style="border: 0; border-top: 1px solid #eee; margin: 25px 0;">
+    <h3 style="color: #2c3e50; border-bottom: 2px solid #3498db; padding-bottom: 10px;">2. Superlatives (The Best of the Best)</h3>
+    <p>We use superlatives to compare three or more things and identify the <strong>top</strong> one.</p>
+    <div style="background-color: #fff; padding: 15px; border-radius: 10px; border: 1px dashed #bdc3c7;">
+        <p style="margin: 5px 0;"><strong>• Short Adjectives:</strong> the + adjective + <strong>-est</strong> (e.g., <i>big &rarr; the biggest</i>)</p>
+        <p style="margin: 5px 0;"><strong>• Long Adjectives:</strong> <strong>the most</strong> + adjective (e.g., <i>popular &rarr; the most popular</i>)</p>
+        <p style="margin: 5px 0;"><strong>• Irregular:</strong> good &rarr; <strong>the best</strong> / bad &rarr; <strong>the worst</strong></p>
+    </div>
+    <p style="margin-top: 20px;"><strong>Context from our Reading:</strong></p>
+    <ul style="padding-left: 20px;">
+        <li>"Football is cited as the world’s <span style="color: #d35400; font-weight: bold;">most popular</span> sport."</li>
+        <li>"Learning about Pato was the <span style="color: #d35400; font-weight: bold;">most fascinating</span> part."</li>
+        <li>"Keirin is one of Japan's <span style="color: #d35400; font-weight: bold;">biggest</span> spectator sports."</li>
+    </ul>
+</div>
+<div class="quiz-item" style="background: #fff; padding: 25px; border-radius: 15px; border: 1px solid #ddd; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+<div id="vocabulary-mastery-section">
+<h3 style="text-align: center; color: #2c3e50; margin-bottom: 2rem; border-bottom: 3px double #3498db; padding-bottom: 10px; display: block; width: fit-content; margin-left: auto; margin-right: auto; font-size: 1.6rem;">
+        <i class="fas fa-spell-check" style="margin-right: 10px;"></i>Vocabulary Check
+    </h3>
+    <div style="background: #ffffff; border: 1px solid #e1e8ed; border-radius: 12px; padding: 20px; margin-bottom: 25px;">
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+            <h4 style="color: #2c3e50; margin: 0; border-left: 4px solid #3498db; padding-left: 10px;">Group 1</h4>
+            <span style="font-size: 0.85rem; background: #3498db; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500; box-shadow: 0 2px 5px rgba(52, 152, 219, 0.3);">
+                <i class="fas fa-spell-check"></i> Word Bank: trait, explores, sedentary, opting, fascinating
+            </span>
+        </div>
+        
+
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+            1. This textbook <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #bdc3c7; background: transparent; text-align: center; font-weight: bold; color: #2980b9;" placeholder="......"> how different cultures relax.
+            <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #3498db; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+            <span style="display: none; margin-left: 10px; font-weight: bold; color: #e67e22;">(Ans: explores)</span>
+        </div>
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+            2. Learning about world traditions is truly <input type="text" class="mini-input" style="width: 120px; border: none; border-bottom: 2px solid #bdc3c7; background: transparent; text-align: center; font-weight: bold; color: #2980b9;" placeholder="......">.
+            <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #3498db; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+            <span style="display: none; margin-left: 10px; font-weight: bold; color: #e67e22;">(Ans: fascinating)</span>
+        </div>
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+            3. Sitting at a desk all day is a <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #bdc3c7; background: transparent; text-align: center; font-weight: bold; color: #2980b9;" placeholder="......"> lifestyle.
+            <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #3498db; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+            <span style="display: none; margin-left: 10px; font-weight: bold; color: #e67e22;">(Ans: sedentary)</span>
+        </div>
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+            4. More people are <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #bdc3c7; background: transparent; text-align: center; font-weight: bold; color: #2980b9;" placeholder="......"> for active hobbies.
+            <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #3498db; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+            <span style="display: none; margin-left: 10px; font-weight: bold; color: #e67e22;">(Ans: opting)</span>
+        </div>
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+            5. The need for rest is a common human <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #bdc3c7; background: transparent; text-align: center; font-weight: bold; color: #2980b9;" placeholder="......">.
+            <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #3498db; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+            <span style="display: none; margin-left: 10px; font-weight: bold; color: #e67e22;">(Ans: trait)</span>
+        </div>
+
+    </div>
+    <div style="background: #ffffff; border: 1px solid #e1e8ed; border-radius: 12px; padding: 20px; margin-bottom: 25px;">
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+            <h4 style="color: #2c3e50; margin: 0; border-left: 4px solid #f39c12; padding-left: 10px;">Group 2</h4>
+            <span style="font-size: 0.85rem; background: #f39c12; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500; box-shadow: 0 2px 5px rgba(243, 156, 18, 0.3);">
+                <i class="fas fa-spell-check"></i> Word Bank: massive, cited, simplicity, unpredictability, spectator
+            </span>
+        </div>
+        
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+            6. Football has a <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #bdc3c7; background: transparent; text-align: center; font-weight: bold; color: #2980b9;" placeholder="......"> number of fans.
+            <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #3498db; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+            <span style="display: none; margin-left: 10px; font-weight: bold; color: #e67e22;">(Ans: massive)</span>
+        </div>
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+            7. Football is often <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #bdc3c7; background: transparent; text-align: center; font-weight: bold; color: #2980b9;" placeholder="......"> as the most popular sport.
+            <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #3498db; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+            <span style="display: none; margin-left: 10px; font-weight: bold; color: #e67e22;">(Ans: cited)</span>
+        </div>
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+            8. Fans love the <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #bdc3c7; background: transparent; text-align: center; font-weight: bold; color: #2980b9;" placeholder="......"> of the game's rules.
+            <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #3498db; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+            <span style="display: none; margin-left: 10px; font-weight: bold; color: #e67e22;">(Ans: simplicity)</span>
+        </div>
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+            9. The <input type="text" class="mini-input" style="width: 150px; border: none; border-bottom: 2px solid #bdc3c7; background: transparent; text-align: center; font-weight: bold; color: #2980b9;" placeholder="......"> of the score makes it exciting.
+            <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #3498db; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+            <span style="display: none; margin-left: 10px; font-weight: bold; color: #e67e22;">(Ans: unpredictability)</span>
+        </div>
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+            10. In Keirin, people watch it as a <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #bdc3c7; background: transparent; text-align: center; font-weight: bold; color: #2980b9;" placeholder="......"> sport.
+            <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #3498db; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+            <span style="display: none; margin-left: 10px; font-weight: bold; color: #e67e22;">(Ans: spectator)</span>
+        </div>
+    </div>
+    <div style="background: #ffffff; border: 1px solid #e1e8ed; border-radius: 12px; padding: 20px; margin-bottom: 25px;">
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+            <h4 style="color: #2c3e50; margin: 0; border-left: 4px solid #27ae60; padding-left: 10px;">Group 3</h4>
+            <span style="font-size: 0.85rem; background: #27ae60; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500; box-shadow: 0 2px 5px rgba(39, 174, 96, 0.3);">
+                <i class="fas fa-spell-check"></i> Word Bank: cherish, stakes, constantly, evolving, staple
+            </span>
+        </div>
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+            11. Betting means there are high financial <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #bdc3c7; background: transparent; text-align: center; font-weight: bold; color: #2980b9;" placeholder="......">.
+            <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #3498db; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+            <span style="display: none; margin-left: 10px; font-weight: bold; color: #e67e22;">(Ans: stakes)</span>
+        </div>
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+            12. Many people <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #bdc3c7; background: transparent; text-align: center; font-weight: bold; color: #2980b9;" placeholder="......"> their local traditions.
+            <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #3498db; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+            <span style="display: none; margin-left: 10px; font-weight: bold; color: #e67e22;">(Ans: cherish)</span>
+        </div>
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+            13. Rules of games are <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #bdc3c7; background: transparent; text-align: center; font-weight: bold; color: #2980b9;" placeholder="......"> changing.
+            <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #3498db; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+            <span style="display: none; margin-left: 10px; font-weight: bold; color: #e67e22;">(Ans: constantly)</span>
+        </div>
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+            14. Napping is a cultural <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #bdc3c7; background: transparent; text-align: center; font-weight: bold; color: #2980b9;" placeholder="......"> in many countries.
+            <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #3498db; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+            <span style="display: none; margin-left: 10px; font-weight: bold; color: #e67e22;">(Ans: staple)</span>
+        </div>
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+            15. The way we play is always <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #bdc3c7; background: transparent; text-align: center; font-weight: bold; color: #2980b9;" placeholder="......"> over time.
+            <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #3498db; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+            <span style="display: none; margin-left: 10px; font-weight: bold; color: #e67e22;">(Ans: evolving)</span>
+        </div>
+    </div>
+    <div style="background: #ffffff; border: 1px solid #e1e8ed; border-radius: 12px; padding: 20px; margin-bottom: 25px;">
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 10px; margin-bottom: 20px;">
+            <h4 style="color: #2c3e50; margin: 0; border-left: 4px solid #e67e22; padding-left: 10px;">Group 4</h4>
+            <span style="font-size: 0.85rem; background: #e67e22; color: white; padding: 4px 12px; border-radius: 20px; font-weight: 500; box-shadow: 0 2px 5px rgba(230, 126, 34, 0.3);">
+                <i class="fas fa-spell-check"></i> Word Bank: overlooked, immense, concentration, ultimately, productive
+            </span>
+        </div>
+        
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+            16. Rest is important and should not be <input type="text" class="mini-input" style="width: 120px; border: none; border-bottom: 2px solid #bdc3c7; background: transparent; text-align: center; font-weight: bold; color: #2980b9;" placeholder="......">.
+            <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #3498db; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+            <span style="display: none; margin-left: 10px; font-weight: bold; color: #e67e22;">(Ans: overlooked)</span>
+        </div>
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+            17. Sleeping well has <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #bdc3c7; background: transparent; text-align: center; font-weight: bold; color: #2980b9;" placeholder="......"> health benefits.
+            <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #3498db; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+            <span style="display: none; margin-left: 10px; font-weight: bold; color: #e67e22;">(Ans: immense)</span>
+        </div>
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+            18. Tiredness makes you lose your <input type="text" class="mini-input" style="width: 130px; border: none; border-bottom: 2px solid #bdc3c7; background: transparent; text-align: center; font-weight: bold; color: #2980b9;" placeholder="......"> at work.
+            <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #3498db; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+            <span style="display: none; margin-left: 10px; font-weight: bold; color: #e67e22;">(Ans: concentration)</span>
+        </div>
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
+            19. <input type="text" class="mini-input" style="width: 110px; border: none; border-bottom: 2px solid #bdc3c7; background: transparent; text-align: center; font-weight: bold; color: #2980b9;" placeholder="......">, the goal is to find a balance.
+            <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #3498db; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+            <span style="display: none; margin-left: 10px; font-weight: bold; color: #e67e22;">(Ans: Ultimately)</span>
+        </div>
+        <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
+            20. A short siesta can make you much more <input type="text" class="mini-input" style="width: 120px; border: none; border-bottom: 2px solid #bdc3c7; background: transparent; text-align: center; font-weight: bold; color: #2980b9;" placeholder="......">.
+            <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #3498db; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+            <span style="display: none; margin-left: 10px; font-weight: bold; color: #e67e22;">(Ans: productive)</span>
+        </div>
+    </div>
+</div>
+</div>
+
+<div class="quiz-item" style="margin-top: 40px; padding: 25px; background: #fcfcfc; border-radius: 10px; border: 1px solid #eee;">
+    <p style="margin-bottom: 15px;">
+        <strong style="font-size: 1.1rem; color: #3498db;">Step 2. Content Check:</strong>
+    </p> 
+    <p style="line-height: 1.6; color: #34495e; font-weight: 500;">
+        While football is the most popular, the text introduces unique sports like <b>Pato</b> and <b>Keirin</b>. What are the specific reasons these sports are so important in their respective countries?
+    </p>
+    <div style="margin: 10px 0; font-size: 0.85rem; color: #7f8c8d;">
+        <i class="fas fa-lightbulb" style="color: #f1c40f;"></i> 
+        <b>Key Keywords:</b> national sport, tradition, betting, spectator sport, Japan, Argentina
+    </div>
+    <textarea id="content-check-answer" rows="3" 
+        style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; font-size: 0.95rem; line-height: 1.6; resize: vertical; display: block; margin-bottom: 10px; box-sizing: border-box;" 
+        placeholder="Write 1-2 sentences about the importance of Pato or Keirin based on the text..."></textarea>
+</div>
+<div class="quiz-item" style="background: #fcfcfc; padding: 25px; border-radius: 10px; margin-top: 20px; border: 1px solid #eee;">
+    <p style="margin-bottom: 15px;">
+        <strong style="font-size: 1.1rem; color: #3498db;">Step 3. Thinking about Balance and Rest:</strong>
+    </p>
+    <p style="color: #34495e; line-height: 1.6;">
+        The text discusses how different cultures view rest—from the <b>Spanish siesta</b> to the <b>global problem of sleep deprivation</b>. It suggests that being productive is not just about working hard, but also about resting well.
+        <br><br><b>Do you believe that taking a nap (siesta) during the day is a "sign of laziness" or a "tool for success"? Choose one side and give a reason.</b>
+    </p>
+    <textarea rows="5" style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; box-sizing: border-box;" 
+        placeholder="I believe a siesta is a tool for success because..."></textarea>
+</div>
+<div style="margin-top: 40px; padding: 30px; background: #fffde7; border-radius: 15px; border: 1px solid #fff176; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+    <h3 style="margin-top: 0; color: #f57f17; display: flex; align-items: center;">
+        <i class="fas fa-lightbulb" style="margin-right: 12px;"></i> Critical Thinking
+    </h3>
+    <p style="line-height: 1.7; color: #444;">
+        We have seen how sports can be <b>massive spectator events</b> (Keirin), <b>traditional pride</b> (Pato), or <b>pure fun</b> (Bossaball). At the same time, we learned that <b>proper rest</b> is essential for a productive life.
+        <br><br>
+        <b>In your opinion, what is the most effective way to recover from the stress of a modern "sedentary" lifestyle? Should we engage in active, competitive sports, or should we prioritize complete rest like naps and longer sleep? 
+        <br>Compare the benefits of "active leisure" (sports) and "passive rest" (sleep) mentioned in the text to support your answer.</b>
+    </p>
+    <textarea class="main-textarea" 
+        placeholder="Synthesize the ideas of sports and rest. Compare active vs. passive recovery based on the reading..." 
+        rows="10" 
+        style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; font-family: inherit; font-size: 0.95rem; line-height: 1.6; resize: vertical; display: block; box-sizing: border-box; background: white;">
+</textarea>
+</div>
+
+<div style="margin-top: 30px; padding: 25px; background: #ffffff; border-radius: 15px; border: 2px solid #3498db; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="margin: 0; color: #2980b9;"><i class="fas fa-robot"></i> AI Solution</h3>
+        <span style="background: #3498db; color: white; padding: 5px 15px; border-radius: 50px; font-weight: bold; font-size: 1.1rem;">
+            Overall Score: <input type="text" class="mini-input" style="width: 50px !important; color: white; background: transparent; border: 1px solid rgba(255,255,255,0.5); text-align: center;" value="9.2"> / 10
+        </span>
+    </div>
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.95rem;">
+        <thead>
+            <tr style="background: #ebf5fb; text-align: left;">
+                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Evaluation Criteria</th>
+                <th style="padding: 12px; border-bottom: 2px solid #3498db; text-align: center;">Score</th>
+                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Detailed Feedback</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Content</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="10"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Deep reflection on career stages from 20s to 50s."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Logic</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="9.5"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Strong comparison between 'meaning' and 'success'."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Grammar</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="8"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Check comparative forms (e.g., more important than)."></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Vocabulary</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="9"> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Great use of 'exhausted', 'exploiting', and 'fulfillment'."></td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="background: #f4f7f6; padding: 15px; border-radius: 10px; border-left: 5px solid #27ae60;">
+        <p style="margin: 0 0 10px 0; font-weight: bold; color: #27ae60;"><i class="fas fa-check-circle"></i> Recommended Revision</p>
+        <textarea style="width: 100%; background: transparent; border: 1px dashed #27ae60; border-radius: 5px; padding: 10px; font-style: italic;" rows="8">"In my experience, I thought gaining experience was more important than anything else in my twenties. My companies might have been exploiting me with boring tasks, but I worked hard and struggled through it. In my thirties, I chased high salaries, but I still worked over ten hours a day. Now in my late forties, I was so exhausted that I retired after 30 years of practice. I currently work as a security officer for two hours a day and I am happy because there is no pressure. To me, a 'meaningful' job is more important than a 'successful' one, and that meaning depends on my current physical and mental well-being."</textarea>
+    </div>
+</div>
+            <button class="save-btn" style="margin-top: 20px;" onclick="saveProgress()">Save My Work</button>
+        </section>
+    </div>
+    <script>
+        // --- 데이터 정의 ---
+        const dialogueData = [
+    { 
+        name: "Corinne", 
+        color: "#3498db", 
+        bg: "#ebf5fb", 
+        text: "Hi, Maribel! Any plans for the weekend?", 
+        char: "speaker1" 
+    },
+    { 
+        name: "Maribel", 
+        color: "#f39c12", 
+        bg: "#fdfaf0", 
+        text: "I’ll just <b>take it easy</b> at home.", 
+        char: "speaker2" 
+    },
+    { 
+        name: "Corinne", 
+        color: "#3498db", 
+        bg: "#ebf5fb", 
+        text: "The <b>weather forecast</b> says it might rain.", 
+        char: "speaker1" 
+    },
+    { 
+        name: "Maribel", 
+        color: "#f39c12", 
+        bg: "#fdfaf0", 
+        text: "Then, I should try a <b>siesta</b>.", 
+        char: "speaker2" 
+    },
+    { 
+        name: "Corinne", 
+        color: "#3498db", 
+        bg: "#ebf5fb", 
+        text: "Naps make you very <b>productive</b>, right?", 
+        char: "speaker1" 
+    },
+    { 
+        name: "Maribel", 
+        color: "#f39c12", 
+        bg: "#fdfaf0", 
+        text: "Yes. How about you? Any <b>spectator</b> sports?", 
+        char: "speaker2" 
+    },
+    { 
+        name: "Corinne", 
+        color: "#3498db", 
+        bg: "#ebf5fb", 
+        text: "I’m watching <b>Bossaball</b>. It’s <b>fascinating</b>!", 
+        char: "speaker1" 
+    },
+    { 
+        name: "Maribel", 
+        color: "#f39c12", 
+        bg: "#fdfaf0", 
+        text: "<b>Ultimately</b>, we just need a <b>balance</b>.", 
+        char: "speaker2" 
+    },
+    { 
+        name: "Corinne", 
+        color: "#3498db", 
+        bg: "#ebf5fb", 
+        text: "Exactly. Enjoy your <b>relaxing</b> weekend!", 
+        char: "speaker1" 
+    }
+];
+const scriptData1_1_D1 = [
+    { start: 0, speaker: "Narrator", text: "5.1" }, 
+    { start: 3, speaker: "Corinne", text: "So what are you going to do while you're here?" },
+    { start: 6, speaker: "Maribel", text: "I'm just going to take it easy. I might go shopping tomorrow. You're working tomorrow, aren't you?" },
+    { start: 12, speaker: "Corinne", text: "Yes - and Saturday morning, I'm afraid." },
+    { start: 15, speaker: "Maribel", text: "Oh dear." },
+    { start: 17, speaker: "Corinne", text: "I'm sorry, but some important clients are coming and I need to go and meet them at the airport and make sure everything's OK." },
+    { start: 24, speaker: "Maribel", text: "Right. What time are you going to be back?" },
+    { start: 28, speaker: "Corinne", text: "Hopefully about 2." },
+    { start: 30, speaker: "Maribel", text: "That's OK, then. I don't usually get up before 11 anyway and I've brought my trainers, so I might go for a run. Is there anywhere to go near here?" },
+    { start: 42, speaker: "Corinne", text: "There's actually an athletics track just down the road." },
+    { start: 46, speaker: "Maribel", text: "OK. To be honest, though, I'd prefer a park or somewhere like that." },
+    { start: 51, speaker: "Corinne", text: "Hmm. There's not much near here. I usually just run on the streets." },
+    { start: 56, speaker: "Maribel", text: "OK. Well, I'll see. Have you got any plans for us over the weekend?" },
+    { start: 62, speaker: "Corinne", text: "Well, a friend is having a party for his birthday on Saturday night, if you'd like to go." },
+    { start: 67, speaker: "Maribel", text: "Yeah, great. You know I always like a dance!" },
+    { start: 71, speaker: "Corinne", text: "And the forecast is really good for Sunday, so we're thinking of going for a walk in the mountains near here." },
+    { start: 77, speaker: "Maribel", text: "Oh right. That sounds nice." },
+    { start: 79, speaker: "Corinne", text: "Yes, it's great there. There's a lovely river we can go swimming in." },
+    { start: 84, speaker: "Maribel", text: "Oh right. I haven't got my swimming gear with me." },
+    { start: 88, speaker: "Corinne", text: "That's OK. I'm sure I can lend you something." },
+    { start: 91, speaker: "Maribel", text: "Isn't the water cold?" },
+    { start: 93, speaker: "Corinne", text: "A bit, but you soon warm up." },
+    { start: 95, speaker: "Maribel", text: "I must admit, I'm a bit soft. I like a heated pool." },
+    { start: 101, speaker: "Corinne", text: "Honestly, it's not so bad and the water's really clear. It's just beautiful with the mountains and everything!" },
+    { start: 108, speaker: "Maribel", text: "So what time are you thinking of leaving?" },
+    { start: 111, speaker: "Corinne", text: "Well, it's two or three hours by car, so if we want to make the most of the day, we need to leave about 6 o'clock." }
+];
+const scriptData1_2_P1 = [
+    { start: 0, speaker: "Narrator", text: "5.2" },
+    { start: 3, speaker: "Speaker", text: "Last night I watched the big game in England between Liverpool and Chelsea." },
+    { start: 7, speaker: "Speaker", text: "I was one of 1 billion people watching in places as far apart as Peru, Saudi Arabia and Vietnam." },
+    { start: 15, speaker: "Speaker", text: "It was a nil-nil draw and perhaps the most boring game I've ever seen." },
+    { start: 21, speaker: "Speaker", text: "Football may be the most popular sport in the world, but it's difficult to know why when you see a game like that." },
+    { start: 28, speaker: "Speaker", text: "Knowing that the players earn millions a year just makes it worse!" },
+    { start: 33, speaker: "Speaker", text: "So why do we watch when there are plenty of alternatives?" },
+    { start: 37, speaker: "Speaker", text: "The Olympics contains thirty-five sports; other countries have different national sports such as cricket; and new sports are being created all the time." },
+    { start: 47, speaker: "Speaker", text: "Maybe it's because football is the simplest game to play. Does anyone really understand the rules of cricket?" },
+    { start: 56, speaker: "Speaker", text: "Football doesn't need expensive equipment. In fact, it requires hardly any gear at all and you need no real skill to play - who can't kick a ball?" },
+    { start: 67, speaker: "Speaker", text: "So nearly everyone has played at least once in their life and once you've played a sport, you appreciate it more." },
+    { start: 74, speaker: "Speaker", text: "Finally, football's different every game. Last night's game was boring, but next time Chelsea might win five-four, with a goal in the last minute!" },
+    { start: 86, speaker: "Speaker", text: "You never know." }
+];
+const scriptData1_2_P2 = [
+    { start: 0, speaker: "Narrator", text: "5.3" },
+    { start: 2, speaker: "1", text: "These days, people are married on average for eleven and a half years, but the longest marriage lasted eighty years!" },
+    { start: 15, speaker: "2", text: "English must be one of the easiest languages to learn." },
+    { start: 21, speaker: "3", text: "We wanted to go there because they said it's the nicest place to eat." },
+    { start: 29, speaker: "4", text: "It's the prettiest village round here, so there's often a shortage of places to stay." }
+];
+const scriptData1_2_P3 = [
+    { start: 0, speaker: "Narrator", text: "5.4" },
+    { start: 2, speaker: "Speaker", text: "In Spain, people typically work from nine in the morning till seven in the evening, though some start even earlier and finish even later." },
+    { start: 13, speaker: "Speaker", text: "When people go out and relax, they often book a table in a restaurant for around ten at night or later and people frequently stay out till two, three or four in the morning. How do they do it?" },
+    { start: 28, speaker: "Speaker", text: "In the past, the answer was the siesta - a short nap after lunch at around three or in the early evening." },
+    { start: 38, speaker: "Speaker", text: "Recent research on sleep suggests the Spanish were very wise." },
+    { start: 44, speaker: "Speaker", text: "A short nap of between 20 minutes and an hour sometime between 1 and 3 pm can increase energy levels and improve your mood and creativity." },
+    { start: 56, speaker: "Speaker", text: "However, nowadays more and more Spanish people are working longer and longer hours, and the siesta is becoming a luxury outside the summer holidays." },
+    { start: 70, speaker: "Speaker", text: "At the moment, late nights are still common, but some academics say people are going to suffer from not having enough sleep if lifestyles don't change." },
+    { start: 81, speaker: "Speaker", text: "Strangely, this comes at a time when other countries are finally showing more interest in the siesta." },
+    { start: 88, speaker: "Speaker", text: "One group in Britain has launched a campaign called National Nap at Work Week." },
+    { start: 95, speaker: "Speaker", text: "They aim to inform people of the benefits of napping - and say that workers who take naps aren't lazy." },
+    { start: 103, speaker: "Speaker", text: "In fact, exactly the opposite is true - people who nap during work time actually work better than those who don't sleep." },
+    { start: 112, speaker: "Speaker", text: "Tired people lose concentration and make more mistakes. Naps also bring increased happiness, and happy workers are more productive." },
+    { start: 125, speaker: "Speaker", text: "Elsewhere, a New York-based company called Metronaps has created a special hi-tech room for business people to nap in during the day." },
+    { start: 135, speaker: "Speaker", text: "They are hoping to install the rooms in businesses everywhere." },
+    { start: 140, speaker: "Speaker", text: "And in Europe a lot of offices are buying a specially designed bed, called the Ready Bed, which can be easily folded and put away." },
+    { start: 150, speaker: "Speaker", text: "But remember, napping isn't only about being able to work better. Research also shows health benefits." },
+    { start: 160, speaker: "Speaker", text: "People who nap regularly are apparently less likely to have heart attacks - maybe because they're more relaxed." },
+    { start: 168, speaker: "Speaker", text: "A nap also means you can stay awake to do the things you really enjoy instead of falling asleep in front of the TV because you're so tired after a long day's work." }
+];
+        // --- 기능 함수 ---
+        let mediaRecorder;
+        let audioChunks = {};
+        function initDialogue() {
+            const container = document.getElementById('dialogue-container');
+            dialogueData.forEach((item, index) => {
+                const div = document.createElement('div');
+                div.style = `padding: 12px 15px; background: ${item.bg}; border-radius: 12px; border-left: 6px solid ${item.color}; display: flex; align-items: center; justify-content: space-between; gap: 10px;`;
+                div.innerHTML = `
+                    <div style="flex: 1;"><strong style="color: ${item.color};">${item.name}:</strong> <span>${item.text}</span></div>
+                    <div style="display: flex; gap: 8px; flex-shrink: 0;">
+                        <button onclick="speakText(\`${item.text.replace(/<\/?[^>]+(>|$)/g, "")}\`, '${item.char}')" style="background: ${item.color}; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">🔊</button>
+                        <button id="rec-${index}" onclick="toggleRecord(${index})" style="background: #e74c3c; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">🎤</button>
+                        <button id="play-${index}" onclick="playMyVoice(${index})" style="background: #2ecc71; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: none;">▶</button>
+                    </div>
+                `;
+                container.appendChild(div);
+            });
+        }
+        function speakText(text, character) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.pitch = (character === 'maya') ? 1.5 : 1.1;
+            window.speechSynthesis.speak(utterance);
+        }
+async function toggleRecord(index) {
+    const btn = document.getElementById(`rec-${index}`);
+    if (mediaRecorder && mediaRecorder.state === "recording") {
+        mediaRecorder.stop();
+        btn.style.backgroundColor = "#e74c3c"; btn.innerText = "🎤";
+    } else {
+        const stream = await navigator.mediaDevices.getUserMedia({ 
+            audio: {
+                echoCancellation: true,
+                noiseSuppression: true,
+                autoGainControl: false, // 웅웅거림 방지를 위해 끔
+                channelCount: 1
+            } 
+        });
+        // --- 오디오 증폭 로직 시작 ---
+        const audioContext = new AudioContext();
+        const source = audioContext.createMediaStreamSource(stream);
+        const gainNode = audioContext.createGain();
+        
+        gainNode.gain.value = 2.0; // [조정 포인트] 소리를 3배 키웁니다 (1.0~5.0 사이 조절 가능)
+        
+        const destination = audioContext.createMediaStreamDestination();
+        source.connect(gainNode);
+        gainNode.connect(destination);
+        // --- 오디오 증폭 로직 끝 ---
+        // 증폭된 스트림으로 녹음 진행
+        mediaRecorder = new MediaRecorder(destination.stream);
+        const chunks = [];
+        mediaRecorder.ondataavailable = e => chunks.push(e.data);
+        mediaRecorder.onstop = () => {
+            const blob = new Blob(chunks, { type: 'audio/webm' });
+            audioChunks[index] = URL.createObjectURL(blob);
+            document.getElementById(`play-${index}`).style.display = "flex";
+            
+            stream.getTracks().forEach(track => track.stop());
+            audioContext.close();
+        };
+        mediaRecorder.start();
+        btn.style.backgroundColor = "#000"; btn.innerText = "⏹";
+    }
+}        function playMyVoice(index) {
+            if (audioChunks[index]) new Audio(audioChunks[index]).play();
+        }
+        function setupAudioSync(audioId, containerId, data, isDialogue = false) {
+    const audio = document.getElementById(audioId);
+    const container = document.getElementById(containerId);
+    if(!audio || !container) return;
+    
+    container.innerHTML = '';
+    data.forEach((line, index) => {
+        const div = document.createElement('div');
+        div.className = 'script-line';
+        div.id = `${containerId}-line-${index}`;
+        div.innerHTML = isDialogue ? `<strong>${line.speaker}:</strong> ${line.text}` : line.text;
+        container.appendChild(div);
+    });
+    // 오디오 재생 시 스크립트 창 보이기
+    audio.addEventListener('play', () => { 
+        container.style.display = 'block'; 
+    });
+    // 오디오 진행 시간에 맞춰 스크립트 하이라이트 및 스크롤
+    audio.addEventListener('timeupdate', () => {
+        let activeIdx = -1;
+        for (let i = 0; i < data.length; i++) {
+            if (audio.currentTime >= data[i].start) activeIdx = i; else break;
+        }
+        container.querySelectorAll('.script-line').forEach(l => l.classList.remove('active'));
+        if (activeIdx !== -1) {
+            const currentLine = document.getElementById(`${containerId}-line-${activeIdx}`);
+            if (currentLine) {
+                currentLine.classList.add('active');
+                container.scrollTo({ 
+                    top: currentLine.offsetTop - container.offsetTop - 80, 
+                    behavior: 'smooth' 
+                });
+            }
+        }
+    });
+    // 추가된 부분: 음성 재생이 끝나면 스크립트 창 숨기기
+    audio.addEventListener('ended', () => { 
+        container.style.display = 'none'; 
+    });
+}        function centralizeScroll(targetId) {
+            const element = document.getElementById(targetId);
+            if (!element) return;
+            const elementRect = element.getBoundingClientRect();
+            const middle = (elementRect.top + window.pageYOffset) - (window.innerHeight / 2) + (elementRect.height / 2);
+            window.scrollTo({ top: middle, behavior: 'smooth' });
+            if (targetId.startsWith('vocab')) {
+                document.querySelectorAll('.card').forEach(c => c.classList.remove('active-highlight'));
+                element.classList.add('active-highlight');
+                setTimeout(() => element.classList.remove('active-highlight'), 1500);
+            }
+        }
+        function toggleAnswer(btn) {
+            const answerSpan = btn.nextElementSibling;
+            if (answerSpan.style.display === "none") {
+                answerSpan.style.display = "inline"; btn.innerText = "Hide";
+            } else {
+                answerSpan.style.display = "none"; btn.innerText = "Check";
+            }
+        }
+        function saveProgress() {
+            const allInputs = document.querySelectorAll('input[type="text"], textarea');
+            allInputs.forEach((input, index) => {
+                localStorage.setItem(`unit20_all_data_${index}`, input.value);
+            });
+            alert('Your progress has been saved! ✅');
+        }
+        // --- 초기화 로직 ---
+        window.addEventListener('DOMContentLoaded', () => {
+            initDialogue();
+            setupAudioSync('main-player-1', 'script-container1', scriptData1_1_D1, true);
+            setupAudioSync('player-1', 'script-1', scriptData1_2_P1);
+            setupAudioSync('player-2', 'script-2', scriptData1_2_P2, true);
+            setupAudioSync('player-3', 'script-3', scriptData1_2_P3);
+            // ... 나머지 setupAudioSync 호출
+            // 저장된 데이터 불러오기
+            const allInputs = document.querySelectorAll('input[type="text"], textarea');
+            allInputs.forEach((input, index) => {
+                const savedValue = localStorage.getItem(`unit05_all_data_${index}`);
+                if (savedValue) input.value = savedValue;
+            });
+        });
+    </script>
+<script>
+function speak(text) {
+    window.speechSynthesis.cancel();
+    const utterance = new SpeechSynthesisUtterance(text);
+    utterance.lang = 'en-US';
+    
+    const voices = window.speechSynthesis.getVoices();
+    // 여성 목소리 우선 선택
+    const femaleVoice = voices.find(v => v.name.includes('Female') || v.name.includes('Google US English') || v.name.includes('Samantha'));
+    
+    if (femaleVoice) {
+        utterance.voice = femaleVoice;
+    }
+    
+    utterance.pitch = 1.1; 
+    utterance.rate = 1.0; // 현대식 표준 영어 빠르기
+    window.speechSynthesis.speak(utterance);
+}window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.getVoices(); };
+</script>
+</body>
+</html>

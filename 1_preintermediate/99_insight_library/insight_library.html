@@ -1,0 +1,1046 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>English Insight Library: Professional Edition</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/dist/css/all.min.css">
+    <style>
+        :root {
+            /* Pastel Palette */
+            --perspective-color: #ffeff0; --perspective-accent: #ff7675;
+            --diagnostics-color: #eef3ff; --diagnostics-accent: #74b9ff;
+            --confusion-color: #eafff2;   --confusion-accent: #55efc4;
+            --transformers-color: #fff4e5; --transformers-accent: #fab1a0;
+            --wordplay-color: #f3efff;    --wordplay-accent: #a29bfe;
+            --sidebar-bg: #2d3436;
+            --text-main: #2d3436;
+        }
+
+/* 모든 스크롤 이동 시 헤더 높이만큼(120px) 자동으로 여백을 줍니다 */
+html {
+    scroll-behavior: smooth;
+    scroll-padding-top: 120px; 
+}
+
+/* 기존 .section 설정에서 scroll-margin-top은 이제 삭제해도 됩니다 */
+.section { 
+    margin-bottom: 80px; 
+}
+
+        body {
+            margin: 0; display: flex;
+            font-family: 'Segoe UI', sans-serif;
+            background: #fdfdfd; color: var(--text-main);
+        }
+
+        /* --- Sidebar Design --- */
+        .sidebar {
+            width: 280px; background: var(--sidebar-bg); height: 100vh;
+            padding: 40px 15px; position: fixed; box-sizing: border-box;
+            box-shadow: 4px 0 10px rgba(0,0,0,0.1);
+        }
+
+        .sidebar h2 { 
+            color: white; font-size: 22px; text-align: center; 
+            margin-bottom: 40px; border-bottom: 1px solid #444; padding-bottom: 20px;
+        }
+
+        .nav-item {
+            padding: 15px 20px; border-radius: 12px; cursor: pointer;
+            margin-bottom: 10px; font-weight: 600; transition: 0.3s;
+            display: flex; align-items: center; gap: 12px; color: #ced4da;
+        }
+
+        .nav-perspective:hover { background: var(--perspective-accent); color: white; }
+        .nav-diagnostics:hover { background: var(--diagnostics-accent); color: white; }
+        .nav-confusion:hover { background: var(--confusion-accent); color: white; }
+        .nav-transformers:hover { background: var(--transformers-accent); color: white; }
+        .nav-wordplay:hover { background: var(--wordplay-accent); color: white; }
+
+        /* --- Main Content --- */
+        .main { margin-left: 280px; padding: 60px; width: 100%; box-sizing: border-box; }
+        
+        .header { 
+            display: flex; justify-content: space-between; align-items: center; 
+            margin-bottom: 50px; position: sticky; top: 0; background: rgba(253,253,253,0.95);
+            padding: 20px 0; z-index: 100; border-bottom: 1px solid #eee;
+        }
+
+        .search { 
+            padding: 15px 25px; width: 400px; border-radius: 30px; 
+            border: 2px solid #ddd; outline: none; font-size: 16px; transition: 0.3s;
+        }
+        .search:focus { border-color: var(--diagnostics-accent); box-shadow: 0 0 10px rgba(116, 185, 255, 0.3); }
+
+        .section { margin-bottom: 80px; scroll-margin-top: 140px; }
+        .section-title { font-size: 30px; font-weight: 800; margin-bottom: 30px; border-left: 8px solid transparent; padding-left: 15px; }
+
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(360px, 1fr)); gap: 25px; }
+        .card {
+            padding: 30px; border-radius: 20px; border: 1px solid rgba(0,0,0,0.05);
+            transition: 0.4s; position: relative; display: flex; flex-direction: column;
+        }
+        .card:hover { transform: translateY(-8px); box-shadow: 0 12px 25px rgba(0,0,0,0.08); }
+
+        .card.perspective { background: var(--perspective-color); }
+        .card.diagnostics { background: var(--diagnostics-color); }
+        .card.confusion { background: var(--confusion-color); }
+        .card.transformers { background: var(--transformers-color); }
+        .card.wordplay { background: var(--wordplay-color); }
+
+        .word-title { font-size: 26px; font-weight: 800; display: block; margin-bottom: 10px; }
+        .badge { 
+            display: inline-block; padding: 5px 12px; border-radius: 50px; 
+            background: white; font-size: 11px; font-weight: 800; margin-bottom: 15px; width: fit-content;
+        }
+
+        .desc-box { background: rgba(255,255,255,0.7); padding: 15px; border-radius: 12px; line-height: 1.6; flex-grow: 1; }
+        .mode-label { font-size: 12px; font-weight: 900; color: #7f8c8d; text-transform: uppercase; display: block; margin-top: 12px; border-bottom: 1px solid rgba(0,0,0,0.05); padding-bottom: 2px; }
+        .example { font-style: italic; color: #444; font-size: 14px; display: block; margin-top: 6px; font-weight: 500; }
+        
+        h3.group-label { margin: 40px 0 20px 0; color: #636e72; font-size: 20px; border-left: 5px solid var(--transformers-accent); padding-left: 15px; }
+
+
+/* 아코디언 메뉴 스타일 */
+.nav-parent {
+    cursor: pointer;
+    user-select: none;
+}
+
+.nav-parent .toggle-icon {
+    margin-left: auto;
+    transition: transform 0.3s ease;
+    font-size: 12px;
+}
+
+.nav-parent.active .toggle-icon {
+    transform: rotate(90deg);
+}
+
+.sub-menu {
+    margin-left: 20px;
+    margin-bottom: 15px;
+    overflow: hidden;
+    transition: max-height 0.3s ease;
+}
+
+.sub-menu .sub-nav-item {
+    padding: 8px 0 8px 25px;
+    font-size: 12px;
+    color: #636e72;
+    cursor: pointer;
+    border-radius: 8px;
+    transition: all 0.2s;
+}
+
+.sub-menu .sub-nav-item:hover {
+    background: rgba(255,255,255,0.1);
+    color: white;
+    padding-left: 30px;
+}
+
+.sub-sub-nav-item {
+    padding: 6px 0 6px 45px !important;
+    font-size: 11px !important;
+    color: #8395a7 !important;
+}
+
+.sub-sub-nav-item:hover {
+    padding-left: 50px !important;
+}
+    </style>
+</head>
+<body>
+
+<div class="sidebar">
+    <h2>📘 INSIGHTS</h2>
+    
+    <!-- I. Perspective -->
+    <div class="nav-item nav-perspective nav-parent" onclick="toggleSubMenu('perspective-sub')">
+        <i class="fas fa-eye"></i> I. Perspective
+        <span class="toggle-icon">▶</span>
+    </div>
+    <div class="sub-menu" id="perspective-sub" style="display: none;">
+        <div class="sub-nav-item" onclick="scrollToSection('perspective')">└ View All</div>
+    </div>
+
+    <!-- II. Diagnostics (아코디언 적용) -->
+    <div class="nav-item nav-diagnostics nav-parent" onclick="toggleSubMenu('diagnostics-sub')">
+        <i class="fas fa-stethoscope"></i> II. Diagnostics
+        <span class="toggle-icon">▶</span>
+    </div>
+    <div class="sub-menu" id="diagnostics-sub" style="display: none;">
+        <div class="sub-nav-item" onclick="scrollToId('problem-solving')">└ Problem-Solving Flow</div>
+        <div class="sub-nav-item" onclick="scrollToId('probability-scales')">└ Probability & Scales</div>
+        
+        <!-- Logic of Measure 하위 그룹 -->
+        <div class="sub-nav-item" style="font-weight: 600; color: #74b9ff; cursor: pointer;" onclick="scrollToId('logic-measure')">└ Logic of Measure</div>
+        <div class="sub-nav-item sub-sub-nav-item" onclick="scrollToId('freq-bar')">  └ Frequency</div>
+        <div class="sub-nav-item sub-sub-nav-item" onclick="scrollToId('cert-bar')">  └ Certainty</div>
+        <div class="sub-nav-item sub-sub-nav-item" onclick="scrollToId('obli-bar')">  └ Obligation</div>
+        <div class="sub-nav-item sub-sub-nav-item" onclick="scrollToId('temp-scale')">  └ Temperature</div>
+        <div class="sub-nav-item sub-sub-nav-item" onclick="scrollToId('size-scale')">  └ Size Expansion</div>
+        <div class="sub-nav-item sub-sub-nav-item" onclick="scrollToId('selection-guide')">  └ Tiny vs. A bit</div>
+    </div>
+
+    <!-- III. Confusion -->
+    <div class="nav-item nav-confusion nav-parent" onclick="toggleSubMenu('confusion-sub')">
+        <i class="fas fa-exclamation"></i> III. Confusion
+        <span class="toggle-icon">▶</span>
+    </div>
+    <div class="sub-menu" id="confusion-sub" style="display: none;">
+        <div class="sub-nav-item" onclick="scrollToSection('confusion')">└ View All</div>
+    </div>
+
+    <!-- IV. Transformers -->
+    <div class="nav-item nav-transformers nav-parent" onclick="toggleSubMenu('transformers-sub')">
+        <i class="fas fa-sync"></i> IV. Transformers
+        <span class="toggle-icon">▶</span>
+    </div>
+    <div class="sub-menu" id="transformers-sub" style="display: none;">
+        <div class="sub-nav-item" onclick="scrollToSection('transformers')">└ View All</div>
+    </div>
+
+    <!-- V. Wordplay -->
+    <div class="nav-item nav-wordplay nav-parent" onclick="toggleSubMenu('wordplay-sub')">
+        <i class="fas fa-magic"></i> V. Wordplay
+        <span class="toggle-icon">▶</span>
+    </div>
+    <div class="sub-menu" id="wordplay-sub" style="display: none;">
+        <div class="sub-nav-item" onclick="scrollToSection('wordplay')">└ View All</div>
+    </div>
+    </div>
+
+
+<div class="main">
+    <div class="header">
+        <h1>English Insight Library</h1>
+        <input class="search" type="text" id="searchInput" placeholder="Search keywords (Run, Buffalo, Fix)..." onkeyup="searchAndScroll()">
+    </div>
+
+<section class="section" id="perspective">
+    <h2 class="section-title" style="color: var(--perspective-accent); border-color: var(--perspective-accent);">I. Perspective Shifters</h2>
+    <div class="card-grid">
+        <div class="card perspective" style="display: flex; flex-direction: column; align-items: center;">
+            <span class="badge" style="color: var(--perspective-accent); align-self: flex-start;">Core Energy</span>
+            <span class="word-title" style="margin-bottom: 20px;">Run</span>
+            
+            <div style="width: 130px; height: 130px; border-radius: 50%; border: 2px solid var(--perspective-accent); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; margin-bottom: 25px; background: #fff; box-shadow: 0 4px 10px rgba(255,118,117,0.15);">
+                <div style="font-size: 28px; margin-bottom: 5px;">🔄</div>
+                <b style="font-size: 11px; color: var(--perspective-accent); line-height: 1.2; letter-spacing: -0.5px;">CONTINUOUS<br>OPERATING FLOW</b>
+                
+                <div style="position: absolute; top: -10px; right: -35px; background: var(--perspective-color); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--perspective-accent); font-size: 10px; font-weight: bold; color: var(--perspective-accent);">🏢 Business</div>
+                <div style="position: absolute; bottom: 5px; left: -45px; background: var(--perspective-color); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--perspective-accent); font-size: 10px; font-weight: bold; color: var(--perspective-accent);">🤒 Physiology</div>
+            </div>
+
+            <div style="width: 100%; text-align: left; font-size: 13px; color: #636e72; border-top: 1px dashed #ddd; padding-top: 15px;">
+                <p style="margin: 5px 0;">• "<b>Run</b> a shop" (Keep it moving)</p>
+                <p style="margin: 5px 0;">• "<b>Run</b> a fever" (Ongoing state)</p>
+            </div>
+        </div>
+
+        <div class="card perspective" style="display: flex; flex-direction: column; align-items: center;">
+            <span class="badge" style="color: var(--perspective-accent); align-self: flex-start;">Core Energy</span>
+            <span class="word-title" style="margin-bottom: 20px;">Sharp</span>
+            
+            <div style="width: 130px; height: 130px; border-radius: 50%; border: 2px solid var(--perspective-accent); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; margin-bottom: 25px; background: #fff; box-shadow: 0 4px 10px rgba(255,118,117,0.15);">
+                <div style="font-size: 28px; margin-bottom: 5px;">📍</div>
+                <b style="font-size: 11px; color: var(--perspective-accent); line-height: 1.2; letter-spacing: -0.5px;">ZERO-MARGIN<br>PRECISION</b>
+                
+                <div style="position: absolute; top: -10px; left: -30px; background: var(--perspective-color); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--perspective-accent); font-size: 10px; font-weight: bold; color: var(--perspective-accent);">⏰ Time</div>
+                <div style="position: absolute; bottom: 5px; right: -35px; background: var(--perspective-color); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--perspective-accent); font-size: 10px; font-weight: bold; color: var(--perspective-accent);">📈 Value</div>
+            </div>
+
+            <div style="width: 100%; text-align: left; font-size: 13px; color: #636e72; border-top: 1px dashed #ddd; padding-top: 15px;">
+                <p style="margin: 5px 0;">• "7 o'clock <b>sharp</b>" (Exact point)</p>
+                <p style="margin: 5px 0;">• "A <b>sharp</b> rise" (Verticality)</p>
+            </div>
+        </div>
+
+<div class="card perspective" style="display: flex; flex-direction: column; align-items: center;">
+    <span class="badge" style="color: var(--perspective-accent); align-self: flex-start;">Core Energy</span>
+    <span class="word-title" style="margin-bottom: 20px;">Lose</span>
+    
+    <div style="width: 130px; height: 130px; border-radius: 50%; border: 2px solid var(--perspective-accent); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; margin-bottom: 25px; background: #fff; box-shadow: 0 4px 10px rgba(255,118,117,0.15);">
+        <div style="font-size: 28px; margin-bottom: 5px;">📴</div>
+        <b style="font-size: 11px; color: var(--perspective-accent); line-height: 1.2; letter-spacing: -0.5px;">FALLING OFF<br></b>
+        
+        <div style="position: absolute; top: -10px; right: -35px; background: var(--perspective-color); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--perspective-accent); font-size: 10px; font-weight: bold; color: var(--perspective-accent);">⚖️ Weight</div>
+        <div style="position: absolute; bottom: 5px; left: -45px; background: var(--perspective-color); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--perspective-accent); font-size: 10px; font-weight: bold; color: var(--perspective-accent);">🕒 Schedule</div>
+    </div>
+
+    <div style="width: 100%; text-align: left; font-size: 13px; color: #636e72; border-top: 1px dashed #ddd; padding-top: 15px;">
+        <p style="margin: 5px 0;">• "<b>Lose</b> weight" (Falling off from body)</p>
+        <p style="margin: 5px 0;">• "<b>Lose</b> a train" (Disconnected from flow)</p>
+    </div>
+</div>
+
+<div class="card perspective" style="display: flex; flex-direction: column; align-items: center;">
+            <span class="badge" style="color: var(--perspective-accent); align-self: flex-start;">Core Energy</span>
+            <span class="word-title" style="margin-bottom: 20px;">Company</span>
+            
+            <div style="width: 130px; height: 130px; border-radius: 50%; border: 2px solid var(--perspective-accent); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; margin-bottom: 25px; background: #fff; box-shadow: 0 4px 10px rgba(255,118,117,0.15);">
+                <div style="font-size: 28px; margin-bottom: 5px;">🤝</div>
+                <b style="font-size: 11px; color: var(--perspective-accent); line-height: 1.2; letter-spacing: -0.5px;">BEING<br>TOGETHER</b>
+                
+                <div style="position: absolute; top: -10px; left: -30px; background: var(--perspective-color); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--perspective-accent); font-size: 10px; font-weight: bold; color: var(--perspective-accent);">🏢 Office</div>
+                <div style="position: absolute; bottom: 5px; right: -35px; background: var(--perspective-color); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--perspective-accent); font-size: 10px; font-weight: bold; color: var(--perspective-accent);">👥 Peer</div>
+            </div>
+
+            <div style="width: 100%; text-align: left; font-size: 13px; color: #636e72; border-top: 1px dashed #ddd; padding-top: 15px;">
+                <p style="margin: 5px 0;">• "A tech <b>company</b>" (Group gathering)</p>
+                <p style="margin: 5px 0;">• "Enjoy your <b>own company</b>" (Self-friendship)</p>
+                <p style="margin: 5px 0;">• "Keep me <b>company</b>" (Stay as a partner)</p>
+            </div>
+        </div>
+
+<div class="card perspective" style="display: flex; flex-direction: column; align-items: center;">
+            <span class="badge" style="color: var(--perspective-accent); align-self: flex-start;">Core Energy</span>
+            <span class="word-title" style="margin-bottom: 20px;">Respectful</span>
+            
+            <div style="width: 130px; height: 130px; border-radius: 50%; border: 2px solid var(--perspective-accent); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; margin-bottom: 25px; background: #fff; box-shadow: 0 4px 10px rgba(255,118,117,0.15);">
+                <div style="font-size: 28px; margin-bottom: 5px;">👀</div>
+                <b style="font-size: 11px; color: var(--perspective-accent); line-height: 1.2; letter-spacing: -0.5px;">LOOKING<br>AGAIN</b>
+                
+                <div style="position: absolute; top: -10px; left: -30px; background: var(--perspective-color); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--perspective-accent); font-size: 10px; font-weight: bold; color: var(--perspective-accent);">🌟 Honor</div>
+                <div style="position: absolute; bottom: 5px; right: -35px; background: var(--perspective-color); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--perspective-accent); font-size: 10px; font-weight: bold; color: var(--perspective-accent);">🤫 Care</div>
+            </div>
+
+            <div style="width: 100%; text-align: left; font-size: 13px; color: #636e72; border-top: 1px dashed #ddd; padding-top: 15px;">
+                <p style="margin: 5px 0;">• "Treat elders with a <b>respectful</b> attitude" (Honor/Reverence)</p>
+                <p style="margin: 5px 0;">• "Be <b>respectful</b> and quiet" (Care/Mindful of others)</p>
+            </div>
+        </div>
+
+<div class="card perspective" style="display: flex; flex-direction: column; align-items: center;">
+    <span class="badge" style="color: var(--perspective-accent); align-self: flex-start;">Core Energy</span>
+    <span class="word-title" style="margin-bottom: 20px;">Take it easy</span>
+    
+    <div style="width: 130px; height: 130px; border-radius: 50%; border: 2px solid var(--perspective-accent); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; margin-bottom: 25px; background: #fff; box-shadow: 0 4px 10px rgba(255,118,117,0.15);">
+        <div style="font-size: 28px; margin-bottom: 5px;">🍃</div>
+        <b style="font-size: 11px; color: var(--perspective-accent); line-height: 1.2; letter-spacing: -0.5px;">GENTLE<br>ADJUSTMENT</b>
+        
+        <div style="position: absolute; top: -10px; right: -35px; background: var(--perspective-color); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--perspective-accent); font-size: 10px; font-weight: bold; color: var(--perspective-accent);">🛌 Rest</div>
+        <div style="position: absolute; bottom: 5px; left: -45px; background: var(--perspective-color); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--perspective-accent); font-size: 10px; font-weight: bold; color: var(--perspective-accent);">🧘 Mindset</div>
+    </div>
+
+    <div style="width: 100%; text-align: left; font-size: 13px; color: #636e72; border-top: 1px dashed #ddd; padding-top: 15px;">
+        <p style="margin: 5px 0;">• "<b>Take it easy</b> at home" (Physical rest)</p>
+        <p style="margin: 5px 0;">• "<b>Take it easy</b>, don't worry" (Calm down)</p>
+        <p style="margin: 5px 0;">• "<b>Take it easy!</b>" (Friendly goodbye)</p>
+    </div>
+</div>
+<div class="card perspective" style="display: flex; flex-direction: column; align-items: center;">
+    <span class="badge" style="color: var(--perspective-accent); align-self: flex-start;">Core Energy</span>
+    <span class="word-title" style="margin-bottom: 20px;">Tablet</span>
+    
+    <div style="width: 130px; height: 130px; border-radius: 50%; border: 2px solid var(--perspective-accent); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; margin-bottom: 25px; background: #fff; box-shadow: 0 4px 10px rgba(255,118,117,0.15);">
+        <div style="font-size: 28px; margin-bottom: 5px;">💊</div>
+        <b style="font-size: 11px; color: var(--perspective-accent); line-height: 1.2; letter-spacing: -0.5px;">COMPRESSED<br>SLAB</b>
+        
+        <div style="position: absolute; top: -10px; right: -30px; background: var(--perspective-color); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--perspective-accent); font-size: 10px; font-weight: bold; color: var(--perspective-accent);">📱 Device</div>
+        <div style="position: absolute; bottom: 5px; left: -40px; background: var(--perspective-color); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--perspective-accent); font-size: 10px; font-weight: bold; color: var(--perspective-accent);">⚪ Pill</div>
+    </div>
+
+    <div style="width: 100%; text-align: left; font-size: 13px; color: #636e72; border-top: 1px dashed #ddd; padding-top: 15px;">
+        <p style="margin: 5px 0;">• "Take two <b>tablets</b> with water" (Medicine/Pill)</p>
+        <p style="margin: 5px 0;">• "Reading on a <b>tablet</b> device" (Flat computer)</p>
+        <p style="margin: 5px 0;">• "Ancient clay <b>tablet</b>" (Writing surface)</p>
+    </div>
+</div>
+
+<div class="card perspective" style="display: flex; flex-direction: column; align-items: center;">
+    <span class="badge" style="color: var(--perspective-accent); align-self: flex-start;">Core Energy</span>
+    <span class="word-title" style="margin-bottom: 20px;">Aid</span>
+    
+    <div style="width: 130px; height: 130px; border-radius: 50%; border: 2px solid var(--perspective-accent); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; margin-bottom: 25px; background: #fff; box-shadow: 0 4px 10px rgba(255,118,117,0.15);">
+        <div style="font-size: 28px; margin-bottom: 5px;">🤝</div>
+        <b style="font-size: 11px; color: var(--perspective-accent); line-height: 1.2; letter-spacing: -0.5px;">SUPPORTIVE<br>HAND</b>
+        
+        <div style="position: absolute; top: -10px; left: -30px; background: var(--perspective-color); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--perspective-accent); font-size: 10px; font-weight: bold; color: var(--perspective-accent);">🩹 Relief</div>
+        <div style="position: absolute; bottom: 5px; right: -35px; background: var(--perspective-color); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--perspective-accent); font-size: 10px; font-weight: bold; color: var(--perspective-accent);">💰 Resource</div>
+    </div>
+
+    <div style="width: 100%; text-align: left; font-size: 13px; color: #636e72; border-top: 1px dashed #ddd; padding-top: 15px;">
+        <p style="margin: 5px 0;">• "Apply <b>first aid</b> to the cut" (Emergency help)</p>
+        <p style="margin: 5px 0;">• "Provide <b>aid</b> to developing countries" (Resources)</p>
+        <p style="margin: 0px 0;">• "<b>Aid</b>ing those in need" (Supporting/Assisting)</p>
+    </div>
+</div>
+
+    </div>
+</section>
+
+<section class="section" id="diagnostics">
+        <h2 class="section-title" style="color: var(--diagnostics-accent); border-color: var(--diagnostics-accent);">II. Situational Diagnostics</h2>
+        
+<h3 class="group-label" id="problem-solving">Integrated Flow: From Trouble to Diagnostics</h3>
+<div class="card diagnostics" style="grid-column: span 2; padding: 30px; background: #ffffff; border: 1px solid #eef3ff;">
+    
+    <div style="display: flex; align-items: flex-start; gap: 20px; margin-bottom: 40px; position: relative;">
+        <div style="min-width: 120px; font-weight: 800; color: #a29bfe;">STEP 1<br><span style="font-size: 11px; opacity: 0.7;">INTERNAL</span></div>
+        <div style="flex-grow: 1; display: flex; gap: 15px;">
+            <div style="background: #f3efff; padding: 15px; border-radius: 12px; flex: 1;">
+                <b style="display: block; margin-bottom: 5px;">💭 On my mind</b>
+                <span style="font-size: 12px; color: #636e72;">Mental occupancy.</span>
+            </div>
+            <div style="background: #f3efff; padding: 15px; border-radius: 12px; flex: 1;">
+                <b style="display: block; margin-bottom: 5px;">😟 Worry vs. Concern</b>
+                <span style="font-size: 12px; color: #636e72;">Personal vs. Official.</span>
+            </div>
+        </div>
+        <div style="position: absolute; bottom: -25px; left: 50%; color: #b2bec3;">↓</div>
+    </div>
+
+    <div style="display: flex; align-items: flex-start; gap: 20px; margin-bottom: 40px; position: relative;">
+        <div style="min-width: 120px; font-weight: 800; color: #fab1a0;">STEP 2<br><span style="font-size: 11px; opacity: 0.7;">REALITY</span></div>
+        <div style="flex-grow: 1; display: flex; flex-direction: column; gap: 15px;">
+            <div style="background: #fff4e5; padding: 15px; border-radius: 12px;">
+                <div style="display: flex; justify-content: space-between; font-size: 10px; font-weight: 900; color: #b2bec3; margin-bottom: 8px;">
+                    <span>MATTER</span><span>ISSUE</span><span>PROBLEM</span><span>TROUBLE</span>
+                </div>
+                <div style="height: 8px; background: linear-gradient(90deg, #55efc4, #ffeaa7, #fab1a0, #ff7675); border-radius: 4px;"></div>
+            </div>
+            <div style="display: flex; gap: 10px;">
+                <div style="background: #fff4e5; padding: 10px; border-radius: 8px; flex: 1; font-size: 13px;"><b>⚡ Pain points:</b> User's hurt.</div>
+                <div style="background: #fff4e5; padding: 10px; border-radius: 8px; flex: 1; font-size: 13px;"><b>🪢 Difficulty:</b> Complex knot.</div>
+            </div>
+        </div>
+        <div style="position: absolute; bottom: -25px; left: 50%; color: #b2bec3;">↓</div>
+    </div>
+
+<div style="display: flex; align-items: flex-start; gap: 20px; margin-bottom: 40px; position: relative;">
+    <div style="min-width: 120px; font-weight: 800; color: #ff7675;">STEP 3<br><span style="font-size: 11px; opacity: 0.7;">IMPACT</span></div>
+    <div style="flex-grow: 1; display: flex; justify-content: space-between; background: #ffeff0; padding: 15px; border-radius: 12px; gap: 10px;">
+        <div style="text-align: center; flex: 1;">
+            ⏳<br><b style="font-size: 12px;">Bottleneck</b><br>
+            <span style="font-size: 10px; color: #636e72; display: block; margin-top: 5px;">A narrow point slowing down the process.</span>
+        </div>
+        <div style="text-align: center; flex: 1;">
+            🚧<br><b style="font-size: 12px;">Roadblock</b><br>
+            <span style="font-size: 10px; color: #636e72; display: block; margin-top: 5px;">A major obstacle stopping all progress.</span>
+        </div>
+        <div style="text-align: center; flex: 1;">
+            ⛰️<br><b style="font-size: 12px;">Challenge</b><br>
+            <span style="font-size: 10px; color: #636e72; display: block; margin-top: 5px;">A difficult task that needs great effort.</span>
+        </div>
+        <div style="text-align: center; flex: 1;">
+            ⚓<br><b style="font-size: 12px;">Stuck</b><br>
+            <span style="font-size: 10px; color: #636e72; display: block; margin-top: 5px;">Caught in a loop with no clear way out.</span>
+        </div>
+    </div>
+    <div style="position: absolute; bottom: -25px; left: 50%; color: #b2bec3;">↓</div>
+</div>
+    <div style="display: flex; align-items: flex-start; gap: 20px;">
+        <div style="min-width: 120px; font-weight: 800; color: #74b9ff;">STEP 4<br><span style="font-size: 11px; opacity: 0.7;">ACTION</span></div>
+        <div style="flex-grow: 1; display: flex; gap: 15px;">
+            <div style="background: #eef3ff; padding: 15px; border-radius: 12px; flex: 1; border: 1px dashed #74b9ff;">
+                <b style="display: block; margin-bottom: 5px;">🌡️ Symptom</b>
+                <span style="font-size: 12px; color: #636e72;">See the visible sign.</span>
+            </div>
+            <div style="background: #eef3ff; padding: 15px; border-radius: 12px; flex: 1; border: 1px solid #74b9ff;">
+                <b style="display: block; margin-bottom: 5px;">🔍 Diagnostics</b>
+                <span style="font-size: 12px; color: #636e72;">Find the root cause.</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+
+<h3 class="group-label" id="probability-scales">The Logic of Probability & Scales (Frequency, Certainty, and Measure)</h3>
+<div class="card diagnostics" style="grid-column: span 2; padding: 30px; background: #ffffff; border: 1px solid #eef3ff;">
+    
+    <div style="position: relative; padding: 40px 0; margin-bottom: 20px;">
+        <div style="height: 4px; background: #eef3ff; border-radius: 2px; position: relative;">
+            <div style="position: absolute; left: 0; top: 0; height: 100%; width: 100%; background: linear-gradient(90deg, #55efc4 0%, #74b9ff 50%, #a29bfe 100%); border-radius: 2px; opacity: 0.6;"></div>
+        </div>
+
+        <div style="display: flex; justify-content: space-between; position: absolute; top: 25px; width: 100%;">
+            <div style="text-align: center; width: 80px;">
+                <div style="font-size: 22px; margin-bottom: 5px;">🔓</div>
+                <b style="display: block; font-size: 14px; color: #00b894;">Let</b>
+                <span style="font-size: 10px; color: #636e72; font-weight: 700;">Casual</span>
+            </div>
+            <div style="text-align: center; width: 80px;">
+                <div style="font-size: 22px; margin-bottom: 5px;">✅</div>
+                <b style="display: block; font-size: 14px; color: #00b894;">Can</b>
+                <span style="font-size: 10px; color: #636e72; font-weight: 700;">Neutral</span>
+            </div>
+            <div style="text-align: center; width: 80px;">
+                <div style="font-size: 22px; margin-bottom: 5px;">🙋‍♂️</div>
+                <b style="display: block; font-size: 14px; color: #0984e3;">May</b>
+                <span style="font-size: 10px; color: #636e72; font-weight: 700;">Polite</span>
+            </div>
+            <div style="text-align: center; width: 80px;">
+                <div style="font-size: 22px; margin-bottom: 5px;">🛂</div>
+                <b style="display: block; font-size: 14px; color: #6c5ce7;">Allow</b>
+                <span style="font-size: 10px; color: #636e72; font-weight: 700;">Official</span>
+            </div>
+            <div style="text-align: center; width: 80px;">
+                <div style="font-size: 22px; margin-bottom: 5px;">📜</div>
+                <b style="display: block; font-size: 14px; color: #6c5ce7;">Permit</b>
+                <span style="font-size: 10px; color: #636e72; font-weight: 700;">Legal</span>
+            </div>
+        </div>
+    </div>
+
+    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px; margin-top: 35px;">
+        <div style="background: #f0fff4; padding: 15px; border-radius: 10px; border-left: 5px solid #55efc4;">
+            <b style="font-size: 14px; color: #2d3436;">Soft Permission</b>
+            <p style="font-size: 12px; color: #636e72; margin: 8px 0 0 0; line-height: 1.5;">
+                Focus on personal relationship. Giving someone a chance or saying "it's fine."
+            </p>
+        </div>
+        <div style="background: #f3f0ff; padding: 15px; border-radius: 10px; border-left: 5px solid #a29bfe;">
+            <b style="font-size: 14px; color: #2d3436;">Formal Authority</b>
+            <p style="font-size: 12px; color: #636e72; margin: 8px 0 0 0; line-height: 1.5;">
+                Focus on rules, laws, and official settings. High social distance.
+            </p>
+        </div>
+    </div>
+</div>
+
+<h3 class="group-label" id="logic-measure">The Logic of Measure: Precision & Scales</h3>
+<div class="card-grid">
+
+<div class="card diagnostics" id="freq-bar" style="grid-column: span 2; border-color: rgba(0,0,0,0.1);">
+        <span class="badge" style="background: #dfe6e9; color: #636e72;">LOGIC: How Often?</span>
+        <span class="word-title" style="margin-bottom: 25px;">📅 The Frequency Bar</span>
+        <div class="desc-box" style="padding: 25px;">
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 100px; text-align: right; font-weight: 800; color: #ff7675;">Always</div>
+                    <div style="flex-grow: 1; height: 12px; background: rgba(0,0,0,0.05); border-radius: 6px; overflow: hidden;">
+                        <div style="width: 100%; height: 100%; background: linear-gradient(90deg, #ff7675 0%, #fab1a0 100%); border-radius: 6px;"></div>
+                    </div>
+                    <div style="width: 50px; font-weight: 700; color: #b2bec3; font-size: 14px;">100%</div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 100px; text-align: right; font-weight: 700;">Usually</div>
+                    <div style="flex-grow: 1; height: 10px; background: rgba(0,0,0,0.05); border-radius: 5px; overflow: hidden;">
+                        <div style="width: 90%; height: 100%; background: #fab1a0; border-radius: 5px;"></div>
+                    </div>
+                    <div style="width: 50px; color: #b2bec3; font-size: 13px;">~90%</div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 100px; text-align: right; font-weight: 700;">Often</div>
+                    <div style="flex-grow: 1; height: 10px; background: rgba(0,0,0,0.05); border-radius: 5px; overflow: hidden;">
+                        <div style="width: 70%; height: 100%; background: #fdcb6e; border-radius: 5px;"></div>
+                    </div>
+                    <div style="width: 50px; color: #b2bec3; font-size: 13px;">~70%</div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 100px; text-align: right; font-weight: 700;">Sometimes</div>
+                    <div style="flex-grow: 1; height: 10px; background: rgba(0,0,0,0.05); border-radius: 5px; overflow: hidden;">
+                        <div style="width: 50%; height: 100%; background: #55efc4; border-radius: 5px;"></div>
+                    </div>
+                    <div style="width: 50px; color: #b2bec3; font-size: 13px;">~50%</div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 100px; text-align: right; font-weight: 700;">Rarely</div>
+                    <div style="flex-grow: 1; height: 10px; background: rgba(0,0,0,0.05); border-radius: 5px; overflow: hidden;">
+                        <div style="width: 10%; height: 100%; background: #a29bfe; border-radius: 5px;"></div>
+                    </div>
+                    <div style="width: 50px; color: #b2bec3; font-size: 13px;">~10%</div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px; opacity: 0.6;">
+                    <div style="width: 100px; text-align: right; font-weight: 700; color: #2d3436;">Never</div>
+                    <div style="flex-grow: 1; height: 10px; background: rgba(0,0,0,0.05); border-radius: 5px; overflow: hidden;">
+                        <div style="width: 0%; height: 100%; background: #b2bec3; border-radius: 5px;"></div>
+                    </div>
+                    <div style="width: 50px; color: #b2bec3; font-size: 13px;">0%</div>
+                </div>
+            </div>
+            <span class="example" style="margin-top: 25px; display: block; text-align: center;">"I <b>usually</b> arrive early, but <b>sometimes</b> late."</span>
+        </div>
+    </div>
+
+    <div class="card diagnostics" id="cert-bar" style="grid-column: span 2; border-color: rgba(0,0,0,0.1);">
+        <span class="badge" style="background: #dfe6e9; color: #636e72;">LOGIC: How Sure?</span>
+        <span class="word-title" style="margin-bottom: 25px;">🤔 The Certainty Bar</span>
+        <div class="desc-box" style="padding: 25px;">
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 100px; text-align: right; font-weight: 800; color: #74b9ff;">Must / Will</div>
+                    <div style="flex-grow: 1; height: 12px; background: rgba(0,0,0,0.05); border-radius: 6px; overflow: hidden;">
+                        <div style="width: 100%; height: 100%; background: linear-gradient(90deg, #74b9ff 0%, #a29bfe 100%); border-radius: 6px;"></div>
+                    </div>
+                    <div style="width: 50px; font-weight: 700; color: #b2bec3; font-size: 14px;">100%</div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 100px; text-align: right; font-weight: 700;">Should</div>
+                    <div style="flex-grow: 1; height: 10px; background: rgba(0,0,0,0.05); border-radius: 5px; overflow: hidden;">
+                        <div style="width: 80%; height: 100%; background: #a29bfe; border-radius: 5px;"></div>
+                    </div>
+                    <div style="width: 50px; color: #b2bec3; font-size: 13px;">~80%</div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 100px; text-align: right; font-weight: 700;">Can / May</div>
+                    <div style="flex-grow: 1; height: 10px; background: rgba(0,0,0,0.05); border-radius: 5px; overflow: hidden;">
+                        <div style="width: 50%; height: 100%; background: #55efc4; border-radius: 5px;"></div>
+                    </div>
+                    <div style="width: 50px; color: #b2bec3; font-size: 13px;">~50%</div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 100px; text-align: right; font-weight: 700;">Might</div>
+                    <div style="flex-grow: 1; height: 10px; background: rgba(0,0,0,0.05); border-radius: 5px; overflow: hidden;">
+                        <div style="width: 30%; height: 100%; background: #fab1a0; border-radius: 5px;"></div>
+                    </div>
+                    <div style="width: 50px; color: #b2bec3; font-size: 13px;">~30%</div>
+                </div>
+            </div>
+            <span class="example" style="margin-top: 25px; display: block; text-align: center;">"It <b>must</b> be him." (Sure) vs "It <b>might</b> be him." (Guess)</span>
+        </div>
+    </div>
+
+    <div class="card diagnostics" id="obli-bar" style="grid-column: span 2; border-color: rgba(0,0,0,0.1);">
+        <span class="badge" style="background: #ffeaa7; color: #d63031;">LOGIC: How Strong?</span>
+        <span class="word-title" style="margin-bottom: 25px;">🛑 The Obligation Bar</span>
+        <div class="desc-box" style="padding: 25px;">
+            <div style="display: flex; flex-direction: column; gap: 15px;">
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 120px; text-align: right; font-weight: 800; color: #d63031;">Must / Have to</div>
+                    <div style="flex-grow: 1; height: 12px; background: rgba(0,0,0,0.05); border-radius: 6px; overflow: hidden;">
+                        <div style="width: 100%; height: 100%; background: #d63031; border-radius: 6px;"></div>
+                    </div>
+                    <div style="width: 60px; font-weight: 700; color: #b2bec3; font-size: 14px;">Strong</div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 120px; text-align: right; font-weight: 700;">Ought to</div>
+                    <div style="flex-grow: 1; height: 10px; background: rgba(0,0,0,0.05); border-radius: 5px; overflow: hidden;">
+                        <div style="width: 75%; height: 100%; background: #ff7675; border-radius: 5px;"></div>
+                    </div>
+                    <div style="width: 60px; color: #b2bec3; font-size: 13px;">Firm</div>
+                </div>
+                <div style="display: flex; align-items: center; gap: 10px;">
+                    <div style="width: 120px; text-align: right; font-weight: 700;">Should</div>
+                    <div style="flex-grow: 1; height: 10px; background: rgba(0,0,0,0.05); border-radius: 5px; overflow: hidden;">
+                        <div style="width: 50%; height: 100%; background: #fab1a0; border-radius: 5px;"></div>
+                    </div>
+                    <div style="width: 60px; color: #b2bec3; font-size: 13px;">Advice</div>
+                </div>
+            </div>
+            <span class="example" style="margin-top: 25px; display: block; text-align: center;">"You <b>should</b> rest (Advice) vs. You <b>must</b> rest (Order)."</span>
+        </div>
+    </div>
+
+<div class="card diagnostics" id="temp-scale" style="grid-column: span 1; border-color: rgba(0,0,0,0.1);">
+    <span class="badge" style="background: #74b9ff; color: #ffffff;">SCALE: Temp</span>
+    <span class="word-title">🌡️ Temperature</span>
+    <div class="desc-box">
+        <div style="font-size: 14px; line-height: 2;">
+            ❄️ <b style="color: #0984e3;">Freezing</b> <span style="font-size: 11px; color: #636e72;">(Extremely cold / Ice)</span><br>
+            ⬇️ <b>Cold</b> <span style="font-size: 11px; color: #636e72;">(Unpleasant low temp)</span><br>
+            ⬇️ <b>Cool</b> <span style="font-size: 11px; color: #636e72;">(Pleasantly low temp)</span><br>
+            <div style="height: 1px; background: #eee; margin: 8px 0; position: relative;">
+                <span style="position: absolute; right: 0; top: -8px; font-size: 10px; background: #fff; padding: 0 5px; color: #b2bec3;">NEUTRAL</span>
+            </div>
+            ⬆️ <b style="color: #fdcb6e;">Warm</b> <span style="font-size: 11px; color: #636e72;">(Pleasantly high temp)</span><br>
+            ⬆️ <b>Hot</b> <span style="font-size: 11px; color: #636e72;">(High temp)</span><br>
+            🔥 <b style="color: #e17055;">Boiling</b> <span style="font-size: 11px; color: #636e72;">(Extremely hot / Steam)</span>
+        </div>
+    </div>
+</div>
+
+<div class="card diagnostics" id="size-scale" style="grid-column: span 1; border-color: rgba(0,0,0,0.1);">
+    <span class="badge" style="background: #55efc4; color: #ffffff;">SCALE: Size</span>
+    <span class="word-title">📏 Size Expansion</span>
+    <div class="desc-box">
+        <div style="font-size: 14px; line-height: 2;">
+            🌌 <b style="color: #6c5ce7;">Massive / Huge</b> <span style="font-size: 11px; color: #636e72;">(Extremely large)</span><br>
+            ⬆️ <b>Large</b> <span style="font-size: 11px; color: #636e72;">(Big / Great)</span><br>
+            ⬆️ <b>Medium</b> <span style="font-size: 11px; color: #636e72;">(Average size)</span><br>
+            ⬇️ <b>Small</b> <span style="font-size: 11px; color: #636e72;">(Not big)</span><br>
+            ⬇️ <b style="color: #b2bec3;">Tiny</b> <span style="font-size: 11px; color: #636e72;">(Very small)</span><br>
+            🔬 <b>Microscopic</b> <span style="font-size: 11px; color: #636e72;">(Invisible to the eye)</span>
+        </div>
+    </div>
+</div>
+</div>
+
+
+<h3 class="group-label">The Logic of Measure: Tiny vs. A bit (Selection Guide)</h3>
+<div class="card-grid">
+
+    <div class="card diagnostics" id="selection-guide" style="grid-column: span 2; background: #ffffff; border: 2px dashed #74b9ff; padding: 25px;">
+        <span class="badge" style="background: #74b9ff; color: white;">SELECTION FLOW</span>
+        <div style="margin-top: 20px;">
+            <div style="display: flex; align-items: center; margin-bottom: 15px; background: #f8faff; padding: 12px; border-radius: 8px;">
+                <div style="width: 30px; height: 30px; border-radius: 50%; background: #2d3436; color: white; display: flex; justify-content: center; align-items: center; font-weight: bold; margin-right: 15px; font-size: 14px;">1</div>
+                <div style="flex-grow: 1;">
+                    <b style="font-size: 15px; color: #2d3436;">Physical Object? <span style="font-weight: 400; color: #636e72;">(Noun)</span></b>
+                </div>
+                <div style="color: #00b894; font-weight: 800; font-size: 16px;">➔ Tiny</div>
+            </div>
+
+            <div style="display: flex; align-items: center; margin-bottom: 15px; background: #fffaf8; padding: 12px; border-radius: 8px;">
+                <div style="width: 30px; height: 30px; border-radius: 50%; background: #2d3436; color: white; display: flex; justify-content: center; align-items: center; font-weight: bold; margin-right: 15px; font-size: 14px;">2</div>
+                <div style="flex-grow: 1;">
+                    <b style="font-size: 15px; color: #2d3436;">Feeling or Action? <span style="font-weight: 400; color: #636e72;">(Adj/Verb)</span></b>
+                </div>
+                <div style="color: #e17055; font-weight: 800; font-size: 16px;">➔ A bit</div>
+            </div>
+
+            <div style="display: flex; align-items: center; background: #f8f9fa; padding: 12px; border-radius: 8px;">
+                <div style="width: 30px; height: 30px; border-radius: 50%; background: #2d3436; color: white; display: flex; justify-content: center; align-items: center; font-weight: bold; margin-right: 15px; font-size: 14px;">3</div>
+                <div style="flex-grow: 1;">
+                    <b style="font-size: 15px; color: #2d3436;">Non-count Quantity? <span style="font-weight: 400; color: #636e72;">(Mass Noun)</span></b>
+                </div>
+                <div style="color: #0984e3; font-weight: 800; font-size: 16px;">➔ A bit of</div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card diagnostics" style="border-left: 5px solid #00b894;">
+        <span class="word-title">🔍 Tiny (Physical Size)</span>
+        <div class="desc-box" style="margin-top: 10px;">
+            <p style="font-size: 12px; color: #636e72; margin-bottom: 8px;">[Focus: Visual Smallness]</p>
+            <div style="font-size: 14px; line-height: 1.8;">
+                • A <b>tiny</b> key 🔑<br>
+                • A <b>tiny</b> room 🏠<br>
+                • A <b>tiny</b> detail 📍
+            </div>
+        </div>
+    </div>
+
+    <div class="card diagnostics" style="border-left: 5px solid #e17055;">
+        <span class="word-title">🌡️ A bit (Degree/Amount)</span>
+        <div class="desc-box" style="margin-top: 10px;">
+            <p style="font-size: 12px; color: #636e72; margin-bottom: 8px;">[Focus: Intensity & Quantity]</p>
+            <div style="font-size: 14px; line-height: 1.8;">
+                • <b>A bit</b> cold ❄️<br>
+                • <b>A bit</b> late ⏰<br>
+                • <b>A bit of</b> help 🤝
+            </div>
+        </div>
+    </div>
+</div>
+
+    </section>
+
+<section class="section" id="confusion">
+    <h2 class="section-title" style="color: var(--confusion-accent); border-color: var(--confusion-accent);">III. Confusion Alert</h2>
+    <div class="card-grid">
+        <div class="card confusion">
+            <span class="badge" style="color: var(--confusion-accent);">Visual Anchor</span>
+            <span class="word-title">Flat vs. Plate</span>
+            <div class="desc-box">
+                <div style="margin-bottom: 12px; display: flex; align-items: flex-start; gap: 10px;">
+                    <div style="width: 24px; height: 16px; background: #fab1a0; border: 1px solid var(--confusion-accent); border-radius: 2px; transform: perspective(100px) rotateX(40deg) skewX(-10deg); box-shadow: 2px 2px 0 rgba(0,0,0,0.1); margin-top: 4px; flex-shrink: 0;"></div>
+                    <div>
+                        <b>Flat:</b> <span style="color: #636e72;">Level Surface / Space</span><br>
+                        <span style="font-size: 11px; color: #b2bec3;">(Think: Perfectly horizontal plane or British Apartment)</span>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 10px;">
+                    <span style="font-size: 20px; flex-shrink: 0;">🍽️</span>
+                    <div>
+                        <b>Plate:</b> <span style="color: #636e72;">Rigid Object / Dish</span><br>
+                        <span style="font-size: 11px; color: #b2bec3;">(Think: Hard circular or square object)</span>
+                    </div>
+                </div>
+                <div style="margin-top: 12px; padding-top: 10px; border-top: 1px dashed #eee;">
+                    <span class="example" style="font-size: 12px;">"Floor is <b>flat</b>" vs "Clean your <b>plate</b>"</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="card confusion">
+            <span class="badge" style="color: var(--confusion-accent);">Visual Anchor</span>
+            <span class="word-title">Loop vs. Rope vs. Lope</span>
+            <div class="desc-box" style="display: flex; flex-direction: column; gap: 8px;">
+                <div style="display: flex; align-items: flex-start; gap: 10px;">
+                    <span style="font-size: 20px; flex-shrink: 0;">➰</span>
+                    <div>
+                        <b>Loop:</b> <span style="color: #636e72;">Circle / Curve</span><br>
+                        <span style="font-size: 11px; color: #b2bec3;">(Shape that returns to start)</span>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 10px;">
+                    <span style="font-size: 20px; flex-shrink: 0;">🪢</span>
+                    <div>
+                        <b>Rope:</b> <span style="color: #636e72;">String / Cord</span><br>
+                        <span style="font-size: 11px; color: #b2bec3;">(Thick material for tying)</span>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 10px;">
+                    <span style="font-size: 20px; flex-shrink: 0;">🏃</span>
+                    <div>
+                        <b>Lope:</b> <span style="color: #636e72;">Long Step / Run</span><br>
+                        <span style="font-size: 11px; color: #b2bec3;">(Moving with easy, long strides)</span>
+                    </div>
+                </div>
+                <div style="margin-top: 5px; padding-top: 8px; border-top: 1px dashed #eee;">
+                    <span class="example" style="font-size: 11px;">"Infinite <b>loop</b>" / "Jump <b>rope</b>" / "<b>Loping</b> gait"</span>
+                </div>
+            </div>
+        </div>
+
+<div class="card confusion">
+            <span class="badge" style="color: var(--confusion-accent);">Visual Anchor</span>
+            <span class="word-title">Suffer vs. Offer vs. Surfer</span>
+            <div class="desc-box" style="display: flex; flex-direction: column; gap: 10px;">
+                <div style="display: flex; align-items: flex-start; gap: 10px;">
+                    <span style="font-size: 20px; flex-shrink: 0;">🤒</span>
+                    <div>
+                        <b>Suffer:</b> <span style="color: #636e72;">Experience Pain / Sick</span><br>
+                        <span style="font-size: 11px; color: #b2bec3;">(Think: <b>S</b>uffer = <b>S</b>ick / To feel bad)</span>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 10px;">
+                    <span style="font-size: 20px; flex-shrink: 0;">🎁</span>
+                    <div>
+                        <b>Offer:</b> <span style="color: #636e72;">Give / Suggest</span><br>
+                        <span style="font-size: 11px; color: #b2bec3;">(Think: Open hand to give something)</span>
+                    </div>
+                </div>
+                <div style="display: flex; align-items: flex-start; gap: 10px;">
+                    <span style="font-size: 20px; flex-shrink: 0;">🏄</span>
+                    <div>
+                        <b>Surfer:</b> <span style="color: #636e72;">Wave Rider</span><br>
+                        <span style="font-size: 11px; color: #b2bec3;">(Think: Person on a surfboard)</span>
+                    </div>
+                </div>
+                <div style="margin-top: 8px; padding-top: 10px; border-top: 1px dashed #eee;">
+                    <span class="example" style="font-size: 11px;">
+                        "<b>Suffer</b> from flu" / "<b>Offer</b> help" / "Professional <b>surfer</b>"
+                    </span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="section" id="transformers">
+    <h2 class="section-title" style="color: var(--transformers-accent); border-color: var(--transformers-accent);">IV. Word Transformers</h2>
+    
+    <h3 class="group-label" id="transformer-integrated">Multi-Role Mastery: One Word, Many Lives</h3>
+    
+    <div class="card-grid">
+        <div class="card transformers">
+            <span class="word-title">Phone</span>
+            <div class="desc-box">
+                <p><span class="mode-label">Noun</span> A communication device. 📱</p>
+                <p><span class="mode-label">Verb</span> To call or contact someone. 📞</p>
+                <div class="example">"Left my <b>phone</b> at home." / "I'll <b>phone</b> you later."</div>
+            </div>
+        </div>
+
+        <div class="card transformers">
+            <span class="word-title">Water</span>
+            <div class="desc-box">
+                <p><span class="mode-label">Noun</span> Essential liquid (H2O). 💧</p>
+                <p><span class="mode-label">Verb</span> To provide liquid to plants. 🚿</p>
+                <div class="example">"Drink more <b>water</b>." / "<b>Water</b> the roses."</div>
+            </div>
+        </div>
+
+        <div class="card transformers">
+            <span class="word-title">Book</span>
+            <div class="desc-box">
+                <p><span class="mode-label">Noun</span> A printed/digital work. 📖</p>
+                <p><span class="mode-label">Verb</span> To reserve (room, flight, table). 📅</p>
+                <div class="example">"Read this <b>book</b>." / "<b>Book</b> a flight to London."</div>
+            </div>
+        </div>
+
+        <div class="card transformers">
+            <span class="word-title">Train</span>
+            <div class="desc-box">
+                <p><span class="mode-label">Noun</span> Railway carriages. 🚄</p>
+                <p><span class="mode-label">Verb</span> To practice or develop a skill. 🏋️‍♂️</p>
+                <div class="example">"Catch the <b>train</b>." / "<b>Train</b> hard for the race."</div>
+            </div>
+        </div>
+
+        <div class="card transformers">
+            <span class="word-title">Watch</span>
+            <div class="desc-box">
+                <p><span class="mode-label">Noun</span> A wrist clock. ⌚</p>
+                <p><span class="mode-label">Verb</span> To look at something for a period. 👀</p>
+                <div class="example">"Check your <b>watch</b>." / "<b>Watch</b> the movie."</div>
+            </div>
+        </div>
+
+        <div class="card transformers">
+            <span class="word-title">Light</span>
+            <div class="desc-box">
+                <p><span class="mode-label">Noun</span> Brightness/Lamp. 💡</p>
+                <p><span class="mode-label">Adj</span> Not heavy ☁️ / Pale color ⚪</p>
+                <div class="example">"Turn on the <b>light</b>." / "This bag is very <b>light</b>."</div>
+            </div>
+        </div>
+
+        <div class="card transformers">
+            <span class="word-title">Plant</span>
+            <div class="desc-box">
+                <p><span class="mode-label">Noun</span> A living organism. 🌱</p>
+                <p><span class="mode-label">Verb</span> To put seeds in the ground. 🧑‍🌾</p>
+                <div class="example">"Water the <b>plant</b>." / "<b>Plant</b> seeds in spring."</div>
+            </div>
+        </div>
+
+        <div class="card transformers">
+            <span class="word-title">Match</span>
+            <div class="desc-box">
+                <p><span class="mode-label">Noun</span> A game/contest 🏟️ or a fire stick 🔥</p>
+                <p><span class="mode-label">Verb</span> To find a pair / To be equal. 🤝</p>
+                <div class="example">"A football <b>match</b>." / "Socks don't <b>match</b>."</div>
+            </div>
+        </div>
+
+        <div class="card transformers">
+            <span class="word-title">Address</span>
+            <div class="desc-box">
+                <p><span class="mode-label">Noun</span> Location ✉️ / Formal speech 🎤</p>
+                <p><span class="mode-label">Verb</span> To deal with a problem 🧠 / To speak 🗣️</p>
+                <div class="example">"Write your <b>address</b>." / "<b>Address</b> the issue."</div>
+            </div>
+        </div>
+
+        <div class="card transformers">
+            <span class="word-title">Table</span>
+            <div class="desc-box">
+                <p><span class="mode-label">Noun</span> Furniture 🪑 / Data chart 🗓️</p>
+                <p><span class="mode-label">Verb</span> To present for discussion. 🗣️</p>
+                <div class="example">"Sit at the <b>table</b>." / "<b>Tabled</b> a new proposal."</div>
+            </div>
+        </div>
+
+        <div class="card transformers">
+            <span class="word-title">Fix</span>
+            <div class="desc-box">
+                <p><span class="mode-label">Noun</span> A quick solution. 💡</p>
+                <p><span class="mode-label">Verb</span> To repair 🛠️ or secure 🔒.</p>
+                <div class="example">"No quick <b>fix</b>." / "Can you <b>fix</b> my watch?"</div>
+            </div>
+        </div>
+
+        <div class="card transformers">
+            <span class="word-title">Kind</span>
+            <div class="desc-box">
+                <p><span class="mode-label">Noun</span> Category or type. 🗃️</p>
+                <p><span class="mode-label">Adj</span> Generous/Caring. ❤️</p>
+                <div class="example">"What <b>kind</b> of music?" / "You are very <b>kind</b>."</div>
+            </div>
+        </div>
+
+        <div class="card transformers">
+            <span class="word-title">Mean</span>
+            <div class="desc-box">
+                <p><span class="mode-label">Verb</span> To signify/importance. 🧠</p>
+                <p><span class="mode-label">Adj</span> Unkind 😈 / Average 📊.</p>
+                <div class="example">"What does it <b>mean</b>?" / "Don't be so <b>mean</b>."</div>
+            </div>
+        </div>
+
+        <div class="card transformers">
+            <span class="word-title">Can</span>
+            <div class="desc-box">
+                <p><span class="mode-label">Noun</span> Metal container. 🥫</p>
+                <p><span class="mode-label">Modal</span> Permission 🔓 / Ability 💪.</p>
+                <div class="example">"A <b>can</b> of soda." / "You <b>can</b> stay here."</div>
+            </div>
+        </div>
+
+        <div class="card transformers">
+            <span class="word-title">Let</span>
+            <div class="desc-box">
+                <p><span class="mode-label">Verb</span> To allow (Casual). 🔓</p>
+                <p><span class="mode-label">Structure</span> Let + Obj + Root Verb. 🗣️</p>
+                <div class="example">"<b>Let</b> me go." / "<b>Let</b> the dog run."</div>
+            </div>
+        </div>
+    </div>
+</section>
+
+    <section class="section" id="wordplay">
+        <h2 class="section-title" style="color: var(--wordplay-accent); border-color: var(--wordplay-accent);">V. Wordplay Training</h2>
+        <div class="card-grid">
+            <div class="card wordplay" style="grid-column: span 2;">
+                <span class="word-title">Buffalo buffalo Buffalo buffalo buffalo buffalo Buffalo buffalo.</span>
+                <div class="desc-box">
+                    <b>Structure:</b> City + Noun + [that] City + Noun + Verb + Verb + City + Noun.
+                    <span class="example">Meaning: Buffalo bison that Buffalo bison bully, also bully Buffalo bison.</span>
+                    <span class="example">- <b>Buffalo (Capital):</b> City in New York state.</span>
+                    <span class="example">- <b>buffalo (noun):</b> Bison animals.</span>
+                    <span class="example">- <b>buffalo (verb):</b> To bully or intimidate.</span>
+                </div>
+            </div>
+            <div class="card wordplay"><span class="word-title">"I can can can a can."</span><div class="desc-box">Subject + Modal + Verb(preserve) + Object(tin).</div></div>
+            <div class="card wordplay"><span class="word-title">"Ship a ship by ship."</span><div class="desc-box">Verb(transport) + Object(vessel) + Method(boat).</div></div>
+        </div>
+    </section>
+</div>
+
+<script>
+// 1. 기존 함수: 섹션 단위 이동
+function scrollToSection(id) {
+    const section = document.getElementById(id);
+    if (section) {
+        const title = section.querySelector('.section-title');
+        const target = title || section;
+        
+        const headerOffset = 130;
+        const pos = target.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+        window.scrollTo({ top: pos, behavior: "smooth" });
+    }
+}
+
+// 2. 수정된 함수: 섹션 내 세부 제목(ID)으로 정밀 이동 (CSS scroll-padding-top 값과 일치)
+function scrollToId(id) {
+    const element = document.getElementById(id);
+    if (element) {
+        const headerOffset = 130;
+        const pos = element.getBoundingClientRect().top + window.pageYOffset - headerOffset;
+        window.scrollTo({ top: pos, behavior: "smooth" });
+    }
+}
+
+// 3. 기존 검색 함수 (유지)
+function searchAndScroll() {
+    let query = document.getElementById('searchInput').value.toLowerCase();
+    let cards = document.querySelectorAll('.card');
+    let firstFound = null;
+
+    cards.forEach(card => {
+        let text = card.innerText.toLowerCase();
+        if (query === "") {
+            card.style.display = 'flex';
+            card.style.opacity = '1';
+        } else if (text.includes(query)) {
+            card.style.display = 'flex';
+            card.style.opacity = '1';
+            if (!firstFound) firstFound = card;
+        } else {
+            card.style.display = 'none';
+        }
+    });
+
+    if (firstFound && query !== "") {
+        firstFound.scrollIntoView({ behavior: 'smooth', block: 'center' });
+    }
+}
+
+// 아코디언 토글 함수
+function toggleSubMenu(id) {
+    const subMenu = document.getElementById(id);
+    const parent = subMenu.previousElementSibling;
+    
+    if (subMenu.style.display === 'none' || !subMenu.style.display) {
+        subMenu.style.display = 'block';
+        parent.classList.add('active');
+    } else {
+        subMenu.style.display = 'none';
+        parent.classList.remove('active');
+    }
+}
+
+// 기존 scrollToSection, scrollToId, searchAndScroll 함수는 그대로 유지
+
+</script>
+
+</body>
+</html>
