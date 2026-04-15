@@ -8,6 +8,8 @@
     <style>
         :root {
             /* Pastel Palette */
+            --primary: #2c3e50;
+            --secondary: #3498db;
             --perspective-color: #ffeff0; --perspective-accent: #ff7675;
             --diagnostics-color: #eef3ff; --diagnostics-accent: #74b9ff;
             --confusion-color: #eafff2;   --confusion-accent: #55efc4;
@@ -149,6 +151,27 @@ html {
 .sub-sub-nav-item:hover {
     padding-left: 50px !important;
 }
+
+        .back-to-dashboard {
+            position: fixed;
+            bottom: 30px;
+            right: 30px;
+            background-color: var(--primary);
+            color: white;
+            padding: 15px 20px;
+            border-radius: 50px;
+            text-decoration: none;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            z-index: 1001;
+            font-weight: bold;
+            transition: transform 0.2s;
+        }
+
+        .back-to-dashboard:hover {
+            transform: scale(1.1);
+            background-color: var(--secondary);
+        }
+
     </style>
 </head>
 <body>
