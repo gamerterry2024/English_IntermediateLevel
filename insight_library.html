@@ -153,6 +153,8 @@ html {
 </head>
 <body>
 
+<a href="index.html#insight_library" class="back-to-dashboard">🏠 Back to Dashboard</a>
+
 <div class="sidebar">
     <h2>📘 INSIGHTS</h2>
     
@@ -202,17 +204,17 @@ html {
         <div class="sub-nav-item" onclick="scrollToSection('transformers')">└ View All</div>
     </div>
 
-    <!-- V. Wordplay -->
-    <div class="nav-item nav-wordplay nav-parent" onclick="toggleSubMenu('wordplay-sub')">
+<div class="nav-item nav-wordplay nav-parent" onclick="toggleSubMenu('wordplay-sub')">
         <i class="fas fa-magic"></i> V. Wordplay & Context
         <span class="toggle-icon">▶</span>
     </div>
     <div class="sub-menu" id="wordplay-sub" style="display: none;">
         <div class="sub-nav-item" onclick="scrollToSection('wordplay')">└ View All</div>
+        
+        <div class="sub-nav-item" onclick="scrollToId('word-logic')">└ Linguistic Logic</div>
+        <div class="sub-nav-item" onclick="scrollToId('medical-context')">└ Medical Context</div>
     </div>
     </div>
-
-
 <div class="main">
     <div class="header">
         <h1>English Insight Library</h1>
@@ -810,38 +812,6 @@ html {
                 </div>
             </div>
         </div>
-        
-        <div class="card confusion">
-            <span class="badge" style="color: var(--confusion-accent);">Visual Anchor</span>
-            <span class="word-title">Flavour vs. Flour vs. Flower</span>
-            <div class="desc-box" style="display: flex; flex-direction: column; gap: 8px;">
-                <div style="display: flex; align-items: flex-start; gap: 10px;">
-                    <span style="font-size: 20px; flex-shrink: 0;">👅</span>
-                    <div>
-                        <b>Flavour:</b> <span style="color: #636e72;">Taste / Aroma</span><br>
-                        <span style="font-size: 11px; color: #b2bec3;">(Taste of food/drink - Orange, Blackcurrant)</span>
-                    </div>
-                </div>
-                <div style="display: flex; align-items: flex-start; gap: 10px;">
-                    <span style="font-size: 20px; flex-shrink: 0;">🍞</span>
-                    <div>
-                        <b>Flour:</b> <span style="color: #636e72;">Powder / Wheat</span><br>
-                        <span style="font-size: 11px; color: #b2bec3;">(White powder used for baking bread)</span>
-                    </div>
-                </div>
-                <div style="display: flex; align-items: flex-start; gap: 10px;">
-                    <span style="font-size: 20px; flex-shrink: 0;">🌻</span>
-                    <div>
-                        <b>Flower:</b> <span style="color: #636e72;">Bloom / Plant</span><br>
-                        <span style="font-size: 11px; color: #b2bec3;">(The colorful part of a plant)</span>
-                    </div>
-                </div>
-                <div style="margin-top: 5px; padding-top: 8px; border-top: 1px dashed #eee;">
-                    <span class="example" style="font-size: 11px;">"Orange <b>flavour</b>" / "Bread <b>flour</b>" / "Sun<b>flower</b>"</span>
-                </div>
-            </div>
-        </div>
-        
     </div>
 </section>
 
@@ -988,21 +958,53 @@ html {
     </div>
 </section>
 
-    <section class="section" id="wordplay">
+<section class="section" id="wordplay">
         <h2 class="section-title" style="color: var(--wordplay-accent); border-color: var(--wordplay-accent);">V. Wordplay & Context</h2>
+        
         <div class="card-grid">
+            
+            <h3 class="group-label" id="word-logic" style="grid-column: 1 / -1; color: var(--wordplay-accent); margin: 15px 0 10px 5px; font-size: 1.1em; border-left: 4px solid var(--wordplay-accent); padding-left: 10px;">
+                Linguistic Logic & Wordplay
+            </h3>
+
             <div class="card wordplay" style="grid-column: span 2;">
                 <span class="word-title">Buffalo buffalo Buffalo buffalo buffalo buffalo Buffalo buffalo.</span>
                 <div class="desc-box">
                     <b>Structure:</b> City + Noun + [that] City + Noun + Verb + Verb + City + Noun.
                     <span class="example">Meaning: Buffalo bison that Buffalo bison bully, also bully Buffalo bison.</span>
-                    <span class="example">- <b>Buffalo (Capital):</b> City in New York state.</span>
-                    <span class="example">- <b>buffalo (noun):</b> Bison animals.</span>
-                    <span class="example">- <b>buffalo (verb):</b> To bully or intimidate.</span>
                 </div>
             </div>
             <div class="card wordplay"><span class="word-title">"I can can can a can."</span><div class="desc-box">Subject + Modal + Verb(preserve) + Object(tin).</div></div>
             <div class="card wordplay"><span class="word-title">"Ship a ship by ship."</span><div class="desc-box">Verb(transport) + Object(vessel) + Method(boat).</div></div>
+
+            <h3 class="group-label" id="medical-context" style="grid-column: 1 / -1; color: var(--wordplay-accent); margin: 30px 0 10px 5px; font-size: 1.1em; border-left: 4px solid var(--wordplay-accent); padding-left: 10px;">
+                Medical Context: Pharmacy
+            </h3>
+
+            <div class="card wordplay" style="grid-column: span 2; border-top: 2px solid var(--wordplay-accent);">
+                <span class="word-title">Indigestion & Symptoms</span>
+                <div class="desc-box" style="display: flex; flex-direction: column; gap: 12px;">
+                    <div style="background: rgba(162, 155, 254, 0.1); padding: 10px; border-radius: 8px;">
+                        <b style="color: #6c5ce7;">Indigestion</b>
+                        <p style="font-size: 11px; color: #636e72; margin-top: 4px;">A pain or uncomfortable feeling in the stomach after eating.</p>
+                    </div>
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">
+                        <div>
+                            <span style="font-size: 18px;">🤢</span> <b>Diarrhoea</b>
+                            <p style="font-size: 11px; color: #b2bec3;">Loose or watery stools. (Difficult spelling!)</p>
+                        </div>
+                        <div>
+                            <span style="font-size: 18px;">🫐</span> <b>Blackcurrant</b>
+                            <p style="font-size: 11px; color: #b2bec3;">A dark purple berry flavor commonly used in medicine.</p>
+                        </div>
+                    </div>
+                    <div style="margin-top: 5px; padding-top: 8px; border-top: 1px dashed #eee;">
+                        <span class="example" style="font-size: 11.5px;">
+                            "Taking <b>blackcurrant</b> tablets for <b>indigestion</b> without <b>diarrhoea</b>."
+                        </span>
+                    </div>
+                </div>
+            </div>
         </div>
     </section>
 </div>
