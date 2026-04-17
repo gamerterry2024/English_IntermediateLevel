@@ -365,7 +365,7 @@
 </div>
 
 <div class="quiz-row" id="tf-q4" style="margin-bottom: 15px; padding: 10px; border-radius: 8px; transition: 0.3s;">
-    <span class="quiz-question">4. Society's negative attitudes often prevent people from seeking help for mental health.</span>
+    <span class="quiz-question">4. Society\'s negative attitudes often prevent people from seeking help for mental health.</span>
     <div class="tf-btn-group" style="display: inline-flex; gap: 5px; margin: 0 10px;">
         <button onclick="selectTF(this, 'T')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">T</button>
         <button onclick="selectTF(this, 'F')" class="tf-btn" style="padding: 2px 8px; border: 1px solid #ccc; background: #fff; cursor: pointer; border-radius: 4px;">F</button>
@@ -430,8 +430,6 @@ function validateTF(rowId, correctVal, explanation) {
     </div>
 </article>
         </section>
-
-
 <section id="section2">
     <h2>Section 2: Speaking Practice</h2> 
     
@@ -445,8 +443,6 @@ function validateTF(rowId, correctVal, explanation) {
         </div>
     </article>
 </section>
-
-
 <section id="section3">
             <h2>Section 3: Writing Practice</h2>
             <div id="final-quiz-area" style="margin-top: 40px; border-top: 2px solid var(--secondary); padding-top: 25px;">
@@ -762,7 +758,6 @@ function validateTF(rowId, correctVal, explanation) {
             <button class="save-btn" style="margin-top: 20px;" onclick="saveProgress()">Save My Work</button>
         </section>
     </div>
-    
     <script>
         // --- 데이터 정의 ---
         const dialogueData = [
@@ -777,7 +772,6 @@ function validateTF(rowId, correctVal, explanation) {
     { name: "Sam", color: "#3498db", bg: "#ebf5fb", text: "You <b>should go home</b> and get some rest.", char: "assistant" },
     { name: "Alex", color: "#f39c12", bg: "#fdfaf0", text: "Good idea. I <b>ought to</b> listen to you.", char: "customer" }
         ];
-        
 const scriptData1_1_D1 = [
     { start: 0, speaker: "Narrator", text: "Seven point one. Conversation one." },
     { start: 5, speaker: "A", text: "Hi, how're you?" },
@@ -880,77 +874,13 @@ const scriptData1_2_P3 = [
                 container.appendChild(div);
             });
         }
-        
-        
-// ============================================
-// 섹션 2: TTS 음성 품질 개선 버전
-// ============================================
-
-// 전역 변수: 선호하는 목소리 저장
-let preferredVoice = null;
-let voicesLoaded = false;
-
-// 목소리 로딩 함수
-function loadPreferredVoice() {
-    return new Promise((resolve) => {
-        const voices = window.speechSynthesis.getVoices();
-        if (voices.length > 0) {
-            preferredVoice = voices.find(v => v.name === 'mbrola-us1') ||
-                            voices.find(v => v.name === 'mbrola-us2') ||
-                            voices.find(v => v.name === 'mbrola-us3') ||
-                            voices.find(v => v.name.includes('Google') && v.lang === 'en-US') ||
-                            voices.find(v => v.name.includes('Microsoft') && v.lang === 'en-US') ||
-                            voices.find(v => v.name.includes('Samantha')) ||
-                            voices.find(v => v.lang === 'en-US' && v.name.includes('Female')) ||
-                            voices.find(v => v.lang === 'en-US');
-            voicesLoaded = true;
-            resolve();
-        } else {
-            window.speechSynthesis.onvoiceschanged = () => {
-                const newVoices = window.speechSynthesis.getVoices();
-                preferredVoice = newVoices.find(v => v.name === 'mbrola-us1') ||
-                                newVoices.find(v => v.name === 'mbrola-us2') ||
-                                newVoices.find(v => v.name === 'mbrola-us3') ||
-                                newVoices.find(v => v.name.includes('Google') && v.lang === 'en-US') ||
-                                newVoices.find(v => v.name.includes('Microsoft') && v.lang === 'en-US') ||
-                                newVoices.find(v => v.name.includes('Samantha')) ||
-                                newVoices.find(v => v.lang === 'en-US' && v.name.includes('Female')) ||
-                                newVoices.find(v => v.lang === 'en-US');
-                voicesLoaded = true;
-                resolve();
-            };
-            setTimeout(() => {
-                if (!voicesLoaded) {
-                    voicesLoaded = true;
-                    resolve();
-                }
-            }, 1000);
+        function speakText(text, character) {
+            window.speechSynthesis.cancel();
+            const utterance = new SpeechSynthesisUtterance(text);
+            utterance.lang = 'en-US';
+            utterance.pitch = (character === 'maya') ? 1.5 : 1.1;
+            window.speechSynthesis.speak(utterance);
         }
-    });
-}
-
-// 메인 speakText 함수
-function speakText(text, character) {
-    window.speechSynthesis.cancel();
-    const cleanText = text.replace(/<\/?[^>]+(>|$)/g, "");
-    const utterance = new SpeechSynthesisUtterance(cleanText);
-    utterance.lang = 'en-US';
-    utterance.pitch = (character === 'maya') ? 1.5 : 1.1;
-    utterance.rate = 0.95;
-    
-    if (preferredVoice) {
-        utterance.voice = preferredVoice;
-    }
-    
-    window.speechSynthesis.speak(utterance);
-}
-
-// 페이지 로드 시 목소리 미리 로딩
-document.addEventListener('DOMContentLoaded', () => {
-    loadPreferredVoice();
-});
-
-
 async function toggleRecord(index) {
     const btn = document.getElementById(`rec-${index}`);
     if (mediaRecorder && mediaRecorder.state === "recording") {
@@ -991,9 +921,7 @@ async function toggleRecord(index) {
         mediaRecorder.start();
         btn.style.backgroundColor = "#000"; btn.innerText = "⏹";
     }
-}   
-
-function playMyVoice(index) {
+}        function playMyVoice(index) {
             if (audioChunks[index]) new Audio(audioChunks[index]).play();
         }
         function setupAudioSync(audioId, containerId, data, isDialogue = false) {
