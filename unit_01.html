@@ -5,228 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UNIT 01: Family and Friends</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #2c3e50;
-            --secondary: #3498db;
-            --success: #27ae60;
-            --bg: #f4f7f6;
-            --white: #ffffff;
-            --highlight: #fff59d;
-            --accent: #e67e22;
-        }
-
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            line-height: 1.6;
-            background-color: var(--bg);
-            color: var(--primary);
-            margin: 0;
-            padding: 0;
-            scroll-behavior: smooth;
-        }
-
-        section {
-            background: var(--white);
-            padding: 2.5rem;
-            border-radius: 15px;
-            margin-bottom: 2.5rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            /* 상단 헤더 높이를 고려한 스크롤 위치 조정 */
-            scroll-margin-top: 90px;
-        }
-
-        .back-to-dashboard {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background-color: var(--primary);
-            color: white;
-            padding: 15px 20px;
-            border-radius: 50px;
-            text-decoration: none;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            z-index: 1001;
-            font-weight: bold;
-            transition: transform 0.2s;
-        }
-
-        .back-to-dashboard:hover {
-            transform: scale(1.1);
-            background-color: var(--secondary);
-        }
-
-        header {
-            background: var(--primary);
-            color: white;
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            margin-left: 20px;
-            font-weight: bold;
-        }
-
-        .container {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 20px;
-            padding-bottom: 300px; 
-        }
-
-        h2 {
-            border-left: 6px solid var(--secondary);
-            padding-left: 15px;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-        }
-
-        .reading-box {
-            background-color: #fffaf0;
-            border: 1px solid #f39c12;
-            padding: 25px;
-            border-radius: 12px;
-            line-height: 1.8;
-            margin-bottom: 20px;
-        }
-
-        .vocab-link {
-            color: var(--secondary);
-            text-decoration: none;
-            border-bottom: 2px solid var(--secondary);
-            font-weight: bold;
-            padding: 0 2px;
-            cursor: pointer;
-        }
-
-        .vocab-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
-        }
-
-        .card {
-            border: 1px solid #eee;
-            padding: 20px;
-            border-radius: 10px;
-            background: #fff;
-            transition: all 0.4s ease;
-        }
-
-        .card.active-highlight {
-            border: 2px solid var(--accent);
-            background-color: #fffde7;
-            transform: scale(1.05);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-
-        .return-btn {
-            display: inline-block;
-            margin-top: 12px;
-            font-size: 0.85rem;
-            color: var(--secondary);
-            text-decoration: none;
-            font-weight: bold;
-            border: 1px solid var(--secondary);
-            padding: 4px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-
-        .audio-zone {
-            background: #ebf5fb;
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid var(--secondary);
-            margin: 20px 0;
-            text-align: center;
-        }
-
-        .audio-label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
-            color: var(--primary);
-        }
-
-        .script-window {
-            margin-top: 15px;
-            padding: 20px;
-            background-color: #ffffff;
-            border: 1px solid #eee;
-            border-radius: 12px;
-            height: 250px; 
-            overflow-y: auto;
-            display: none;
-            text-align: left;
-        }
-
-        .script-line {
-            padding: 8px 10px;
-            border-radius: 5px;
-            margin-bottom: 5px;
-            transition: background 0.3s;
-            font-size: 0.95rem;
-        }
-
-        .script-line.active {
-            background-color: var(--highlight);
-            font-weight: bold;
-        }
-
-        textarea, input[type="text"] {
-            width: 100%;
-            padding: 14px;
-            margin-top: 10px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-sizing: border-box;
-        }
-
-        .quiz-item {
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-
-        .instruction {
-            font-style: italic;
-            color: #7f8c8d;
-            font-size: 0.9rem;
-        }
-
-        .save-btn {
-            background: var(--success);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-
-        .save-btn:hover {
-            background-color: #219150;
-        }
-
-        .mini-input {
-            width: 100px !important;
-            padding: 5px !important;
-            margin: 0 5px !important;
-            display: inline-block !important;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-    </style>
+    <link rel="stylesheet" href="css/unit.css">
+    
 </head>
 <body>
 
@@ -292,9 +72,9 @@
                 <h3>1-1. A Friend of Mine (Dialogue)</h3>
                 <div class="audio-zone">
                     <span class="audio-label">🎧 Listening Practice: Track 2</span>
-                    <audio id="main-player" style="width:100%;" controls src="Track 2.mp3"></audio>
+                    <audio id="main-player-1" style="width:100%;" controls src="Track 2.mp3"></audio>
                 </div>
-                <div id="script-container" class="script-window" style="height: 400px;"></div>
+                <div id="script-container1" class="script-window" style="height: 400px;"></div>
             </article>
 
             <article style="margin-top: 3rem; border-top: 1px solid #eee; padding-top: 2rem;">
@@ -571,107 +351,82 @@ Modern communication tools help us share a lot of information quickly, but they 
 </div>
 
 <div style="margin-top: 30px; padding: 25px; background: #ffffff; border-radius: 15px; border: 2px solid #3498db; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-
-        <h3 style="margin: 0; color: #2980b9;"><i class="fas fa-robot"></i> AI Solution - CHAT GPT</h3>
-
-        <span style="background: #3498db; color: white; padding: 5px 15px; border-radius: 50px; font-weight: bold; font-size: 1.1rem;">
-
-            Overall Score: <input type="text" class="mini-input" style="width: 40px !important; color: white; background: transparent; border: 1px solid rgba(255,255,255,0.5); text-align: center;" value="6"> / 10
-
-        </span>
-
-    </div>
-
-
-    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.95rem;">
-
-        <thead>
-
-            <tr style="background: #ebf5fb; text-align: left;">
-
-                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Evaluation Criteria</th>
-
-                <th style="padding: 12px; border-bottom: 2px solid #3498db; text-align: center;">Score</th>
-
-                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Detailed Feedback</th>
-
-            </tr>
-
-        </thead>
-
-        <tbody>
-
-            <tr>
-                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Content</td>
-                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="7"> / 10</td>
-                <td style="padding: 12px; border-bottom: 1px solid #eee;">
-                    <input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Good ideas about information overload and media influence. Examples are interesting but not always clearly explained.">
-                </td>
-            </tr>
-
-            <tr>
-                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Logic</td>
-                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="6"> / 10</td>
-                <td style="padding: 12px; border-bottom: 1px solid #eee;">
-                    <input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Main idea is clear, but connections between ideas are sometimes unclear or jump suddenly.">
-                </td>
-            </tr>
-
-            <tr>
-                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Grammar</td>
-                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="5"> / 10</td>
-                <td style="padding: 12px; border-bottom: 1px solid #eee;">
-                    <input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Frequent errors (sentence structure, verb forms, articles). Some sentences are hard to understand.">
-                </td>
-            </tr>
-
-            <tr>
-                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Vocabulary</td>
-                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="6"> / 10</td>
-                <td style="padding: 12px; border-bottom: 1px solid #eee;">
-                    <input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Good attempt to use topic vocabulary, but mixing Korean and English and incorrect word forms reduce clarity.">
-                </td>
-            </tr>
-
-        </tbody>
-
-    </table>
-
-
-    <div style="background: #f4f7f6; padding: 15px; border-radius: 10px; border-left: 5px solid #27ae60;">
-
-        <p style="margin: 0 0 10px 0; font-weight: bold; color: #27ae60;">
-            <i class="fas fa-check-circle"></i> Recommended Revision
-        </p>
-
-        <textarea style="width: 100%; background: transparent; border: 1px dashed #27ae60; border-radius: 5px; padding: 10px; font-style: italic;" rows="4">
-I think modern communication tools create more confusion. We can get a lot of information very quickly, but there is so much information that it is difficult to know what is true or important. For example, governments and media sometimes give false information. Also, different groups use different language, so people do not always understand each other. Therefore, we need to think carefully and choose reliable information.
-        </textarea>
-
-</div>
-
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="margin: 0; color: #2980b9;"><i class="fas fa-robot"></i> AI Solution</h3>
+        <span style="background: #3498db; color: white; padding: 5px 15px; border-radius: 50px; font-weight: bold; font-size: 1.1rem;">
+            Overall Score: <input type="text" class="mini-input" style="width: 50px !important; color: white; background: transparent; border: 1px solid rgba(255,255,255,0.5); text-align: center;" value=""> / 10
+        </span>
+    </div>
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.95rem;">
+        <thead>
+            <tr style="background: #ebf5fb; text-align: left;">
+                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Evaluation Criteria</th>
+                <th style="padding: 12px; border-bottom: 2px solid #3498db; text-align: center;">Score</th>
+                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Detailed Feedback</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Content</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value=""> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value=""></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Logic</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value=""> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value=""></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Grammar</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value=""> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value=""></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Vocabulary</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value=""> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value=""></td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="background: #f4f7f6; padding: 15px; border-radius: 10px; border-left: 5px solid #27ae60;">
+        <p style="margin: 0 0 10px 0; font-weight: bold; color: #27ae60;"><i class="fas fa-check-circle"></i> Recommended Revision</p>
+        <textarea style="width: 100%; background: transparent; border: 1px dashed #27ae60; border-radius: 5px; padding: 10px; font-style: italic;" rows="8"></textarea>
+    </div>
 </div>
             <button class="save-btn" style="margin-top: 20px;" onclick="saveProgress()">Save My Work</button>
         </section>
     </div>
 
-    <script>
-        // --- 데이터 정의 ---
-        const dialogueData = [
-            { name: "Laura", color: "#3498db", bg: "#ebf5fb", text: "Maya, you have a brother, right? What is he like?", char: "laura" },
-            { name: "Maya", color: "#f39c12", bg: "#fdfaf0", text: "Yes, he’s a nurse. He’s very <b>patient</b> and caring. But I’m not like that!", char: "maya" },
-            { name: "Laura", color: "#3498db", bg: "#ebf5fb", text: "That’s interesting. Do you think it’s because of his genes?", char: "laura" },
-            { name: "Maya", color: "#f39c12", bg: "#fdfaf0", text: "Maybe. But we grew up together. So, is it nature or nurture? I’m not sure.", char: "maya" },
-            { name: "Laura", color: "#3498db", bg: "#ebf5fb", text: "Well, the text says humans are 'great communicators.' We use 6,000 languages to talk about this!", char: "laura" },
-            { name: "Maya", color: "#f39c12", bg: "#fdfaf0", text: "True. Even animals communicate, like bees dancing for food.", char: "maya" },
-            { name: "Laura", color: "#3498db", bg: "#ebf5fb", text: "But they can’t talk about the future like we can. Anyway, what about your parents? Are they <b>strict</b>?", char: "laura" },
-            { name: "Maya", color: "#f39c12", bg: "#fdfaf0", text: "No, they are quite liberal. My mom is very <b>bright</b> and smart, though.", char: "maya" },
-            { name: "Laura", color: "#3498db", bg: "#ebf5fb", text: "I think you’re just like your mom then!", char: "laura" }
-        ];
+            <!-- 공통 스크립트 파일들 -->
+<script src="js/speaking.js"></script>
+<script src="js/listening.js"></script>
 
-const scriptData1_1 = [
+    <script>
+// --- 데이터 정의 (UNIT 1: The World of Communication - 본문 충실형) ---
+const dialogueData = [
+    // Paragraph 1: Human vs Animal Communication (본문 1-2 섹션)
+    { name: "1 Chunk", color: "#3498db", bg: "#ebf5fb", text: "communicate with other people", char: "assistant" },
+    { name: "2 Chunk", color: "#3498db", bg: "#ebf5fb", text: "in many different ways", char: "assistant" },
+    { name: "3 Sentence", color: "#2980b9", bg: "#e1f5fe", text: "We can <b>communicate with other people</b> <b>in many different ways</b>, such as talking, writing, and e-mail.", char: "assistant" },
+    { name: "4 Chunk", color: "#3498db", bg: "#ebf5fb", text: "exchanging information", char: "assistant" },
+    { name: "5 Chunk", color: "#3498db", bg: "#ebf5fb", text: "nothing compared to", char: "assistant" },
+    { name: "6 Sentence", color: "#2980b9", bg: "#e1f5fe", text: "Animals have ways of <b>exchanging information</b>, but this is <b>nothing compared to</b> what people can do.", char: "assistant" },
+    { name: "7 Paragraph", color: "#2c3e50", bg: "#f0f7ff", text: "Humans <b>communicate with other people</b> <b>in many different ways</b>, including using language and technology. While animals are <b>exchanging information</b> through dance or song, it is <b>nothing compared to</b> human abilities like telling jokes or making promises.", char: "assistant" },
+
+    // Paragraph 2: History and Modern Impact (본문 3-4 섹션)
+    { name: "1 Chunk", color: "#9b59b6", bg: "#f5eef8", text: "transformed Egyptian life", char: "assistant" },
+    { name: "2 Chunk", color: "#9b59b6", bg: "#f5eef8", text: "the printing press", char: "assistant" },
+    { name: "3 Sentence", color: "#8e44ad", bg: "#f4ecf7", text: "Hieroglyphics <b>transformed Egyptian life</b>, and later <b>the printing press</b> helped develop new ways of thinking.", char: "assistant" },
+    { name: "4 Chunk", color: "#9b59b6", bg: "#f5eef8", text: "huge influence on society", char: "assistant" },
+    { name: "5 Chunk", color: "#9b59b6", bg: "#f5eef8", text: "changing our world every minute", char: "assistant" },
+    { name: "6 Sentence", color: "#8e44ad", bg: "#f4ecf7", text: "Radio and television have had a <b>huge influence on society</b> and are <b>changing our world every minute</b>.", char: "assistant" },
+    { name: "7 Paragraph", color: "#2c3e50", bg: "#f4ecf7", text: "Historical tools like paper <b>transformed Egyptian life</b>, while <b>the printing press</b> changed Europe. In modern times, the Internet has a <b>huge influence on society</b>, <b>changing our world every minute</b> of every day.", char: "assistant" },
+
+    // Final Challenge
+    { name: "Final Story", color: "#ffffff", bg: "#2c3e50", text: "We <b>communicate with other people</b> <b>in many different ways</b>, which is <b>nothing compared to</b> animals <b>exchanging information</b>. From the time hieroglyphics <b>transformed Egyptian life</b> to the invention of <b>the printing press</b>, communication has evolved. Today, modern media has a <b>huge influence on society</b>, <b>changing our world every minute</b> and providing information very quickly.", char: "assistant" }
+];
+
+const scriptData1_1_D1 = [
     { start: 0, speaker: "Narrator", text: "one point one" },
     { start: 4, speaker: "L", text: "Maya" },
     { start: 5, speaker: "M", text: "Hi Laura. Sorry I'm a bit late." },
@@ -757,172 +512,14 @@ const scriptData1_2_P3 = [
     { start: 52, text: "I tell my husband it's genetic and that's why I don't put things away, but it's not true!" }
 ];
 
-        // --- 기능 함수 ---
-        let mediaRecorder;
-        let audioChunks = {};
-
-        function initDialogue() {
-            const container = document.getElementById('dialogue-container');
-            dialogueData.forEach((item, index) => {
-                const div = document.createElement('div');
-                div.style = `padding: 12px 15px; background: ${item.bg}; border-radius: 12px; border-left: 6px solid ${item.color}; display: flex; align-items: center; justify-content: space-between; gap: 10px;`;
-                div.innerHTML = `
-                    <div style="flex: 1;"><strong style="color: ${item.color};">${item.name}:</strong> <span>${item.text}</span></div>
-                    <div style="display: flex; gap: 8px; flex-shrink: 0;">
-                        <button onclick="speakText(\`${item.text.replace(/<\/?[^>]+(>|$)/g, "")}\`, '${item.char}')" style="background: ${item.color}; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">🔊</button>
-                        <button id="rec-${index}" onclick="toggleRecord(${index})" style="background: #e74c3c; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">🎤</button>
-                        <button id="play-${index}" onclick="playMyVoice(${index})" style="background: #2ecc71; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: none;">▶️</button>
-                    </div>
-                `;
-                container.appendChild(div);
-            });
-        }
-
-        function speakText(text, character) {
-            window.speechSynthesis.cancel();
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'en-US';
-            utterance.pitch = (character === 'maya') ? 1.5 : 1.1;
-            window.speechSynthesis.speak(utterance);
-        }
-
-async function toggleRecord(index) {
-    const btn = document.getElementById(`rec-${index}`);
-    if (mediaRecorder && mediaRecorder.state === "recording") {
-        mediaRecorder.stop();
-        btn.style.backgroundColor = "#e74c3c"; btn.innerText = "🎤";
-    } else {
-        const stream = await navigator.mediaDevices.getUserMedia({ 
-            audio: {
-                echoCancellation: true,
-                noiseSuppression: true,
-                autoGainControl: false, // 웅웅거림 방지를 위해 끔
-                channelCount: 1
-            } 
-        });
-
-        // --- 오디오 증폭 로직 시작 ---
-        const audioContext = new AudioContext();
-        const source = audioContext.createMediaStreamSource(stream);
-        const gainNode = audioContext.createGain();
-        
-        gainNode.gain.value = 2.0; // [조정 포인트] 소리를 3배 키웁니다 (1.0~5.0 사이 조절 가능)
-        
-        const destination = audioContext.createMediaStreamDestination();
-        source.connect(gainNode);
-        gainNode.connect(destination);
-        // --- 오디오 증폭 로직 끝 ---
-
-        // 증폭된 스트림으로 녹음 진행
-        mediaRecorder = new MediaRecorder(destination.stream);
-        const chunks = [];
-        mediaRecorder.ondataavailable = e => chunks.push(e.data);
-        mediaRecorder.onstop = () => {
-            const blob = new Blob(chunks, { type: 'audio/webm' });
-            audioChunks[index] = URL.createObjectURL(blob);
-            document.getElementById(`play-${index}`).style.display = "flex";
-            
-            stream.getTracks().forEach(track => track.stop());
-            audioContext.close();
-        };
-        mediaRecorder.start();
-        btn.style.backgroundColor = "#000"; btn.innerText = "⏹";
-    }
-}
-        function playMyVoice(index) {
-            if (audioChunks[index]) new Audio(audioChunks[index]).play();
-        }
-
-        function setupAudioSync(audioId, containerId, data, isDialogue = false) {
-    const audio = document.getElementById(audioId);
-    const container = document.getElementById(containerId);
-    if(!audio || !container) return;
-    
-    container.innerHTML = '';
-    data.forEach((line, index) => {
-        const div = document.createElement('div');
-        div.className = 'script-line';
-        div.id = `${containerId}-line-${index}`;
-        div.innerHTML = isDialogue ? `<strong>${line.speaker}:</strong> ${line.text}` : line.text;
-        container.appendChild(div);
+    // 초기화
+    window.addEventListener('DOMContentLoaded', () => {
+        if (typeof initDialogue === 'function') initDialogue();
+        setupAudioSync('main-player-1', 'script-container1', scriptData1_1_D1, true);
+        setupAudioSync('player-1', 'script-1', scriptData1_2_P1, true);
+        setupAudioSync('player-2', 'script-2', scriptData1_2_P2, true);
+        setupAudioSync('player-3', 'script-3', scriptData1_2_P3, true);
     });
-
-    // 오디오 재생 시 스크립트 창 보이기
-    audio.addEventListener('play', () => { 
-        container.style.display = 'block'; 
-    });
-
-    // 오디오 진행 시간에 맞춰 스크립트 하이라이트 및 스크롤
-    audio.addEventListener('timeupdate', () => {
-        let activeIdx = -1;
-        for (let i = 0; i < data.length; i++) {
-            if (audio.currentTime >= data[i].start) activeIdx = i; else break;
-        }
-        container.querySelectorAll('.script-line').forEach(l => l.classList.remove('active'));
-        if (activeIdx !== -1) {
-            const currentLine = document.getElementById(`${containerId}-line-${activeIdx}`);
-            if (currentLine) {
-                currentLine.classList.add('active');
-                container.scrollTo({ 
-                    top: currentLine.offsetTop - container.offsetTop - 80, 
-                    behavior: 'smooth' 
-                });
-            }
-        }
-    });
-
-    // 추가된 부분: 음성 재생이 끝나면 스크립트 창 숨기기
-    audio.addEventListener('ended', () => { 
-        container.style.display = 'none'; 
-    });
-}
-
-        function centralizeScroll(targetId) {
-            const element = document.getElementById(targetId);
-            if (!element) return;
-            const elementRect = element.getBoundingClientRect();
-            const middle = (elementRect.top + window.pageYOffset) - (window.innerHeight / 2) + (elementRect.height / 2);
-            window.scrollTo({ top: middle, behavior: 'smooth' });
-            if (targetId.startsWith('vocab')) {
-                document.querySelectorAll('.card').forEach(c => c.classList.remove('active-highlight'));
-                element.classList.add('active-highlight');
-                setTimeout(() => element.classList.remove('active-highlight'), 1500);
-            }
-        }
-
-        function toggleAnswer(btn) {
-            const answerSpan = btn.nextElementSibling;
-            if (answerSpan.style.display === "none") {
-                answerSpan.style.display = "inline"; btn.innerText = "Hide";
-            } else {
-                answerSpan.style.display = "none"; btn.innerText = "Check";
-            }
-        }
-
-        function saveProgress() {
-            const allInputs = document.querySelectorAll('input[type="text"], textarea');
-            allInputs.forEach((input, index) => {
-                localStorage.setItem(`unit01_all_data_${index}`, input.value);
-            });
-            alert('Your progress has been saved! ✅');
-        }
-
-        // --- 초기화 로직 ---
-        window.addEventListener('DOMContentLoaded', () => {
-            initDialogue();
-            setupAudioSync('main-player', 'script-container', scriptData1_1, true);
-            setupAudioSync('player-1', 'script-1', scriptData1_2_P1);
-            setupAudioSync('player-2', 'script-2', scriptData1_2_P2);
-            setupAudioSync('player-3', 'script-3', scriptData1_2_P3);
-            // ... 나머지 setupAudioSync 호출
-
-            // 저장된 데이터 불러오기
-            const allInputs = document.querySelectorAll('input[type="text"], textarea');
-            allInputs.forEach((input, index) => {
-                const savedValue = localStorage.getItem(`unit01_all_data_${index}`);
-                if (savedValue) input.value = savedValue;
-            });
-        });
     </script>
 </body>
 </html>

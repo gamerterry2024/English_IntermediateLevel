@@ -190,9 +190,9 @@ html {
         <div class="sub-nav-item" onclick="scrollToSection('perspective')">└ View All</div>
     </div>
 
-    <!-- II. Diagnostics (아코디언 적용) -->
+    <!-- II. Semantic Clusters & Logic Scales (아코디언 적용) -->
     <div class="nav-item nav-diagnostics nav-parent" onclick="toggleSubMenu('diagnostics-sub')">
-        <i class="fas fa-stethoscope"></i> II. Diagnostics
+        <i class="fas fa-stethoscope"></i> II. Semantic Clusters & Logic Scales
         <span class="toggle-icon">▶</span>
     </div>
     <div class="sub-menu" id="diagnostics-sub" style="display: none;">
@@ -205,6 +205,14 @@ html {
         <div class="sub-nav-item sub-sub-nav-item" onclick="scrollToId('temp-scale')">  └ Temperature</div>
         <div class="sub-nav-item sub-sub-nav-item" onclick="scrollToId('size-scale')">  └ Size Expansion</div>
         <div class="sub-nav-item sub-sub-nav-item" onclick="scrollToId('selection-guide')">  └ Tiny vs. A bit</div>
+                <div class="sub-nav-item" onclick="scrollToId('contrast-logic')">└ Connectors & Concession</div>
+                                <div class="sub-nav-item" onclick="scrollToId('uncertainty-scale')">└ The Logic of Uncertainty & Resolve</div>
+                                <div class="sub-nav-item"
+onclick="scrollToId('as-like')">└ The Logic of Identity & Comparison</div>
+                                <div class="sub-nav-item"
+onclick="scrollToId('connector-matrix')">└ The Connector Matrix</div>
+                                <div class="sub-nav-item"
+onclick="scrollToId('wh-matrix')">└ The Information Wh-Matrix</div>       
     </div>
 
     <!-- III. Confusion -->
@@ -501,12 +509,53 @@ html {
     </div>
 </div>
 
-        
+<div class="card perspective" style="display: flex; flex-direction: column; align-items: center;">
+    <span class="badge" style="color: var(--perspective-accent); align-self: flex-start;">Core Energy</span>
+    <span class="word-title" style="margin-bottom: 20px;">Present</span>
+    <div style="width: 130px; height: 130px; border-radius: 50%; border: 2px solid var(--perspective-accent); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; margin-bottom: 35px; background: #fff; box-shadow: 0 4px 10px rgba(255,118,117,0.15);">
+        <div style="font-size: 28px; margin-bottom: 5px;">🤲</div>
+        <b style="font-size: 11px; color: var(--perspective-accent); line-height: 1.2; letter-spacing: -0.5px;">BEING<br>VISIBLE</b>
+        <div style="position: absolute; top: -22px; left: 50%; transform: translateX(-50%); background: var(--perspective-color); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--perspective-accent); font-size: 10px; font-weight: bold; color: var(--perspective-accent); white-space: nowrap;">📍 At Scene</div>
+        <div style="position: absolute; top: 15px; right: -45px; background: var(--perspective-color); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--perspective-accent); font-size: 10px; font-weight: bold; color: var(--perspective-accent); white-space: nowrap;">🎁 Gift</div>
+        <div style="position: absolute; bottom: -5px; right: -25px; background: var(--perspective-color); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--perspective-accent); font-size: 10px; font-weight: bold; color: var(--perspective-accent); white-space: nowrap;">🕒 Now</div>
+        <div style="position: absolute; bottom: -5px; left: -25px; background: var(--perspective-color); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--perspective-accent); font-size: 10px; font-weight: bold; color: var(--perspective-accent); white-space: nowrap;">📢 Show</div>
+        <div style="position: absolute; top: 15px; left: -45px; background: var(--perspective-color); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--perspective-accent); font-size: 10px; font-weight: bold; color: var(--perspective-accent); white-space: nowrap;">⚖️ Court</div>
     </div>
+    <div style="width: 100%; text-align: left; font-size: 13px; color: #636e72; border-top: 1px dashed #ddd; padding-top: 15px;">
+        <p style="margin: 5px 0;">• "Be <b>present</b> at the scene" (Physically there)</p>
+        <p style="margin: 5px 0;">• "A birthday <b>present</b>" (A gift shown to someone)</p>
+        <p style="margin: 5px 0;">• "At the <b>present</b> moment" (Existing right now)</p>
+        <p style="margin: 5px 0;">• "<b>Present</b> your ID" (Show or give formally)</p>
+        <p style="margin: 5px 0;">• "The <b>present</b> situation" (Current state of affairs)</p>
+    </div>
+</div>  
+
+<div class="card perspective" style="display: flex; flex-direction: column; align-items: center;">
+    <span class="badge" style="color: var(--perspective-accent); align-self: flex-start;">Core Energy</span>
+    <span class="word-title" style="margin-bottom: 20px;">Free</span>
+    <div style="width: 130px; height: 130px; border-radius: 50%; border: 2px solid var(--perspective-accent); display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; position: relative; margin-bottom: 35px; background: #fff; box-shadow: 0 4px 10px rgba(255,118,117,0.15);">
+        <div style="font-size: 28px; margin-bottom: 5px;">🕊️</div>
+        <b style="font-size: 11px; color: var(--perspective-accent); line-height: 1.2; letter-spacing: -0.5px;">BONDAGE<br>LESS</b>
+        <div style="position: absolute; top: -22px; left: 50%; transform: translateX(-50%); background: var(--perspective-color); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--perspective-accent); font-size: 10px; font-weight: bold; color: var(--perspective-accent); white-space: nowrap;">✨ Relief</div>
+        <div style="position: absolute; top: 15px; right: -45px; background: var(--perspective-color); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--perspective-accent); font-size: 10px; font-weight: bold; color: var(--perspective-accent); white-space: nowrap;">💰 $0</div>
+        <div style="position: absolute; bottom: -5px; right: -25px; background: var(--perspective-color); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--perspective-accent); font-size: 10px; font-weight: bold; color: var(--perspective-accent); white-space: nowrap;">🕒 Empty</div>
+        <div style="position: absolute; bottom: -5px; left: -25px; background: var(--perspective-color); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--perspective-accent); font-size: 10px; font-weight: bold; color: var(--perspective-accent); white-space: nowrap;">🍃 Clear</div>
+        <div style="position: absolute; top: 15px; left: -45px; background: var(--perspective-color); padding: 4px 10px; border-radius: 12px; border: 1px solid var(--perspective-accent); font-size: 10px; font-weight: bold; color: var(--perspective-accent); white-space: nowrap;">🗽 Liberty</div>
+    </div>
+    <div style="width: 100%; text-align: left; font-size: 13px; color: #636e72; border-top: 1px dashed #ddd; padding-top: 15px;">
+        <p style="margin: 5px 0;">• "Feel <b>free</b> to sleep" (No mental hesitation/burden)</p>
+        <p style="margin: 5px 0;">• "A <b>free</b> sample" (Without any cost or charge)</p>
+        <p style="margin: 5px 0;">• "Are you <b>free</b> now?" (Schedule is clear/empty)</p>
+        <p style="margin: 5px 0;">• "Sugar-<b>free</b> soda" (Cleared of specific ingredients)</p>
+        <p style="margin: 5px 0;">• "Set the bird <b>free</b>" (Released from physical bondage)</p>
+    </div>
+</div>
+
+</div>
 </section>
 
 <section class="section" id="diagnostics">
-        <h2 class="section-title" style="color: var(--diagnostics-accent); border-color: var(--diagnostics-accent);">II. Situational Diagnostics</h2>
+        <h2 class="section-title" style="color: var(--diagnostics-accent); border-color: var(--diagnostics-accent);">II. Semantic Clusters & Logic Scales</h2>
         
 <h3 class="group-label" id="problem-solving">Integrated Flow: From Trouble to Diagnostics</h3>
 <div class="card diagnostics" style="grid-column: span 2; padding: 30px; background: #ffffff; border: 1px solid #eef3ff;">
@@ -839,10 +888,10 @@ html {
 </div>
 
 
-<h3 class="group-label">The Logic of Measure: Tiny vs. A bit (Selection Guide)</h3>
+<h3 class="group-label" id="selection-guide" >The Logic of Measure: Tiny vs. A bit (Selection Guide)</h3>
 <div class="card-grid">
 
-    <div class="card diagnostics" id="selection-guide" style="grid-column: span 2; background: #ffffff; border: 2px dashed #74b9ff; padding: 25px;">
+    <div class="card diagnostics" style="grid-column: span 2; background: #ffffff; border: 2px dashed #74b9ff; padding: 25px;">
         <span class="badge" style="background: #74b9ff; color: white;">SELECTION FLOW</span>
         <div style="margin-top: 20px;">
             <div style="display: flex; align-items: center; margin-bottom: 15px; background: #f8faff; padding: 12px; border-radius: 8px;">
@@ -896,6 +945,442 @@ html {
     </div>
 </div>
 
+    <h3 class="group-label" id="contrast-logic">The Logic of Contrast: Connectors & Concession</h3>
+
+<div class="card diagnostics" style="grid-column: span 2; padding: 30px; background: #ffffff; border: 1px solid #eef3ff;">
+    <div style="display: flex; align-items: flex-start; gap: 20px; margin-bottom: 40px; position: relative;">
+
+        <table style="width: 100%; border-collapse: collapse; font-size: 13px; text-align: left;">
+            <thead>
+                <tr style="background: #f8f9ff; border-bottom: 2px solid #74b9ff;">
+                    <th style="padding: 15px; color: #2d3436; font-weight: 800; width: 20%;">Category</th>
+                    <th style="padding: 15px; color: #2d3436; font-weight: 800; width: 20%;">Key Words</th>
+                    <th style="padding: 15px; color: #2d3436; font-weight: 800; width: 25%;">Sentence Structure</th>
+                    <th style="padding: 15px; color: #2d3436; font-weight: 800; width: 35%;">Nuance & Usage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr style="border-bottom: 1px solid #eee;">
+                    <td style="padding: 15px;"><b style="color: #0984e3;">Coordinating<br>Conjunctions</b></td>
+                    <td style="padding: 15px; font-weight: 700;">But, Yet</td>
+                    <td style="padding: 15px; color: #636e72;">A, <b>but</b> B.</td>
+                    <td style="padding: 15px;">The most direct way to link opposing ideas. <b>Yet</b> emphasizes "despite that" or a surprising contrast.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #eee;">
+                    <td style="padding: 15px;"><b style="color: #6c5ce7;">Conjunctive<br>Adverbs</b></td>
+                    <td style="padding: 15px; font-weight: 700;">However,<br>Nevertheless,<br>Nonetheless</td>
+                    <td style="padding: 15px; color: #636e72;"><b>However</b>, A.<br>A; <b>however</b>, B.</td>
+                    <td style="padding: 15px;">Used to transition between independent sentences. <b>Nevertheless</b> is formal and acknowledges the previous fact.</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #eee;">
+                    <td style="padding: 15px;"><b style="color: #00b894;">Subordinating<br>Conjunctions</b></td>
+                    <td style="padding: 15px; font-weight: 700;">While, Whereas,<br>Although</td>
+                    <td style="padding: 15px; color: #636e72;"><b>While</b> A, B.<br>B, <b>whereas</b> A.</td>
+                    <td style="padding: 15px;">Connects two clauses in one sentence. <b>While/Whereas</b> for direct contrast; <b>Although</b> for granting a point (concession).</td>
+                </tr>
+                <tr style="border-bottom: 1px solid #eee;">
+                    <td style="padding: 15px;"><b style="color: #e17055;">Prepositions</b></td>
+                    <td style="padding: 15px; font-weight: 700;">Despite,<br>In spite of</td>
+                    <td style="padding: 15px; color: #636e72;"><b>Despite</b> A (Noun), B.</td>
+                    <td style="padding: 15px;">Must be followed by a <b>Noun or Noun Phrase</b>, not a full sentence. Means "regardless of A."</td>
+                </tr>
+                <tr>
+                    <td style="padding: 15px;"><b style="color: #d63031;">Phrasal<br>Connectors</b></td>
+                    <td style="padding: 15px; font-weight: 700;">On the other hand,<br>In contrast</td>
+                    <td style="padding: 15px; color: #636e72;"><b>On the other hand</b>, A.</td>
+                    <td style="padding: 15px;"><b>On the other hand</b> compares two sides/perspectives. <b>In contrast</b> highlights a striking difference.</td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <div style="margin-top: 25px; padding: 15px; background: #fff4e5; border-radius: 10px; font-size: 12px; color: #2d3436; border-left: 4px solid #fab1a0;">
+        💡 <b>Grammar Insight:</b> While <i>But</i> and <i>However</i> feel like separate blocks, <b>Subordinating Conjunctions</b> (While/Although) wrap two ideas into a single <b>Core Structure</b> unit.
+    </div>
+</div>
+
+
+        <h3 class="group-label" id="uncertainty-scale" style="margin-top: 50; color: var(--diagnostics-accent); font-size: 20px; border-bottom: 2px solid var(--diagnostics-accent); display: inline-block; padding-bottom: 5px; margin-bottom: 20px;">
+        The Logic of Uncertainty & Resolve
+    </h3>
+        
+    
+<div class="card logic-scale" style="padding: 30px; border: 1px solid #dfe6e9; border-radius: 15px; background: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.05); margin-bottom: 40px;">
+
+
+    <div style="display: flex; flex-direction: column; gap: 25px;">
+        
+        <div style="position: relative; padding-left: 20px; border-left: 3px solid #dfe6e9;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                <span style="background: #eef3ff; color: #0984e3; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; text-transform: uppercase;">Uncertainty</span>
+                <b style="font-size: 16px; color: #2d3436;">If / Whether (Noun Clause)</b>
+            </div>
+            <p style="font-size: 13px; color: #636e72; margin: 0 0 10px 0; line-height: 1.5;">
+                Focuses on the <b>Truth Value</b> (Yes or No). It fills a "gap" in the sentence as an object or subject.
+            </p>
+            <div style="background: #f1f2f6; padding: 12px; border-radius: 8px; font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #2d3436; border: 1px solid #e2e2e2;">
+                "I wonder <b>whether</b> she will attend." <br>
+                <span style="font-size: 11px; color: #636e72; font-weight: 500;">→ The focus is on the unknown fact: 'Will she come or not?'</span>
+            </div>
+        </div>
+
+        <div style="position: relative; padding-left: 20px; border-left: 3px solid #fab1a0;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                <span style="background: #fff0ed; color: #e17055; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; text-transform: uppercase;">Indifference</span>
+                <b style="font-size: 16px; color: #2d3436;">Whether ... or not (Adverb Clause)</b>
+            </div>
+            <p style="font-size: 13px; color: #636e72; margin: 0 0 10px 0; line-height: 1.5;">
+                Both possibilities are acknowledged, but they <b>cannot change</b> the final outcome.
+            </p>
+            <div style="background: #f1f2f6; padding: 12px; border-radius: 8px; font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #2d3436; border: 1px solid #e2e2e2;">
+                "<b>Whether</b> it rains <b>or not</b>, I will go." <br>
+                <span style="font-size: 11px; color: #636e72; font-weight: 500;">→ The main action (going) is fixed, regardless of the weather.</span>
+            </div>
+        </div>
+
+        <div style="position: relative; padding-left: 20px; border-left: 3px solid #ff7675;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                <span style="background: #fff0f0; color: #d63031; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; text-transform: uppercase;">Exclusion</span>
+                <b style="font-size: 16px; color: #2d3436;">Regardless of (Prepositional Phrase)</b>
+            </div>
+            <p style="font-size: 13px; color: #636e72; margin: 0 0 10px 0; line-height: 1.5;">
+                Actively <b>ignores</b> the variable. It treats the condition as irrelevant information.
+            </p>
+            <div style="background: #f1f2f6; padding: 12px; border-radius: 8px; font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #2d3436; border: 1px solid #e2e2e2;">
+                "<b>Regardless of</b> the cost, buy it." <br>
+                <span style="font-size: 11px; color: #636e72; font-weight: 500;">→ The cost is completely excluded from the decision-making process.</span>
+            </div>
+        </div>
+
+        <div style="position: relative; padding-left: 20px; border-left: 3px solid #2d3436;">
+            <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+                <span style="background: #2d3436; color: white; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; text-transform: uppercase;">Resolve</span>
+                <b style="font-size: 16px; color: #2d3436;">No matter what / how</b>
+            </div>
+            <p style="font-size: 13px; color: #636e72; margin: 0 0 10px 0; line-height: 1.5;">
+                The <b>highest scale</b> of commitment. The focus changes depending on whether you use a <b>Noun</b> or an <b>Adjective</b>.
+            </p>
+            
+            <div style="background: #f1f2f6; padding: 12px; border-radius: 8px; font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #2d3436; margin-bottom: 10px; border: 1px solid #e2e2e2;">
+                <b style="color: #d63031;">[How + Adj/Adv]</b><br>
+                "<b>No matter how <span style="text-decoration: underline;">hard</span></b> it is, I'll finish."<br>
+                <span style="font-size: 11px; color: #636e72; font-weight: 500;">→ 'Hard' (Adj) is pulled forward by 'How'. Focuses on the <b>degree</b> of difficulty.</span>
+            </div>
+
+            <div style="background: #f1f2f6; padding: 12px; border-radius: 8px; font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #2d3436; border: 1px solid #e2e2e2;">
+                <b style="color: #0984e3;">[What + Noun / Alone]</b><br>
+                "<b>No matter what <span style="text-decoration: underline;">happens</span></b>, I'll finish."<br>
+                <span style="font-size: 11px; color: #636e72; font-weight: 500;">→ 'What' acts as the subject/object. Focuses on the <b>event</b> itself.</span>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-top: 30px; padding-top: 15px; border-top: 1px dashed #ddd; font-size: 12px; color: #2d3436;">
+        <span style="color: #d63031; font-weight: bold;">[Logic Scale Summary]</span><br>
+        Curiosity (If) → Passive Indifference (Whether) → Active Exclusion (Regardless) → Absolute Resolve (No matter what)
+    </div>
+</div>
+
+        <h3 class="group-label" id="as-like" style="margin-top: 50; color: var(--diagnostics-accent); font-size: 20px; border-bottom: 2px solid var(--diagnostics-accent); display: inline-block; padding-bottom: 5px; margin-bottom: 20px;">
+        The Logic of Identity & Comparison
+    </h3>
+    
+    
+    
+<div class="card logic-scale" style="padding: 30px; border: 1px solid #dfe6e9; border-radius: 15px; background: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.05); margin-bottom: 40px;">
+
+
+<div style="display: flex; flex-direction: column; gap: 25px;">
+    
+    <div style="position: relative; padding-left: 20px; border-left: 3px solid #00b894;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <span style="background: #e6fffb; color: #00b894; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; text-transform: uppercase;">Identity</span>
+            <b style="font-size: 16px; color: #2d3436;">As (Role & Status)</b>
+        </div>
+        <p style="font-size: 13px; color: #636e72; margin: 0 0 10px 0; line-height: 1.5;">
+            Defines a <b>Actual Role</b>. The subject <b>IS</b> the object in this context.
+        </p>
+        <div style="background: #f1f2f6; padding: 12px; border-radius: 8px; font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #2d3436; border: 1px solid #e2e2e2;">
+            "I work <b>as</b> a security officer."<br>
+            <span style="font-size: 11px; color: #636e72; font-weight: 500;">→ (Status) My actual job is a security officer.</span>
+        </div>
+    </div>
+
+    <div style="position: relative; padding-left: 20px; border-left: 3px solid #0984e3;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <span style="background: #eef3ff; color: #0984e3; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; text-transform: uppercase;">Similarity</span>
+            <b style="font-size: 16px; color: #2d3436;">Like / Such as (Vague vs. Specific)</b>
+        </div>
+        <p style="font-size: 13px; color: #636e72; margin: 0 0 10px 0; line-height: 1.5;">
+            Compares two different things. <b>Like</b> is for general resemblance; <b>Such as</b> is for listing examples.
+        </p>
+        <div style="background: #f1f2f6; padding: 12px; border-radius: 8px; font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #2d3436; margin-bottom: 10px; border: 1px solid #e2e2e2;">
+            "He runs <b>like</b> the wind."<br>
+            <span style="font-size: 11px; color: #636e72; font-weight: 500;">→ (Resemblance) He is not wind, but his speed is similar.</span>
+        </div>
+        <div style="background: #f1f2f6; padding: 12px; border-radius: 8px; font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #2d3436; border: 1px solid #e2e2e2;">
+            "I like mysteries, <b>such as</b> Sherlock Holmes."<br>
+            <span style="font-size: 11px; color: #636e72; font-weight: 500;">→ (Example) Provides a specific instance of the 'Mystery' category.</span>
+        </div>
+    </div>
+
+    <div style="position: relative; padding-left: 20px; border-left: 3px solid #fd79a8;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <span style="background: #fff0f5; color: #fd79a8; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; text-transform: uppercase;">Hypothesis</span>
+            <b style="font-size: 16px; color: #2d3436;">As if / As though (Imagination)</b>
+        </div>
+        <p style="font-size: 13px; color: #636e72; margin: 0 0 10px 0; line-height: 1.5;">
+            Describes a <b>False or Unlikely</b> situation as if it were true.
+        </p>
+        <div style="background: #f1f2f6; padding: 12px; border-radius: 8px; font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #2d3436; border: 1px solid #e2e2e2;">
+            "She acts <b>as if</b> she were the boss." <br>
+            <span style="font-size: 11px; color: #636e72; font-weight: 500;">→ (Pretense) She is NOT the boss, but her behavior mimics one.</span>
+        </div>
+    </div>
+
+    <div style="position: relative; padding-left: 20px; border-left: 3px solid #f9ca24;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <span style="background: #fff9e6; color: #f9ca24; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; text-transform: uppercase;">Degree</span>
+            <b style="font-size: 16px; color: #2d3436;">As [Adj/Adv] as (Equivalence)</b>
+        </div>
+        <p style="font-size: 13px; color: #636e72; margin: 0 0 10px 0; line-height: 1.5;">
+            Compares the <b>Level or Quality</b> between two subjects. They are equal in that trait.
+        </p>
+        <div style="background: #f1f2f6; padding: 12px; border-radius: 8px; font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #2d3436; border: 1px solid #e2e2e2;">
+            "This parrot is <b>as</b> smart <b>as</b> a human." <br>
+            <span style="font-size: 11px; color: #636e72; font-weight: 500;">→ (Balance) The intelligence level of both is on the same scale.</span>
+        </div>
+    </div>
+
+    <div style="position: relative; padding-left: 20px; border-left: 3px solid #6c5ce7;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <span style="background: #f3f0ff; color: #6c5ce7; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; text-transform: uppercase;">Function</span>
+            <b style="font-size: 16px; color: #2d3436;">Standalone As (Reason / Time / Way)</b>
+        </div>
+        <p style="font-size: 13px; color: #636e72; margin: 0 0 10px 0; line-height: 1.5;">
+            Acts as a <b>Connector</b> for logical flow.
+        </p>
+        <div style="background: #f1f2f6; padding: 12px; border-radius: 8px; font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #2d3436; margin-bottom: 10px; border: 1px solid #e2e2e2;">
+            "<b>As</b> I was tired, I slept." (Reason/Because)<br>
+            "<b>As</b> the sun set, it got cold." (Time/When)
+        </div>
+    </div>
+
+</div>
+
+<div style="margin-top: 30px; padding-top: 15px; border-top: 1px dashed #ddd; font-size: 12px; color: #2d3436;">
+    <span style="color: #00b894; font-weight: bold;">[Logic Summary]</span><br>
+    Identity (As) vs. Similarity (Like/Such as) vs. Imagination (As if) vs. Equivalence (As...as)
+</div>
+</div>
+
+
+
+        <h3 class="group-label" id="connector-matrix" style="margin-top: 50; color: var(--diagnostics-accent); font-size: 20px; border-bottom: 2px solid var(--diagnostics-accent); display: inline-block; padding-bottom: 5px; margin-bottom: 20px;">
+        The Connector Matrix
+    </h3>
+     
+<div class="card logic-scale" style="padding: 30px; border: 1px solid #dfe6e9; border-radius: 15px; background: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.05); margin-bottom: 40px;">
+
+<div style="display: flex; flex-direction: column; gap: 25px;">
+    
+    <div style="position: relative; padding-left: 20px; border-left: 3px solid #00b894;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <span style="background: #e6fffb; color: #00b894; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; text-transform: uppercase;">Modification</span>
+            <b style="font-size: 16px; color: #2d3436;">That vs. Which / Who</b>
+        </div>
+        <p style="font-size: 13px; color: #636e72; margin: 0 0 10px 0; line-height: 1.5;">
+            Both require a <b>Noun (Antecedent)</b>. Focus is on the <b>Identity</b> of the noun.
+        </p>
+        <div style="background: #f1f2f6; padding: 12px; border-radius: 8px; font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #2d3436; border: 1px solid #e2e2e2;">
+            "Cows <b>that/which</b> had names..." <br>
+            <span style="font-size: 11px; color: #636e72; font-weight: 500;">→ Logic: <b>[Noun] + [Connector] + [Incomplete Sentence]</b></span>
+        </div>
+    </div>
+
+    <div style="position: relative; padding-left: 20px; border-left: 3px solid #d63031;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <span style="background: #fff0f0; color: #d63031; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; text-transform: uppercase;">Ownership</span>
+            <b style="font-size: 16px; color: #2d3436;">That vs. What (Does it have a Noun?)</b>
+        </div>
+        <p style="font-size: 13px; color: #636e72; margin: 0 0 10px 0; line-height: 1.5;">
+            <b>That</b> needs a noun to modify, but <b>What</b> contains the noun inside itself.
+        </p>
+        <div style="background: #f1f2f6; padding: 12px; border-radius: 8px; font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #2d3436; border: 1px solid #e2e2e2;">
+            "I know <b>that</b> [fact]." vs. "I know <b>what</b> [you did]." <br>
+            <span style="font-size: 11px; color: #636e72; font-weight: 500;">→ Logic: <b>What</b> = The thing which. It never follows a noun.</span>
+        </div>
+    </div>
+
+    <div style="position: relative; padding-left: 20px; border-left: 3px solid #0984e3;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <span style="background: #eef3ff; color: #0984e3; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; text-transform: uppercase;">Certainty</span>
+            <b style="font-size: 16px; color: #2d3436;">That vs. Whether / If</b>
+        </div>
+        <p style="font-size: 13px; color: #636e72; margin: 0 0 10px 0; line-height: 1.5;">
+            Both act as Noun Clauses (after a Verb). The difference is the <b>Confidence Level</b> of the fact.
+        </p>
+        <div style="background: #f1f2f6; padding: 12px; border-radius: 8px; font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #2d3436; border: 1px solid #e2e2e2;">
+            "I know <b>that</b>..." (Certainty: 100%) <br>
+            "I wonder <b>whether</b>..." (Uncertainty: 50/50)
+        </div>
+    </div>
+<div style="margin-top: 30px; padding-top: 15px; border-top: 1px dashed #ddd; font-size: 12px; color: #2d3436;">
+    <span style="color: #e17055; font-weight: bold;">[Semantic Scale Summary]</span><br>
+    Modification (That/Which) → Container (What) → Uncertainty (Whether/If)
+</div>
+    </div>
+    </div>
+    
+    
+    
+        <h3 class="group-label" id="wh-matrix" style="margin-top: 50; color: var(--diagnostics-accent); font-size: 20px; border-bottom: 2px solid var(--diagnostics-accent); display: inline-block; padding-bottom: 5px; margin-bottom: 20px;">
+        The Information Wh-Matrix
+    </h3>
+
+<div class="card logic-scale" style="padding: 30px; border: 1px solid #dfe6e9; border-radius: 15px; background: #fff; box-shadow: 0 10px 20px rgba(0,0,0,0.05); margin-bottom: 40px;">
+
+<div style="display: flex; flex-direction: column; gap: 25px;">
+    
+    <div style="position: relative; padding-left: 20px; border-left: 3px solid #6c5ce7;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <span style="background: #f3f0ff; color: #6c5ce7; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; text-transform: uppercase;">Identity</span>
+            <b style="font-size: 16px; color: #2d3436;">Who & What (The Entities)</b>
+        </div>
+        <p style="font-size: 13px; color: #636e72; margin: 0 0 10px 0; line-height: 1.5;">
+            Focuses on <b>Person</b> or <b>Thing</b>. These are the main actors in a <b>Core Structure</b>.
+        </p>
+        <div style="background: #f1f2f6; padding: 12px; border-radius: 8px; font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #2d3436; border: 1px solid #e2e2e2;">
+            "<b>Who</b> did it?" / "<b>What</b> happened?" <br>
+            <span style="font-size: 11px; color: #636e72; font-weight: 500;">→ Logic: Seeking the Subject or Object. (100% Reality)</span>
+        </div>
+    </div>
+
+    <div style="position: relative; padding-left: 20px; border-left: 3px solid #00b894;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <span style="background: #e6fffb; color: #00b894; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; text-transform: uppercase;">Selection</span>
+            <b style="font-size: 16px; color: #2d3436;">Which (Limited Options)</b>
+        </div>
+        <p style="font-size: 13px; color: #636e72; margin: 0 0 10px 0; line-height: 1.5;">
+            Unlike 'What', <b>Which</b> operates within a <b>Defined Set</b>. It's about choosing from a list.
+        </p>
+        <div style="background: #f1f2f6; padding: 12px; border-radius: 8px; font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #2d3436; border: 1px solid #e2e2e2;">
+            "<b>Which</b> cow produced more milk?" <br>
+            <span style="font-size: 11px; color: #636e72; font-weight: 500;">→ Logic: Comparison between specific candidates. (Narrow Focus)</span>
+        </div>
+    </div>
+
+    <div style="position: relative; padding-left: 20px; border-left: 3px solid #0984e3;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <span style="background: #eef3ff; color: #0984e3; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; text-transform: uppercase;">Setting</span>
+            <b style="font-size: 16px; color: #2d3436;">Where & When (The Coordinates)</b>
+        </div>
+        <p style="font-size: 13px; color: #636e72; margin: 0 0 10px 0; line-height: 1.5;">
+            Establishes the <b>Background</b>. These function as <b>Adverbials</b>, adding detail to the action.
+        </p>
+        <div style="background: #f1f2f6; padding: 12px; border-radius: 8px; font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #2d3436; border: 1px solid #e2e2e2;">
+            "<b>Where</b> are the mines?" / "<b>When</b> did they start?" <br>
+            <span style="font-size: 11px; color: #636e72; font-weight: 500;">→ Logic: Mapping the event in Space and Time.</span>
+        </div>
+    </div>
+
+    <div style="position: relative; padding-left: 20px; border-left: 3px solid #e17055;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <span style="background: #fff0ed; color: #e17055; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; text-transform: uppercase;">Reasoning</span>
+            <b style="font-size: 16px; color: #2d3436;">Why & How (The Process)</b>
+        </div>
+        <p style="font-size: 13px; color: #636e72; margin: 0 0 10px 0; line-height: 1.5;">
+            Deals with <b>Causality</b> and <b>Mechanism</b>. Explains the 'Behind the Scenes' of an action.
+        </p>
+        <div style="background: #f1f2f6; padding: 12px; border-radius: 8px; font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #2d3436; border: 1px solid #e2e2e2;">
+            "<b>Why</b> save rats?" / "<b>How</b> do they detect disease?" <br>
+            <span style="font-size: 11px; color: #636e72; font-weight: 500;">→ Logic: Understanding the motive and the system.</span>
+        </div>
+    </div>
+
+
+<div style="display: flex; flex-direction: column; gap: 25px;">
+    
+    <div style="position: relative; padding-left: 20px; border-left: 3px solid #d63031;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <span style="background: #fff0f0; color: #d63031; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; text-transform: uppercase;">Noun Function</span>
+            
+            <b style="font-size: 16px; color: #2d3436;">Who, What, Which (The Essential Components)</b>
+        </div>
+        <p style="font-size: 13px; color: #636e72; margin: 0 0 10px 0; line-height: 1.5;">
+            These words act as <b>Essential Components (Subject/Object)</b> themselves. When they move to the front, they leave an <b>Empty Slot (Gap)</b> behind.
+        </p>
+        <div style="background: #f1f2f6; padding: 12px; border-radius: 8px; font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #2d3436; border: 1px solid #e2e2e2;">
+            "I know <b>what</b> [you did <b>__</b>]." <br>
+            <span style="font-size: 11px; color: #d63031; font-weight: bold;">(Slot Empty: The object of 'did' moved to 'what')</span>
+        </div>
+    </div>
+
+    <div style="position: relative; padding-left: 20px; border-left: 3px solid #0984e3;">
+        <div style="display: flex; align-items: center; gap: 10px; margin-bottom: 8px;">
+            <span style="background: #eef3ff; color: #0984e3; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: bold; text-transform: uppercase;">Adverb Function</span>
+            <b style="font-size: 16px; color: #2d3436;">Where, When, Why, How (The Background Settings)</b>
+        </div>
+        <p style="font-size: 13px; color: #636e72; margin: 0 0 10px 0; line-height: 1.5;">
+            These words only provide <b>Context (Time/Place/Method)</b>. Since they aren't essential parts, the remaining sentence stays <b>Structurally Complete</b>.
+        </p>
+        <div style="background: #f1f2f6; padding: 12px; border-radius: 8px; font-family: 'Courier New', Courier, monospace; font-size: 13px; color: #2d3436; border: 1px solid #e2e2e2;">
+            "I know <b>where</b> [you did it]." <br>
+            <span style="font-size: 11px; color: #0984e3; font-weight: bold;">(Slot Full: Subject(you) + Verb(did) + Object(it) are all present)</span>
+        </div>
+    </div>
+
+</div>
+
+<div style="margin-top: 30px; padding-top: 15px; border-top: 1px dashed #ddd; font-size: 12px; color: #2d3436;">
+    <span style="color: #d63031; font-weight: bold;">[Decision Flow]</span><br>
+    Is an essential component missing? → Yes: Who/What/Which | No: Where/When/Why/How
+</div>
+
+<div style="margin-top: 40px; padding: 25px; background: #f8f9fa; border-radius: 12px; border: 1px solid #e9ecef;">
+    <h4 style="margin: 0 0 15px 0; color: #2d3436; font-size: 16px; display: flex; align-items: center; gap: 8px;">
+        <span style="font-size: 18px;">✍️</span> The Writing Algorithm: Logic of Deployment
+    </h4>
+    <p style="font-size: 13px; color: #636e72; margin-bottom: 20px; line-height: 1.6;">
+        Build your sentences layer by layer. Start from the <b>Essential Core</b> and expand to the <b>Deep Logic</b>.<br>
+        <i style="color: #6c5ce7;">"Sentences become most powerful when they evolve from mere existence to deep reasoning."</i>
+    </p>
+
+    <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 15px;">
+        <div style="background: #fff; padding: 15px; border-radius: 8px; border-top: 3px solid #6c5ce7; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+            <small style="color: #6c5ce7; font-weight: bold; font-size: 10px; text-transform: uppercase;">Step 01. The Core</small>
+            <div style="font-size: 14px; font-weight: bold; color: #2d3436; margin: 5px 0;">Entity (Who/What)</div>
+            <p style="font-size: 12px; color: #636e72; margin: 0;">Define the main actor and the action.</p>
+        </div>
+        <div style="background: #fff; padding: 15px; border-radius: 8px; border-top: 3px solid #00b894; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+            <small style="color: #00b894; font-weight: bold; font-size: 10px; text-transform: uppercase;">Step 02. The Focus</small>
+            <div style="font-size: 14px; font-weight: bold; color: #2d3436; margin: 5px 0;">Scope (Which)</div>
+            <p style="font-size: 12px; color: #636e72; margin: 0;">Narrow down to a specific target.</p>
+        </div>
+        <div style="background: #fff; padding: 15px; border-radius: 8px; border-top: 3px solid #0984e3; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+            <small style="color: #0984e3; font-weight: bold; font-size: 10px; text-transform: uppercase;">Step 03. The Backdrop</small>
+            <div style="font-size: 14px; font-weight: bold; color: #2d3436; margin: 5px 0;">Coordinates (Where/When)</div>
+            <p style="font-size: 12px; color: #636e72; margin: 0;">Set the time and place for the scene.</p>
+        </div>
+        <div style="background: #fff; padding: 15px; border-radius: 8px; border-top: 3px solid #e17055; box-shadow: 0 2px 5px rgba(0,0,0,0.05);">
+            <small style="color: #e17055; font-weight: bold; font-size: 10px; text-transform: uppercase;">Step 04. The Depth</small>
+            <div style="font-size: 14px; font-weight: bold; color: #2d3436; margin: 5px 0;">Mechanism (Why/How)</div>
+            <p style="font-size: 12px; color: #636e72; margin: 0;">Explain the logic and the process.</p>
+        </div>
+    </div>
+
+    <div style="margin-top: 25px; padding-top: 15px; border-top: 1px dashed #ccc; font-size: 12px; color: #2d3436;">
+        <span style="color: #6c5ce7; font-weight: bold;">[Wh-Inquiry Summary]</span><br>
+        Entity (Who/What) → Scope (Which) → Coordinates (Where/When) → Mechanism (Why/How)
+    </div>
+
+    <div style="margin-top: 15px; padding: 12px; background: #fff; border-radius: 6px; font-family: 'Courier New', monospace; font-size: 12px; color: #2d3436; border-left: 3px solid #b2bec3;">
+        <b>Writing Check:</b> [Entity] + [Scope] + [Coordinates] + [Mechanism] = <b>Perfect Sentence Logic.</b>
+    </div>
+</div>
+
+
+</div>
     </section>
 
 <section class="section" id="confusion">

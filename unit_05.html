@@ -5,203 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UNIT 05: RELAX</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #2c3e50;
-            --secondary: #3498db;
-            --success: #27ae60;
-            --bg: #f4f7f6;
-            --white: #ffffff;
-            --highlight: #fff59d;
-            --accent: #e67e22;
-        }
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            line-height: 1.6;
-            background-color: var(--bg);
-            color: var(--primary);
-            margin: 0;
-            padding: 0;
-            scroll-behavior: smooth;
-        }
-        section {
-            background: var(--white);
-            padding: 2.5rem;
-            border-radius: 15px;
-            margin-bottom: 2.5rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            /* 상단 헤더 높이를 고려한 스크롤 위치 조정 */
-            scroll-margin-top: 90px;
-        }
-        .back-to-dashboard {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background-color: var(--primary);
-            color: white;
-            padding: 15px 20px;
-            border-radius: 50px;
-            text-decoration: none;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            z-index: 1001;
-            font-weight: bold;
-            transition: transform 0.2s;
-        }
-        .back-to-dashboard:hover {
-            transform: scale(1.1);
-            background-color: var(--secondary);
-        }
-        header {
-            background: var(--primary);
-            color: white;
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            margin-left: 20px;
-            font-weight: bold;
-        }
-        .container {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 20px;
-            padding-bottom: 300px; 
-        }
-        h2 {
-            border-left: 6px solid var(--secondary);
-            padding-left: 15px;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-        }
-        .reading-box {
-            background-color: #fffaf0;
-            border: 1px solid #f39c12;
-            padding: 25px;
-            border-radius: 12px;
-            line-height: 1.8;
-            margin-bottom: 20px;
-        }
-        .vocab-link {
-            color: var(--secondary);
-            text-decoration: none;
-            border-bottom: 2px solid var(--secondary);
-            font-weight: bold;
-            padding: 0 2px;
-            cursor: pointer;
-        }
-        .vocab-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
-        }
-        .card {
-            border: 1px solid #eee;
-            padding: 20px;
-            border-radius: 10px;
-            background: #fff;
-            transition: all 0.4s ease;
-        }
-        .card.active-highlight {
-            border: 2px solid var(--accent);
-            background-color: #fffde7;
-            transform: scale(1.05);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        .return-btn {
-            display: inline-block;
-            margin-top: 12px;
-            font-size: 0.85rem;
-            color: var(--secondary);
-            text-decoration: none;
-            font-weight: bold;
-            border: 1px solid var(--secondary);
-            padding: 4px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .audio-zone {
-            background: #ebf5fb;
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid var(--secondary);
-            margin: 20px 0;
-            text-align: center;
-        }
-        .audio-label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
-            color: var(--primary);
-        }
-        .script-window {
-            margin-top: 15px;
-            padding: 20px;
-            background-color: #ffffff;
-            border: 1px solid #eee;
-            border-radius: 12px;
-            height: 250px; 
-            overflow-y: auto;
-            display: none;
-            text-align: left;
-        }
-        .script-line {
-            padding: 8px 10px;
-            border-radius: 5px;
-            margin-bottom: 5px;
-            transition: background 0.3s;
-            font-size: 0.95rem;
-        }
-        .script-line.active {
-            background-color: var(--highlight);
-            font-weight: bold;
-        }
-        textarea, input[type="text"] {
-            width: 100%;
-            padding: 14px;
-            margin-top: 10px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-sizing: border-box;
-        }
-        .quiz-item {
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .instruction {
-            font-style: italic;
-            color: #7f8c8d;
-            font-size: 0.9rem;
-        }
-        .save-btn {
-            background: var(--success);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .save-btn:hover {
-            background-color: #219150;
-        }
-        .mini-input {
-            width: 100px !important;
-            padding: 5px !important;
-            margin: 0 5px !important;
-            display: inline-block !important;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-    </style>
+    <link rel="stylesheet" href="css/unit.css">
+    
 </head>
 <body>
     <a href="index.html#unit_05" class="back-to-dashboard">🏠 Back to Dashboard</a>
@@ -740,117 +545,79 @@ function validateTF(rowId, correctVal, explanation) {
 </div>
 
 <div style="margin-top: 30px; padding: 25px; background: #ffffff; border-radius: 15px; border: 2px solid #3498db; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-        <h3 style="margin: 0; color: #2980b9;"><i class="fas fa-robot"></i> AI Solution</h3>
-        <span style="background: #3498db; color: white; padding: 5px 15px; border-radius: 50px; font-weight: bold; font-size: 1.1rem;">
-            Overall Score: <input type="text" class="mini-input" style="width: 50px !important; color: white; background: transparent; border: 1px solid rgba(255,255,255,0.5); text-align: center;" value="9.2"> / 10
-        </span>
-    </div>
-    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.95rem;">
-        <thead>
-            <tr style="background: #ebf5fb; text-align: left;">
-                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Evaluation Criteria</th>
-                <th style="padding: 12px; border-bottom: 2px solid #3498db; text-align: center;">Score</th>
-                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Detailed Feedback</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Content</td>
-                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="10"> / 10</td>
-                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Deep reflection on career stages from 20s to 50s."></td>
-            </tr>
-            <tr>
-                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Logic</td>
-                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="9.5"> / 10</td>
-                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Strong comparison between 'meaning' and 'success'."></td>
-            </tr>
-            <tr>
-                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Grammar</td>
-                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="8"> / 10</td>
-                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Check comparative forms (e.g., more important than)."></td>
-            </tr>
-            <tr>
-                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Vocabulary</td>
-                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="9"> / 10</td>
-                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Great use of 'exhausted', 'exploiting', and 'fulfillment'."></td>
-            </tr>
-        </tbody>
-    </table>
-    <div style="background: #f4f7f6; padding: 15px; border-radius: 10px; border-left: 5px solid #27ae60;">
-        <p style="margin: 0 0 10px 0; font-weight: bold; color: #27ae60;"><i class="fas fa-check-circle"></i> Recommended Revision</p>
-        <textarea style="width: 100%; background: transparent; border: 1px dashed #27ae60; border-radius: 5px; padding: 10px; font-style: italic;" rows="8">"In my experience, I thought gaining experience was more important than anything else in my twenties. My companies might have been exploiting me with boring tasks, but I worked hard and struggled through it. In my thirties, I chased high salaries, but I still worked over ten hours a day. Now in my late forties, I was so exhausted that I retired after 30 years of practice. I currently work as a security officer for two hours a day and I am happy because there is no pressure. To me, a 'meaningful' job is more important than a 'successful' one, and that meaning depends on my current physical and mental well-being."</textarea>
-    </div>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="margin: 0; color: #2980b9;"><i class="fas fa-robot"></i> AI Solution</h3>
+        <span style="background: #3498db; color: white; padding: 5px 15px; border-radius: 50px; font-weight: bold; font-size: 1.1rem;">
+            Overall Score: <input type="text" class="mini-input" style="width: 50px !important; color: white; background: transparent; border: 1px solid rgba(255,255,255,0.5); text-align: center;" value=""> / 10
+        </span>
+    </div>
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.95rem;">
+        <thead>
+            <tr style="background: #ebf5fb; text-align: left;">
+                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Evaluation Criteria</th>
+                <th style="padding: 12px; border-bottom: 2px solid #3498db; text-align: center;">Score</th>
+                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Detailed Feedback</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Content</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value=""> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value=""></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Logic</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value=""> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value=""></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Grammar</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value=""> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value=""></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Vocabulary</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value=""> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value=""></td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="background: #f4f7f6; padding: 15px; border-radius: 10px; border-left: 5px solid #27ae60;">
+        <p style="margin: 0 0 10px 0; font-weight: bold; color: #27ae60;"><i class="fas fa-check-circle"></i> Recommended Revision</p>
+        <textarea style="width: 100%; background: transparent; border: 1px dashed #27ae60; border-radius: 5px; padding: 10px; font-style: italic;" rows="8"></textarea>
+    </div>
 </div>
             <button class="save-btn" style="margin-top: 20px;" onclick="saveProgress()">Save My Work</button>
         </section>
     </div>
+    
+                <!-- 공통 스크립트 파일들 -->
+<script src="js/speaking.js"></script>
+<script src="js/listening.js"></script>
+
     <script>
-        // --- 데이터 정의 ---
-        const dialogueData = [
-    { 
-        name: "Corinne", 
-        color: "#3498db", 
-        bg: "#ebf5fb", 
-        text: "Hi, Maribel! Any plans for the weekend?", 
-        char: "speaker1" 
-    },
-    { 
-        name: "Maribel", 
-        color: "#f39c12", 
-        bg: "#fdfaf0", 
-        text: "I’ll just <b>take it easy</b> at home.", 
-        char: "speaker2" 
-    },
-    { 
-        name: "Corinne", 
-        color: "#3498db", 
-        bg: "#ebf5fb", 
-        text: "The <b>weather forecast</b> says it might rain.", 
-        char: "speaker1" 
-    },
-    { 
-        name: "Maribel", 
-        color: "#f39c12", 
-        bg: "#fdfaf0", 
-        text: "Then, I should try a <b>siesta</b>.", 
-        char: "speaker2" 
-    },
-    { 
-        name: "Corinne", 
-        color: "#3498db", 
-        bg: "#ebf5fb", 
-        text: "Naps make you very <b>productive</b>, right?", 
-        char: "speaker1" 
-    },
-    { 
-        name: "Maribel", 
-        color: "#f39c12", 
-        bg: "#fdfaf0", 
-        text: "Yes. How about you? Any <b>spectator</b> sports?", 
-        char: "speaker2" 
-    },
-    { 
-        name: "Corinne", 
-        color: "#3498db", 
-        bg: "#ebf5fb", 
-        text: "I’m watching <b>Bossaball</b>. It’s <b>fascinating</b>!", 
-        char: "speaker1" 
-    },
-    { 
-        name: "Maribel", 
-        color: "#f39c12", 
-        bg: "#fdfaf0", 
-        text: "<b>Ultimately</b>, we just need a <b>balance</b>.", 
-        char: "speaker2" 
-    },
-    { 
-        name: "Corinne", 
-        color: "#3498db", 
-        bg: "#ebf5fb", 
-        text: "Exactly. Enjoy your <b>relaxing</b> weekend!", 
-        char: "speaker1" 
-    }
+// --- 데이터 정의 (UNIT 5: Unique Sports Around the World - 본문 충실형) ---
+const dialogueData = [
+    // Paragraph 1: Pato and Keirin (본문 1-2 섹션)
+    { name: "1 Chunk", color: "#3498db", bg: "#ebf5fb", text: "national sport of Argentina", char: "assistant" },
+    { name: "2 Chunk", color: "#3498db", bg: "#ebf5fb", text: "banned for a while", char: "assistant" },
+    { name: "3 Sentence", color: "#2980b9", bg: "#e1f5fe", text: "Pato is the <b>national sport of Argentina</b>, but it was <b>banned for a while</b> due to violence.", char: "assistant" },
+    { name: "4 Chunk", color: "#3498db", bg: "#ebf5fb", text: "sets the pace", char: "assistant" },
+    { name: "5 Chunk", color: "#3498db", bg: "#ebf5fb", text: "bet over $15 billion dollars", char: "assistant" },
+    { name: "6 Sentence", color: "#2980b9", bg: "#e1f5fe", text: "In Keirin, a cyclist <b>sets the pace</b> before others race, and people <b>bet over $15 billion dollars</b> on the outcome.", char: "assistant" },
+    { name: "7 Paragraph", color: "#2c3e50", bg: "#f0f7ff", text: "While Pato remains the <b>national sport of Argentina</b> despite being <b>banned for a while</b> in the past, Japan's Keirin is a massive industry. Fans <b>bet over $15 billion dollars</b> on races where a pacer <b>sets the pace</b> for high-speed cyclists.", char: "assistant" },
+
+    // Paragraph 2: Bossaball and Modern Evolution (본문 3 섹션)
+    { name: "1 Chunk", color: "#9b59b6", bg: "#f5eef8", text: "fusion of music and sport", char: "assistant" },
+    { name: "2 Chunk", color: "#9b59b6", bg: "#f5eef8", text: "special inflatable pitch", char: "assistant" },
+    { name: "3 Sentence", color: "#8e44ad", bg: "#f4ecf7", text: "Bossaball is a <b>fusion of music and sport</b> played on a <b>special inflatable pitch</b>.", char: "assistant" },
+    { name: "4 Chunk", color: "#9b59b6", bg: "#f5eef8", text: "rules are a little complicated", char: "assistant" },
+    { name: "5 Chunk", color: "#9b59b6", bg: "#f5eef8", text: "aim to pass, kick and head", char: "assistant" },
+    { name: "6 Sentence", color: "#8e44ad", bg: "#f4ecf7", text: "Although the <b>rules are a little complicated</b>, players <b>aim to pass, kick and head</b> the ball over the net.", char: "assistant" },
+    { name: "7 Paragraph", color: "#2c3e50", bg: "#f4ecf7", text: "Bossaball offers a unique <b>fusion of music and sport</b> on a <b>special inflatable pitch</b>. Even if the <b>rules are a little complicated</b>, the excitement grows as players <b>aim to pass, kick and head</b> the ball to the beat of the music.", char: "assistant" },
+
+    // Final Challenge
+    { name: "Final Story", color: "#ffffff", bg: "#2c3e50", text: "From the <b>national sport of Argentina</b> that was <b>banned for a while</b>, to Keirin where spectators <b>bet over $15 billion dollars</b> as a cyclist <b>sets the pace</b>, sports are diverse. Newer games like Bossaball create a <b>fusion of music and sport</b> on a <b>special inflatable pitch</b>. Whether players <b>aim to pass, kick and head</b> the ball or follow <b>rules that are a little complicated</b>, these sports define cultural identity.", char: "assistant" }
 ];
 const scriptData1_1_D1 = [
     { start: 0, speaker: "Narrator", text: "5.1" }, 
@@ -923,175 +690,15 @@ const scriptData1_2_P3 = [
     { start: 160, speaker: "Speaker", text: "People who nap regularly are apparently less likely to have heart attacks - maybe because they're more relaxed." },
     { start: 168, speaker: "Speaker", text: "A nap also means you can stay awake to do the things you really enjoy instead of falling asleep in front of the TV because you're so tired after a long day's work." }
 ];
-        // --- 기능 함수 ---
-        let mediaRecorder;
-        let audioChunks = {};
-        function initDialogue() {
-            const container = document.getElementById('dialogue-container');
-            dialogueData.forEach((item, index) => {
-                const div = document.createElement('div');
-                div.style = `padding: 12px 15px; background: ${item.bg}; border-radius: 12px; border-left: 6px solid ${item.color}; display: flex; align-items: center; justify-content: space-between; gap: 10px;`;
-                div.innerHTML = `
-                    <div style="flex: 1;"><strong style="color: ${item.color};">${item.name}:</strong> <span>${item.text}</span></div>
-                    <div style="display: flex; gap: 8px; flex-shrink: 0;">
-                        <button onclick="speakText(\`${item.text.replace(/<\/?[^>]+(>|$)/g, "")}\`, '${item.char}')" style="background: ${item.color}; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">🔊</button>
-                        <button id="rec-${index}" onclick="toggleRecord(${index})" style="background: #e74c3c; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">🎤</button>
-                        <button id="play-${index}" onclick="playMyVoice(${index})" style="background: #2ecc71; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: none;">▶</button>
-                    </div>
-                `;
-                container.appendChild(div);
-            });
-        }
-        function speakText(text, character) {
-            window.speechSynthesis.cancel();
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'en-US';
-            utterance.pitch = (character === 'maya') ? 1.5 : 1.1;
-            window.speechSynthesis.speak(utterance);
-        }
-async function toggleRecord(index) {
-    const btn = document.getElementById(`rec-${index}`);
-    if (mediaRecorder && mediaRecorder.state === "recording") {
-        mediaRecorder.stop();
-        btn.style.backgroundColor = "#e74c3c"; btn.innerText = "🎤";
-    } else {
-        const stream = await navigator.mediaDevices.getUserMedia({ 
-            audio: {
-                echoCancellation: true,
-                noiseSuppression: true,
-                autoGainControl: false, // 웅웅거림 방지를 위해 끔
-                channelCount: 1
-            } 
-        });
-        // --- 오디오 증폭 로직 시작 ---
-        const audioContext = new AudioContext();
-        const source = audioContext.createMediaStreamSource(stream);
-        const gainNode = audioContext.createGain();
-        
-        gainNode.gain.value = 2.0; // [조정 포인트] 소리를 3배 키웁니다 (1.0~5.0 사이 조절 가능)
-        
-        const destination = audioContext.createMediaStreamDestination();
-        source.connect(gainNode);
-        gainNode.connect(destination);
-        // --- 오디오 증폭 로직 끝 ---
-        // 증폭된 스트림으로 녹음 진행
-        mediaRecorder = new MediaRecorder(destination.stream);
-        const chunks = [];
-        mediaRecorder.ondataavailable = e => chunks.push(e.data);
-        mediaRecorder.onstop = () => {
-            const blob = new Blob(chunks, { type: 'audio/webm' });
-            audioChunks[index] = URL.createObjectURL(blob);
-            document.getElementById(`play-${index}`).style.display = "flex";
-            
-            stream.getTracks().forEach(track => track.stop());
-            audioContext.close();
-        };
-        mediaRecorder.start();
-        btn.style.backgroundColor = "#000"; btn.innerText = "⏹";
-    }
-}        function playMyVoice(index) {
-            if (audioChunks[index]) new Audio(audioChunks[index]).play();
-        }
-        function setupAudioSync(audioId, containerId, data, isDialogue = false) {
-    const audio = document.getElementById(audioId);
-    const container = document.getElementById(containerId);
-    if(!audio || !container) return;
-    
-    container.innerHTML = '';
-    data.forEach((line, index) => {
-        const div = document.createElement('div');
-        div.className = 'script-line';
-        div.id = `${containerId}-line-${index}`;
-        div.innerHTML = isDialogue ? `<strong>${line.speaker}:</strong> ${line.text}` : line.text;
-        container.appendChild(div);
+
+    // 초기화
+    window.addEventListener('DOMContentLoaded', () => {
+        if (typeof initDialogue === 'function') initDialogue();
+        setupAudioSync('main-player-1', 'script-container1', scriptData1_1_D1, true);
+        setupAudioSync('player-1', 'script-1', scriptData1_2_P1, true);
+        setupAudioSync('player-2', 'script-2', scriptData1_2_P2, true);
+        setupAudioSync('player-3', 'script-3', scriptData1_2_P3, true);
     });
-    // 오디오 재생 시 스크립트 창 보이기
-    audio.addEventListener('play', () => { 
-        container.style.display = 'block'; 
-    });
-    // 오디오 진행 시간에 맞춰 스크립트 하이라이트 및 스크롤
-    audio.addEventListener('timeupdate', () => {
-        let activeIdx = -1;
-        for (let i = 0; i < data.length; i++) {
-            if (audio.currentTime >= data[i].start) activeIdx = i; else break;
-        }
-        container.querySelectorAll('.script-line').forEach(l => l.classList.remove('active'));
-        if (activeIdx !== -1) {
-            const currentLine = document.getElementById(`${containerId}-line-${activeIdx}`);
-            if (currentLine) {
-                currentLine.classList.add('active');
-                container.scrollTo({ 
-                    top: currentLine.offsetTop - container.offsetTop - 80, 
-                    behavior: 'smooth' 
-                });
-            }
-        }
-    });
-    // 추가된 부분: 음성 재생이 끝나면 스크립트 창 숨기기
-    audio.addEventListener('ended', () => { 
-        container.style.display = 'none'; 
-    });
-}        function centralizeScroll(targetId) {
-            const element = document.getElementById(targetId);
-            if (!element) return;
-            const elementRect = element.getBoundingClientRect();
-            const middle = (elementRect.top + window.pageYOffset) - (window.innerHeight / 2) + (elementRect.height / 2);
-            window.scrollTo({ top: middle, behavior: 'smooth' });
-            if (targetId.startsWith('vocab')) {
-                document.querySelectorAll('.card').forEach(c => c.classList.remove('active-highlight'));
-                element.classList.add('active-highlight');
-                setTimeout(() => element.classList.remove('active-highlight'), 1500);
-            }
-        }
-        function toggleAnswer(btn) {
-            const answerSpan = btn.nextElementSibling;
-            if (answerSpan.style.display === "none") {
-                answerSpan.style.display = "inline"; btn.innerText = "Hide";
-            } else {
-                answerSpan.style.display = "none"; btn.innerText = "Check";
-            }
-        }
-        function saveProgress() {
-            const allInputs = document.querySelectorAll('input[type="text"], textarea');
-            allInputs.forEach((input, index) => {
-                localStorage.setItem(`unit20_all_data_${index}`, input.value);
-            });
-            alert('Your progress has been saved! ✅');
-        }
-        // --- 초기화 로직 ---
-        window.addEventListener('DOMContentLoaded', () => {
-            initDialogue();
-            setupAudioSync('main-player-1', 'script-container1', scriptData1_1_D1, true);
-            setupAudioSync('player-1', 'script-1', scriptData1_2_P1);
-            setupAudioSync('player-2', 'script-2', scriptData1_2_P2, true);
-            setupAudioSync('player-3', 'script-3', scriptData1_2_P3);
-            // ... 나머지 setupAudioSync 호출
-            // 저장된 데이터 불러오기
-            const allInputs = document.querySelectorAll('input[type="text"], textarea');
-            allInputs.forEach((input, index) => {
-                const savedValue = localStorage.getItem(`unit05_all_data_${index}`);
-                if (savedValue) input.value = savedValue;
-            });
-        });
-    </script>
-<script>
-function speak(text) {
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-US';
-    
-    const voices = window.speechSynthesis.getVoices();
-    // 여성 목소리 우선 선택
-    const femaleVoice = voices.find(v => v.name.includes('Female') || v.name.includes('Google US English') || v.name.includes('Samantha'));
-    
-    if (femaleVoice) {
-        utterance.voice = femaleVoice;
-    }
-    
-    utterance.pitch = 1.1; 
-    utterance.rate = 1.0; // 현대식 표준 영어 빠르기
-    window.speechSynthesis.speak(utterance);
-}window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.getVoices(); };
 </script>
 </body>
 </html>

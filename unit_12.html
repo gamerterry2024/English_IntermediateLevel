@@ -5,203 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>UNIT 12: PHONE</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-    <style>
-        :root {
-            --primary: #2c3e50;
-            --secondary: #3498db;
-            --success: #27ae60;
-            --bg: #f4f7f6;
-            --white: #ffffff;
-            --highlight: #fff59d;
-            --accent: #e67e22;
-        }
-        body {
-            font-family: 'Segoe UI', sans-serif;
-            line-height: 1.6;
-            background-color: var(--bg);
-            color: var(--primary);
-            margin: 0;
-            padding: 0;
-            scroll-behavior: smooth;
-        }
-        section {
-            background: var(--white);
-            padding: 2.5rem;
-            border-radius: 15px;
-            margin-bottom: 2.5rem;
-            box-shadow: 0 10px 30px rgba(0,0,0,0.05);
-            /* 상단 헤더 높이를 고려한 스크롤 위치 조정 */
-            scroll-margin-top: 90px;
-        }
-        .back-to-dashboard {
-            position: fixed;
-            bottom: 30px;
-            right: 30px;
-            background-color: var(--primary);
-            color: white;
-            padding: 15px 20px;
-            border-radius: 50px;
-            text-decoration: none;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            z-index: 1001;
-            font-weight: bold;
-            transition: transform 0.2s;
-        }
-        .back-to-dashboard:hover {
-            transform: scale(1.1);
-            background-color: var(--secondary);
-        }
-        header {
-            background: var(--primary);
-            color: white;
-            padding: 1rem 5%;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-        .nav-links a {
-            color: white;
-            text-decoration: none;
-            margin-left: 20px;
-            font-weight: bold;
-        }
-        .container {
-            max-width: 900px;
-            margin: 2rem auto;
-            padding: 0 20px;
-            padding-bottom: 300px; 
-        }
-        h2 {
-            border-left: 6px solid var(--secondary);
-            padding-left: 15px;
-            color: var(--primary);
-            margin-bottom: 1.5rem;
-        }
-        .reading-box {
-            background-color: #fffaf0;
-            border: 1px solid #f39c12;
-            padding: 25px;
-            border-radius: 12px;
-            line-height: 1.8;
-            margin-bottom: 20px;
-        }
-        .vocab-link {
-            color: var(--secondary);
-            text-decoration: none;
-            border-bottom: 2px solid var(--secondary);
-            font-weight: bold;
-            padding: 0 2px;
-            cursor: pointer;
-        }
-        .vocab-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-            gap: 20px;
-            margin: 20px 0;
-        }
-        .card {
-            border: 1px solid #eee;
-            padding: 20px;
-            border-radius: 10px;
-            background: #fff;
-            transition: all 0.4s ease;
-        }
-        .card.active-highlight {
-            border: 2px solid var(--accent);
-            background-color: #fffde7;
-            transform: scale(1.05);
-            box-shadow: 0 10px 20px rgba(0,0,0,0.1);
-        }
-        .return-btn {
-            display: inline-block;
-            margin-top: 12px;
-            font-size: 0.85rem;
-            color: var(--secondary);
-            text-decoration: none;
-            font-weight: bold;
-            border: 1px solid var(--secondary);
-            padding: 4px 10px;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        .audio-zone {
-            background: #ebf5fb;
-            padding: 20px;
-            border-radius: 12px;
-            border: 1px solid var(--secondary);
-            margin: 20px 0;
-            text-align: center;
-        }
-        .audio-label {
-            display: block;
-            margin-bottom: 10px;
-            font-weight: bold;
-            color: var(--primary);
-        }
-        .script-window {
-            margin-top: 15px;
-            padding: 20px;
-            background-color: #ffffff;
-            border: 1px solid #eee;
-            border-radius: 12px;
-            height: 250px; 
-            overflow-y: auto;
-            display: none;
-            text-align: left;
-        }
-        .script-line {
-            padding: 8px 10px;
-            border-radius: 5px;
-            margin-bottom: 5px;
-            transition: background 0.3s;
-            font-size: 0.95rem;
-        }
-        .script-line.active {
-            background-color: var(--highlight);
-            font-weight: bold;
-        }
-        textarea, input[type="text"] {
-            width: 100%;
-            padding: 14px;
-            margin-top: 10px;
-            border: 1px solid #ddd;
-            border-radius: 8px;
-            box-sizing: border-box;
-        }
-        .quiz-item {
-            margin-bottom: 25px;
-            padding-bottom: 15px;
-            border-bottom: 1px solid #f0f0f0;
-        }
-        .instruction {
-            font-style: italic;
-            color: #7f8c8d;
-            font-size: 0.9rem;
-        }
-        .save-btn {
-            background: var(--success);
-            color: white;
-            border: none;
-            padding: 12px 25px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: bold;
-        }
-        .save-btn:hover {
-            background-color: #219150;
-        }
-        .mini-input {
-            width: 100px !important;
-            padding: 5px !important;
-            margin: 0 5px !important;
-            display: inline-block !important;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-    </style>
+    <link rel="stylesheet" href="css/unit.css">
+    
 </head>
 <body>
     <a href="index.html#unit_12" class="back-to-dashboard">🏠 Back to Dashboard</a>
@@ -458,48 +263,6 @@
 </div>
 
 
-<script>
-// T/F 버튼 선택 시 시각적 효과
-function selectTF(btn, val) {
-    const parent = btn.parentElement;
-    const btns = parent.querySelectorAll('.tf-btn');
-    btns.forEach(b => {
-        b.style.background = '#fff';
-        b.style.color = '#333';
-        b.classList.remove('selected');
-    });
-    btn.style.background = '#333';
-    btn.style.color = '#fff';
-    btn.classList.add('selected');
-    btn.dataset.value = val;
-}// 정답 확인 및 토글 함수
-function validateTF(rowId, correctVal, explanation) {
-    const row = document.getElementById(rowId);
-    const selectedBtn = row.querySelector('.tf-btn.selected');
-    const ansText = row.querySelector('.answer-text');
-    // 이미 정답이 보이고 있다면 -> 다시 숨기기 (토글)
-    if (ansText.style.display === 'inline') {
-        ansText.style.display = 'none';
-        row.style.background = '#fff'; // 배경색 초기화
-        return;
-    }
-    // 버튼을 선택하지 않았을 때
-    if (!selectedBtn) {
-        alert("Please select T or F first!");
-        return;
-    }
-    // 정답 확인 모드
-    const userVal = selectedBtn.dataset.value;
-    ansText.style.display = 'inline';
-    ansText.innerText = explanation;
-    if (userVal === correctVal) {
-        row.style.background = '#e8f5e9'; // 정답: 연한 초록색
-        ansText.style.color = '#2e7d32';
-    } else {
-        row.style.background = '#ffebee'; // 오답: 연한 빨간색
-        ansText.style.color = '#c62828';
-    }
-}</script>
     </div>
 </article>
         </section>
@@ -610,30 +373,32 @@ function validateTF(rowId, correctVal, explanation) {
 <i class="fas fa-spell-check"></i> Word Bank: urgent, frustration, automated, properly, defines
 </span>
 </div>
+
+<!-- 문제 순서 변경됨 (기존 4→1→3→2→5) -->
 <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
-1. Please help me now; this emergency call is very <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......">.
-<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
-<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: urgent)</span>
+    1. My internet connection is slow and doesn't work <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......">.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: properly)</span>
 </div>
 <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
-2. Waiting for a slow computer system causes a lot of <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......">.
-<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
-<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: frustration)</span>
+    2. Please help me now; this emergency call is very <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......">.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: urgent)</span>
 </div>
 <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
-3. I don't like <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> voices on the phone; I want a real person.
-<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
-<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: automated)</span>
+    3. I don't like <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> voices on the phone; I want a real person.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: automated)</span>
 </div>
 <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
-4. My internet connection is slow and doesn't work <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......">.
-<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
-<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: properly)</span>
+    4. Waiting for a slow computer system causes a lot of <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......">.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: frustration)</span>
 </div>
 <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
-5. How we communicate often <input type="text" class="mini-input" style="width: 80px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> our daily experience.
-<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
-<span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: defines)</span>
+    5. How we communicate often <input type="text" class="mini-input" style="width: 80px; border: none; border-bottom: 2px solid #feb2b2; background: transparent; text-align: center; font-weight: bold; color: #c53030;" placeholder="......"> our daily experience.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #f56565; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #e53e3e;">(Ans: defines)</span>
 </div>
 </div>
 
@@ -644,30 +409,32 @@ function validateTF(rowId, correctVal, explanation) {
 <i class="fas fa-spell-check"></i> Word Bank: insufficient, postage, leaflets, improper, trivial
 </span>
 </div>
+
+<!-- 문제 순서 변경됨 (기존 9→6→10→7→8) -->
 <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
-6. The package was held because of <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> money on the stamp.
-<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
-<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: insufficient)</span>
+    6. It is <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> to use 999 for non-emergency situations.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: improper)</span>
 </div>
 <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
-7. You need to pay the correct <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> to send a letter abroad.
-<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
-<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: postage)</span>
+    7. The package was held because of <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> money on the stamp.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: insufficient)</span>
 </div>
 <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
-8. The police are giving out information <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> to every house.
-<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
-<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: leaflets)</span>
+    8. Don't call the police for <input type="text" class="mini-input" style="width: 80px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> matters like a lost cat.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: trivial)</span>
 </div>
 <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
-9. It is <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> to use 999 for non-emergency situations.
-<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
-<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: improper)</span>
+    9. You need to pay the correct <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> to send a letter abroad.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: postage)</span>
 </div>
 <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
-10. Don't call the police for <input type="text" class="mini-input" style="width: 80px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> matters like a lost cat.
-<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
-<span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: trivial)</span>
+    10. The police are giving out information <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #fbd38d; background: transparent; text-align: center; font-weight: bold; color: #c05621;" placeholder="......"> to every house.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #ed8936; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #dd6b20;">(Ans: leaflets)</span>
 </div>
 </div>
 
@@ -678,30 +445,32 @@ function validateTF(rowId, correctVal, explanation) {
 <i class="fas fa-spell-check"></i> Word Bank: swelling, presence, literally, poisonous, recovery
 </span>
 </div>
+
+<!-- 문제 순서 변경됨 (기존 14→13→12→15→11) -->
 <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
-11. The doctor noticed a large <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> on the boy's head.
-<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
-<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: swelling)</span>
+    11. Matthew was bitten by a very <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> spider in the kitchen.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: poisonous)</span>
 </div>
 <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
-12. Having the <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> of mind to stay calm can save a life.
-<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
-<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: presence)</span>
+    12. In a serious accident, a mobile phone can <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> save your life.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: literally)</span>
 </div>
 <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
-13. In a serious accident, a mobile phone can <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> save your life.
-<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
-<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: literally)</span>
+    13. Having the <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> of mind to stay calm can save a life.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: presence)</span>
 </div>
 <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
-14. Matthew was bitten by a very <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> spider in the kitchen.
-<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
-<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: poisonous)</span>
+    14. After the operation, the young boy made a complete <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......">.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: recovery)</span>
 </div>
 <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
-15. After the operation, the young boy made a complete <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......">.
-<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
-<span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: recovery)</span>
+    15. The doctor noticed a large <input type="text" class="mini-input" style="width: 90px; border: none; border-bottom: 2px solid #9ae6b4; background: transparent; text-align: center; font-weight: bold; color: #276749;" placeholder="......"> on the boy's head.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #48bb78; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #38a169;">(Ans: swelling)</span>
 </div>
 </div>
 
@@ -712,30 +481,32 @@ function validateTF(rowId, correctVal, explanation) {
 <i class="fas fa-spell-check"></i> Word Bank: experts, identified, species, colleague, fine
 </span>
 </div>
+
+<!-- 문제 순서 변경됨 (기존 20→16→17→19→18) -->
 <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
-16. University <input type="text" class="mini-input" style="width: 80px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> studied the photo to find a cure.
-<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
-<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: experts)</span>
+    16. You will have to pay a <input type="text" class="mini-input" style="width: 70px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> of £80 for a false 999 call.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: fine)</span>
 </div>
 <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
-17. The scientists <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> the spider as a Brazilian wandering spider.
-<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
-<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: identified)</span>
+    17. University <input type="text" class="mini-input" style="width: 80px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> studied the photo to find a cure.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: experts)</span>
 </div>
 <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
-18. There are many different <input type="text" class="mini-input" style="width: 80px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> of insects in the rainforest.
-<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
-<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: species)</span>
+    18. The scientists <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> the spider as a Brazilian wandering spider.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: identified)</span>
 </div>
 <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px; margin-bottom: 15px;">
-19. The doctor called a <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> in Melbourne for surgical advice.
-<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
-<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: colleague)</span>
+    19. The doctor called a <input type="text" class="mini-input" style="width: 100px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> in Melbourne for surgical advice.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: colleague)</span>
 </div>
 <div style="display: flex; align-items: center; flex-wrap: wrap; gap: 5px;">
-20. You will have to pay a <input type="text" class="mini-input" style="width: 70px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> of £80 for a false 999 call.
-<button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
-<span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: fine)</span>
+    20. There are many different <input type="text" class="mini-input" style="width: 80px; border: none; border-bottom: 2px solid #90cdf4; background: transparent; text-align: center; font-weight: bold; color: #2c5282;" placeholder="......"> of insects in the rainforest.
+    <button onclick="toggleAnswer(this)" style="margin-left: 8px; cursor: pointer; border: none; background: #4299e1; color: white; border-radius: 4px; padding: 2px 8px; font-size: 0.75rem;">Check</button>
+    <span style="display: none; margin-left: 10px; font-weight: bold; color: #3182ce;">(Ans: species)</span>
 </div>
 </div>
 
@@ -794,65 +565,82 @@ style="width: 100%; padding: 15px; border-radius: 10px; border: 1px solid #ddd; 
 
 
 <div style="margin-top: 30px; padding: 25px; background: #ffffff; border-radius: 15px; border: 2px solid #3498db; box-shadow: 0 4px 15px rgba(0,0,0,0.05);">
-    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
-        <h3 style="margin: 0; color: #2980b9;"><i class="fas fa-robot"></i> AI Solution</h3>
-        <span style="background: #3498db; color: white; padding: 5px 15px; border-radius: 50px; font-weight: bold; font-size: 1.1rem;">
-            Overall Score: <input type="text" class="mini-input" style="width: 50px !important; color: white; background: transparent; border: 1px solid rgba(255,255,255,0.5); text-align: center;" value="9.2"> / 10
-        </span>
-    </div>
-    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.95rem;">
-        <thead>
-            <tr style="background: #ebf5fb; text-align: left;">
-                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Evaluation Criteria</th>
-                <th style="padding: 12px; border-bottom: 2px solid #3498db; text-align: center;">Score</th>
-                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Detailed Feedback</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr>
-                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Content</td>
-                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="10"> / 10</td>
-                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Deep reflection on career stages from 20s to 50s."></td>
-            </tr>
-            <tr>
-                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Logic</td>
-                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="9.5"> / 10</td>
-                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Strong comparison between 'meaning' and 'success'."></td>
-            </tr>
-            <tr>
-                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Grammar</td>
-                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="8"> / 10</td>
-                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Check comparative forms (e.g., more important than)."></td>
-            </tr>
-            <tr>
-                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Vocabulary</td>
-                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value="9"> / 10</td>
-                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value="Great use of 'exhausted', 'exploiting', and 'fulfillment'."></td>
-            </tr>
-        </tbody>
-    </table>
-    <div style="background: #f4f7f6; padding: 15px; border-radius: 10px; border-left: 5px solid #27ae60;">
-        <p style="margin: 0 0 10px 0; font-weight: bold; color: #27ae60;"><i class="fas fa-check-circle"></i> Recommended Revision</p>
-        <textarea style="width: 100%; background: transparent; border: 1px dashed #27ae60; border-radius: 5px; padding: 10px; font-style: italic;" rows="8">"In my experience, I thought gaining experience was more important than anything else in my twenties. My companies might have been exploiting me with boring tasks, but I worked hard and struggled through it. In my thirties, I chased high salaries, but I still worked over ten hours a day. Now in my late forties, I was so exhausted that I retired after 30 years of practice. I currently work as a security officer for two hours a day and I am happy because there is no pressure. To me, a 'meaningful' job is more important than a 'successful' one, and that meaning depends on my current physical and mental well-being."</textarea>
-    </div>
+    <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 20px;">
+        <h3 style="margin: 0; color: #2980b9;"><i class="fas fa-robot"></i> AI Solution</h3>
+        <span style="background: #3498db; color: white; padding: 5px 15px; border-radius: 50px; font-weight: bold; font-size: 1.1rem;">
+            Overall Score: <input type="text" class="mini-input" style="width: 50px !important; color: white; background: transparent; border: 1px solid rgba(255,255,255,0.5); text-align: center;" value=""> / 10
+        </span>
+    </div>
+    <table style="width: 100%; border-collapse: collapse; margin-bottom: 20px; font-size: 0.95rem;">
+        <thead>
+            <tr style="background: #ebf5fb; text-align: left;">
+                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Evaluation Criteria</th>
+                <th style="padding: 12px; border-bottom: 2px solid #3498db; text-align: center;">Score</th>
+                <th style="padding: 12px; border-bottom: 2px solid #3498db;">Detailed Feedback</th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Content</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value=""> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value=""></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Logic</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value=""> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value=""></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Grammar</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value=""> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value=""></td>
+            </tr>
+            <tr>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; font-weight: bold;">Vocabulary</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee; text-align: center;"><input type="text" class="mini-input" value=""> / 10</td>
+                <td style="padding: 12px; border-bottom: 1px solid #eee;"><input type="text" style="width: 100%; border: none; background: #f9f9f9;" value=""></td>
+            </tr>
+        </tbody>
+    </table>
+    <div style="background: #f4f7f6; padding: 15px; border-radius: 10px; border-left: 5px solid #27ae60;">
+        <p style="margin: 0 0 10px 0; font-weight: bold; color: #27ae60;"><i class="fas fa-check-circle"></i> Recommended Revision</p>
+        <textarea style="width: 100%; background: transparent; border: 1px dashed #27ae60; border-radius: 5px; padding: 10px; font-style: italic;" rows="8"></textarea>
+    </div>
 </div>
             <button class="save-btn" style="margin-top: 20px;" onclick="saveProgress()">Save My Work</button>
         </section>
     </div>
+    
+                <!-- 공통 스크립트 파일들 -->
+<script src="js/speaking.js"></script>
+<script src="js/listening.js"></script>
+
     <script>
-        // --- 데이터 정의 ---
-        const dialogueData = [
-    { name: "Jim", color: "#f39c12", bg: "#fdfaf0", text: "Hello? I'm <b>still</b> having <b>Internet connection</b> problems.", char: "customer" },
-    { name: "Agent", color: "#3498db", bg: "#ebf5fb", text: "I'm sorry. This <b>automated system</b> is <b>just</b> slow.", char: "assistant" },
-    { name: "Jim", color: "#f39c12", bg: "#fdfaf0", text: "It's <b>urgent</b>! I <b>already</b> <b>signed a contract</b>.", char: "customer" },
-    { name: "Agent", color: "#3498db", bg: "#ebf5fb", text: "Did you restart your <b>wireless box</b> <b>yet</b>?", char: "assistant" },
-    { name: "Jim", color: "#f39c12", bg: "#fdfaf0", text: "Yes, but it doesn't <b>work properly</b>. It's <b>awful</b>!", char: "customer" },
-    { name: "Agent", color: "#3498db", bg: "#ebf5fb", text: "I see. I'll <b>put you through</b> to <b>experts</b>.", char: "assistant" },
-    { name: "Jim", color: "#f39c12", bg: "#fdfaf0", text: "Thanks. This <b>frustration</b> is <b>driving me mad</b>!", char: "customer" },
-    { name: "Agent", color: "#3498db", bg: "#ebf5fb", text: "Wait, I <b>just</b> <b>identified</b> a <b>system error</b>.", char: "assistant" },
-    { name: "Jim", color: "#f39c12", bg: "#fdfaf0", text: "Oh? So when will you <b>sort it out</b>?", char: "customer" },
-    { name: "Agent", color: "#3498db", bg: "#ebf5fb", text: "We'll find a <b>resolution</b> by this afternoon.", char: "assistant" }
-        ];
+// --- 데이터 정의 (UNIT 12: Emergencies and Life-Saving Actions - 본문 충실형) ---
+const dialogueData = [
+    // Paragraph 1: Unnecessary 999 Calls (본문 1번 섹션)
+    { name: "1 Chunk", color: "#3498db", bg: "#ebf5fb", text: "totally unnecessary", char: "assistant" },
+    { name: "2 Chunk", color: "#3498db", bg: "#ebf5fb", text: "improper calls", char: "assistant" },
+    { name: "3 Sentence", color: "#2980b9", bg: "#e1f5fe", text: "A third of the calls police receive are <b>totally unnecessary</b>, including <b>improper calls</b> about lost cats.", char: "assistant" },
+    { name: "4 Chunk", color: "#3498db", bg: "#ebf5fb", text: "dealing with this problem", char: "assistant" },
+    { name: "5 Chunk", color: "#3498db", bg: "#ebf5fb", text: "prevent further time-wasting", char: "assistant" },
+    { name: "6 Sentence", color: "#2980b9", bg: "#e1f5fe", text: "Police are <b>dealing with this problem</b> by introducing fines to <b>prevent further time-wasting</b>.", char: "assistant" },
+    { name: "7 Paragraph", color: "#2c3e50", bg: "#f0f7ff", text: "Because many calls are <b>totally unnecessary</b>, the police are <b>dealing with this problem</b>. They fined those making <b>improper calls</b> to <b>prevent further time-wasting</b>.", char: "assistant" },
+
+    // Paragraph 2: A Miracle Operation (본문 2번 섹션)
+    { name: "1 Chunk", color: "#9b59b6", bg: "#f5eef8", text: "in danger of dying", char: "assistant" },
+    { name: "2 Chunk", color: "#9b59b6", bg: "#f5eef8", text: "reduce the pressure", char: "assistant" },
+    { name: "3 Sentence", color: "#8e44ad", bg: "#f4ecf7", text: "The doctor realized the boy was <b>in danger of dying</b> without an operation to <b>reduce the pressure</b>.", char: "assistant" },
+    { name: "4 Chunk", color: "#9b59b6", bg: "#f5eef8", text: "made a complete recovery", char: "assistant" },
+    { name: "5 Chunk", color: "#9b59b6", bg: "#f5eef8", text: "just part of the job", char: "assistant" },
+    { name: "6 Sentence", color: "#8e44ad", bg: "#f4ecf7", text: "The boy has <b>made a complete recovery</b>, though the doctor said it was <b>just part of the job</b>.", char: "assistant" },
+    { name: "7 Paragraph", color: "#2c3e50", bg: "#f4ecf7", text: "A boy <b>in danger of dying</b> needed an operation to <b>reduce the pressure</b> on his brain. He <b>made a complete recovery</b>, but his doctor described the action as <b>just part of the job</b>.", char: "assistant" },
+
+    // Final Challenge (본문 전체 통합)
+    { name: "Final Story", color: "#ffffff", bg: "#2c3e50", text: "Police want to <b>prevent further time-wasting</b> from <b>totally unnecessary</b> <b>improper calls</b>. In real emergencies, like when a boy is <b>in danger of dying</b>, doctors must <b>reduce the pressure</b> to save lives. After the patient has <b>made a complete recovery</b>, many modest heroes say their work is <b>just part of the job</b>.", char: "assistant" }
+];
+
+
 const scriptData1_1_D1 = [
     { start: 0, speaker: "Narrator", text: "Twelve point one. Conversation one." },
     { start: 4, speaker: "A", text: "Hello." },
@@ -950,177 +738,15 @@ const scriptData1_2_P3 = [
     { start: 49, speaker: "Jim", text: "It's so <b>annoying</b>. Anyway, sorry. I didn't mean to <b>complain</b>." },
     { start: 54, speaker: "Jim", text: "Listen, I'll ... Oh. Um." }
 ];
-        // --- 기능 함수 ---
-        let mediaRecorder;
-        let audioChunks = {};
-        function initDialogue() {
-            const container = document.getElementById('dialogue-container');
-            dialogueData.forEach((item, index) => {
-                const div = document.createElement('div');
-                div.style = `padding: 12px 15px; background: ${item.bg}; border-radius: 12px; border-left: 6px solid ${item.color}; display: flex; align-items: center; justify-content: space-between; gap: 10px;`;
-                div.innerHTML = `
-                    <div style="flex: 1;"><strong style="color: ${item.color};">${item.name}:</strong> <span>${item.text}</span></div>
-                    <div style="display: flex; gap: 8px; flex-shrink: 0;">
-                        <button onclick="speakText(\`${item.text.replace(/<\/?[^>]+(>|$)/g, "")}\`, '${item.char}')" style="background: ${item.color}; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">🔊</button>
-                        <button id="rec-${index}" onclick="toggleRecord(${index})" style="background: #e74c3c; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer;">🎤</button>
-                        <button id="play-${index}" onclick="playMyVoice(${index})" style="background: #2ecc71; border: none; color: white; width: 32px; height: 32px; border-radius: 50%; cursor: pointer; display: none;">▶</button>
-                    </div>
-                `;
-                container.appendChild(div);
-            });
-        }
-        function speakText(text, character) {
-            window.speechSynthesis.cancel();
-            const utterance = new SpeechSynthesisUtterance(text);
-            utterance.lang = 'en-US';
-            utterance.pitch = (character === 'maya') ? 1.5 : 1.1;
-            window.speechSynthesis.speak(utterance);
-        }
-async function toggleRecord(index) {
-    const btn = document.getElementById(`rec-${index}`);
-    if (mediaRecorder && mediaRecorder.state === "recording") {
-        mediaRecorder.stop();
-        btn.style.backgroundColor = "#e74c3c"; btn.innerText = "🎤";
-    } else {
-        const stream = await navigator.mediaDevices.getUserMedia({ 
-            audio: {
-                echoCancellation: true,
-                noiseSuppression: true,
-                autoGainControl: false, // 웅웅거림 방지를 위해 끔
-                channelCount: 1
-            } 
-        });
-        // --- 오디오 증폭 로직 시작 ---
-        const audioContext = new AudioContext();
-        const source = audioContext.createMediaStreamSource(stream);
-        const gainNode = audioContext.createGain();
-        
-        gainNode.gain.value = 2.0; // [조정 포인트] 소리를 3배 키웁니다 (1.0~5.0 사이 조절 가능)
-        
-        const destination = audioContext.createMediaStreamDestination();
-        source.connect(gainNode);
-        gainNode.connect(destination);
-        // --- 오디오 증폭 로직 끝 ---
-        // 증폭된 스트림으로 녹음 진행
-        mediaRecorder = new MediaRecorder(destination.stream);
-        const chunks = [];
-        mediaRecorder.ondataavailable = e => chunks.push(e.data);
-        mediaRecorder.onstop = () => {
-            const blob = new Blob(chunks, { type: 'audio/webm' });
-            audioChunks[index] = URL.createObjectURL(blob);
-            document.getElementById(`play-${index}`).style.display = "flex";
-            
-            stream.getTracks().forEach(track => track.stop());
-            audioContext.close();
-        };
-        mediaRecorder.start();
-        btn.style.backgroundColor = "#000"; btn.innerText = "⏹";
-    }
-}        function playMyVoice(index) {
-            if (audioChunks[index]) new Audio(audioChunks[index]).play();
-        }
-        function setupAudioSync(audioId, containerId, data, isDialogue = false) {
-    const audio = document.getElementById(audioId);
-    const container = document.getElementById(containerId);
-    if(!audio || !container) return;
-    
-    container.innerHTML = '';
-    data.forEach((line, index) => {
-        const div = document.createElement('div');
-        div.className = 'script-line';
-        div.id = `${containerId}-line-${index}`;
-        div.innerHTML = isDialogue ? `<strong>${line.speaker}:</strong> ${line.text}` : line.text;
-        container.appendChild(div);
-    });
-    // 오디오 재생 시 스크립트 창 보이기
-    audio.addEventListener('play', () => { 
-        container.style.display = 'block'; 
-    });
-    // 오디오 진행 시간에 맞춰 스크립트 하이라이트 및 스크롤
-    audio.addEventListener('timeupdate', () => {
-        let activeIdx = -1;
-        for (let i = 0; i < data.length; i++) {
-            if (audio.currentTime >= data[i].start) activeIdx = i; else break;
-        }
-        container.querySelectorAll('.script-line').forEach(l => l.classList.remove('active'));
-        if (activeIdx !== -1) {
-            const currentLine = document.getElementById(`${containerId}-line-${activeIdx}`);
-            if (currentLine) {
-                currentLine.classList.add('active');
-                container.scrollTo({ 
-                    top: currentLine.offsetTop - container.offsetTop - 80, 
-                    behavior: 'smooth' 
-                });
-            }
-        }
-    });
-    // 추가된 부분: 음성 재생이 끝나면 스크립트 창 숨기기
-    audio.addEventListener('ended', () => { 
-        container.style.display = 'none'; 
-    });
-}        function centralizeScroll(targetId) {
-            const element = document.getElementById(targetId);
-            if (!element) return;
-            const elementRect = element.getBoundingClientRect();
-            const middle = (elementRect.top + window.pageYOffset) - (window.innerHeight / 2) + (elementRect.height / 2);
-            window.scrollTo({ top: middle, behavior: 'smooth' });
-            if (targetId.startsWith('vocab')) {
-                document.querySelectorAll('.card').forEach(c => c.classList.remove('active-highlight'));
-                element.classList.add('active-highlight');
-                setTimeout(() => element.classList.remove('active-highlight'), 1500);
-            }
-        }
-        function toggleAnswer(btn) {
-            const answerSpan = btn.nextElementSibling;
-            if (answerSpan.style.display === "none") {
-                answerSpan.style.display = "inline"; btn.innerText = "Hide";
-            } else {
-                answerSpan.style.display = "none"; btn.innerText = "Check";
-            }
-        }
-        function saveProgress() {
-            const allInputs = document.querySelectorAll('input[type="text"], textarea');
-            allInputs.forEach((input, index) => {
-                localStorage.setItem(`UNIT12_all_data_${index}`, input.value);
-            });
-            alert('Your progress has been saved! ✅');
-        }
-         // --- 초기화 로직 ---
-        window.addEventListener('DOMContentLoaded', () => {
-            initDialogue();
-            setupAudioSync('main-player-1', 'script-container1', scriptData1_1_D1, true);
-            setupAudioSync('main-player-2', 'script-container2', scriptData1_1_D2, true);
-            setupAudioSync('player-1', 'script-1', scriptData1_2_P1, true);
-            setupAudioSync('player-2', 'script-2', scriptData1_2_P2, true);
-            setupAudioSync('player-3', 'script-3', scriptData1_2_P3, true);
-            // ... 나머지 setupAudioSync 호출
-            // 저장된 데이터 불러오기
-            const allInputs = document.querySelectorAll('input[type="text"], textarea');
-            allInputs.forEach((input, index) => {
-                const savedValue = localStorage.getItem(`UNIT10_all_data_${index}`);
-                if (savedValue) input.value = savedValue;
-            });
-        });
-    </script>
 
-<script>
-function speak(text) {
-    window.speechSynthesis.cancel();
-    const utterance = new SpeechSynthesisUtterance(text);
-    utterance.lang = 'en-US';
-    
-    const voices = window.speechSynthesis.getVoices();
-    // 여성 목소리 우선 선택
-    const femaleVoice = voices.find(v => v.name.includes('Female') || v.name.includes('Google US English') || v.name.includes('Samantha'));
-    
-    if (femaleVoice) {
-        utterance.voice = femaleVoice;
-    }
-    
-    utterance.pitch = 1.1; 
-    utterance.rate = 1.0; // 현대식 표준 영어 빠르기
-    window.speechSynthesis.speak(utterance);
-}window.speechSynthesis.onvoiceschanged = () => { window.speechSynthesis.getVoices(); };
+    // 초기화
+    window.addEventListener('DOMContentLoaded', () => {
+        if (typeof initDialogue === 'function') initDialogue();
+        setupAudioSync('main-player-1', 'script-container1', scriptData1_1_D1, true);
+        setupAudioSync('player-1', 'script-1', scriptData1_2_P1, true);
+        setupAudioSync('player-2', 'script-2', scriptData1_2_P2, true);
+        setupAudioSync('player-3', 'script-3', scriptData1_2_P3, true);
+    });
 </script>
 </body>
 </html>
